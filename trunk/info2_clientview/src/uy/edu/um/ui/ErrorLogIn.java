@@ -1,4 +1,4 @@
-package uy.edu.um.ui;
+package src.uy.edu.um.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
