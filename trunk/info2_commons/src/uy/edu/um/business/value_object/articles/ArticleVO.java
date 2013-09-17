@@ -1,4 +1,4 @@
-package uy.edu.um.business.articles;
+package uy.edu.um.business.value_object.articles;
 
 public class ArticleVO {
 
