@@ -1,4 +1,4 @@
-package uy.edu.um.client_service.persistance;
+package src.uy.edu.um.client_service.persistance;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBC {
-	
+
 	private static final String JDBC_DRIVER = "org.hsqldb.jdbc.JDBCDriver";
 
 	private static final String JDBC_USER = "SA";
@@ -17,7 +17,7 @@ public class JDBC {
 	private static final String JDBC_URL = "jdbc:hsqldb:file:data/um-test";
 
 	private Connection connection  = null;
-	
+
 	private Connection getConnection() {
 		if (connection == null) {
 
@@ -64,26 +64,26 @@ public class JDBC {
 		}
 
 	}
-	
+
 	public void createDatabase(){
-		
+
 		try {
 		Statement oStatement = getConnection().createStatement();
-		
+
 		oStatement.execute("DROP TABLE ARTICLES");
-		
+
 		oStatement.execute("CREATE TABLE ARTICLES (ID INTEGER, NOMBRE VARCHAR(40), PRECIO INTEGER)");
-		
+
 		oStatement.close();
-		
-				
-		} 
+
+
+		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
 
 	public void addArticle(int id,String nom, int precio){
@@ -95,9 +95,9 @@ public class JDBC {
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void getArticles() {
 
 		try {
@@ -125,19 +125,19 @@ public class JDBC {
 		}
 
 	}
-	
-	
-	
+
+
+
 	public JDBC() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public static void main(String[] args) {
 
 		JDBC oTest  = new JDBC();
 
 		try {
-			
+
 			oTest.createDatabase();
 
 			oTest.addArticle(10,"Pizza",80);
@@ -147,7 +147,6 @@ public class JDBC {
 		} finally {
 
 			oTest.closeConnection();
-
 		}
 
 
