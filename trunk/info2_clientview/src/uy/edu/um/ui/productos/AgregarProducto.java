@@ -25,6 +25,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import uy.edu.um.ui.Confirmacion;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class AgregarProducto extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
@@ -142,8 +147,11 @@ public class AgregarProducto extends JFrame implements ActionListener{
 				"[29px]"));
 
 		JButton btnNewButton = new JButton("Aceptar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Confirmacion confirma = new Confirmacion();
+				confirma.setVisible(true);
 			}
 		});
 		ZonaBotones.add(btnNewButton, "cell 1 0,growx,aligny center");
