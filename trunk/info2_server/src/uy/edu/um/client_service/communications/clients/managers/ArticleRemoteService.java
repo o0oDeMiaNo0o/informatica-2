@@ -2,9 +2,8 @@ package uy.edu.um.client_service.communications.clients.managers;
 
 import java.rmi.RemoteException;
 
+import uy.edu.um.business.interfaces.articles.ArticleRemoteMgt;
 
-import uy.edu.um.business.interfaces.ArticleRemoteMgt;
-import uy.edu.um.client_service.persistance.JDBC;
 
 public class ArticleRemoteService implements ArticleRemoteMgt{
 
@@ -14,7 +13,6 @@ public class ArticleRemoteService implements ArticleRemoteMgt{
 
 	@Override
 	public void addArticle(int id, String nombre, int precio) throws RemoteException {
-
 	}
 
 	@Override
