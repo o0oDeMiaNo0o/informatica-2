@@ -1,4 +1,4 @@
-package src.uy.edu.um.client_service.persistance;
+package uy.edu.um.client_service.persistance;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
