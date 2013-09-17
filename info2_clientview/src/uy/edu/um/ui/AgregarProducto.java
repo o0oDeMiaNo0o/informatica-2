@@ -102,10 +102,9 @@ public class AgregarProducto extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		ZonaBotones.add(btnCancelar, "cell 2 0,alignx left,aligny center");
 		
-		JPanel panel = new JPanel();
-		
+		PanelTransparente panel = new PanelTransparente();
+		panel.setBackgroundImage(panel.createImage("uy/edu/um/imagenes/Bernie's.jpg").getImage());
 		contentPane.add(panel, BorderLayout.WEST);
-		panel.setLayout(new BorderLayout(0, 0));
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, ZonaIngresoDatos, lblNombreMenu, textField, lblPrecio, Precio, textField_1, lblDescripcin, ZonaBotones, btnAceptar, btnCancelar}));
 	}
 
