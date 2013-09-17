@@ -1,4 +1,4 @@
-package uy.edu.um.client_service.communications.clients.managers;
+package uy.edu.um.client_service.communications.clients;
 
 import java.rmi.RemoteException;
 
