@@ -18,7 +18,7 @@ public class JDBC {
 
 	private Connection connection  = null;
 
-	private Connection getConnection() {
+	public Connection getConnection() {
 		if (connection == null) {
 
 			try {
@@ -86,17 +86,6 @@ public class JDBC {
 
 	}
 
-	public void addArticle(int id,String nom, int precio){
-		try{
-			Statement oStatement = getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES VALUES("+id+",'"+nom+"',"+precio+")");
-			oStatement.close();
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-
-	}
 
 	public void getArticles() {
 
@@ -134,20 +123,7 @@ public class JDBC {
 
 	public static void main(String[] args) {
 
-		JDBC oTest  = new JDBC();
-
-		try {
-
-			oTest.createDatabase();
-
-			oTest.addArticle(10,"Pizza",80);
-
-			oTest.getArticles();
-
-		} finally {
-
-			oTest.closeConnection();
-		}
+		
 
 
 	}
