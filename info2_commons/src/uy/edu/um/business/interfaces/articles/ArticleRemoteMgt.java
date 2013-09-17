@@ -1,4 +1,4 @@
-package uy.edu.um.business.interfaces;
+package uy.edu.um.business.interfaces.articles;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
