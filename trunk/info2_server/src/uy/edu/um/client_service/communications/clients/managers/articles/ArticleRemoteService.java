@@ -2,13 +2,13 @@ package uy.edu.um.client_service.communications.clients.managers.articles;
 
 import java.rmi.RemoteException;
 
-
 import uy.edu.um.business.interfaces.articles.ArticleRemoteMgt;
+import uy.edu.um.client_service.persistance.articles.ArticleDAO;
 
 public class ArticleRemoteService implements ArticleRemoteMgt{
 
 	public void showArticle(int id, String nombre, int precio){
-		System.out.println("id : "+id+", nombre : "+nombre+", precio : "+precio);
+		System.out.println(id+" "+nombre+" "+precio);
 	}
 
 	@Override
