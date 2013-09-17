@@ -1,4 +1,4 @@
-package uy.edu.um.client_service.communications.clients.entities;
+package uy.edu.um.client_service.business.entities;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

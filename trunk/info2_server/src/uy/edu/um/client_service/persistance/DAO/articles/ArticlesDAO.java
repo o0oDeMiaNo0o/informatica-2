@@ -8,10 +8,12 @@ import uy.edu.um.client_service.persistance.*;
 public class ArticlesDAO {
 	
 	JDBC database = new JDBC();
+	
 
 	public ArticlesDAO() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	public void addArticle(int id,String nom, int precio){
 		try{
