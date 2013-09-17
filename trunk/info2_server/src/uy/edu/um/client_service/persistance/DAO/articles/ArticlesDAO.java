@@ -3,7 +3,9 @@ package uy.edu.um.client_service.persistance.DAO.articles;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import uy.edu.um.client_service.persistance.*;
+
+import uy.edu.um.client_service.business.entities.Article;
+import uy.edu.um.client_service.persistance.JDBC;
 
 public class ArticlesDAO {
 	
@@ -15,10 +17,10 @@ public class ArticlesDAO {
 	}
 	
 	
-	public void addArticle(int id,String nom, int precio){
+	public void addArticle(Article articulo){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES VALUES("+id+",'"+nom+"',"+precio+")");
+			oStatement.execute("INSERT INTO ARTICLES VALUES("+articulo.getId()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+")");
 			oStatement.close();
 			database.closeConnection();
 		}
