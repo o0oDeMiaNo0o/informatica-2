@@ -4,19 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import uy.edu.um.client_service.business.entities.Article;
+import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.persistance.JDBC;
 
 public class ArticlesDAO {
-	
+
 	JDBC database = new JDBC();
-	
+
 
 	public ArticlesDAO() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
 	public void addArticle(Article articulo){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
@@ -30,7 +30,7 @@ public class ArticlesDAO {
 		}
 
 	}
-	
+
 	public void getArticles() {
 
 		try {
@@ -55,10 +55,10 @@ public class ArticlesDAO {
 		} catch (SQLException e) {
 			database.closeConnection();
 			throw new RuntimeException(e);
-			
+
 		}
-	
-	
+
+
 
 }
 }
