@@ -1,12 +1,15 @@
 package uy.edu.um.client_service.business.article.entities;
 
+import uy.edu.um.value_object.article.ArticleVO;
+
 public class Article {
 
 	private int id;
 	private String nombre;
 	private int precio;
 
-	public Article(String nombre, int precio) {
+	public Article(int id, String nombre, int precio) {
+		this.id = id;
 		this.nombre=nombre;
 		this.precio=precio;
 	}
@@ -34,7 +37,5 @@ public class Article {
 	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
-
-
 
 }

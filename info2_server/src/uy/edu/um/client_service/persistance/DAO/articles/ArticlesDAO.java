@@ -9,13 +9,22 @@ import uy.edu.um.client_service.persistance.JDBC;
 
 public class ArticlesDAO {
 
+	private static ArticlesDAO instance = new ArticlesDAO();
+
 	JDBC database = new JDBC();
 
-
-	public ArticlesDAO() {
+	//constructor
+	private ArticlesDAO() {
 		// TODO Auto-generated constructor stub
 	}
 
+	//obtener instancia
+	public static ArticlesDAO getInstance(){
+		if (instance == null){
+			instance = new ArticlesDAO();
+		}
+		return instance;
+	}
 
 	public void addArticle(Article articulo){
 		try{

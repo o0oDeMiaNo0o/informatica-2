@@ -1,37 +1,45 @@
 package uy.edu.um.client_service.service.articleRemote.manager;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
-import uy.edu.um.business.articles.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.business.value_object.article.ArticleVO;
+import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
-
+import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
+import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticleRemoteMgr implements ArticleRemoteMgt{
 
 	@Override
 	public void addArticle(ArticleVO a) throws RemoteException {
-		Article art = this.getArticle(a);
+		//obtener instacia del manager con singleton
+		ArticleMgt aMgr = BusinessFacade.getInstance().getArticleMgt();
+		Article article = aMgr.getArticle(a);
+		aMgr.addArticle(article);
 	}
 
-	@Override
-	public void editArticle(ArticleVO a) throws RemoteException {
-		// TODO Auto-generated method stub
+	public static void setServerConnection(){
+		try {
+			String name = "ArticleRemoteMgr";
 
+			ArticleRemoteMgr oArticleRemoteMgr = new ArticleRemoteMgr();
+
+			ArticleRemoteMgt oStub = (ArticleRemoteMgt) UnicastRemoteObject
+					.exportObject(oArticleRemoteMgr, 0);
+
+			Registry oRegistry = LocateRegistry.createRegistry(1099);
+
+			oRegistry.rebind(name, oStub);
+
+			System.out.println("Ready and waiting");
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+		}
 	}
-
-	@Override
-	public void removeArticle(ArticleVO a) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Article getArticle(ArticleVO a){
-		String nombre = a.getNombre();
-		int precio = a.getPrecio();
-		Article aReturn = new Article(nombre, precio);
-		return aReturn;
-	}
-
-
 }
+
+
