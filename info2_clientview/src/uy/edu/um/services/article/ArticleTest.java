@@ -28,10 +28,12 @@ public class ArticleTest {
 
 			oArticleRemoteMgt.addArticle(toSend);
 
+			System.out.println("articulo agregado");
+
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-	}
+		}
 
 	}
 }

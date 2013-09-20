@@ -3,6 +3,7 @@ package uy.edu.um.services.article.value_object;
 import java.io.Serializable;
 
 public class ArticleVO implements Serializable{
+
 	//atributos
 	private String nombre;
 	private int precio;
