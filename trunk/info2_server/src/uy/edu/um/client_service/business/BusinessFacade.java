@@ -2,6 +2,9 @@ package uy.edu.um.client_service.business;
 
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.article.managers.ArticleMgr;
+import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
+import uy.edu.um.client_service.business.categories.managers.CategoryMgr;
+
 
 /**
  *
@@ -25,9 +28,11 @@ public class BusinessFacade {
 		return instance;
 	}
 
-
-
 	public ArticleMgt getArticleMgt(){
 		return ArticleMgr.getInstance();
+	}
+
+	public CategoryMgt getCategoryMgt(){
+		return CategoryMgr.getInstance();
 	}
 }

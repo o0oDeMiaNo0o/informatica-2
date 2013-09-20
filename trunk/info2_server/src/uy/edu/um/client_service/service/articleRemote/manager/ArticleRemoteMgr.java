@@ -13,6 +13,17 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticleRemoteMgr implements ArticleRemoteMgt{
 
+	private static ArticleRemoteMgr instance = new ArticleRemoteMgr();
+
+	private ArticleRemoteMgr(){};
+
+	public static ArticleRemoteMgr getInstance(){
+		if(instance == null){
+			instance = new ArticleRemoteMgr();
+		}
+		return instance;
+	}
+
 	@Override
 	public void addArticle(ArticleVO a) throws RemoteException {
 		//obtener instacia del manager con singleton
