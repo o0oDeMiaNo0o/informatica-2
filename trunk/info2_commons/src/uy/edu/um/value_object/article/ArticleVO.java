@@ -1,6 +1,8 @@
 package uy.edu.um.value_object.article;
 
-public class ArticleVO {
+import java.io.Serializable;
+
+public class ArticleVO implements Serializable{
 
 	private String nombre;
 	private int precio;
