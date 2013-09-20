@@ -32,11 +32,14 @@ public class ArticlesDAO {
 			oStatement.execute("INSERT INTO ARTICLES VALUES("+articulo.getId()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+")");
 			oStatement.close();
 			database.closeConnection();
+			//Verificacion por consola
+			System.out.println("articulo agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
 			database.closeConnection();
 		}
+
 
 	}
 
