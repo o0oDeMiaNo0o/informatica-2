@@ -1,4 +1,4 @@
-package src.uy.edu.um.ui;
+package uy.edu.um.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -55,20 +55,20 @@ public class LogIn extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JButton btnCreditos = new JButton("INGRESAR");
 		btnCreditos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		
+
 		JLabel lblUsuario = new JLabel("Usuario:");
-		
+
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
-		
+
 		txtIngreseUsuario = new JTextField();
 		txtIngreseUsuario.setColumns(10);
-		
+
 		pwdIngreseContrasea = new JPasswordField();
 		contentPane.setLayout(new MigLayout("", "[grow][75px][198px][grow]", "[grow][28px][28px][29px,grow]"));
 		contentPane.add(btnCreditos, "cell 2 3,alignx right,aligny top");

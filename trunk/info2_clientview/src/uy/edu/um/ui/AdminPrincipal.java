@@ -1,4 +1,4 @@
-package src.uy.edu.um.ui;
+package uy.edu.um.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -84,7 +84,7 @@ public class AdminPrincipal extends JFrame {
 				LogIn nuevo = new LogIn();
 				nuevo.setVisible(true);
 				cerrar();
-				
+
 			}
 		});
 		contentPane.add(btnCerrarSesin, BorderLayout.SOUTH);

@@ -1,4 +1,4 @@
-package src.uy.edu.um.ui;
+package uy.edu.um.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -70,26 +70,26 @@ public class ClientePrincipal extends JFrame {
 				FormFactory.GLUE_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.GLUE_ROWSPEC,}));
-		
+
 		JLabel lblNewLabel_1 = new JLabel(" ");
 		contentPane.add(lblNewLabel_1, "2, 2");
-		
+
 		JButton btnAgregarNuevo = new JButton("Agregar Nuevo");
 		btnAgregarNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		contentPane.add(btnAgregarNuevo, "3, 2, center, center");
-		
+
 		JLabel lblNewLabel = new JLabel(" ");
 		contentPane.add(lblNewLabel, "4, 2, right, center");
-		
+
 		JButton btnVerExistentes = new JButton("Lista Clientes");
 		contentPane.add(btnVerExistentes, "3, 6");
-		
+
 		JButton btnNewButton = new JButton("Buscar Cliente");
 		contentPane.add(btnNewButton, "3, 10");
-		
+
 		JButton btnSalir = new JButton("Salir");
 		contentPane.add(btnSalir, "3, 18");
 	}
