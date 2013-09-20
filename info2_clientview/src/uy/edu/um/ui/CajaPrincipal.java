@@ -1,4 +1,4 @@
-package src.uy.edu.um.ui;
+package uy.edu.um.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -45,17 +45,17 @@ public class CajaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][][][][grow]"));
-		
+
 		JButton btnPedidoLocal = new JButton("Pedido Local");
 		panel.add(btnPedidoLocal, "cell 1 1,growx,aligny center");
-		
+
 		JButton btnDelivery = new JButton("Delivery");
 		panel.add(btnDelivery, "cell 1 3,growx,aligny center");
-		
+
 		JButton btnAgregarCliemte = new JButton("Agregar Cliente");
 		btnAgregarCliemte.setAction(action);
 		btnAgregarCliemte.addActionListener(new ActionListener() {
@@ -63,7 +63,7 @@ public class CajaPrincipal extends JFrame {
 			}
 		});
 		panel.add(btnAgregarCliemte, "cell 1 5,growx,aligny center");
-		
+
 		JButton btnNewButton = new JButton("Cerrar Sesi\u00F3n");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

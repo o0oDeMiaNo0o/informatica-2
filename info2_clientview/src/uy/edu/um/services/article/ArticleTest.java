@@ -2,8 +2,8 @@ package uy.edu.um.services.article;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import uy.edu.um.business.interfaces.ArticleRemoteMgt;
 
+import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 
 public class ArticleTest {
 	public static void main(String[] args) {
@@ -16,10 +16,7 @@ public class ArticleTest {
 
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry.lookup(sObjectService);
 
-			int id = 4; int precio = 10;
-			String nombre = "pizza";
 
-			oArticleRemoteMgt.showArticle(id, nombre, precio);
 
 		} catch (Exception e) {
 			System.err.println("error:");
