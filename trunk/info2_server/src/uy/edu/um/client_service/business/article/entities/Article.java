@@ -1,7 +1,5 @@
 package uy.edu.um.client_service.business.article.entities;
 
-import uy.edu.um.value_object.article.ArticleVO;
-
 public class Article {
 
 	private int id;
