@@ -1,5 +1,8 @@
 package uy.edu.um.services.article.managers;
 
+import java.rmi.RemoteException;
+
+import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.services.*;
@@ -27,8 +30,13 @@ public class ArticleMgr implements ArticleMgt{
 	@Override
 
 	public void sendArticleVO(ArticleVO article) {
-		ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
-
+		ArticleRemoteMgt aMgr = ServiceFacade.getInstance().getArticleRemoteMgt();
+		try {
+			aMgr.addArticle(article);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
