@@ -8,13 +8,13 @@ import java.sql.Statement;
 
 public class JDBC {
 
-	private static final String JDBC_DRIVER = "org.hsqldb.jdbc.JDBCDriver";
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
-	private static final String JDBC_USER = "SA";
+	private static final String JDBC_USER = "root";
 
 	private static final String JDBC_PASSWORD = "";
 
-	private static final String JDBC_URL = "jdbc:hsqldb:file:data/um-test";
+	private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/Info2";
 
 	private Connection connection  = null;
 
@@ -122,8 +122,39 @@ public class JDBC {
 	}
 
 	public static void main(String[] args) {
-
 		
+		JDBC db = new JDBC();
+		
+		try {
+			Statement oStatement = db.getConnection().createStatement();
+			//oStatement.execute("INSERT INTO ARTICLES VALUES(11,'burger',120)");
+			//oStatement.execute("INSERT INTO ARTICLES VALUES(12,'pancho',120)");
+			//oStatement.execute("INSERT INTO ARTICLES VALUES(13,'chivito',120)");
+			//oStatement.execute("INSERT INTO ARTICLES VALUES(14,'Receta de la casa',5000)");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
+
+			while (oResultSet.next()) {
+
+				int nId = oResultSet.getInt(1);
+				String sName = oResultSet.getString(2);
+				int nPrice = oResultSet.getInt(3);
+
+				System.out.println("Article. ID: " + nId + " Nombre: " + sName + " Precio: " + nPrice);
+
+			}
+
+			oResultSet.close();
+			oStatement.close();
+			db.closeConnection();
+
+			
+		}
+		
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 
 	}
