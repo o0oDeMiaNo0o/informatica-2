@@ -102,7 +102,7 @@ public class JDBC {
 				int nPrice = oResultSet.getInt(3);
 
 				System.out.println("Article. ID: " + nId + " Nombre: " + sName + " Precio: " + nPrice);
-
+				// Esto esta mal, hay que agregar prod.num
 			}
 
 			oResultSet.close();
