@@ -123,40 +123,40 @@ public class JDBC {
 
 	public static void main(String[] args) {
 		
-		JDBC db = new JDBC();
-		
-		try {
-			Statement oStatement = db.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES VALUES(123,1,'gjhgjh',120)");
-			oStatement.execute("INSERT INTO ARTICLES VALUES(12,2,'pancho',120)");
-			oStatement.execute("INSERT INTO ARTICLES VALUES(13,3,'chivito',120)");
-			oStatement.execute("INSERT INTO ARTICLES VALUES(14,4,'Receta de la casa',5000)");
-			
-			
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
-
-			while (oResultSet.next()) {
-
-				int nId = oResultSet.getInt(1);
-				int nProd = oResultSet.getInt(2);
-				String sName = oResultSet.getString(3);
-				int nPrice = oResultSet.getInt(4);
-
-				System.out.println("Article. ID: " + nId +" Product Nr: "+nProd+ " Nombre: " + sName + " Precio: " + nPrice);
-
-			}
-
-			oResultSet.close();
-			oStatement.close();
-			db.closeConnection();
-
-			
-		}
-		
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		JDBC db = new JDBC();
+//		
+//		try {
+//			Statement oStatement = db.getConnection().createStatement();
+//			oStatement.execute("INSERT INTO ARTICLES VALUES(123,1,'gjhgjh',120)");
+//			oStatement.execute("INSERT INTO ARTICLES VALUES(12,2,'pancho',120)");
+//			oStatement.execute("INSERT INTO ARTICLES VALUES(13,3,'chivito',120)");
+//			oStatement.execute("INSERT INTO ARTICLES VALUES(14,4,'Receta de la casa',5000)");
+//			
+//			
+//			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
+//
+//			while (oResultSet.next()) {
+//
+//				int nId = oResultSet.getInt(1);
+//				int nProd = oResultSet.getInt(2);
+//				String sName = oResultSet.getString(3);
+//				int nPrice = oResultSet.getInt(4);
+//
+//				System.out.println("Article. ID: " + nId +" Product Nr: "+nProd+ " Nombre: " + sName + " Precio: " + nPrice);
+//
+//			}
+//
+//			oResultSet.close();
+//			oStatement.close();
+//			db.closeConnection();
+//
+//			
+//		}
+//		
+//		catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 
 
