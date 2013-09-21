@@ -127,7 +127,7 @@ public class JDBC {
 		
 		try {
 			Statement oStatement = db.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES VALUES(121,'AAAAA',120)");
+			oStatement.execute("INSERT INTO ARTICLES VALUES(123,'gjhgjh',120)");
 			//oStatement.execute("INSERT INTO ARTICLES VALUES(12,'pancho',120)");
 			//oStatement.execute("INSERT INTO ARTICLES VALUES(13,'chivito',120)");
 			//oStatement.execute("INSERT INTO ARTICLES VALUES(14,'Receta de la casa',5000)");
