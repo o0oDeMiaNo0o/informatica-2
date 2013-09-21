@@ -2,23 +2,29 @@ package uy.edu.um.client_service.business.article.entities;
 
 public class Article {
 
-	private int id;
+	private int prodN;
 	private String nombre;
 	private int precio;
 
-	public Article(int id, String nombre, int precio) {
-		this.id = id;
+	public Article(int prodN, String nombre, int precio) {
+		this.prodN = prodN;
 		this.nombre=nombre;
 		this.precio=precio;
 	}
 
-	public int getId() {
-		return id;
+	
+
+	public int getProdN() {
+		return prodN;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+
+
+	public void setProdN(int prodN) {
+		this.prodN = prodN;
 	}
+
+
 
 	public String getNombre() {
 		return nombre;

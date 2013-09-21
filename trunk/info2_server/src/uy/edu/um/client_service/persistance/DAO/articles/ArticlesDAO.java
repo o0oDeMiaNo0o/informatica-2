@@ -14,8 +14,8 @@ public class ArticlesDAO {
 	JDBC database = new JDBC();
 
 	//constructor
-	private ArticlesDAO() {
-		// TODO Auto-generated constructor stub
+	public ArticlesDAO() {
+		
 	}
 
 	//obtener instancia
@@ -29,7 +29,7 @@ public class ArticlesDAO {
 	public void addArticle(Article articulo){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES VALUES("+articulo.getId()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+")");
+			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE) VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+");");
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
@@ -46,25 +46,30 @@ public class ArticlesDAO {
 	public void getArticles() {
 
 		try {
-
+			
 			Statement oStatement = database.getConnection().createStatement();
+
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
 
 			while (oResultSet.next()) {
 
 				int nId = oResultSet.getInt(1);
-				String sName = oResultSet.getString(2);
-				int nPrice = oResultSet.getInt(3);
+				int nProd = oResultSet.getInt(2);
+				String sName = oResultSet.getString(3);
+				int nPrice = oResultSet.getInt(4);
 
-				System.out.println("Article. ID: " + nId + " Nombre: " + sName + " Precio: " + nPrice);
-				database.closeConnection();
+				System.out.println("Article. ID: " + nId +" Product Nr: "+nProd+ " Nombre: " + sName + " Precio: " + nPrice);
+
 			}
 
 			oResultSet.close();
 			oStatement.close();
+			database.closeConnection();
 
-		} catch (SQLException e) {
+			
+		}
+			 catch (SQLException e) {
 			database.closeConnection();
 			throw new RuntimeException(e);
 
