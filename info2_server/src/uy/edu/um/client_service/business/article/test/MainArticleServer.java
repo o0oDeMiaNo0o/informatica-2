@@ -6,9 +6,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
-import uy.edu.um.client_service.business.article.managers.ArticleMgr;
-import uy.edu.um.client_service.service.articleRemote.manager.ArticleRemoteMgr;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 
 public class MainArticleServer {

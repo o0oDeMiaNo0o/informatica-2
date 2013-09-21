@@ -33,7 +33,7 @@ public class ArticlesDAO {
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
-			System.out.println("articulo agregado correctamente");
+			//System.out.println("articulo agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
