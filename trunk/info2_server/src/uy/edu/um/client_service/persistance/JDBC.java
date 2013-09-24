@@ -65,26 +65,6 @@ public class JDBC {
 
 	}
 
-	public void createDatabase(){
-
-		try {
-		Statement oStatement = getConnection().createStatement();
-
-		oStatement.execute("DROP TABLE ARTICLES");
-
-		oStatement.execute("CREATE TABLE ARTICLES (ID INTEGER, NOMBRE VARCHAR(40), PRECIO INTEGER)");
-
-		oStatement.close();
-
-
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-	}
 
 
 	public void getArticles() {
