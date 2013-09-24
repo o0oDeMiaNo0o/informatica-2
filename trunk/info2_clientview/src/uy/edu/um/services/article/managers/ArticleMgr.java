@@ -1,22 +1,26 @@
 package uy.edu.um.services.article.managers;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.services.*;
 
-public class ArticleMgr implements ArticleMgt{
-	//respeta patron singleton
+public class ArticleMgr implements ArticleMgt {
+	// respeta patron singleton
 	private static ArticleMgr instance = new ArticleMgr();
-	//constructor privado para que lo inicialize esta clase
-	private ArticleMgr(){
+
+	// constructor privado para que lo inicialize esta clase
+	private ArticleMgr() {
 
 	}
+
 	//
-	public static ArticleMgr getInstance(){
-		if (instance == null){
+	public static ArticleMgr getInstance() {
+		if (instance == null) {
 			instance = new ArticleMgr();
 		}
 		return instance;
@@ -24,13 +28,14 @@ public class ArticleMgr implements ArticleMgt{
 
 	@Override
 	public ArticleVO createArticleVO(String nombre, int precio) {
-		ArticleVO aReturn = new ArticleVO(nombre,precio);
+		ArticleVO aReturn = new ArticleVO(nombre, precio);
 		return aReturn;
 	}
-	@Override
 
+	@Override
 	public void sendArticleVO(ArticleVO article) {
-		ArticleRemoteMgt aMgr = ServiceFacade.getInstance().getArticleRemoteMgt();
+		ArticleRemoteMgt aMgr = ServiceFacade.getInstance()
+				.getArticleRemoteMgt();
 		try {
 			aMgr.addArticle(article);
 		} catch (RemoteException e) {
@@ -39,5 +44,30 @@ public class ArticleMgr implements ArticleMgt{
 		}
 	}
 
+	@Override
+	public void setCliente(ArticleVO a) {
+		try {
 
+			String sObjectService = "ArticleRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+
+			ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
+
+
+			oArticleRemoteMgt.addArticle(a);
+
+			System.out.println("articulo agregado");
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+	}
 }
