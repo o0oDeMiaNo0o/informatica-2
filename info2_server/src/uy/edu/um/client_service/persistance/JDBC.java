@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBC {
+	 
+	private static JDBC instance = null;
 
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
@@ -17,6 +19,19 @@ public class JDBC {
 	private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/Info2";
 
 	private Connection connection  = null;
+	
+	private JDBC(){
+		
+	}
+	
+	public static JDBC getInstance(){
+		
+		if(instance==null){
+			instance = new JDBC();
+		}
+		
+		return instance;
+	}
 
 	public Connection getConnection() {
 		if (connection == null) {
@@ -63,42 +78,6 @@ public class JDBC {
 
 		}
 
-	}
-
-
-
-	public void getArticles() {
-
-		try {
-
-			Statement oStatement = getConnection().createStatement();
-
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
-
-			while (oResultSet.next()) {
-
-				int nId = oResultSet.getInt(1);
-				String sName = oResultSet.getString(2);
-				int nPrice = oResultSet.getInt(3);
-
-				System.out.println("Article. ID: " + nId + " Nombre: " + sName + " Precio: " + nPrice);
-				// Esto esta mal, hay que agregar prod.num
-			}
-
-			oResultSet.close();
-			oStatement.close();
-
-		} catch (SQLException e) {
-
-			throw new RuntimeException(e);
-		}
-
-	}
-
-
-
-	public JDBC() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
