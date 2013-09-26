@@ -11,7 +11,7 @@ public class ArticlesDAO {
 
 	private static ArticlesDAO instance = new ArticlesDAO();
 
-	JDBC database = new JDBC();
+	JDBC database = JDBC.getInstance();
 
 	//constructor
 	public ArticlesDAO() {
