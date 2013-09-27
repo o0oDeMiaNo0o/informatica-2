@@ -12,7 +12,7 @@ public class Article {
 		this.precio=precio;
 	}
 
-	
+
 
 	public int getProdN() {
 		return prodN;

@@ -12,4 +12,6 @@ public interface ArticleMgt {
 	public void removeArticle(Article a);
 
 	public Article getArticle(ArticleVO a);
+
+	public void getArticles();
 }

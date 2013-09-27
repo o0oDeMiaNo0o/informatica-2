@@ -2,6 +2,7 @@ package uy.edu.um.client_service.business.categories.managers;
 
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
+import uy.edu.um.client_service.persistance.DAO.category.CategoryDAO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryMgr implements CategoryMgt{
@@ -20,9 +21,9 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public void addCategory(CategoryVO c) {
-		// TODO Auto-generated method stub
-
+	public void addCategory(Category c) {
+		CategoryDAO dao = CategoryDAO.getInstance();
+		dao.addCategory(c);
 	}
 
 	@Override
@@ -32,7 +33,5 @@ public class CategoryMgr implements CategoryMgt{
 		int precio = c.getPrecio();
 		Category category = new Category(id,nombre,precio);
 		return category;
-
-
 	}
 }
