@@ -5,10 +5,11 @@ import java.io.Serializable;
 public class ArticleVO implements Serializable{
 
 	private String nombre;
-	private int precio;
+	private int precio, numProducto;
 
-	public ArticleVO(String nombre, int precio) {
+	public ArticleVO(int numProducto, String nombre, int precio) {
 		this.nombre=nombre;
+		this.numProducto = numProducto;
 		this.precio=precio;
 	}
 
@@ -26,6 +27,14 @@ public class ArticleVO implements Serializable{
 
 	public void setPrecio(int precio) {
 		this.precio = precio;
+	}
+
+	public int getNumProducto() {
+		return numProducto;
+	}
+
+	public void setNumProducto(int numProducto) {
+		this.numProducto = numProducto;
 	}
 
 
