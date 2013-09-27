@@ -7,7 +7,7 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticleMgr implements ArticleMgt{
 
-	private static ArticleMgr instance = new ArticleMgr();
+	private static ArticleMgr instance = null;
 
 	//constructor privado
 	private ArticleMgr(){
@@ -49,6 +49,12 @@ public class ArticleMgr implements ArticleMgt{
 		int precio = a.getPrecio();
 		Article aReturn = new Article(id,nombre, precio);
 		return aReturn;
+	}
+
+	@Override
+	public void getArticles() {
+		ArticlesDAO dao = ArticlesDAO.getInstance();
+		dao.getArticles();
 	}
 
 

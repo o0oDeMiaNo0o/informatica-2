@@ -1,11 +1,15 @@
 package uy.edu.um.client_service.business;
 
-import uy.edu.um.client_service.service.articleRemote.manager.*;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.article.managers.ArticleMgr;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.business.categories.managers.CategoryMgr;
+import uy.edu.um.client_service.business.clients.interfaces.ClientMgt;
+import uy.edu.um.client_service.business.clients.managers.ClientMgr;
+import uy.edu.um.client_service.service.articleRemote.manager.ArticleRemoteMgr;
+import uy.edu.um.client_service.service.categoriesRemote.manager.CategoryRemoteMgr;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 
 
 /**
@@ -19,7 +23,7 @@ import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 
 
 public class BusinessFacade {
-	private static BusinessFacade instance = new BusinessFacade();
+	private static BusinessFacade instance = null;
 
 	private BusinessFacade(){};
 
@@ -30,10 +34,6 @@ public class BusinessFacade {
 		return instance;
 	}
 
-//	public ArticleMgt getArticleMgt2(){
-//		return ArticleMgr.getInstance();
-//	}
-
 	public ArticleMgt getArticleMgt(){
 		return ArticleMgr.getInstance();
 	}
@@ -42,7 +42,15 @@ public class BusinessFacade {
 		return CategoryMgr.getInstance();
 	}
 
+	public ClientMgt getClientMgt(){
+		return ClientMgr.getInstance();
+	}
+
 	public ArticleRemoteMgt getArticleRemote(){
 		return ArticleRemoteMgr.getInstance();
+	}
+
+	public CategoryRemoteMgt getCategoryRemote(){
+		return CategoryRemoteMgr.getInstance();
 	}
 }

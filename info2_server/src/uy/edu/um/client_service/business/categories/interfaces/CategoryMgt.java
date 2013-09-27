@@ -5,8 +5,8 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public interface CategoryMgt {
 
-	public void addCategory(CategoryVO c);
-
 	public Category createCategory(CategoryVO c);
+
+	public void addCategory(Category c);
 
 }
