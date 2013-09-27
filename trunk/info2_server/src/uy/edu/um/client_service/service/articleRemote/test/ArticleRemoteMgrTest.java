@@ -9,11 +9,11 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticleRemoteMgrTest {
 	public static void main(String[] args) throws RemoteException{
-		JDBC db = new JDBC();
-		db.createDatabase();
+//		JDBC db = new JDBC();
+//		db.createDatabase();
 		String nombre = "pizza";
 		int precio = 34;
-		ArticleVO toAdd = new ArticleVO(nombre,precio);
+		ArticleVO toAdd = new ArticleVO(12,nombre,precio);
 		ArticleRemoteMgt aMgr = BusinessFacade.getInstance().getArticleRemote();
 		aMgr.addArticle(toAdd);
 	}

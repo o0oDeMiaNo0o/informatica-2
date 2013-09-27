@@ -13,7 +13,7 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticleRemoteMgr implements ArticleRemoteMgt{
 
-	private static ArticleRemoteMgr instance = new ArticleRemoteMgr();
+	private static ArticleRemoteMgr instance = null;
 
 	private ArticleRemoteMgr(){};
 
@@ -32,25 +32,6 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 		aMgr.addArticle(article);
 	}
 
-	public static void setServerConnection(){
-		try {
-			String name = "ArticleRemoteMgr";
-
-			ArticleRemoteMgr oArticleRemoteMgr = new ArticleRemoteMgr();
-
-			ArticleRemoteMgt oStub = (ArticleRemoteMgt) UnicastRemoteObject
-					.exportObject(oArticleRemoteMgr, 0);
-
-			Registry oRegistry = LocateRegistry.createRegistry(1099);
-
-			oRegistry.rebind(name, oStub);
-
-			System.out.println("Ready and waiting");
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-		}
-	}
 }
 
 
