@@ -57,5 +57,11 @@ public class ArticleMgr implements ArticleMgt{
 		dao.getArticles();
 	}
 
+	@Override
+	public ArticleVO consultArticle(int numProducto) {
+		ArticlesDAO dao = ArticlesDAO.getInstance();
+		return null;
+	}
+
 
 }
