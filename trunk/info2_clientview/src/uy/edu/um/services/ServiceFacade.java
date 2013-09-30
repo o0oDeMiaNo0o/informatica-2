@@ -22,6 +22,8 @@ public class ServiceFacade {
 		return instance;
 	}
 
+
+
 	public ArticleMgt getArticleMgt(){
 		return ArticleMgr.getInstance();
 	}
