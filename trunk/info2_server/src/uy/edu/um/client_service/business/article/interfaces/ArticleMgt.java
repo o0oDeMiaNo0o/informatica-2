@@ -14,4 +14,6 @@ public interface ArticleMgt {
 	public Article getArticle(ArticleVO a);
 
 	public void getArticles();
+
+	public ArticleVO consultArticle(int numProducto);
 }
