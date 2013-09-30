@@ -1,13 +1,18 @@
 package uy.edu.um.client_service.business.users.entities;
 
 public class User {
-	
-	
+
+
 	private String Username;
 	private String Password;
 	boolean admin = false;
-	
-	
+
+	public User(String Username, String password, boolean admin){
+		this.Username = Username;
+		this.Password = password;
+		this.admin = admin;
+	}
+
 	public String getUsername() {
 		return Username;
 	}
@@ -26,7 +31,7 @@ public class User {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
-	
-	
+
+
 
 }
