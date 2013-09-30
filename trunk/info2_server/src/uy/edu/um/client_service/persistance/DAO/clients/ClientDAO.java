@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.persistance.DAO.clients;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -38,6 +39,44 @@ public class ClientDAO {
 
 
 	}
+	
+	public void getClients() {
+
+		try {
+
+			Statement oStatement = database.getConnection().createStatement();
+
+
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM CLIENTES");
+
+			while (oResultSet.next()) {
+
+				int nId = oResultSet.getInt(1);
+				String sName = oResultSet.getString(2);
+				String sApellido = oResultSet.getString(3);
+				String sMail = oResultSet.getString(4);
+				String sDir = oResultSet.getString(5);
+				int ntel = oResultSet.getInt(6);
+				
+				System.out.println("Cient. Ci: " + nId +" Nombre: "+sName+ " " + sApellido + ". Mail: " + sMail+" Direccion: "+sDir+". Telefono:"+ntel);
+
+			}
+
+			oResultSet.close();
+			oStatement.close();
+			database.closeConnection();
+
+
+		}
+			 catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
+
+		}
+
+
+
+}
 	
 	
 	
