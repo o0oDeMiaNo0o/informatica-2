@@ -27,13 +27,13 @@ public class ArticlesDAO {
 		}
 		return instance;
 	}
-	
+
 	public ArticleVO searchArticle(int prodnum){
 		ArticleVO result = null;
 		try {
 			Statement oStatement = database.getConnection().createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT (ID,PROD_N,NAME,PRICE) FROM ARTICLES WHERE PROD_N = '"+prodnum+"'");
-		
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES WHERE PROD_N = '"+prodnum+"'");
+
 
 				int nId = oResultSet.getInt(1);
 				int nProd = oResultSet.getInt(2);
@@ -41,14 +41,14 @@ public class ArticlesDAO {
 				int nPrice = oResultSet.getInt(4);
 				result = new ArticleVO(nProd,sName,nPrice);
 
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
 
-		
+
 	}
 
 	public void addArticle(Article articulo){

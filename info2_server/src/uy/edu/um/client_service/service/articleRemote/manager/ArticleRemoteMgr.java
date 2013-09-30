@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
@@ -37,6 +38,18 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 		ArticleMgt oMgt = BusinessFacade.getInstance().getArticleMgt();
 		ArticleVO toReturn = oMgt.consultArticle(numProducto);
 		return toReturn;
+	}
+
+	@Override
+	public void removeArticle(ArticleVO a) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<ArticleVO> getArticlesVO() throws RemoteException {
+		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
+		return aMgt.allArticles();
 	}
 
 }

@@ -15,6 +15,6 @@ public class ArticleRemoteMgrTest {
 		int precio = 34;
 		ArticleVO toAdd = new ArticleVO(12,nombre,precio);
 		ArticleRemoteMgt aMgr = BusinessFacade.getInstance().getArticleRemote();
-		aMgr.addArticle(toAdd);
+
 	}
 }
