@@ -13,6 +13,10 @@ public interface ClientMgt {
 
 	public Client getClient(ClientVO c);
 
-	public void getClient();
+	public void consultClient(int ci);
+
+	public void getClients();
+
+
 
 }

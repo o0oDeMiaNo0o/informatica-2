@@ -12,9 +12,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 	private static ClientRemoteMgr instance = null;
 
-	private ClientRemoteMgr(){
-
-	}
+	private ClientRemoteMgr(){}
 
 	public static ClientRemoteMgr getInstance(){
 		if (instance == null){
@@ -22,6 +20,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 		}
 		return instance;
 	}
+
 
 	@Override
 	public void addClient(ClientVO c) throws RemoteException {
@@ -35,6 +34,8 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 	@Override
 	public void removeClient(ClientVO c) throws RemoteException {

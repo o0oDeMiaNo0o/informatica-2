@@ -8,7 +8,7 @@ import uy.edu.um.client_service.business.clients.entities.Client;
 import uy.edu.um.client_service.persistance.JDBC;
 
 public class ClientDAO {
-	
+
 	private JDBC database = JDBC.getInstance();
 
 	private static ClientDAO instance = null;
@@ -21,7 +21,7 @@ public class ClientDAO {
 		}
 		return instance;
 	}
-	
+
 	public void addClient(Client cliente){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
@@ -36,10 +36,8 @@ public class ClientDAO {
 			e.printStackTrace();
 			database.closeConnection();
 		}
-
-
 	}
-	
+
 	public void getClients() {
 
 		try {
@@ -57,7 +55,7 @@ public class ClientDAO {
 				String sMail = oResultSet.getString(4);
 				String sDir = oResultSet.getString(5);
 				int ntel = oResultSet.getInt(6);
-				
+
 				System.out.println("Cient. Ci: " + nId +" Nombre: "+sName+ " " + sApellido + ". Mail: " + sMail+" Direccion: "+sDir+". Telefono:"+ntel);
 
 			}
@@ -77,8 +75,8 @@ public class ClientDAO {
 
 
 }
-	
-	
-	
-	
+
+
+
+
 }
