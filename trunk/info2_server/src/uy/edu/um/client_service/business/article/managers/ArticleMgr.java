@@ -1,5 +1,7 @@
 package uy.edu.um.client_service.business.article.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
@@ -60,7 +62,13 @@ public class ArticleMgr implements ArticleMgt{
 	@Override
 	public ArticleVO consultArticle(int numProducto) {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
-		return null;
+		return dao.searchArticle(numProducto);
+	}
+
+	@Override
+	public ArrayList<ArticleVO> allArticles() {
+		ArticlesDAO dao = ArticlesDAO.getInstance();
+		return dao.getArticlesVO();
 	}
 
 
