@@ -19,12 +19,14 @@ public class ArticleTest {
 
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry.lookup(sObjectService);
 
-			String nombre = "pizza";
+
+			int prodN = 105;
+			String nombre = " daniel";
 			int precio = 45;
 
 			ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
 
-			ArticleVO toSend = aMgt.createArticleVO(nombre, precio);
+			ArticleVO toSend = aMgt.createArticleVO(prodN, nombre, precio);
 
 			oArticleRemoteMgt.addArticle(toSend);
 
@@ -34,6 +36,5 @@ public class ArticleTest {
 			System.err.println("error:");
 			e.printStackTrace();
 		}
-
 	}
 }

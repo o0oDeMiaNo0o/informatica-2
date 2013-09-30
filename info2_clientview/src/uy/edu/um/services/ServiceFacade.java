@@ -1,8 +1,11 @@
 package uy.edu.um.services;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.interfaces.clients.ClientRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.article.managers.ArticleMgr;
+import uy.edu.um.services.clients.interfaces.ClientMgt;
+import uy.edu.um.services.clients.managers.ClientMgr;
 
 public class ServiceFacade {
 	//instancia para implementar la instancia de Singleton
@@ -25,6 +28,13 @@ public class ServiceFacade {
 
 	public ArticleRemoteMgt getArticleRemoteMgt(){
 		return null;
+	}
 
+	public ClientRemoteMgt getClientRemoteMgt(){
+		return null;
+	}
+
+	public ClientMgt getClientMgt(){
+		return ClientMgr.getInstance();
 	}
 }
