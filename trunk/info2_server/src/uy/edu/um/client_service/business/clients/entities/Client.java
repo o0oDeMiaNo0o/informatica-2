@@ -4,7 +4,14 @@ public class Client {
 	//atributos
 	private String nombre, apellido, direccion, mail;
 	private int tel, ci;
+	
+	
+	
+	
 	//getters y setter
+	
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
