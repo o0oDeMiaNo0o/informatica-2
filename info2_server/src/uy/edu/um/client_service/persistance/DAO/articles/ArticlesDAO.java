@@ -3,9 +3,11 @@ package uy.edu.um.client_service.persistance.DAO.articles;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.value_object.article.ArticleVO;
 
 public class ArticlesDAO {
 
@@ -44,6 +46,42 @@ public class ArticlesDAO {
 
 	}
 
+	public ArrayList<ArticleVO> getArticlesVO() {
+
+		try {
+
+			ArrayList<ArticleVO> toReturn = null;
+
+			Statement oStatement = database.getConnection().createStatement();
+
+
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
+
+			while (oResultSet.next()) {
+
+				//int nId = oResultSet.getInt(1);
+				int nProd = oResultSet.getInt(2);
+				String sName = oResultSet.getString(3);
+				int nPrice = oResultSet.getInt(4);
+				ArticleVO a = new ArticleVO(nProd,sName,nPrice);
+				toReturn.add(a);
+			}
+
+			oResultSet.close();
+			oStatement.close();
+			database.closeConnection();
+			return toReturn;
+		}
+			 catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
+
+
+		}
+
+	}
+
+
 	public void getArticles() {
 
 		try {
@@ -74,9 +112,7 @@ public class ArticlesDAO {
 			database.closeConnection();
 			throw new RuntimeException(e);
 
+
 		}
-
-
-
-}
+	}
 }
