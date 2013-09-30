@@ -27,8 +27,8 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArticleVO createArticleVO(String nombre, int precio) {
-		ArticleVO aReturn = new ArticleVO(nombre, precio);
+	public ArticleVO createArticleVO(int prodN, String nombre, int precio) {
+		ArticleVO aReturn = new ArticleVO(prodN, nombre, precio);
 		return aReturn;
 	}
 
@@ -38,12 +38,12 @@ public class ArticleMgr implements ArticleMgt {
 				.getArticleRemoteMgt();
 		try {
 			aMgr.addArticle(article);
+			System.out.println("articulo agregado correctamente");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 	@Override
 	public void setCliente(ArticleVO a) {
 		try {
@@ -69,5 +69,10 @@ public class ArticleMgr implements ArticleMgt {
 
 		}
 
+	}
+
+	@Override
+	public ArticleVO searchArticle(int numProducto) {
+		return null;
 	}
 }
