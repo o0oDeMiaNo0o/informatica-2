@@ -32,6 +32,13 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 		aMgr.addArticle(article);
 	}
 
+	@Override
+	public ArticleVO searchArticle(int numProducto) throws RemoteException {
+		ArticleMgt oMgt = BusinessFacade.getInstance().getArticleMgt();
+		ArticleVO toReturn = oMgt.consultArticle(numProducto);
+		return toReturn;
+	}
+
 }
 
 

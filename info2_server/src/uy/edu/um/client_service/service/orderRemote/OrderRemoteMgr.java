@@ -25,6 +25,8 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	@Override
 	public void addOrder(OrderVO order) throws RemoteException {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order toAdd = oMgt.getOrder(order);
+		oMgt.addOrder(toAdd);
 	}
 
 	@Override
