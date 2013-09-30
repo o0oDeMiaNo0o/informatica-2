@@ -9,4 +9,6 @@ public interface ArticleRemoteMgt extends Remote{
 
 	public void addArticle(ArticleVO a) throws RemoteException;
 
+	public ArticleVO searchArticle(int numProducto) throws RemoteException;
+
 }
