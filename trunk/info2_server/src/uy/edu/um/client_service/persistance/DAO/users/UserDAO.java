@@ -10,8 +10,17 @@ public class UserDAO {
 
 	private static UserDAO instance = null;
 	private JDBC database = JDBC.getInstance();
-	
-	
+
+	private UserDAO(){}
+
+	public static UserDAO getInstance(){
+		if(instance == null){
+			instance = new UserDAO();
+		}
+		return instance;
+	}
+
+
 		public void addUser(User usuario){
 			try{
 				int adm = 0;
@@ -33,9 +42,9 @@ public class UserDAO {
 
 
 		}
-		
+
 
 	}
-	
+
 
 

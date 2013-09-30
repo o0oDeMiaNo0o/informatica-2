@@ -8,14 +8,18 @@ import uy.edu.um.client_service.business.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.business.clients.managers.ClientMgr;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.order.managers.OrderMgr;
+import uy.edu.um.client_service.business.users.interfaces.UserMgt;
+import uy.edu.um.client_service.business.users.managers.UserMgr;
 import uy.edu.um.client_service.service.articleRemote.manager.ArticleRemoteMgr;
 import uy.edu.um.client_service.service.categoriesRemote.manager.CategoryRemoteMgr;
+import uy.edu.um.client_service.service.clientRemote.manager.ClientRemoteMgr;
+import uy.edu.um.client_service.service.orderRemote.OrderRemoteMgr;
+import uy.edu.um.client_service.service.userRemote.manager.UserRemoteMgr;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.interfaces.clients.ClientRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
-import uy.edu.um.client_service.service.clientRemote.manager.*;
-import uy.edu.um.client_service.service.orderRemote.OrderRemoteMgr;
+import uy.edu.um.interfaces.user.UserRemoteMgt;
 
 /**
  *
@@ -70,4 +74,13 @@ public class BusinessFacade {
 	public OrderRemoteMgt getOrderRemote(){
 		return OrderRemoteMgr.getInstance();
 	}
+
+	public UserRemoteMgt getUserRemote(){
+		return UserRemoteMgr.getInstance();
+	}
+
+	public UserMgt getUserMgt(){
+		return UserMgr.getInstance();
+	}
+
 }
