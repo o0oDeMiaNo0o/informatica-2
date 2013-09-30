@@ -15,4 +15,6 @@ public interface ClientRemoteMgt extends Remote{
 
 	public void editClient(ClientVO c) throws RemoteException;
 
+
+
 }
