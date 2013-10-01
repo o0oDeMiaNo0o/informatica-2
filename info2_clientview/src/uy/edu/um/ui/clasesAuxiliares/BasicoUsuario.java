@@ -1,21 +1,21 @@
-package uy.edu.um.ui.ClasesAuxiliares;
+package uy.edu.um.ui.clasesAuxiliares;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Frame;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
-
-import java.awt.Color;
+import javax.swing.JMenuItem;
+import javax.swing.border.EmptyBorder;
 
 public class BasicoUsuario extends JFrame {
 
-	private ImagePanel contentPane;
-	private String DirFondo = "/Users/facundoliston/Documents/FACULTAD/UM/Informatica2/info2_clientview/src/uy/edu/um/imagenes/Fondo2.jpg";
+	public ImagePanel contentPane;
+	public String DirFondo = "/Users/facundoliston/Documents/FACULTAD/UM/Informatica2/info2_clientview/src/uy/edu/um/imagenes/Fondo2.jpg";
+	
 	
 	/**
 	 * Launch the application.
@@ -39,6 +39,8 @@ public class BasicoUsuario extends JFrame {
 	public BasicoUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
+		
 		contentPane = new ImagePanel(DirFondo);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -54,14 +56,14 @@ public class BasicoUsuario extends JFrame {
 				menuUsuario.setBackground(Color.DARK_GRAY);
 				menuBar.add(menuUsuario);
 				
-				JMenuItem menuItem_4 = new JMenuItem("Agregar Usuarios");
-				menuUsuario.add(menuItem_4);
+				JMenuItem mntmAgregarNuevo = new JMenuItem("Agregar Nuevo");
+				menuUsuario.add(mntmAgregarNuevo);
 				
-				JMenuItem menuItem_5 = new JMenuItem("Ver Lista Usuarios");
-				menuUsuario.add(menuItem_5);
+				JMenuItem mntmVerLista = new JMenuItem("Ver Lista");
+				menuUsuario.add(mntmVerLista);
 				
-				JMenuItem menuItem_6 = new JMenuItem("Eliminar Usuarios");
-				menuUsuario.add(menuItem_6);
+				JMenuItem mntmEliminar = new JMenuItem("Eliminar");
+				menuUsuario.add(mntmEliminar);
 				
 				JMenuItem menuItem_7 = new JMenuItem("Salir");
 				menuItem_7.setForeground(Color.BLACK);
@@ -98,11 +100,25 @@ public class BasicoUsuario extends JFrame {
 				menuCocina.setBackground(Color.DARK_GRAY);
 				menuBar.add(menuCocina);
 				
-				JMenuItem mntmVerCocina = new JMenuItem("Ver Cocina");
+				JMenuItem mntmVerCocina = new JMenuItem("Ver");
 				menuCocina.add(mntmVerCocina);
 				
 				JMenuItem mntmEnviarMensaje = new JMenuItem("Enviar Mensaje");
 				menuCocina.add(mntmEnviarMensaje);
+				
+				JMenu mnClientes = new JMenu("Clientes");
+				mnClientes.setBackground(Color.DARK_GRAY);
+				menuBar.add(mnClientes);
+				
+				JMenuItem mntmAgregarCliente = new JMenuItem("Agregar Nuevo");
+				mnClientes.add(mntmAgregarCliente);
+				
+				JMenuItem mntmListadoClientes = new JMenuItem("Ver Lista");
+				mnClientes.add(mntmListadoClientes);
+				
+				JMenuItem mntmEliminarCliente = new JMenuItem("Eliminar");
+				mntmEliminarCliente.setBackground(Color.WHITE);
+				mnClientes.add(mntmEliminarCliente);
 	}
 
 }

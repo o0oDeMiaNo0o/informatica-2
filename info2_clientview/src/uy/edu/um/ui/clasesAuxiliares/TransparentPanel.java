@@ -1,6 +1,4 @@
-package uy.edu.um.ui.ClasesAuxiliares;
-
-import java.awt.Graphics;
+package uy.edu.um.ui.clasesAuxiliares;
 
 import javax.swing.JPanel;
 

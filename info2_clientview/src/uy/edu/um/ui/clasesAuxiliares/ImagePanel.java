@@ -1,4 +1,4 @@
-package uy.edu.um.ui.ClasesAuxiliares;
+package uy.edu.um.ui.clasesAuxiliares;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
