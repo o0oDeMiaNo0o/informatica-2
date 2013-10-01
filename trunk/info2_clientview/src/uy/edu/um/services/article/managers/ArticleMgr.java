@@ -91,9 +91,6 @@ public class ArticleMgr implements ArticleMgt {
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
 
-
-			//ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
-
 			array = oArticleRemoteMgt.getArticlesVO();
 
 
