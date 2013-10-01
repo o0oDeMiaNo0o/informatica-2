@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `pedido`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pedido` (
   `idpedido` int(11) NOT NULL AUTO_INCREMENT,
-  `HoraPedido` datetime DEFAULT NULL,
+  `HoraPedido` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `idCliente` int(11) DEFAULT NULL,
   PRIMARY KEY (`idpedido`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
