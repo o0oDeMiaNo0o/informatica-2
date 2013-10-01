@@ -1,7 +1,9 @@
 package uy.edu.um.value_object.user;
 
+import java.io.Serializable;
 
-public class UserVO{
+
+public class UserVO implements Serializable{
 
 	String user, password;
 	boolean isAdmin;
