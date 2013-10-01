@@ -1,11 +1,16 @@
 package uy.edu.um.services;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.interfaces.clients.ClientRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.article.managers.ArticleMgr;
-import uy.edu.um.services.clients.interfaces.ClientMgt;
-import uy.edu.um.services.clients.managers.ClientMgr;
+import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.categories.managers.CategoryMgr;
+import uy.edu.um.services.people.clients.interfaces.ClientMgt;
+import uy.edu.um.services.people.clients.managers.ClientMgr;
+import uy.edu.um.services.people.waiters.interfaces.WaiterMgt;
+import uy.edu.um.services.people.waiters.managers.WaiterMgr;
+import uy.edu.um.services.user.interfaces.UserMgt;
+import uy.edu.um.services.user.managers.UserMgr;
 
 public class ServiceFacade {
 	//instancia para implementar la instancia de Singleton
@@ -28,15 +33,23 @@ public class ServiceFacade {
 		return ArticleMgr.getInstance();
 	}
 
-	public ArticleRemoteMgt getArticleRemoteMgt(){
-		return null;
-	}
-
-	public ClientRemoteMgt getClientRemoteMgt(){
-		return null;
-	}
-
 	public ClientMgt getClientMgt(){
 		return ClientMgr.getInstance();
+	}
+
+	public UserMgt getUserMgt(){
+		return UserMgr.getInstance();
+	}
+
+	public WaiterMgt getWaiterMgt(){
+		return WaiterMgr.getInstance();
+	}
+
+	public CategoryMgt getCategoryMgt(){
+		return CategoryMgr.getInstance();
+	}
+
+	public ArticleRemoteMgt getArticleRemoteMgt(){
+		return null;
 	}
 }

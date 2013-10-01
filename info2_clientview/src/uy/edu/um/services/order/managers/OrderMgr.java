@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.client.ClientVO;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public class OrderMgr implements OrderMgt{
 
