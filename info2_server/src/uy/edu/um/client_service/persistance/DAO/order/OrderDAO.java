@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
 
 public class OrderDAO {
 	
@@ -41,7 +40,7 @@ public class OrderDAO {
 		
 			
 			for(int i =0;i<articles.size();i++){
-				oStatement.execute("INSERT INTO `Pedido/Producto` (idPedido, idArticle, Nombre) VALUES ("+nroPedido+","+articles.get(i).getProdN()+","+articles.get(i).getNombre()+");");
+				oStatement.execute("INSERT INTO `Pedido/Producto` (idPedido, idArticle, Nombre) VALUES ("+nroPedido+","+articles.get(i).getProdN()+",'"+articles.get(i).getNombre()+"');");
 			}
 			
 			oStatement.close();
