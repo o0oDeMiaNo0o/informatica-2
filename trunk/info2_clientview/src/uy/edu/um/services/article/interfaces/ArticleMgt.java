@@ -1,5 +1,7 @@
 package uy.edu.um.services.article.interfaces;
 
+import java.util.ArrayList;
+
 import uy.edu.um.value_object.article.ArticleVO;
 
 public interface ArticleMgt {
@@ -11,4 +13,6 @@ public interface ArticleMgt {
 	public void setCliente(ArticleVO a);
 
 	public ArticleVO searchArticle(int numProducto);
+
+	public ArrayList<ArticleVO> allArticles();
 }

@@ -5,6 +5,17 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryMgr implements CategoryMgt{
 
+	private static CategoryMgr instance = null;
+
+	private CategoryMgr(){}
+
+	public static CategoryMgr getInstance(){
+		if(instance == null){
+			instance = new CategoryMgr();
+		}
+		return instance;
+	}
+
 	@Override
 	public CategoryVO createArticleVO(int numProducto, String nombre, int precio) {
 		CategoryVO toReturn = new CategoryVO(numProducto,nombre,precio);

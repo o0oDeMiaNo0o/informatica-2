@@ -3,11 +3,12 @@ package uy.edu.um.services.article.managers;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.services.*;
 
 public class ArticleMgr implements ArticleMgt {
 	// respeta patron singleton
@@ -74,5 +75,34 @@ public class ArticleMgr implements ArticleMgt {
 	@Override
 	public ArticleVO searchArticle(int numProducto) {
 		return null;
+	}
+
+	@Override
+	public ArrayList<ArticleVO> allArticles() {
+
+		ArrayList<ArticleVO> array = new ArrayList<ArticleVO>(10);
+
+		try {
+
+			String sObjectService = "ArticleRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+			.lookup(sObjectService);
+
+
+			//ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
+
+			array = oArticleRemoteMgt.getArticlesVO();
+
+
+		}catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+		return array;
 	}
 }
