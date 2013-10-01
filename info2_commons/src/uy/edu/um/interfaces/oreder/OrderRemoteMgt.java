@@ -3,8 +3,8 @@ package uy.edu.um.interfaces.oreder;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import uy.edu.um.value_object.client.ClientVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public interface OrderRemoteMgt extends Remote{
 
