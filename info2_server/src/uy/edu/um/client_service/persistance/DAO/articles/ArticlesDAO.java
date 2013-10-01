@@ -74,6 +74,7 @@ public class ArticlesDAO {
 
 	}
 
+	@SuppressWarnings("null")
 	public ArrayList<ArticleVO> getArticlesVO() {
 
 		try {
