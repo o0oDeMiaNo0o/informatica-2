@@ -8,12 +8,23 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
 
 public class OrderDAO {
 	
 	private static OrderDAO instance = null;
 	private JDBC database = JDBC.getInstance();
 	
+	public static OrderDAO getInstance(){
+		if (instance == null){
+			instance = new OrderDAO();
+		}
+		return instance;
+	}
+	
+	public OrderDAO(){
+		
+	}
 	
 	public void addOrder(Order orden){
 		try{
@@ -45,6 +56,8 @@ public class OrderDAO {
 
 
 	}
+	
+	
 	
 	
 
