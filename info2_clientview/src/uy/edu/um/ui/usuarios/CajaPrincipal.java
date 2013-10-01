@@ -241,25 +241,34 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
 		
 		JLabel lblTotal = new JLabel("Nro Cliente");
+		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblTotal.setForeground(Color.WHITE);
 		transparentPanel.add(lblTotal, "cell 0 0,alignx left,aligny center");
 		
 		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		transparentPanel.add(textField_3, "cell 1 0,growx");
 		textField_3.setColumns(10);
 		
 		JLabel lblMozo = new JLabel("Mozo");
+		lblMozo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		lblMozo.setForeground(Color.WHITE);
 		transparentPanel.add(lblMozo, "cell 0 1,alignx left,aligny center");
 		
 		textField_5 = new JTextField();
+		textField_5.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		transparentPanel.add(textField_5, "cell 1 1,growx");
 		textField_5.setColumns(10);
 		
 		JLabel lblTotal_1 = new JLabel("TOTAL:");
 		lblTotal_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblTotal_1.setForeground(Color.BLACK);
-		transparentPanel.add(lblTotal_1, "cell 1 9,alignx right,aligny center");
+		transparentPanel.add(lblTotal_1, "flowx,cell 1 9,alignx right,aligny center");
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		transparentPanel.add(lblNewLabel, "cell 1 9");
 
 	}
 
