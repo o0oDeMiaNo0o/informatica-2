@@ -6,8 +6,8 @@ import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
-import uy.edu.um.value_object.client.ClientVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public class OrderRemoteMgr implements OrderRemoteMgt{
 
