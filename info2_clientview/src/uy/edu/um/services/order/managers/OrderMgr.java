@@ -8,6 +8,17 @@ import uy.edu.um.value_object.people.client.ClientVO;
 
 public class OrderMgr implements OrderMgt{
 
+	private static OrderMgr instance = null;
+
+	private OrderMgr(){}
+
+	public static OrderMgr getInstance(){
+		if(instance == null){
+			instance = new OrderMgr();
+		}
+		return instance;
+	}
+
 	@Override
 	public void getOrdersClient(ClientVO c) {
 		// TODO Auto-generated method stub
