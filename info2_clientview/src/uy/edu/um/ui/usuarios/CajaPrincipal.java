@@ -3,6 +3,7 @@ package uy.edu.um.ui.usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,7 +27,6 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
-import java.awt.Font;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -45,6 +45,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	private JTable tablePrePedido;
 	private JTextField textField_3;
 	private JTextField textField_5;
+	private String total = "$ 0";
 
 	/**
 	 * Launch the application.
@@ -181,6 +182,15 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelBotonera
 				.setLayout(new MigLayout("", "[grow][][]", "[]"));
 
+		TransparentPanel transparentPanelTabla = new TransparentPanel();
+		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
+		transparentPanelTabla.setLayout(new MigLayout("", "[1px][grow][grow]",
+				"[1px][grow]"));
+
+		tablePrePedido = new JTable();
+		armarPedido(); // Creo Tabla Con Pedido Actual
+		transparentPanelTabla.add(tablePrePedido, "cell 1 1,grow");
+
 		JButton button_2 = new JButton("Agregar a Pedido");
 		button_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -202,13 +212,52 @@ public class CajaPrincipal extends BasicoUsuario {
 				if (cuentaMenus(opEspeciales, spinnerE)) { // Chequeo Especiales
 					resetearPosicion(comboBoxE, spinnerE);
 				}
-
 				armarPedido();
 				// String opBebidas = (String) comboBoxB.getSelectedItem();
 
 			}
 
 		});
+
+		TransparentPanel transparentPanelFacturacion = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanelFacturacion, "cell 2 1,grow");
+		transparentPanelFacturacion.setLayout(new MigLayout("", "[][grow]",
+				"[][][][][][][][][][]"));
+
+		JLabel lblNroC = new JLabel("Nro Cliente");
+		lblNroC.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblNroC.setForeground(Color.WHITE);
+		transparentPanelFacturacion.add(lblNroC,
+				"cell 0 0,alignx left,aligny center");
+
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		transparentPanelFacturacion.add(textField_3, "cell 1 0,growx");
+		textField_3.setColumns(10);
+
+		JLabel lblMozo = new JLabel("Mozo");
+		lblMozo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblMozo.setForeground(Color.WHITE);
+		transparentPanelFacturacion.add(lblMozo,
+				"cell 0 1,alignx left,aligny center");
+
+		textField_5 = new JTextField();
+		textField_5.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		transparentPanelFacturacion.add(textField_5, "cell 1 1,growx");
+		textField_5.setColumns(10);
+
+		JLabel lblTotal_1 = new JLabel("TOTAL:");
+		lblTotal_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblTotal_1.setForeground(Color.BLACK);
+		transparentPanelFacturacion.add(lblTotal_1,
+				"flowx,cell 1 9,alignx right,aligny center");
+
+		JLabel lblTOTAL = new JLabel(total);
+		lblTOTAL.setForeground(Color.BLACK);
+		lblTOTAL.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		transparentPanelFacturacion.add(lblTOTAL, "cell 1 9");
+		calculaTotal();
+
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -228,48 +277,6 @@ public class CajaPrincipal extends BasicoUsuario {
 		});
 		transparentPanelBotonera.add(btnVaciar, "cell 2 0");
 
-		TransparentPanel transparentPanelTabla = new TransparentPanel();
-		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
-		transparentPanelTabla.setLayout(new MigLayout("", "[1px][grow][grow]", "[1px][grow]"));
-
-		tablePrePedido = new JTable();
-		armarPedido(); // Creo Tabla Con Pedido Actual
-		transparentPanelTabla.add(tablePrePedido, "cell 1 1,grow");
-		
-		TransparentPanel transparentPanel = new TransparentPanel();
-		transparentPanelTabla.add(transparentPanel, "cell 2 1,grow");
-		transparentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
-		
-		JLabel lblTotal = new JLabel("Nro Cliente");
-		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblTotal.setForeground(Color.WHITE);
-		transparentPanel.add(lblTotal, "cell 0 0,alignx left,aligny center");
-		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		transparentPanel.add(textField_3, "cell 1 0,growx");
-		textField_3.setColumns(10);
-		
-		JLabel lblMozo = new JLabel("Mozo");
-		lblMozo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblMozo.setForeground(Color.WHITE);
-		transparentPanel.add(lblMozo, "cell 0 1,alignx left,aligny center");
-		
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		transparentPanel.add(textField_5, "cell 1 1,growx");
-		textField_5.setColumns(10);
-		
-		JLabel lblTotal_1 = new JLabel("TOTAL:");
-		lblTotal_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal_1.setForeground(Color.BLACK);
-		transparentPanel.add(lblTotal_1, "flowx,cell 1 9,alignx right,aligny center");
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-		transparentPanel.add(lblNewLabel, "cell 1 9");
-
 	}
 
 	// Metodos Auxiliares
@@ -281,6 +288,17 @@ public class CajaPrincipal extends BasicoUsuario {
 	private void resetearPosicion(JComboBox comboBox, JSpinner spinner) {
 		comboBox.setSelectedIndex(0);
 		spinner.setValue(0);
+	}
+
+	public String calculaTotal() {
+		int tot = 0;
+		for (int i = 0; i < pedidoAux.size(); i++) {
+			tot = tot + pedidoAux.get(i).getPrecio();
+		}
+		String totAux = "$" + tot;
+		total = totAux;
+		//trasparentPanelFacturacion.
+		return total;
 	}
 
 	public void armarPedido() {
