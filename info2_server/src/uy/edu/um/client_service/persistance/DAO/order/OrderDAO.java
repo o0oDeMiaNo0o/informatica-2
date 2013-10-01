@@ -41,7 +41,7 @@ public class OrderDAO {
 		
 			
 			for(int i =0;i<articles.size();i++){
-				oStatement.execute("INSERT INTO Pedido/Producto (idPedido, idArticle) VALUES ("+nroPedido+","+articles.get(i).getProdN()+");");
+				oStatement.execute("INSERT INTO `Pedido/Producto` (idPedido, idArticle) VALUES ("+nroPedido+","+articles.get(i).getProdN()+");");
 			}
 			
 			oStatement.close();
