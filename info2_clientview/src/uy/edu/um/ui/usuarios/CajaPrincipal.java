@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
+import java.awt.Font;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -42,6 +43,8 @@ public class CajaPrincipal extends BasicoUsuario {
 	private JTable table;
 	private String[] textos;
 	private JTable tablePrePedido;
+	private JTextField textField_3;
+	private JTextField textField_5;
 
 	/**
 	 * Launch the application.
@@ -175,24 +178,36 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
-		transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][]",
-				"[]"));
+		transparentPanelBotonera
+				.setLayout(new MigLayout("", "[grow][][]", "[]"));
 
 		JButton button_2 = new JButton("Agregar a Pedido");
 		button_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				String opMenu = (String) comboBoxM.getSelectedItem();
-				cuentaMenus(opMenu, spinnerM); // Chequeo Menus
+				if (cuentaMenus(opMenu, spinnerM)) { // Chequeo Menus
+					resetearPosicion(comboBoxM, spinnerM);
+				}
 				String opPizzas = (String) comboBoxP.getSelectedItem();
-				cuentaMenus(opPizzas, spinnerP); // Chequeo Pizzas String
+				if (cuentaMenus(opPizzas, spinnerP)) { // Chequeo Pizzas String
+					resetearPosicion(comboBoxP, spinnerP);
+				}
 				String opHamburguesas = (String) comboBoxH.getSelectedItem();
-				cuentaMenus(opHamburguesas, spinnerH); // Chequeo Hamburguers
+				if (cuentaMenus(opHamburguesas, spinnerH)) { // Chequeo
+																// Hamburguers
+					resetearPosicion(comboBoxH, spinnerH);
+				}
 				String opEspeciales = (String) comboBoxE.getSelectedItem();
-				cuentaMenus(opEspeciales, spinnerE); // Chequeo Especiales
+				if (cuentaMenus(opEspeciales, spinnerE)) { // Chequeo Especiales
+					resetearPosicion(comboBoxE, spinnerE);
+				}
+
+				armarPedido();
 				// String opBebidas = (String) comboBoxB.getSelectedItem();
 
 			}
+
 		});
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -203,38 +218,90 @@ public class CajaPrincipal extends BasicoUsuario {
 		JButton btnFacturar = new JButton("Facturar");
 		transparentPanelBotonera.add(btnFacturar, "cell 1 0");
 
-		JButton btnVerPedido = new JButton("Ver Pedido");
-		transparentPanelBotonera.add(btnVerPedido, "cell 2 0");
-
-		JButton btnCancelar = new JButton("Cancelar");
-		transparentPanelBotonera.add(btnCancelar, "cell 3 0");
+		JButton btnVaciar = new JButton("Vaciar Pedido");
+		btnVaciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				vaciarPedido();
+				armarPedido();
+			}
+		});
+		transparentPanelBotonera.add(btnVaciar, "cell 2 0");
 
 		TransparentPanel transparentPanelTabla = new TransparentPanel();
 		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
-		transparentPanelTabla.setLayout(new MigLayout("", "[1px][grow][grow]",
-				"[1px][grow]"));
+		transparentPanelTabla.setLayout(new MigLayout("", "[1px][grow][grow]", "[1px][grow]"));
+
 		tablePrePedido = new JTable();
-		
+		armarPedido(); // Creo Tabla Con Pedido Actual
 		transparentPanelTabla.add(tablePrePedido, "cell 1 1,grow");
+		
+		TransparentPanel transparentPanel = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanel, "cell 2 1,grow");
+		transparentPanel.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][]"));
+		
+		JLabel lblTotal = new JLabel("Nro Cliente");
+		lblTotal.setForeground(Color.WHITE);
+		transparentPanel.add(lblTotal, "cell 0 0,alignx left,aligny center");
+		
+		textField_3 = new JTextField();
+		transparentPanel.add(textField_3, "cell 1 0,growx");
+		textField_3.setColumns(10);
+		
+		JLabel lblMozo = new JLabel("Mozo");
+		lblMozo.setForeground(Color.WHITE);
+		transparentPanel.add(lblMozo, "cell 0 1,alignx left,aligny center");
+		
+		textField_5 = new JTextField();
+		transparentPanel.add(textField_5, "cell 1 1,growx");
+		textField_5.setColumns(10);
+		
+		JLabel lblTotal_1 = new JLabel("TOTAL:");
+		lblTotal_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblTotal_1.setForeground(Color.BLACK);
+		transparentPanel.add(lblTotal_1, "cell 1 9,alignx right,aligny center");
 
 	}
 
 	// Metodos Auxiliares
+	protected void vaciarPedido() {
+		pedidoAux.clear();
+
+	}
+
+	private void resetearPosicion(JComboBox comboBox, JSpinner spinner) {
+		comboBox.setSelectedIndex(0);
+		spinner.setValue(0);
+	}
 
 	public void armarPedido() {
-		Object[][] aux = new Object[pedidoAux.size()][2];
-		for (int i = 0; i < pedidoAux.size() - 1; i++) {
-			aux[i][0] = pedidoAux.get(i).getNombre();
-			aux[i][1] = pedidoAux.get(i).getPrecio();
+		Object[][] aux;
+		if ((pedidoAux.size() != 0)) {
+			aux = new Object[pedidoAux.size() + 1][3];
+			aux[0][0] = "Nro Producto";
+			aux[0][1] = "Nombre";
+			aux[0][2] = "Precio";
+			for (int i = 0; i < pedidoAux.size(); i++) {
+				if (pedidoAux.get(i) != null) {
+					aux[i + 1][0] = pedidoAux.get(i).getNumProducto();
+					aux[i + 1][1] = pedidoAux.get(i).getNombre();
+					aux[i + 1][2] = pedidoAux.get(i).getPrecio();
+				}
+			}
+		} else {
+			aux = new Object[1][3];
+			aux[0][0] = "Nro Producto";
+			aux[0][1] = "Nombre";
+			aux[0][2] = "Precio";
 		}
-
 		tablePrePedido.setModel(new DefaultTableModel(aux, new String[] {
-				"Nombre", "Precio" }));
+				"Nro Producto", "Nombre", "Precio" }));
 
 	}
 
 	// Agrega pedidos a la orden
-	public void cuentaMenus(String op, JSpinner m) {
+	public boolean cuentaMenus(String op, JSpinner m) {
+		boolean bandera = false;
 		if ((!op.equals("---- Desplegar Lista ----")) && (!op.equals(""))) {
 			ArticleVO aux = null;
 			int valor = (Integer) m.getValue();
@@ -242,9 +309,10 @@ public class CajaPrincipal extends BasicoUsuario {
 			for (int k = 0; k < valor; k++) {
 				aux = buscaArticulo(listaArticulos, op);
 				pedidoAux.add(aux);
-				System.out.println("Agregado: ");
+				bandera = true;
 			}
 		}
+		return bandera;
 
 	}
 
@@ -299,6 +367,11 @@ public class CajaPrincipal extends BasicoUsuario {
 		listaArticulos.add(d);
 		listaArticulos.add(e);
 		listaArticulos.add(f);
+		// pedidoAux.add(a);
+		// pedidoAux.add(a);
+		// pedidoAux.add(a);
+		// pedidoAux.add(a);
+		// pedidoAux.add(a);
 
 	}
 
