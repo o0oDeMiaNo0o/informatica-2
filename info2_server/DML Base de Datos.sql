@@ -1,0 +1,304 @@
+
+
+
+
+-- Ingreso del Menu a la BD
+
+
+
+
+-- ----------------------------------------------------------------------
+
+-- Chivitos
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(101,
+"CHIVITO CHILDREN",
+220);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(102,
+"CHIVITO CANADIENSE",
+260);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(103,
+"CHIVITO AL PLATO (PARA DOS PERSONAS)",
+400);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(104,
+"CHIVITO DE LA CASA",
+220);
+
+-- Hambuguresas
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(201,
+"HAMBURGUESA CON FRITAS",
+150);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(202,
+"CHISBUGER",
+200);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(203,
+"HAMBUERGUESA COMPLETA",
+260);
+
+-- Muzzrella 
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(301,
+"PIZZA",50);
+
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(302,
+"MUZZARELLA",
+80);
+
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(303,
+"MUZZARELLA CON JAMON",
+100);
+
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(304,
+"MUZZARELLA CON PANCETA",
+100);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(305,
+"FAINA",
+50);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(306,
+"FAINA CON MUZZARELLA",
+70);
+
+ -- Minutas
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(401,
+"MILANESA",
+180);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(402,
+"MILANESA CON PROVOLONES",
+220);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(403,
+"NAPOLITANA",
+250);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(404,
+"MILANESA RELLENA",
+250);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(405,
+"MILANESA DE LA CASA (PARA DOS)",
+350);
+
+-- Bebidas
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(501,
+"AGUA (CON/SIN)",
+50);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(502,
+"REFRESCO CHICO (300ML)",
+60);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(503,
+"REFRESCO GRANDE (1.5L)",
+110);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(504,
+"WHISKEY NACIONAL",
+80);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(505,
+"RED BULL",
+80);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(506,
+"GATORADE",
+60);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(507,
+"COCKTAIL SECRETO DE LA CASA",
+100);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(508,
+"CERVEZA 1L",
+120);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(509,
+"CHOPP",
+80);
+
+INSERT INTO `Info2`.`Articles`
+(
+`PROD_N`,
+`NAME`,
+`PRICE`)
+VALUES
+(510,
+"CAFE COLOMBIANO",
+60);
+
+

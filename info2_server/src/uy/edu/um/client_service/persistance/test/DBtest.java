@@ -2,6 +2,7 @@ package uy.edu.um.client_service.persistance.test;
 
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import uy.edu.um.value_object.article.ArticleVO;
 
 
 public class DBtest {
@@ -14,13 +15,8 @@ public class DBtest {
 
 	public static void main(String[] args) {
 		ArticlesDAO d1= ArticlesDAO.getInstance();
-//		d1.getArticles();
-//		d1.addArticle(a1);
-//		d1.addArticle(a2);
-//		d1.addArticle(a3);
-//		d1.addArticle(a4);
-
-		d1.getArticles();
+		ArticleVO vo = d1.searchArticle(304);
+		System.out.println(vo.getNombre());
 
 
 	}
