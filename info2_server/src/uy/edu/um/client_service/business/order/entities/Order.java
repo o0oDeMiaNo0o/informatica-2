@@ -9,6 +9,7 @@ public class Order {
 	//atributos
 	ArrayList<Article> articles = new ArrayList<Article>(10);
 	Client c = null;
+	
 
 	//constructor
 	public Order(ArrayList<Article> articles, Client c){
