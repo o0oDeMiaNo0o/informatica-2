@@ -16,7 +16,7 @@ public class Helpers {
 	}
 	
 	public static int buscaArticulo (ArrayList<ArticleVO> a,String b){
-		for(int i = 0;i<a.size();i++){
+		for(int i = 0;i<a.size()-1;i++){
 			if(a.get(i).getNombre().equals(b)){
 				return i;
 			}
