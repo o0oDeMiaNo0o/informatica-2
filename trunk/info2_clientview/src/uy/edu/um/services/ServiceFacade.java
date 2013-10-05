@@ -3,6 +3,8 @@ package uy.edu.um.services;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.article.managers.ArticleMgr;
+import uy.edu.um.services.bill.interfaces.BillMgt;
+import uy.edu.um.services.bill.managers.BillMgr;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.categories.managers.CategoryMgr;
 import uy.edu.um.services.order.interfaces.OrderMgt;
@@ -57,5 +59,9 @@ public class ServiceFacade {
 
 	public OrderMgt getOrderMgt(){
 		return OrderMgr.getInstance();
+	}
+
+	public BillMgt getBillMgt() {
+		return BillMgr.getInstance();
 	}
 }

@@ -20,7 +20,7 @@ public class UserTest {
 
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 
-			String name = "bforrisi";
+			String name = "agonzalez";
 			String password = "asd";
 			boolean isAdmin = false;
 

@@ -44,7 +44,7 @@ public class OrderClientTest {
 
 			 oOrderRemoteMgt.addOrder(order);
 
-			System.out.println("orden agregado");
+			System.out.println("orden agregada");
 
 		} catch (Exception e) {
 			System.err.println("error:");
