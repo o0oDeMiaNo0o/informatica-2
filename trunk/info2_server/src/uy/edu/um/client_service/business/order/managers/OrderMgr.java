@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
-import uy.edu.um.client_service.business.clients.entities.Client;
-import uy.edu.um.client_service.business.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
+import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public class OrderMgr implements OrderMgt{
 
@@ -29,14 +31,15 @@ public class OrderMgr implements OrderMgt{
 
 	@Override
 	public void addOrder(Order o) {
-
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.addOrder(o);
 	}
 
 	@Override
 	public Order getOrder(OrderVO o) {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
-		ArrayList<Article> articleReturn = null;
+		ArrayList<Article> articleReturn = new ArrayList<Article>(10);
 		ArrayList<ArticleVO> articulos = o.getArticulos();
 		for(ArticleVO current: articulos){
 			if(current != null){
@@ -52,6 +55,13 @@ public class OrderMgr implements OrderMgt{
 	@Override
 	public void getOrderClient(Client c) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public OrderVO createOrderVO(ArrayList<ArticleVO> a, ClientVO c) {
+		OrderVO ov = new OrderVO(a,c, null);
+		return ov;
 
 	}
 
