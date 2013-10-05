@@ -12,7 +12,7 @@ import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 public class test2 {
 	public static void main(String[] args){
 		try {
-			String name = "OrderRemoteMgr";
+			String name = "ArticleRemoteMgr";
 
 			OrderRemoteMgt oOrderRemoteMgr = BusinessFacade.getInstance().getOrderRemote();
 
