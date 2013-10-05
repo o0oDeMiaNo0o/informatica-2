@@ -3,8 +3,8 @@ package uy.edu.um.client_service.service.peopleRemote.client.manager;
 import java.rmi.RemoteException;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.client_service.business.clients.entities.Client;
-import uy.edu.um.client_service.business.clients.interfaces.ClientMgt;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 
