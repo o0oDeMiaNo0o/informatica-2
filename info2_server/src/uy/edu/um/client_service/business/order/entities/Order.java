@@ -3,7 +3,7 @@ package uy.edu.um.client_service.business.order.entities;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
-import uy.edu.um.client_service.business.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
 
 public class Order {
 	//atributos

@@ -46,10 +46,10 @@ public class ArticleMgr implements ArticleMgt{
 	//Metodos
 
 	public Article getArticle(ArticleVO a){
-		int id = 23;
+		int prod_n = a.getNumProducto();
 		String nombre = a.getNombre();
 		int precio = a.getPrecio();
-		Article aReturn = new Article(id,nombre, precio);
+		Article aReturn = new Article(prod_n,nombre, precio);
 		return aReturn;
 	}
 
