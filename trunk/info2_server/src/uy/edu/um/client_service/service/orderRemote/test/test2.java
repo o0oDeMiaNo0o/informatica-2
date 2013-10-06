@@ -6,7 +6,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 
 public class test2 {
