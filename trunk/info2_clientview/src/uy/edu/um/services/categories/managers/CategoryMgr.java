@@ -1,5 +1,7 @@
 package uy.edu.um.services.categories.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -16,7 +18,6 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	@Override
 	public CategoryVO createArticleVO(String nombre, int precio) {
 		CategoryVO toReturn = new CategoryVO(nombre,precio);
 		return toReturn;
@@ -32,6 +33,12 @@ public class CategoryMgr implements CategoryMgt{
 	public void setCliente(CategoryVO c) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<CategoryVO> allCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
