@@ -1,13 +1,15 @@
 package uy.edu.um.value_object.article;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class ArticleVO implements Serializable{
 
 	private String nombre;
-	private int precio, numProducto;
+	private BigDecimal precio;
+	private int numProducto;
 
-	public ArticleVO(int numProducto, String nombre, int precio) {
+	public ArticleVO(int numProducto, String nombre, BigDecimal precio) {
 		this.nombre=nombre;
 		this.numProducto = numProducto;
 		this.precio=precio;
@@ -21,11 +23,11 @@ public class ArticleVO implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public int getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
 
