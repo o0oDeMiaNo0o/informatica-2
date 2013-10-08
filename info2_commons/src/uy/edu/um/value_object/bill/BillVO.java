@@ -1,6 +1,7 @@
 package uy.edu.um.value_object.bill;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.value_object.article.ArticleVO;
@@ -9,7 +10,7 @@ import uy.edu.um.value_object.oreder.OrderVO;
 public class BillVO implements Serializable{
 
 	private ArrayList<OrderVO> orders = new ArrayList<OrderVO>(10);
-	private int costoTotal;
+	private BigDecimal costoTotal;
 
 	public BillVO(ArrayList<OrderVO> orders){
 		this.orders = orders;
@@ -20,18 +21,19 @@ public class BillVO implements Serializable{
 		return orders;
 	}
 
-	public int getCostoTotal() {
+	public BigDecimal getCostoTotal() {
 		return costoTotal;
 	}
 
 
 
-	public int getTotal(){
-		int total = 0;
+	public BigDecimal getTotal(){
+		BigDecimal total = new BigDecimal(0);
 		for(OrderVO current : orders){
 			ArrayList<ArticleVO> articles = current.getArticulos();
 			for(ArticleVO a : articles){
-				total = total + a.getPrecio();
+				BigDecimal currentPrice = a.getPrecio();
+				total = currentPrice.add(currentPrice);
 			}
 		}
 		return total;
