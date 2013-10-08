@@ -49,10 +49,6 @@ public class ServiceFacade {
 		return WaiterMgr.getInstance();
 	}
 
-	public CategoryMgt getCategoryMgt(){
-		return CategoryMgr.getInstance();
-	}
-
 	public ArticleRemoteMgt getArticleRemoteMgt(){
 		return null;
 	}
@@ -63,5 +59,9 @@ public class ServiceFacade {
 
 	public BillMgt getBillMgt() {
 		return BillMgr.getInstance();
+	}
+
+	public CategoryMgt getCategoryMgt(){
+		return CategoryMgr.getInstance();
 	}
 }
