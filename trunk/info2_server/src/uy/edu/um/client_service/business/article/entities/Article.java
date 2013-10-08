@@ -1,12 +1,14 @@
 package uy.edu.um.client_service.business.article.entities;
 
+import java.math.BigDecimal;
+
 public class Article {
 
 	private int prodN;
 	private String nombre;
-	private int precio;
+	private BigDecimal precio;
 
-	public Article(int prodN, String nombre, int precio) {
+	public Article(int prodN, String nombre, BigDecimal precio) {
 		this.prodN = prodN;
 		this.nombre=nombre;
 		this.precio=precio;
@@ -34,12 +36,17 @@ public class Article {
 		this.nombre = nombre;
 	}
 
-	public int getPrecio() {
+
+
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+
+
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
+
 
 }
