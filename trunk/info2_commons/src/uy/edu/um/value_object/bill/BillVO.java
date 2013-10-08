@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class BillVO implements Serializable{
@@ -30,9 +31,10 @@ public class BillVO implements Serializable{
 	public BigDecimal getTotal(){
 		BigDecimal total = new BigDecimal(0);
 		for(OrderVO current : orders){
-			ArrayList<ArticleVO> articles = current.getArticulos();
-			for(ArticleVO a : articles){
-				BigDecimal currentPrice = a.getPrecio();
+			ArrayList<ArticleOrderVO> articles = current.getArticulos();
+			for(ArticleOrderVO a : articles){
+				ArticleVO currentArticle = a.getArticle();
+				BigDecimal currentPrice = currentArticle.getPrecio();
 				total = currentPrice.add(currentPrice);
 			}
 		}
