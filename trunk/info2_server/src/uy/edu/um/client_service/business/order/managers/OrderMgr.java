@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
+import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
@@ -40,13 +41,15 @@ public class OrderMgr implements OrderMgt{
 	public Order getOrder(OrderVO o) {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
-		ArrayList<Article> articleReturn = new ArrayList<Article>(10);
+		ArrayList<ArticleOrder> articleReturn = new ArrayList<ArticleOrder>(10);
 		ArrayList<ArticleOrderVO> articulos = o.getArticulos();
 		for(ArticleOrderVO current: articulos){
 			if(current != null){
 				ArticleVO aVO = current.getArticle();
+				int currentCantidad = current.getCantidad();
 				Article a = aMgt.getArticle(aVO);
-				articleReturn.add(a);
+				ArticleOrder toAdd = new ArticleOrder(a,currentCantidad);
+				articleReturn.add(toAdd);
 			}
 		}
 		Client clientReturn = cMgt.getClient(o.getC());
