@@ -91,7 +91,6 @@ public class NewProduct extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				ArticleMgt a = ServiceFacade.getInstance().getArticleMgt();
 				String nombre = textFieldNombre.getText();
-				String cat = comboBoxCat.getName();
 				boolean bandera = false;
 				while (bandera == false) {
 					String precioAux = textFieldPrecio.getText();

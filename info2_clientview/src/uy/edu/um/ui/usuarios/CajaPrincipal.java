@@ -87,7 +87,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblEspecificaciones,
 				"cell 4 1,alignx center,aligny center");
 
-		creaLabels(transparentPanelPedido);
+		creaElementos(transparentPanelPedido);
 		/*
 		 * /* JLabel lblMens = new JLabel("Men\u00FAs");
 		 * lblMens.setForeground(Color.WHITE);
@@ -273,7 +273,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Crea coleccion de labels
-	private void creaLabels(TransparentPanel a) {
+	private void creaElementos(TransparentPanel a) {
 		if (categoria.size() != 0) {
 			String posicion = null;
 			int j = 2;
@@ -301,13 +301,14 @@ public class CajaPrincipal extends BasicoUsuario {
 				textFieldTemp.setColumns(10);
 				posicion = "cell 4 " + j + ",growx";
 				a.add(textFieldTemp, posicion);
-				
+
 				j = j + 2;
 
 				// coleccion.add(lblTemp);
 			}
 		} else {
-			JLabel lblTemp = new JLabel("NO EXISTEN CATEGORIAS");
+			JLabel lblTemp = new JLabel(
+					"NO EXISTEN CATEGORIAS (MENUS/Agregar Nuevo)");
 			lblTemp.setForeground(Color.WHITE);
 			a.add(lblTemp, "cell 1 2,alignx left");
 		}
