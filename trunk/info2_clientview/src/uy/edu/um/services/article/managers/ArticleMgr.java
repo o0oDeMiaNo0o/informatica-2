@@ -1,5 +1,6 @@
 package uy.edu.um.services.article.managers;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,7 +29,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArticleVO createArticleVO(int prodN, String nombre, int precio) {
+	public ArticleVO createArticleVO(int prodN, String nombre, BigDecimal precio) {
 		ArticleVO aReturn = new ArticleVO(prodN, nombre, precio);
 		return aReturn;
 	}

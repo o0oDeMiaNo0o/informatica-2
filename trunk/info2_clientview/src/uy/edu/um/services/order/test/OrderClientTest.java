@@ -1,5 +1,6 @@
 package uy.edu.um.services.order.test;
 
+import java.math.BigDecimal;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -23,26 +24,31 @@ public class OrderClientTest {
 
 			OrderMgt oMgt = ServiceFacade.getInstance().getOrderMgt();
 
-			 ArticleVO a1 = new ArticleVO(101,"pizza",120);
-			 ArticleVO a2 = new ArticleVO(102,"muzza",200);
-			 ArticleVO a3 = new ArticleVO(201,"hambuerguesa",180);
-			 ArticleVO a4 = new ArticleVO(202,"chivito",280);
-			 String nombre = "asdf";
-			 String apellido = "asdf";
-			 String direccion = "asdf";
-			 String email = "asdf";
-			 int ci= 1234;
-			 int tel = 345;
-			 ClientVO c1 = new ClientVO(nombre,apellido,ci,tel,direccion,email);
-			 ArrayList<ArticleVO> a = new ArrayList<ArticleVO>(4);
-			 a.add(a1);
-			 a.add(a4);
-			 a.add(a2);
-			 a.add(a3);
+			BigDecimal p1 = new BigDecimal(120);
+			BigDecimal p2 = new BigDecimal(200);
+			BigDecimal p3 = new BigDecimal(180);
+			BigDecimal p4 = new BigDecimal(280);
 
-			 OrderVO order = new OrderVO(a,c1,null);
+			ArticleVO a1 = new ArticleVO(101,"pizza",p1);
+			ArticleVO a2 = new ArticleVO(102,"muzza",p2);
+			ArticleVO a3 = new ArticleVO(201,"hambuerguesa",p3);
+			ArticleVO a4 = new ArticleVO(202,"chivito",p4);
+			String nombre = "asdf";
+			String apellido = "asdf";
+			String direccion = "asdf";
+			String email = "asdf";
+			int ci= 1234;
+			int tel = 345;
+			ClientVO c1 = new ClientVO(nombre,apellido,ci,tel,direccion,email);
+			ArrayList<ArticleVO> a = new ArrayList<ArticleVO>(4);
+			a.add(a1);
+			a.add(a4);
+			a.add(a2);
+			a.add(a3);
 
-			 oOrderRemoteMgt.addOrder(order);
+			OrderVO order = new OrderVO(a,c1,null);
+
+			oOrderRemoteMgt.addOrder(order);
 
 			System.out.println("orden agregada");
 
