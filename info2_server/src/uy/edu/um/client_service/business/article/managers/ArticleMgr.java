@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.business.article.managers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
@@ -48,7 +49,7 @@ public class ArticleMgr implements ArticleMgt{
 	public Article getArticle(ArticleVO a){
 		int prod_n = a.getNumProducto();
 		String nombre = a.getNombre();
-		int precio = a.getPrecio();
+		BigDecimal precio = a.getPrecio();
 		Article aReturn = new Article(prod_n,nombre, precio);
 		return aReturn;
 	}

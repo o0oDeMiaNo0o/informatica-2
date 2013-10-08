@@ -11,6 +11,7 @@ import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
 
@@ -40,10 +41,11 @@ public class OrderMgr implements OrderMgt{
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		ArrayList<Article> articleReturn = new ArrayList<Article>(10);
-		ArrayList<ArticleVO> articulos = o.getArticulos();
-		for(ArticleVO current: articulos){
+		ArrayList<ArticleOrderVO> articulos = o.getArticulos();
+		for(ArticleOrderVO current: articulos){
 			if(current != null){
-				Article a = aMgt.getArticle(current);
+				ArticleVO aVO = current.getArticle();
+				Article a = aMgt.getArticle(aVO);
 				articleReturn.add(a);
 			}
 		}
@@ -59,10 +61,12 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public OrderVO createOrderVO(ArrayList<ArticleVO> a, ClientVO c) {
-		OrderVO ov = new OrderVO(a,c, null);
-		return ov;
-
+	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> a, ClientVO c,String descripcion) {
+		OrderVO toReturn = new OrderVO(a,c,descripcion);
+		return toReturn;
 	}
+
+
+
 
 }
