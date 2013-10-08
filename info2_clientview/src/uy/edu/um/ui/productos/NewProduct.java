@@ -20,7 +20,9 @@ import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 
-public class NuevoProducto extends JFrame {
+import javax.swing.JComboBox;
+
+public class NewProduct extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
@@ -28,7 +30,7 @@ public class NuevoProducto extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblPrecio;
 	private JLabel lblNroProducto;
-	private JTextField textFieldNumero;
+	private JComboBox comboBoxCat;
 
 	/**
 	 * Launch the application.
@@ -37,7 +39,7 @@ public class NuevoProducto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NuevoProducto frame = new NuevoProducto();
+					NewProduct frame = new NewProduct();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -50,7 +52,7 @@ public class NuevoProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoProducto() {
+	public NewProduct() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -63,13 +65,12 @@ public class NuevoProducto extends JFrame {
 		transparentPanel.setLayout(new MigLayout("", "[][92px,grow]",
 				"[][][][29px][][][][][]"));
 
-		lblNroProducto = new JLabel("Nro Producto");
+		lblNroProducto = new JLabel("Categoria");
 		transparentPanel.add(lblNroProducto,
 				"cell 0 0,alignx trailing,aligny center");
 
-		textFieldNumero = new JTextField();
-		transparentPanel.add(textFieldNumero, "cell 1 0,growx");
-		textFieldNumero.setColumns(10);
+		comboBoxCat = new JComboBox();
+		transparentPanel.add(comboBoxCat, "cell 1 0,growx");
 
 		lblNewLabel = new JLabel("Nombre");
 		transparentPanel.add(lblNewLabel, "cell 0 1,alignx left,aligny center");
@@ -90,18 +91,20 @@ public class NuevoProducto extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				ArticleMgt a = ServiceFacade.getInstance().getArticleMgt();
 				String nombre = textFieldNombre.getText();
-				String nro = textFieldNumero.getText();
+				String cat = comboBoxCat.getName();
 				boolean bandera = false;
 				while (bandera == false) {
 					String precioAux = textFieldPrecio.getText();
 					if (!nombre.equals("")) {
 						if (Helpers.isNumeric(precioAux)) {
-							if (Helpers.isNumeric(nro)) {
+							if (!comboBoxCat.getSelectedItem().equals(
+									"--- Desplegar Lista ---")) {
 								int precio = Integer.parseInt(textFieldPrecio
 										.getText());
-								int numero = Integer.parseInt(nro);
+								int categoria = buscaCategoria(comboBoxCat
+										.getSelectedItem());
 								bandera = true;
-								ArticleVO toSend = a.createArticleVO(numero,
+								ArticleVO toSend = a.createArticleVO(categoria,
 										nombre, precio);
 								a.setCliente(toSend);
 								MensajeGenerico mensaje = new MensajeGenerico(
@@ -123,9 +126,15 @@ public class NuevoProducto extends JFrame {
 				}
 
 			}
+
 		});
 
 		transparentPanel.add(btnAceptar, "cell 1 8,alignx right,aligny top");
+	}
+
+	private int buscaCategoria(Object selectedItem) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
