@@ -33,9 +33,9 @@ public class ArticlesDAO {
 		try {
 			Statement oStatement = database.getConnection().createStatement();
 
-			
+
 			ResultSet oResultSet = oStatement.executeQuery("SELECT `PROD_N`,`NAME`,`PRICE` FROM `Articles` where `Articles`.`PROD_N` = "+prodnum+";");
-		
+
 
 
 			while(oResultSet.next()){
@@ -43,7 +43,7 @@ public class ArticlesDAO {
 				String sName = oResultSet.getString(2);
 				int nPrice = oResultSet.getInt(3);
 				result = new ArticleVO(nProd,sName,nPrice);
-				
+
 			}
 
 
@@ -79,7 +79,7 @@ public class ArticlesDAO {
 
 		try {
 
-			ArrayList<ArticleVO> toReturn = null;
+			ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>(10);
 
 			Statement oStatement = database.getConnection().createStatement();
 
@@ -119,7 +119,7 @@ public class ArticlesDAO {
 
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
-  
+
 			while (oResultSet.next()) {
 
 				int nId = oResultSet.getInt(1);
