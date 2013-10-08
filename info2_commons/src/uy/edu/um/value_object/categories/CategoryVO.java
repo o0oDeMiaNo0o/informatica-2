@@ -2,12 +2,11 @@ package uy.edu.um.value_object.categories;
 
 public class CategoryVO {
 	private String nombre;
-	private int precio,numProducto;
+	private int id;
 
-	public CategoryVO(int numProducto, String nombre, int precio) {
+	public CategoryVO(String nombre,int id) {
 		this.nombre=nombre;
-		this.precio=precio;
-		this.numProducto = numProducto;
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -18,22 +17,12 @@ public class CategoryVO {
 		this.nombre = nombre;
 	}
 
-	public int getPrecio() {
-		return precio;
+	public int getId() {
+		return id;
 	}
 
-	public void setPrecio(int precio) {
-		this.precio = precio;
+	public void setId(int id) {
+		this.id = id;
 	}
-
-	public int getNumProducto() {
-		return numProducto;
-	}
-
-	public void setNumProducto(int numProducto) {
-		this.numProducto = numProducto;
-	}
-
-
 
 }
