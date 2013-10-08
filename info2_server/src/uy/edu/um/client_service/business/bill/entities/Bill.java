@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 
 public class Bill {
@@ -27,10 +28,11 @@ public class Bill {
 		BigDecimal total = new BigDecimal(0);
 		for(Order o: orders){
 			if(o != null){
-				ArrayList<Article> articles = o.getArticles();
-				for(Article a : articles){
+				ArrayList<ArticleOrder> articles = o.getArticles();
+				for(ArticleOrder a : articles){
 					if(a != null){
-						BigDecimal currentPrice = a.getPrecio();
+						Article currentArticle = a.getArticle();
+						BigDecimal currentPrice = currentArticle.getPrecio();
 						total = total.add(currentPrice);
 					}
 				}
