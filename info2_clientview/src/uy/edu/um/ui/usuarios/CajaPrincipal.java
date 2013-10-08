@@ -3,7 +3,6 @@ package uy.edu.um.ui.usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,6 +23,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.article.interfaces.ArticleMgt;
+import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
@@ -32,9 +34,9 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	ArrayList<ArticleVO> pedidoAux = new ArrayList<ArticleVO>(); // Array de
 																	// pedido
-	ArrayList<ArticleVO> listaArticulos = new ArrayList<ArticleVO>(); // Array
-																		// de
-																		// Articulos
+	ArrayList<ArticleVO> listaArticulos = cargoListado(); // Array
+															// de
+															// Articulos
 	private final Action action = new SwingAction();
 	private JTextField textField;
 	private JTextField textField_1;
@@ -43,8 +45,6 @@ public class CajaPrincipal extends BasicoUsuario {
 	private JTable table;
 	private String[] textos;
 	private JTable tablePrePedido;
-	private JTextField textField_3;
-	private JTextField textField_5;
 	private String total = "$ 0";
 
 	/**
@@ -69,7 +69,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	public CajaPrincipal() {
 		super();
 		setTitle("Pedido");
-		llenararticulos();
+		// llenararticulos();
 
 		TransparentPanel transparentPanelPedido = new TransparentPanel();
 		getContentPane().add(transparentPanelPedido, BorderLayout.NORTH);
@@ -91,7 +91,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblMens, "cell 1 2,alignx left");
 
 		final JComboBox comboBoxM = new JComboBox();
-		String[] textosMenu = cargaPedidos(0); // cargaPedidos
+		String[] textosMenu = cargaPedidos(100); // cargaPedidos
 		comboBoxM.setModel(new DefaultComboBoxModel(textosMenu));
 		transparentPanelPedido.add(comboBoxM, "cell 2 2,grow");
 
@@ -107,7 +107,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblPizzas, "cell 1 4,alignx left");
 
 		final JComboBox comboBoxP = new JComboBox();
-		String[] textosPizzas = cargaPedidos(100);
+		String[] textosPizzas = cargaPedidos(300);
 		comboBoxP.setModel(new DefaultComboBoxModel(textosPizzas));
 		comboBoxP.setToolTipText("Desplegar Lista");
 		transparentPanelPedido.add(comboBoxP, "cell 2 4,grow");
@@ -124,9 +124,8 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblBebidas, "cell 1 6,alignx left");
 
 		final JComboBox comboBoxB = new JComboBox();
-		comboBoxB.setModel(new DefaultComboBoxModel(new String[] {
-				" ---- Desplegar Lista ----", "", "Bebida 1", "Bebida 2",
-				"Bebida 3", "Bebida 4" }));
+		String[] textosBebidas = cargaPedidos(500);
+		comboBoxB.setModel(new DefaultComboBoxModel(textosBebidas));
 		transparentPanelPedido.add(comboBoxB, "cell 2 6,grow");
 
 		JSpinner spinnerB = new JSpinner();
@@ -153,7 +152,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblEspeciales, "cell 1 10,alignx left");
 
 		final JComboBox comboBoxE = new JComboBox();
-		String[] textosEspeciales = cargaPedidos(300);
+		String[] textosEspeciales = cargaPedidos(400);
 		comboBoxE.setModel(new DefaultComboBoxModel(textosEspeciales));
 		transparentPanelPedido.add(comboBoxE, "flowx,cell 2 10,growx");
 
@@ -179,17 +178,17 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
-		transparentPanelBotonera
-				.setLayout(new MigLayout("", "[grow][][]", "[]"));
+		transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][]",
+				"[]"));
 
 		TransparentPanel transparentPanelTabla = new TransparentPanel();
 		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
-		transparentPanelTabla.setLayout(new MigLayout("", "[1px][grow][grow]",
-				"[1px][grow]"));
+		transparentPanelTabla.setLayout(new MigLayout("",
+				"[1px][grow][grow][grow]", "[1px][grow]"));
 
 		tablePrePedido = new JTable();
 		armarPedido(); // Creo Tabla Con Pedido Actual
-		transparentPanelTabla.add(tablePrePedido, "cell 1 1,grow");
+		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
 		button_2.addMouseListener(new MouseAdapter() {
@@ -218,44 +217,6 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 
 		});
-
-		TransparentPanel transparentPanelFacturacion = new TransparentPanel();
-		transparentPanelTabla.add(transparentPanelFacturacion, "cell 2 1,grow");
-		transparentPanelFacturacion.setLayout(new MigLayout("", "[][grow]",
-				"[][][][][][][][][][]"));
-
-		JLabel lblNroC = new JLabel("Nro Cliente");
-		lblNroC.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNroC.setForeground(Color.WHITE);
-		transparentPanelFacturacion.add(lblNroC,
-				"cell 0 0,alignx left,aligny center");
-
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		transparentPanelFacturacion.add(textField_3, "cell 1 0,growx");
-		textField_3.setColumns(10);
-
-		JLabel lblMozo = new JLabel("Mozo");
-		lblMozo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblMozo.setForeground(Color.WHITE);
-		transparentPanelFacturacion.add(lblMozo,
-				"cell 0 1,alignx left,aligny center");
-
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		transparentPanelFacturacion.add(textField_5, "cell 1 1,growx");
-		textField_5.setColumns(10);
-
-		JLabel lblTotal_1 = new JLabel("TOTAL:");
-		lblTotal_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblTotal_1.setForeground(Color.BLACK);
-		transparentPanelFacturacion.add(lblTotal_1,
-				"flowx,cell 1 9,alignx right,aligny center");
-
-		JLabel lblTOTAL = new JLabel(total);
-		lblTOTAL.setForeground(Color.BLACK);
-		lblTOTAL.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-		transparentPanelFacturacion.add(lblTOTAL, "cell 1 9");
 		calculaTotal();
 
 		button_2.addActionListener(new ActionListener() {
@@ -265,7 +226,28 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(button_2, "cell 5 6");
 
 		JButton btnFacturar = new JButton("Facturar");
-		transparentPanelBotonera.add(btnFacturar, "cell 1 0");
+		btnFacturar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+
+		JButton btnNewButton = new JButton("Agregar a Mesa");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (pedidoAux.size() == 0) {
+					MensajeGenerico mensaje = new MensajeGenerico(
+							"Pedido Vacio");
+				} else {
+					SeleccionaMesa nueva = new SeleccionaMesa(pedidoAux);
+				}
+			}
+		});
+		transparentPanelBotonera.add(btnNewButton,
+				"cell 1 0,alignx center,aligny center");
+		transparentPanelBotonera.add(btnFacturar,
+				"cell 2 0,alignx center,aligny center");
 
 		JButton btnVaciar = new JButton("Vaciar Pedido");
 		btnVaciar.addMouseListener(new MouseAdapter() {
@@ -275,11 +257,19 @@ public class CajaPrincipal extends BasicoUsuario {
 				armarPedido();
 			}
 		});
-		transparentPanelBotonera.add(btnVaciar, "cell 2 0");
+		transparentPanelBotonera.add(btnVaciar,
+				"cell 3 0,alignx center,aligny center");
 
 	}
 
 	// Metodos Auxiliares
+	public ArrayList<ArticleVO> cargoListado() {
+		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
+		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
+		sol = test.allArticles();
+		return sol;
+	}
+
 	protected void vaciarPedido() {
 		pedidoAux.clear();
 
@@ -297,7 +287,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		}
 		String totAux = "$" + tot;
 		total = totAux;
-		//trasparentPanelFacturacion.
+		// trasparentPanelFacturacion.
 		return total;
 	}
 
@@ -380,27 +370,20 @@ public class CajaPrincipal extends BasicoUsuario {
 		return aux;
 	}
 
-	private void llenararticulos() {
-		ArticleVO a = new ArticleVO(1, "Menu 1", 250);
-		ArticleVO b = new ArticleVO(2, "Menu 2", 250);
-		ArticleVO c = new ArticleVO(3, "Menu 3", 100);
-		ArticleVO d = new ArticleVO(4, "Menu 4", 100);
-		ArticleVO e = new ArticleVO(150, "Pizza 1", 150);
-		ArticleVO f = new ArticleVO(100, "Pizza 2", 150);
-
-		listaArticulos.add(a);
-		listaArticulos.add(b);
-		listaArticulos.add(c);
-		listaArticulos.add(d);
-		listaArticulos.add(e);
-		listaArticulos.add(f);
-		// pedidoAux.add(a);
-		// pedidoAux.add(a);
-		// pedidoAux.add(a);
-		// pedidoAux.add(a);
-		// pedidoAux.add(a);
-
-	}
+	/*
+	 * private void llenararticulos() { ArticleVO a = new ArticleVO(1, "Menu 1",
+	 * 250); ArticleVO b = new ArticleVO(2, "Menu 2", 250); ArticleVO c = new
+	 * ArticleVO(3, "Menu 3", 100); ArticleVO d = new ArticleVO(4, "Menu 4",
+	 * 100); ArticleVO e = new ArticleVO(150, "Pizza 1", 150); ArticleVO f = new
+	 * ArticleVO(100, "Pizza 2", 150);
+	 * 
+	 * listaArticulos.add(a); listaArticulos.add(b); listaArticulos.add(c);
+	 * listaArticulos.add(d); listaArticulos.add(e); listaArticulos.add(f); //
+	 * pedidoAux.add(a); // pedidoAux.add(a); // pedidoAux.add(a); //
+	 * pedidoAux.add(a); // pedidoAux.add(a);
+	 * 
+	 * }
+	 */
 
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
