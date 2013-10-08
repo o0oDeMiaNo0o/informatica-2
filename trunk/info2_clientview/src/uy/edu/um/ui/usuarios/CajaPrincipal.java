@@ -25,10 +25,12 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
+import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -37,15 +39,14 @@ public class CajaPrincipal extends BasicoUsuario {
 	ArrayList<ArticleVO> listaArticulos = cargoListado(); // Array
 															// de
 															// Articulos
+	ArrayList<CategoryVO> categoria = cargoCategorias();
+
+	private ArrayList<JLabel> coleccion;
+
 	private final Action action = new SwingAction();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_2;
 	private JTable table;
 	private String[] textos;
 	private JTable tablePrePedido;
-	private String total = "$ 0";
 
 	/**
 	 * Launch the application.
@@ -86,95 +87,85 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblEspecificaciones,
 				"cell 4 1,alignx center,aligny center");
 
-		JLabel lblMens = new JLabel("Men\u00FAs");
-		lblMens.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblMens, "cell 1 2,alignx left");
-
-		final JComboBox comboBoxM = new JComboBox();
-		String[] textosMenu = cargaPedidos(100); // cargaPedidos
-		comboBoxM.setModel(new DefaultComboBoxModel(textosMenu));
-		transparentPanelPedido.add(comboBoxM, "cell 2 2,grow");
-
-		final JSpinner spinnerM = new JSpinner();
-		transparentPanelPedido.add(spinnerM, "cell 3 2,alignx center");
-
-		textField = new JTextField();
-		transparentPanelPedido.add(textField, "cell 4 2,growx");
-		textField.setColumns(10);
-
-		JLabel lblPizzas = new JLabel("Pizzas");
-		lblPizzas.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblPizzas, "cell 1 4,alignx left");
-
-		final JComboBox comboBoxP = new JComboBox();
-		String[] textosPizzas = cargaPedidos(300);
-		comboBoxP.setModel(new DefaultComboBoxModel(textosPizzas));
-		comboBoxP.setToolTipText("Desplegar Lista");
-		transparentPanelPedido.add(comboBoxP, "cell 2 4,grow");
-
-		final JSpinner spinnerP = new JSpinner();
-		transparentPanelPedido.add(spinnerP, "cell 3 4,alignx center");
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		transparentPanelPedido.add(textField_1, "cell 4 4,growx");
-
-		JLabel lblBebidas = new JLabel("Bebidas");
-		lblBebidas.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblBebidas, "cell 1 6,alignx left");
-
-		final JComboBox comboBoxB = new JComboBox();
-		String[] textosBebidas = cargaPedidos(500);
-		comboBoxB.setModel(new DefaultComboBoxModel(textosBebidas));
-		transparentPanelPedido.add(comboBoxB, "cell 2 6,grow");
-
-		JSpinner spinnerB = new JSpinner();
-		transparentPanelPedido.add(spinnerB, "cell 3 6,alignx center");
-
-		JLabel lblHamburguesas = new JLabel("Hamburguesas");
-		lblHamburguesas.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblHamburguesas, "cell 1 8,alignx left");
-
-		final JComboBox comboBoxH = new JComboBox();
-		String[] textosHamburguesas = cargaPedidos(200);
-		comboBoxH.setModel(new DefaultComboBoxModel(textosHamburguesas));
-		transparentPanelPedido.add(comboBoxH, "cell 2 8,grow");
-
-		final JSpinner spinnerH = new JSpinner();
-		transparentPanelPedido.add(spinnerH, "cell 3 8,alignx center");
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		transparentPanelPedido.add(textField_2, "cell 4 8,growx");
-
-		JLabel lblEspeciales = new JLabel("Especiales");
-		lblEspeciales.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblEspeciales, "cell 1 10,alignx left");
-
-		final JComboBox comboBoxE = new JComboBox();
-		String[] textosEspeciales = cargaPedidos(400);
-		comboBoxE.setModel(new DefaultComboBoxModel(textosEspeciales));
-		transparentPanelPedido.add(comboBoxE, "flowx,cell 2 10,growx");
-
-		final JSpinner spinnerE = new JSpinner();
-		transparentPanelPedido.add(spinnerE, "cell 3 10,alignx center");
-
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		transparentPanelPedido.add(textField_4, "cell 4 10,growx");
-
-		JRadioButton rdbtnLight = new JRadioButton("Light");
-		rdbtnLight.setHorizontalAlignment(SwingConstants.RIGHT);
-		rdbtnLight.setForeground(Color.WHITE);
-		transparentPanelPedido.add(rdbtnLight,
-				"flowx,cell 4 6,alignx center,aligny center");
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {
-				" ---- Tama\u00F1o ----", "", "Peque\u00F1o", "Mediano",
-				"Grande" }));
-		transparentPanelPedido.add(comboBox,
-				"cell 4 6,alignx center,aligny center");
+		creaLabels(transparentPanelPedido);
+		/*
+		 * /* JLabel lblMens = new JLabel("Men\u00FAs");
+		 * lblMens.setForeground(Color.WHITE);
+		 * transparentPanelPedido.add(lblMens, "cell 1 2,alignx left");
+		 * 
+		 * 
+		 * final JComboBox comboBoxM = new JComboBox(); String[] textosMenu =
+		 * cargaPedidos(100); // cargaPedidos comboBoxM.setModel(new
+		 * DefaultComboBoxModel(textosMenu));
+		 * transparentPanelPedido.add(comboBoxM, "cell 2 2,grow");
+		 * 
+		 * final JSpinner spinnerM = new JSpinner();
+		 * transparentPanelPedido.add(spinnerM, "cell 3 2,alignx center");
+		 * 
+		 * textField = new JTextField(); transparentPanelPedido.add(textField,
+		 * "cell 4 2,growx"); textField.setColumns(10);
+		 * 
+		 * 
+		 * JLabel lblPizzas = new JLabel("Pizzas");
+		 * lblPizzas.setForeground(Color.WHITE);
+		 * transparentPanelPedido.add(lblPizzas, "cell 1 4,alignx left");
+		 * 
+		 * final JComboBox comboBoxP = new JComboBox(); String[] textosPizzas =
+		 * cargaPedidos(300); comboBoxP.setModel(new
+		 * DefaultComboBoxModel(textosPizzas));
+		 * comboBoxP.setToolTipText("Desplegar Lista");
+		 * transparentPanelPedido.add(comboBoxP, "cell 2 4,grow");
+		 * 
+		 * final JSpinner spinnerP = new JSpinner();
+		 * transparentPanelPedido.add(spinnerP, "cell 3 4,alignx center");
+		 * 
+		 * textField_1 = new JTextField(); textField_1.setColumns(10);
+		 * transparentPanelPedido.add(textField_1, "cell 4 4,growx");
+		 * 
+		 * 
+		 * JLabel lblBebidas = new JLabel("Bebidas");
+		 * lblBebidas.setForeground(Color.WHITE);
+		 * transparentPanelPedido.add(lblBebidas, "cell 1 6,alignx left");
+		 * 
+		 * final JComboBox comboBoxB = new JComboBox(); String[] textosBebidas =
+		 * cargaPedidos(500); comboBoxB.setModel(new
+		 * DefaultComboBoxModel(textosBebidas));
+		 * transparentPanelPedido.add(comboBoxB, "cell 2 6,grow");
+		 * 
+		 * JSpinner spinnerB = new JSpinner();
+		 * transparentPanelPedido.add(spinnerB, "cell 3 6,alignx center");
+		 * 
+		 * 
+		 * JLabel lblHamburguesas = new JLabel("Hamburguesas");
+		 * lblHamburguesas.setForeground(Color.WHITE);
+		 * transparentPanelPedido.add(lblHamburguesas, "cell 1 8,alignx left");
+		 * 
+		 * final JComboBox comboBoxH = new JComboBox(); String[]
+		 * textosHamburguesas = cargaPedidos(200); comboBoxH.setModel(new
+		 * DefaultComboBoxModel(textosHamburguesas));
+		 * transparentPanelPedido.add(comboBoxH, "cell 2 8,grow");
+		 * 
+		 * final JSpinner spinnerH = new JSpinner();
+		 * transparentPanelPedido.add(spinnerH, "cell 3 8,alignx center");
+		 * 
+		 * textField_2 = new JTextField(); textField_2.setColumns(10);
+		 * transparentPanelPedido.add(textField_2, "cell 4 8,growx");
+		 * 
+		 * JLabel lblEspeciales = new JLabel("Especiales");
+		 * lblEspeciales.setForeground(Color.WHITE);
+		 * transparentPanelPedido.add(lblEspeciales, "cell 1 10,alignx left");
+		 * 
+		 * final JComboBox comboBoxE = new JComboBox(); String[]
+		 * textosEspeciales = cargaPedidos(400); comboBoxE.setModel(new
+		 * DefaultComboBoxModel(textosEspeciales));
+		 * transparentPanelPedido.add(comboBoxE, "flowx,cell 2 10,growx");
+		 * 
+		 * final JSpinner spinnerE = new JSpinner();
+		 * transparentPanelPedido.add(spinnerE, "cell 3 10,alignx center");
+		 * 
+		 * textField_4 = new JTextField(); textField_4.setColumns(10);
+		 * transparentPanelPedido.add(textField_4, "cell 4 10,growx");
+		 */
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
@@ -191,34 +182,26 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
-		button_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				String opMenu = (String) comboBoxM.getSelectedItem();
-				if (cuentaMenus(opMenu, spinnerM)) { // Chequeo Menus
-					resetearPosicion(comboBoxM, spinnerM);
-				}
-				String opPizzas = (String) comboBoxP.getSelectedItem();
-				if (cuentaMenus(opPizzas, spinnerP)) { // Chequeo Pizzas String
-					resetearPosicion(comboBoxP, spinnerP);
-				}
-				String opHamburguesas = (String) comboBoxH.getSelectedItem();
-				if (cuentaMenus(opHamburguesas, spinnerH)) { // Chequeo
-																// Hamburguers
-					resetearPosicion(comboBoxH, spinnerH);
-				}
-				String opEspeciales = (String) comboBoxE.getSelectedItem();
-				if (cuentaMenus(opEspeciales, spinnerE)) { // Chequeo Especiales
-					resetearPosicion(comboBoxE, spinnerE);
-				}
-				armarPedido();
-				// String opBebidas = (String) comboBoxB.getSelectedItem();
-
-			}
-
-		});
-		calculaTotal();
-
+		/*
+		 * button_2.addMouseListener(new MouseAdapter() { //@Override public
+		 * void mouseClicked(MouseEvent arg0) { String opMenu = (String)
+		 * comboBoxM.getSelectedItem(); if (cuentaMenus(opMenu, spinnerM)) { //
+		 * Chequeo Menus resetearPosicion(comboBoxM, spinnerM); } String
+		 * opPizzas = (String) comboBoxP.getSelectedItem(); if
+		 * (cuentaMenus(opPizzas, spinnerP)) { // Chequeo Pizzas String
+		 * resetearPosicion(comboBoxP, spinnerP); } String opHamburguesas =
+		 * (String) comboBoxH.getSelectedItem(); if (cuentaMenus(opHamburguesas,
+		 * spinnerH)) { // Chequeo // Hamburguers resetearPosicion(comboBoxH,
+		 * spinnerH); } String opEspeciales = (String)
+		 * comboBoxE.getSelectedItem(); if (cuentaMenus(opEspeciales, spinnerE))
+		 * { // Chequeo Especiales resetearPosicion(comboBoxE, spinnerE); }
+		 * armarPedido(); // String opBebidas = (String)
+		 * comboBoxB.getSelectedItem();
+		 * 
+		 * }
+		 * 
+		 * });
+		 */
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -263,11 +246,71 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Metodos Auxiliares
+
+	// Carga Articulos a arraylist
 	public ArrayList<ArticleVO> cargoListado() {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
 		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
 		sol = test.allArticles();
 		return sol;
+	}
+
+	// Cargo categorias a arraylist
+	private ArrayList<CategoryVO> cargoCategorias() {
+		CategoryVO test = new CategoryVO("Menu", 1);
+		CategoryVO test2 = new CategoryVO("Hamburguesas", 2);
+
+		ArrayList<CategoryVO> sol = new ArrayList<CategoryVO>();
+		sol.add(test);
+		sol.add(test2);
+		return sol;
+
+		/*
+		 * CategoryMgt test = ServiceFacade.getInstance().getCategoryMgt();
+		 * ArrayList<CategoryVO> sol = new ArrayList<CategoryVO>(10); sol =
+		 * test.allCategories(); return sol;
+		 */
+	}
+
+	// Crea coleccion de labels
+	private void creaLabels(TransparentPanel a) {
+		if (categoria.size() != 0) {
+			String posicion = null;
+			int j = 2;
+			for (int i = 0; i < categoria.size(); i++) {
+				// Labels
+				JLabel lblTemp = new JLabel(categoria.get(i).getNombre());
+				lblTemp.setForeground(Color.WHITE);
+				posicion = "cell 1 " + j + ",alignx left";
+				a.add(lblTemp, posicion);
+
+				// Combobox's
+				final JComboBox comboBoxTemp = new JComboBox();
+				String[] textosMenu = cargaPedidos(categoria.get(i).getId()); // cargaPedidos
+				comboBoxTemp.setModel(new DefaultComboBoxModel(textosMenu));
+				posicion = "cell 2 " + j + ",grow";
+				a.add(comboBoxTemp, posicion);
+
+				// Spinners
+				final JSpinner spinnerTemp = new JSpinner();
+				posicion = "cell 3 " + j + ",alignx center";
+				a.add(spinnerTemp, posicion);
+
+				// JText's
+				final JTextField textFieldTemp = new JTextField();
+				textFieldTemp.setColumns(10);
+				posicion = "cell 4 " + j + ",growx";
+				a.add(textFieldTemp, posicion);
+				
+				j = j + 2;
+
+				// coleccion.add(lblTemp);
+			}
+		} else {
+			JLabel lblTemp = new JLabel("NO EXISTEN CATEGORIAS");
+			lblTemp.setForeground(Color.WHITE);
+			a.add(lblTemp, "cell 1 2,alignx left");
+		}
 	}
 
 	protected void vaciarPedido() {
@@ -278,17 +321,6 @@ public class CajaPrincipal extends BasicoUsuario {
 	private void resetearPosicion(JComboBox comboBox, JSpinner spinner) {
 		comboBox.setSelectedIndex(0);
 		spinner.setValue(0);
-	}
-
-	public String calculaTotal() {
-		int tot = 0;
-		for (int i = 0; i < pedidoAux.size(); i++) {
-			tot = tot + pedidoAux.get(i).getPrecio();
-		}
-		String totAux = "$" + tot;
-		total = totAux;
-		// trasparentPanelFacturacion.
-		return total;
 	}
 
 	public void armarPedido() {
@@ -369,21 +401,6 @@ public class CajaPrincipal extends BasicoUsuario {
 		}
 		return aux;
 	}
-
-	/*
-	 * private void llenararticulos() { ArticleVO a = new ArticleVO(1, "Menu 1",
-	 * 250); ArticleVO b = new ArticleVO(2, "Menu 2", 250); ArticleVO c = new
-	 * ArticleVO(3, "Menu 3", 100); ArticleVO d = new ArticleVO(4, "Menu 4",
-	 * 100); ArticleVO e = new ArticleVO(150, "Pizza 1", 150); ArticleVO f = new
-	 * ArticleVO(100, "Pizza 2", 150);
-	 * 
-	 * listaArticulos.add(a); listaArticulos.add(b); listaArticulos.add(c);
-	 * listaArticulos.add(d); listaArticulos.add(e); listaArticulos.add(f); //
-	 * pedidoAux.add(a); // pedidoAux.add(a); // pedidoAux.add(a); //
-	 * pedidoAux.add(a); // pedidoAux.add(a);
-	 * 
-	 * }
-	 */
 
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
