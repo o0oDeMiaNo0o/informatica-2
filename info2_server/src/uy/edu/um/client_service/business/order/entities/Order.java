@@ -3,25 +3,26 @@ package uy.edu.um.client_service.business.order.entities;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 
 public class Order {
 	//atributos
-	ArrayList<Article> articles = new ArrayList<Article>(10);
+	ArrayList<ArticleOrder> articles = new ArrayList<ArticleOrder>(10);
 	Client c = null;
-	
+
 
 	//constructor
-	public Order(ArrayList<Article> articles, Client c){
+	public Order(ArrayList<ArticleOrder> articles, Client c){
 		this.articles = articles;
 		this.c = c;
 	}
 
-	public ArrayList<Article> getArticles() {
+	public ArrayList<ArticleOrder> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(ArrayList<Article> articles) {
+	public void setArticles(ArrayList<ArticleOrder> articles) {
 		this.articles = articles;
 	}
 
