@@ -17,8 +17,8 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public CategoryVO createArticleVO(int numProducto, String nombre, int precio) {
-		CategoryVO toReturn = new CategoryVO(numProducto,nombre,precio);
+	public CategoryVO createArticleVO(String nombre, int precio) {
+		CategoryVO toReturn = new CategoryVO(nombre,precio);
 		return toReturn;
 	}
 
