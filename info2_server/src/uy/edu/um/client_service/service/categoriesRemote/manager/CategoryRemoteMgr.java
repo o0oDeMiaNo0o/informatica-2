@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.service.categoriesRemote.manager;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.categories.entities.Category;
@@ -26,6 +27,12 @@ public class CategoryRemoteMgr implements CategoryRemoteMgt{
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
 		Category category = cMgt.createCategory(c);
 		cMgt.addCategory(category);
+	}
+
+	@Override
+	public ArrayList<CategoryVO> allCategories() throws RemoteException {
+		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
+		return cMgt.allCategories();
 	}
 
 }
