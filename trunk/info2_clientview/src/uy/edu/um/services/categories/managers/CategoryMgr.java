@@ -1,7 +1,11 @@
 package uy.edu.um.services.categories.managers;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -37,8 +41,32 @@ public class CategoryMgr implements CategoryMgt{
 
 	@Override
 	public ArrayList<CategoryVO> allCategories() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
+
+		try {
+
+			String sObjectService = "CategoryRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+
+			CategoryMgt cMgt = ServiceFacade.getInstance().getCategoryMgt();
+
+			array = oCategoryRemoteMgt.allCategories();
+
+			System.out.println("nada colapso");
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+		return array;
+
 	}
 
 }
