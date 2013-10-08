@@ -38,7 +38,7 @@ public class CategoryMgr implements CategoryMgt{
 
 	@Override
 	public ArrayList<CategoryVO> allCategories() {
-		// TODO Auto-generated method stub
+		CategoryDAO dao = CategoryDAO.getInstance();
 		return null;
 	}
 }
