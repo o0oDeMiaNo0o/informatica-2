@@ -1,5 +1,7 @@
 package uy.edu.um.client_service.business.categories.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.persistance.DAO.category.CategoryDAO;
@@ -28,10 +30,15 @@ public class CategoryMgr implements CategoryMgt{
 
 	@Override
 	public Category createCategory(CategoryVO c) {
-		int id = 12;
 		String nombre = c.getNombre();
-		int precio = c.getPrecio();
-		Category category = new Category(id,nombre,precio);
-		return category;
+		int id = c.getId();
+		return new Category(nombre,id);
+
+	}
+
+	@Override
+	public ArrayList<CategoryVO> allCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
