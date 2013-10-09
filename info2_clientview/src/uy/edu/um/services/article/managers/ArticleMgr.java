@@ -35,19 +35,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void sendArticleVO(ArticleVO article) {
-		ArticleRemoteMgt aMgr = ServiceFacade.getInstance()
-				.getArticleRemoteMgt();
-		try {
-			aMgr.addArticle(article);
-			System.out.println("articulo agregado correctamente");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	@Override
-	public void setCliente(ArticleVO a) {
+	public void sendCliente(ArticleVO a) {
 		try {
 
 			String sObjectService = "ArticleRemoteMgr";
@@ -56,10 +44,6 @@ public class ArticleMgr implements ArticleMgt {
 
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
-
-			ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
-
 
 			oArticleRemoteMgt.addArticle(a);
 
