@@ -56,23 +56,7 @@ public class ArticlesDAO {
 
 	}
 
-	public void addArticle(Article articulo){
-		try{
-			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE) " +
-					"VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+");");
-			oStatement.close();
-			database.closeConnection();
-			//Verificacion por consola
-			System.out.println("articulo agregado correctamente");
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-			database.closeConnection();
-		}
 
-
-	}
 
 	@SuppressWarnings("null")
 	public ArrayList<ArticleVO> getArticlesVO() {
@@ -85,7 +69,7 @@ public class ArticlesDAO {
 
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
-
+ 
 			while (oResultSet.next()) {
 
 				//int nId = oResultSet.getInt(1);

@@ -3,11 +3,9 @@ package uy.edu.um.client_service.persistance.test;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
-import uy.edu.um.client_service.business.clients.entities.Client;
 import uy.edu.um.client_service.business.order.entities.Order;
-import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
-import uy.edu.um.value_object.article.ArticleVO;
 
 
 public class DBtest {
@@ -19,6 +17,7 @@ public class DBtest {
 	ArrayList<Article> aa = new ArrayList<Article>();
 	static Client c = new Client("rodrigo", "aa", 4010, 4010, "aaaa", "aaaa");
 
+
 	public static void main(String[] args) {
 		
 		ArrayList<Article> aa = new ArrayList<Article>();
@@ -26,9 +25,10 @@ public class DBtest {
 		aa.add(a2);
 		aa.add(a3);
 		aa.add(a4);
-		Order o = new Order(aa,c);
 
 		OrderDAO o1 = OrderDAO.getInstance();
+		Order o = new Order(aa,c);
+
 		
 		o1.addOrder(o);
 		//ArticleVO vo = d1.searchArticle(304);
