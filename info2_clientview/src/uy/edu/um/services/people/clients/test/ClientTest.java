@@ -11,34 +11,19 @@ import uy.edu.um.value_object.people.client.ClientVO;
 
 public class ClientTest {
 	public static void main(String[] args) {
+		String nombre = "matias";
+		String apellido = "liston";
+		String direccion = "asd";
+		String mail = "mliston";
+		int ci = 12345;
+		int tel = 12345345;
 
-		try {
+		ClientMgt cMgt = ServiceFacade.getInstance().getClientMgt();
 
-			String sObjectService = "ClientRemoteMgr";
+		ClientVO toSend = cMgt.createClientVO(nombre, apellido, ci, tel, direccion, mail);
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+		cMgt.sendClientVO(toSend);
 
-			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry.lookup(sObjectService);
-
-
-			String nombre = "matias";
-			String apellido = "liston";
-			String direccion = "asd";
-			String mail = "mliston";
-			int ci = 12345;
-			int tel = 12345345;
-
-			ClientMgt aMgt = ServiceFacade.getInstance().getClientMgt();
-
-			ClientVO toSend = aMgt.createClientVO(nombre,apellido,ci,tel,direccion,mail);
-
-			oArticleRemoteMgt.addClient(toSend);
-
-			System.out.println("cliente agregado");
-
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-		}
+		System.out.println("cliente agregado");
 	}
 }
