@@ -6,7 +6,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.client_service.business.BusinessFacade;
+import uy.edu.um.client_service.business.articleOrder.interfaces.ArticleOrderMgt;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
@@ -79,6 +81,17 @@ public class MainServer {
 					.exportObject((Remote) oTableRemoteMgr, 0);
 
 			oRegistry.rebind(name, oStubTable);
+
+			//componente de articleOrder
+
+			name = "ArticleOrderRemoteMgr";
+
+			ArticleOrderRemoteMgt oArticleOrderRemoteMgr = BusinessFacade.getInstance().getArticleOrderRemote();
+
+			ArticleOrderRemoteMgt oStubArticleOrder = (ArticleOrderRemoteMgt) UnicastRemoteObject
+					.exportObject((Remote) oArticleOrderRemoteMgr, 0);
+
+			oRegistry.rebind(name, oStubArticleOrder);
 
 			System.out.println("Ready and waiting");
 		} catch (Exception e) {
