@@ -3,10 +3,14 @@ package uy.edu.um.client_service.business.article.managers;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
+import uy.edu.um.client_service.business.categories.entities.Category;
+import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticleMgr implements ArticleMgt{
 
@@ -29,7 +33,7 @@ public class ArticleMgr implements ArticleMgt{
 	public void addArticle(Article a) {
 		//obtener instancia del DAO con Singleton
 		ArticlesDAO dao = ArticlesDAO.getInstance();
-	//	dao.addArticle(a);
+		dao.addArticle(a);
 	}
 
 	@Override
@@ -47,10 +51,11 @@ public class ArticleMgr implements ArticleMgt{
 	//Metodos
 
 	public Article getArticle(ArticleVO a){
-		int prod_n = a.getNumProducto();
 		String nombre = a.getNombre();
 		BigDecimal precio = a.getPrecio();
-		Article aReturn = new Article(prod_n,nombre, precio);
+		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
+		Category cat = cMgt.createCategory(a.getCategory());
+		Article aReturn = new Article(nombre, precio,cat);
 		return aReturn;
 	}
 
