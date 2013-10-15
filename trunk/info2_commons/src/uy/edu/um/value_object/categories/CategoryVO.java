@@ -6,7 +6,7 @@ public class CategoryVO implements Serializable{
 	private String nombre;
 	private int id;
 
-	public CategoryVO(String nombre,int id) {
+	public CategoryVO(int id,String nombre) {
 		this.nombre=nombre;
 		this.id = id;
 	}
