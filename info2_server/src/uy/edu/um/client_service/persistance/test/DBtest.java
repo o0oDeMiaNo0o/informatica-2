@@ -1,38 +1,31 @@
 package uy.edu.um.client_service.persistance.test;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 
 import uy.edu.um.client_service.business.article.entities.Article;
-import uy.edu.um.client_service.business.order.entities.Order;
-import uy.edu.um.client_service.business.people.clients.entities.Client;
-import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
+import uy.edu.um.client_service.business.categories.entities.Category;
+import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import uy.edu.um.client_service.persistance.DAO.category.CategoryDAO;
 
 
 public class DBtest {
 
-	static Article a1 = new Article(101,"pizza",120);
-	static Article a2 = new Article(102,"muzza",200);
-	static Article a3 = new Article(201,"hambuerguesa",180);
-	static Article a4 = new Article(202,"chivito",280);
-	ArrayList<Article> aa = new ArrayList<Article>();
-	static Client c = new Client("rodrigo", "aa", 4010, 4010, "aaaa", "aaaa");
+
 
 
 	public static void main(String[] args) {
 		
-		ArrayList<Article> aa = new ArrayList<Article>();
-		aa.add(a1);
-		aa.add(a2);
-		aa.add(a3);
-		aa.add(a4);
+	//Category c = new Category("Hamburguesas");
+	BigDecimal b = new BigDecimal(23);
+	Article a = new Article(101,"OPAAA",b);
+	ArticlesDAO aDAO = ArticlesDAO.getInstance();
+	
+	//CategoryDAO cDAO = CategoryDAO.getInstance();
+	aDAO.addArticle(a);
+	//cDAO.addCategory(c);
 
-		OrderDAO o1 = OrderDAO.getInstance();
-		Order o = new Order(aa,c);
 
-		
-		o1.addOrder(o);
-		//ArticleVO vo = d1.searchArticle(304);
-		//System.out.println(vo.getNombre());
+
 
 
 	}
