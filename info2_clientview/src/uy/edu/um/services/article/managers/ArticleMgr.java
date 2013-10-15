@@ -1,15 +1,14 @@
 package uy.edu.um.services.article.managers;
 
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticleMgr implements ArticleMgt {
 	// respeta patron singleton
@@ -29,8 +28,8 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArticleVO createArticleVO(int prodN, String nombre, BigDecimal precio) {
-		ArticleVO aReturn = new ArticleVO(prodN, nombre, precio);
+	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category) {
+		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
 
