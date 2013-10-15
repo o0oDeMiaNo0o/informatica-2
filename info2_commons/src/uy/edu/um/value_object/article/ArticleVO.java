@@ -3,16 +3,20 @@ package uy.edu.um.value_object.article;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import uy.edu.um.value_object.categories.CategoryVO;
+
 public class ArticleVO implements Serializable{
 
 	private String nombre;
 	private BigDecimal precio;
 	private int numProducto;
+	private int idCategory;
 
-	public ArticleVO(int numProducto, String nombre, BigDecimal precio) {
+	public ArticleVO(int numProducto, String nombre, BigDecimal precio, CategoryVO category) {
 		this.nombre=nombre;
 		this.numProducto = numProducto;
 		this.precio=precio;
+		this.idCategory = category.getId();
 	}
 
 	public String getNombre() {
