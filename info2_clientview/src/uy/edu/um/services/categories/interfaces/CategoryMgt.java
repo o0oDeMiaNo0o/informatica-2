@@ -6,11 +6,9 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public interface CategoryMgt {
 
-	public CategoryVO createArticleVO(String nombre, int precio);
+	public CategoryVO createCategoryVO(String nombre, int id);
 
 	public void sendCategoryVO(CategoryVO c);
-
-	public void setCliente(CategoryVO c);
 
 	public ArrayList<CategoryVO> allCategories();
 
