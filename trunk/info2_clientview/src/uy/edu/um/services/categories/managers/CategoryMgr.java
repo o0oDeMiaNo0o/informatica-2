@@ -22,20 +22,28 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	public CategoryVO createArticleVO(String nombre, int precio) {
-		CategoryVO toReturn = new CategoryVO(nombre,precio);
+	public CategoryVO createCategoryVO(String nombre, int id) {
+		CategoryVO toReturn = new CategoryVO(nombre,id);
 		return toReturn;
 	}
 
 	@Override
 	public void sendCategoryVO(CategoryVO c) {
-		// TODO Auto-generated method stub
+		try {
 
-	}
+			String sObjectService = "CategoryRemoteMgr";
 
-	@Override
-	public void setCliente(CategoryVO c) {
-		// TODO Auto-generated method stub
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			oCategoryRemoteMgt.addCategory(c);
+
+			System.out.println("Categoria agregada correctamente");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
@@ -52,9 +60,6 @@ public class CategoryMgr implements CategoryMgt{
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
-
-			CategoryMgt cMgt = ServiceFacade.getInstance().getCategoryMgt();
 
 			array = oCategoryRemoteMgt.allCategories();
 
