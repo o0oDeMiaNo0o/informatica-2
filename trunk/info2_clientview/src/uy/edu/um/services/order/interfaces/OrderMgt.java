@@ -9,7 +9,7 @@ public interface OrderMgt {
 
 	public void getOrdersClient(ClientVO c);
 
-	public void setClient();
+	public void setClient(ArrayList<ArticleVO> a, ClientVO c);
 
 
 

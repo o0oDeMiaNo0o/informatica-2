@@ -34,7 +34,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void sendCliente(ArticleVO a) {
+	public void sendArticle(ArticleVO a) {
 		try {
 
 			String sObjectService = "ArticleRemoteMgr";
