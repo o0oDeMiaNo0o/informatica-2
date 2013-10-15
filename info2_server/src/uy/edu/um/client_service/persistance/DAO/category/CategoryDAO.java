@@ -25,8 +25,8 @@ public class CategoryDAO {
 		try{
 			
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO CATEGORIAS (Nombre, Descripcion) " +
-					"VALUES ("+c.getNombre()+",'"+c.getDescripcion()+");");
+			oStatement.execute("INSERT INTO CATEGORIAS (Nombre) " +
+					"VALUES ('"+c.getNombre()+"');");
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
@@ -39,6 +39,8 @@ public class CategoryDAO {
 
 
 	}
+	
+	
 
 
 }

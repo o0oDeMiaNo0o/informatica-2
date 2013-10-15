@@ -91,7 +91,6 @@ public class ArticlesDAO {
 
 			while (oResultSet.next()) {
 
-				//int nId = oResultSet.getInt(1);
 				int nProd = oResultSet.getInt(2);
 				String sName = oResultSet.getString(3);
 				BigDecimal nPrice = oResultSet.getBigDecimal(4);
@@ -128,7 +127,7 @@ public class ArticlesDAO {
 				int nId = oResultSet.getInt(1);
 				int nProd = oResultSet.getInt(2);
 				String sName = oResultSet.getString(3);
-				int nPrice = oResultSet.getInt(4);
+				BigDecimal nPrice = oResultSet.getBigDecimal(4);
 
 				System.out.println("Article. ID: " + nId +" Product Nr: "+nProd+ " Nombre: " + sName + " Precio: " + nPrice);
 
