@@ -2,30 +2,18 @@ package uy.edu.um.client_service.business.article.entities;
 
 import java.math.BigDecimal;
 
-public class Article {
+import uy.edu.um.client_service.business.categories.entities.Category;
 
-	private int prodN;
+public class Article {
 	private String nombre;
 	private BigDecimal precio;
+	private Category category;
 
-	public Article(int prodN, String nombre, BigDecimal precio) {
-		this.prodN = prodN;
+	public Article(String nombre, BigDecimal precio, Category category) {
 		this.nombre=nombre;
 		this.precio=precio;
+		this.category = category;
 	}
-
-
-
-	public int getProdN() {
-		return prodN;
-	}
-
-
-
-	public void setProdN(int prodN) {
-		this.prodN = prodN;
-	}
-
 
 
 	public String getNombre() {
@@ -46,6 +34,18 @@ public class Article {
 
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
+	}
+
+
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 
