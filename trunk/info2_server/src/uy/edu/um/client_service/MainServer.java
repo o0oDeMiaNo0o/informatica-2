@@ -11,6 +11,7 @@ import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
+import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
 
@@ -60,6 +61,17 @@ public class MainServer {
 					.exportObject((Remote) oArticleRemoteMgr, 0);
 
 			oRegistry.rebind(name, oStubArticle);
+
+			//componente de clientes
+
+			name = "ClientRemoteMgr";
+
+			ClientRemoteMgt oClientRemoteMgr = BusinessFacade.getInstance().getClientRemote();
+
+			ClientRemoteMgt oStubClient = (ClientRemoteMgt) UnicastRemoteObject
+					.exportObject((Remote) oClientRemoteMgr, 0);
+
+			oRegistry.rebind(name, oStubClient);
 
 			//comoponente de usuarios
 
