@@ -1,6 +1,8 @@
 package uy.edu.um.value_object.categories;
 
-public class CategoryVO {
+import java.io.Serializable;
+
+public class CategoryVO implements Serializable{
 	private String nombre;
 	private int id;
 
