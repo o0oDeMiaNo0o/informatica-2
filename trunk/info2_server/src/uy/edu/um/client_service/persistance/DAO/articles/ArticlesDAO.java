@@ -32,8 +32,8 @@ public class ArticlesDAO {
 	public void addArticle(Article articulo){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE) " +
-					"VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+");");
+			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE, Categorias_idCategorias) " +
+					"VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+",1);");
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
