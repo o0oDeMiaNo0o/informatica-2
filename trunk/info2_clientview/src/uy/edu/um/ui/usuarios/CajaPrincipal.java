@@ -182,26 +182,15 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
-		/*
-		 * button_2.addMouseListener(new MouseAdapter() { //@Override public
-		 * void mouseClicked(MouseEvent arg0) { String opMenu = (String)
-		 * comboBoxM.getSelectedItem(); if (cuentaMenus(opMenu, spinnerM)) { //
-		 * Chequeo Menus resetearPosicion(comboBoxM, spinnerM); } String
-		 * opPizzas = (String) comboBoxP.getSelectedItem(); if
-		 * (cuentaMenus(opPizzas, spinnerP)) { // Chequeo Pizzas String
-		 * resetearPosicion(comboBoxP, spinnerP); } String opHamburguesas =
-		 * (String) comboBoxH.getSelectedItem(); if (cuentaMenus(opHamburguesas,
-		 * spinnerH)) { // Chequeo // Hamburguers resetearPosicion(comboBoxH,
-		 * spinnerH); } String opEspeciales = (String)
-		 * comboBoxE.getSelectedItem(); if (cuentaMenus(opEspeciales, spinnerE))
-		 * { // Chequeo Especiales resetearPosicion(comboBoxE, spinnerE); }
-		 * armarPedido(); // String opBebidas = (String)
-		 * comboBoxB.getSelectedItem();
-		 * 
-		 * }
-		 * 
-		 * });
-		 */
+		button_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+
+		}
+
+		);
+
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -257,8 +246,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	// Cargo categorias a arraylist
 	private ArrayList<CategoryVO> cargoCategorias() {
-		CategoryVO test = new CategoryVO("Menu", 1);
-		CategoryVO test2 = new CategoryVO("Hamburguesas", 2);
+		CategoryVO test = new CategoryVO(1, "Menu");
+		CategoryVO test2 = new CategoryVO(2, "Hamburguesas");
 
 		ArrayList<CategoryVO> sol = new ArrayList<CategoryVO>();
 		sol.add(test);
@@ -272,7 +261,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		 */
 	}
 
-	// Crea coleccion de labels
+	// Crea Elementos dependiendo de categoria
 	private void creaElementos(TransparentPanel a) {
 		if (categoria.size() != 0) {
 			String posicion = null;
