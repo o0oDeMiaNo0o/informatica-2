@@ -88,84 +88,6 @@ public class CajaPrincipal extends BasicoUsuario {
 				"cell 4 1,alignx center,aligny center");
 
 		creaElementos(transparentPanelPedido);
-		/*
-		 * /* JLabel lblMens = new JLabel("Men\u00FAs");
-		 * lblMens.setForeground(Color.WHITE);
-		 * transparentPanelPedido.add(lblMens, "cell 1 2,alignx left");
-		 * 
-		 * 
-		 * final JComboBox comboBoxM = new JComboBox(); String[] textosMenu =
-		 * cargaPedidos(100); // cargaPedidos comboBoxM.setModel(new
-		 * DefaultComboBoxModel(textosMenu));
-		 * transparentPanelPedido.add(comboBoxM, "cell 2 2,grow");
-		 * 
-		 * final JSpinner spinnerM = new JSpinner();
-		 * transparentPanelPedido.add(spinnerM, "cell 3 2,alignx center");
-		 * 
-		 * textField = new JTextField(); transparentPanelPedido.add(textField,
-		 * "cell 4 2,growx"); textField.setColumns(10);
-		 * 
-		 * 
-		 * JLabel lblPizzas = new JLabel("Pizzas");
-		 * lblPizzas.setForeground(Color.WHITE);
-		 * transparentPanelPedido.add(lblPizzas, "cell 1 4,alignx left");
-		 * 
-		 * final JComboBox comboBoxP = new JComboBox(); String[] textosPizzas =
-		 * cargaPedidos(300); comboBoxP.setModel(new
-		 * DefaultComboBoxModel(textosPizzas));
-		 * comboBoxP.setToolTipText("Desplegar Lista");
-		 * transparentPanelPedido.add(comboBoxP, "cell 2 4,grow");
-		 * 
-		 * final JSpinner spinnerP = new JSpinner();
-		 * transparentPanelPedido.add(spinnerP, "cell 3 4,alignx center");
-		 * 
-		 * textField_1 = new JTextField(); textField_1.setColumns(10);
-		 * transparentPanelPedido.add(textField_1, "cell 4 4,growx");
-		 * 
-		 * 
-		 * JLabel lblBebidas = new JLabel("Bebidas");
-		 * lblBebidas.setForeground(Color.WHITE);
-		 * transparentPanelPedido.add(lblBebidas, "cell 1 6,alignx left");
-		 * 
-		 * final JComboBox comboBoxB = new JComboBox(); String[] textosBebidas =
-		 * cargaPedidos(500); comboBoxB.setModel(new
-		 * DefaultComboBoxModel(textosBebidas));
-		 * transparentPanelPedido.add(comboBoxB, "cell 2 6,grow");
-		 * 
-		 * JSpinner spinnerB = new JSpinner();
-		 * transparentPanelPedido.add(spinnerB, "cell 3 6,alignx center");
-		 * 
-		 * 
-		 * JLabel lblHamburguesas = new JLabel("Hamburguesas");
-		 * lblHamburguesas.setForeground(Color.WHITE);
-		 * transparentPanelPedido.add(lblHamburguesas, "cell 1 8,alignx left");
-		 * 
-		 * final JComboBox comboBoxH = new JComboBox(); String[]
-		 * textosHamburguesas = cargaPedidos(200); comboBoxH.setModel(new
-		 * DefaultComboBoxModel(textosHamburguesas));
-		 * transparentPanelPedido.add(comboBoxH, "cell 2 8,grow");
-		 * 
-		 * final JSpinner spinnerH = new JSpinner();
-		 * transparentPanelPedido.add(spinnerH, "cell 3 8,alignx center");
-		 * 
-		 * textField_2 = new JTextField(); textField_2.setColumns(10);
-		 * transparentPanelPedido.add(textField_2, "cell 4 8,growx");
-		 * 
-		 * JLabel lblEspeciales = new JLabel("Especiales");
-		 * lblEspeciales.setForeground(Color.WHITE);
-		 * transparentPanelPedido.add(lblEspeciales, "cell 1 10,alignx left");
-		 * 
-		 * final JComboBox comboBoxE = new JComboBox(); String[]
-		 * textosEspeciales = cargaPedidos(400); comboBoxE.setModel(new
-		 * DefaultComboBoxModel(textosEspeciales));
-		 * transparentPanelPedido.add(comboBoxE, "flowx,cell 2 10,growx");
-		 * 
-		 * final JSpinner spinnerE = new JSpinner();
-		 * transparentPanelPedido.add(spinnerE, "cell 3 10,alignx center");
-		 * 
-		 * textField_4 = new JTextField(); textField_4.setColumns(10);
-		 * transparentPanelPedido.add(textField_4, "cell 4 10,growx");
-		 */
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
@@ -246,19 +168,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	// Cargo categorias a arraylist
 	private ArrayList<CategoryVO> cargoCategorias() {
-		CategoryVO test = new CategoryVO(1, "Menu");
-		CategoryVO test2 = new CategoryVO(2, "Hamburguesas");
-
-		ArrayList<CategoryVO> sol = new ArrayList<CategoryVO>();
-		sol.add(test);
-		sol.add(test2);
-		return sol;
-
-		/*
-		 * CategoryMgt test = ServiceFacade.getInstance().getCategoryMgt();
-		 * ArrayList<CategoryVO> sol = new ArrayList<CategoryVO>(10); sol =
-		 * test.allCategories(); return sol;
-		 */
+		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
+		return cat.allCategories();
 	}
 
 	// Crea Elementos dependiendo de categoria
@@ -275,7 +186,7 @@ public class CajaPrincipal extends BasicoUsuario {
 
 				// Combobox's
 				final JComboBox comboBoxTemp = new JComboBox();
-				String[] textosMenu = cargaPedidos(categoria.get(i).getId()); // cargaPedidos
+				String[] textosMenu = cargaPedidos(categoria.get(i)); // cargaPedidos
 				comboBoxTemp.setModel(new DefaultComboBoxModel(textosMenu));
 				posicion = "cell 2 " + j + ",grow";
 				a.add(comboBoxTemp, posicion);
@@ -317,19 +228,19 @@ public class CajaPrincipal extends BasicoUsuario {
 		Object[][] aux;
 		if ((pedidoAux.size() != 0)) {
 			aux = new Object[pedidoAux.size() + 1][3];
-			aux[0][0] = "Nro Producto";
+			aux[0][0] = "Categoria";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Precio";
 			for (int i = 0; i < pedidoAux.size(); i++) {
 				if (pedidoAux.get(i) != null) {
-					aux[i + 1][0] = pedidoAux.get(i).getNumProducto();
+					aux[i + 1][0] = pedidoAux.get(i).getCategory().getNombre();
 					aux[i + 1][1] = pedidoAux.get(i).getNombre();
 					aux[i + 1][2] = pedidoAux.get(i).getPrecio();
 				}
 			}
 		} else {
 			aux = new Object[1][3];
-			aux[0][0] = "Nro Producto";
+			aux[0][0] = "Categoria";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Precio";
 		}
@@ -356,23 +267,16 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Carga pedidos y los agrega a los comboBox
-	public String[] cargaPedidos(int seccion) {
-		int limite = seccion + 99;
+	public String[] cargaPedidos(CategoryVO cat) {
 		ArrayList<String> aux = new ArrayList<String>();
 		aux.add("---- Desplegar Lista ----");
 		aux.add("");
 		int j = 0;
-		boolean bandera = false;
-		while ((j < listaArticulos.size()) && (bandera == false)) {
-			if ((seccion <= listaArticulos.get(j).getNumProducto())
-					&& (limite >= listaArticulos.get(j).getNumProducto())) {
+		while ((j < listaArticulos.size())) {
+			if (listaArticulos.get(j).getCategory() == cat) {
 				aux.add(listaArticulos.get(j).getNombre());
-				j++;
-			} else if (seccion > listaArticulos.get(j).getNumProducto()) {
-				j++;
-			} else {
-				bandera = true;
 			}
+			j++;
 		}
 		textos = new String[aux.size() + 1];
 		for (int i = 0; i < textos.length - 1; i++) {

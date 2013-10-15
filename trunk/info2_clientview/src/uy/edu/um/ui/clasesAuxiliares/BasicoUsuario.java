@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,10 +12,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.imagenes.DirLocal;
+
 public class BasicoUsuario extends JFrame {
 
 	public ImagePanel contentPane;
-	public String DirFondo = "/Users/facundoliston/Documents/FACULTAD/UM/Informatica2/info2_clientview/src/uy/edu/um/imagenes/Fondo2.jpg";
+	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
 
 	/**
 	 * Launch the application.
@@ -72,7 +75,7 @@ public class BasicoUsuario extends JFrame {
 		JMenu menuCaja = new JMenu("Caja");
 		menuCaja.setBackground(Color.DARK_GRAY);
 		menuBar.add(menuCaja);
-		
+
 		JMenuItem mntmVerMesas = new JMenuItem("Ver Mesas");
 		menuCaja.add(mntmVerMesas);
 
