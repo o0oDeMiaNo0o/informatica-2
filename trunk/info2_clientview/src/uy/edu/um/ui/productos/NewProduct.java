@@ -35,7 +35,7 @@ public class NewProduct extends JFrame {
 	private JTextField textFieldPrecio;
 	private JLabel lblNewLabel;
 	private JLabel lblPrecio;
-	private JLabel lblNroProducto;
+	private JLabel lblCategoria;
 	private JComboBox comboBoxCat;
 	private JButton btnCancelar;
 
@@ -72,8 +72,8 @@ public class NewProduct extends JFrame {
 		transparentPanel.setLayout(new MigLayout("", "[][92px,grow]",
 				"[][][][29px][][][][][]"));
 
-		lblNroProducto = new JLabel("Categoria");
-		transparentPanel.add(lblNroProducto,
+		lblCategoria = new JLabel("Categoria");
+		transparentPanel.add(lblCategoria,
 				"cell 0 0,alignx trailing,aligny center");
 
 		comboBoxCat = new JComboBox();
