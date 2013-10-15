@@ -7,6 +7,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticleVO implements Serializable{
 
+	private int id;
 	private String nombre;
 	private BigDecimal precio;
 	private CategoryVO category;
@@ -14,6 +15,13 @@ public class ArticleVO implements Serializable{
 	public ArticleVO(String nombre, BigDecimal precio, CategoryVO category) {
 		this.nombre=nombre;
 		this.precio=precio;
+		this.category = category;
+	}
+
+	public ArticleVO(int id, String nombre, BigDecimal precio, CategoryVO category){
+		this.id = id;
+		this.nombre = nombre;
+		this.precio = precio;
 		this.category = category;
 	}
 
@@ -39,6 +47,14 @@ public class ArticleVO implements Serializable{
 
 	public void setCategory(CategoryVO category) {
 		this.category = category;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
