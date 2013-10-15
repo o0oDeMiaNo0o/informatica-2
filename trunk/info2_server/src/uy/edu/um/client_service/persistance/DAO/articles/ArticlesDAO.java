@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.persistance.DAO.articles;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,6 +29,24 @@ public class ArticlesDAO {
 		return instance;
 	}
 
+	public void addArticle(Article articulo){
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE) " +
+					"VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+");");
+			oStatement.close();
+			database.closeConnection();
+			//Verificacion por consola
+			System.out.println("articulo agregado correctamente");
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			database.closeConnection();
+		}
+
+
+	}
+
 	public ArticleVO searchArticle(int prodnum){
 		ArticleVO result = null;
 		try {
@@ -41,7 +60,7 @@ public class ArticlesDAO {
 			while(oResultSet.next()){
 				int nProd = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
-				int nPrice = oResultSet.getInt(3);
+				BigDecimal nPrice = oResultSet.getBigDecimal(3);
 				result = new ArticleVO(nProd,sName,nPrice);
 
 			}
@@ -69,13 +88,13 @@ public class ArticlesDAO {
 
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
- 
+
 			while (oResultSet.next()) {
 
 				//int nId = oResultSet.getInt(1);
 				int nProd = oResultSet.getInt(2);
 				String sName = oResultSet.getString(3);
-				int nPrice = oResultSet.getInt(4);
+				BigDecimal nPrice = oResultSet.getBigDecimal(4);
 				ArticleVO a = new ArticleVO(nProd,sName,nPrice);
 				toReturn.add(a);
 			}
