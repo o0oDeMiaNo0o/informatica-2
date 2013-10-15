@@ -32,12 +32,6 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public void sendClientVO(ClientVO c) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setCliente() {
 		try {
 
 			String sObjectService = "ClientRemoteMgr";
@@ -48,41 +42,23 @@ public class ClientMgr implements ClientMgt{
 					.lookup(sObjectService);
 
 
-			ClientMgt aMgt = ServiceFacade.getInstance().getClientMgt();
+			//ClientMgt aMgt = ServiceFacade.getInstance().getClientMgt();
 
-			int ci = 4518723;
-			String nombre = "pedro";
-			String apellido = "bermudez";
-			String mail = "jbermu@gmail.com";
-			String direccion = "soriano 1590";
-			int tel = 452452345;
-
-			ClientVO toSend = aMgt.createClientVO(nombre, apellido, ci, tel, direccion, mail);
-
-			oArticleRemoteMgt.addClient(toSend);
+			oArticleRemoteMgt.addClient(c);
 
 			System.out.println("Cliente agregado");
+			} catch (Exception e) {
+				System.err.println("error:");
+				e.printStackTrace();
 
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-
-		}
+			}
 
 	}
-
-
 
 	@Override
 	public void getClient(int ci) {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void addClient(String nombre, String apellido, int ci, int tel,
-			String direccion, String mail) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
