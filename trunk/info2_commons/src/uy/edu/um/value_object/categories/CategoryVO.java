@@ -10,6 +10,10 @@ public class CategoryVO implements Serializable{
 		this.nombre=nombre;
 		this.id = id;
 	}
+	
+	public CategoryVO(String nombre) {
+		this.nombre=nombre;
+	}
 
 	public String getNombre() {
 		return nombre;
