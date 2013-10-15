@@ -2,8 +2,18 @@ package uy.edu.um.client_service.business.categories.entities;
 
 public class Category {
 
-	int id;
 	private String nombre;
+	private int id;
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Category(String nombre){
 		this.nombre = nombre;
@@ -16,11 +26,5 @@ public class Category {
 		this.nombre = nombre;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 }
