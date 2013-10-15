@@ -2,6 +2,7 @@ package uy.edu.um.client_service.business.categories.entities;
 
 public class Category {
 
+	int id;
 	private String nombre;
 
 	public Category(String nombre){
@@ -13,5 +14,13 @@ public class Category {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
