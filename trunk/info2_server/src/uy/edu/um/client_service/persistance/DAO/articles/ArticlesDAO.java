@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.persistance.JDBC;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticlesDAO {
 
@@ -32,8 +33,8 @@ public class ArticlesDAO {
 	public void addArticle(Article articulo){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO ARTICLES (PROD_N, NAME, PRICE, Categorias_idCategorias) " +
-					"VALUES ("+articulo.getProdN()+",'"+articulo.getNombre()+"',"+articulo.getPrecio()+",1);");
+			oStatement.execute("INSERT INTO ARTICLES ( NAME, PRICE, Categorias_idCategorias) " +
+					"VALUES ('"+articulo.getNombre()+"',"+articulo.getPrecio()+","+articulo.getCategory().getId()+");");
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
@@ -47,34 +48,33 @@ public class ArticlesDAO {
 
 	}
 
-	public ArticleVO searchArticle(int prodnum){
-		ArticleVO result = null;
-		try {
-			Statement oStatement = database.getConnection().createStatement();
-
-
-			ResultSet oResultSet = oStatement.executeQuery("SELECT `PROD_N`,`NAME`,`PRICE` FROM `Articles` where `Articles`.`PROD_N` = "+prodnum+";");
-
-
-
-			while(oResultSet.next()){
-				int nProd = oResultSet.getInt(1);
-				String sName = oResultSet.getString(2);
-				BigDecimal nPrice = oResultSet.getBigDecimal(3);
-				result = new ArticleVO(nProd,sName,nPrice);
-
-			}
-
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-
-
-	}
-
+//	public ArticleVO searchArticle(int prodnum){
+//		ArticleVO result = null;
+//		try {
+//			Statement oStatement = database.getConnection().createStatement();
+//
+//
+//			ResultSet oResultSet = oStatement.executeQuery("SELECT `PROD_N`,`NAME`,`PRICE` FROM `Articles` where `Articles`.`PROD_N` = "+prodnum+";");
+//
+//
+//
+//			while(oResultSet.next()){
+//				String sName = oResultSet.getString(1);
+//				BigDecimal nPrice = oResultSet.getBigDecimal(2);
+//				result = new ArticleVO(sName,nPrice);
+//
+//			}
+//
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return result;
+//
+//
+//	}
+//
 
 
 	@SuppressWarnings("null")
@@ -91,10 +91,11 @@ public class ArticlesDAO {
 
 			while (oResultSet.next()) {
 
-				int nProd = oResultSet.getInt(2);
-				String sName = oResultSet.getString(3);
-				BigDecimal nPrice = oResultSet.getBigDecimal(4);
-				ArticleVO a = new ArticleVO(nProd,sName,nPrice);
+				String sName = oResultSet.getString(2);
+				BigDecimal nPrice = oResultSet.getBigDecimal(3);
+				int id = oResultSet.getInt(4);
+				CategoryVO c = getCategoryVO(id);
+				ArticleVO a = new ArticleVO(sName,nPrice,c);
 				toReturn.add(a);
 			}
 
@@ -111,6 +112,34 @@ public class ArticlesDAO {
 		}
 
 	}
+	
+	public CategoryVO getCategoryVO(int catId){
+		CategoryVO c=null;
+		
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
+			
+			while (oResultSet1.next()){
+				String sName = oResultSet1.getString(1);
+				c = new CategoryVO(catId,sName);
+
+			}
+			
+			oResultSet1.close();
+			oStatement.close();
+			
+		}
+		catch(SQLException e){
+			
+		}
+		return c;
+		
+	}
+	
+	
+	
+	
 
 
 	public void getArticles() {
