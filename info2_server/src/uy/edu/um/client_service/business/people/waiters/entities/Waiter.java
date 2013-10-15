@@ -1,7 +1,5 @@
 package uy.edu.um.client_service.business.people.waiters.entities;
 
-import uy.edu.um.client_service.business.people.People;
-
 public class Waiter{
 
 	private String nombre, apellido, direccion, mail;
