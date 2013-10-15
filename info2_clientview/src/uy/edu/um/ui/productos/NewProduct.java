@@ -106,7 +106,7 @@ public class NewProduct extends JFrame {
 					if (!nombre.equals("")) {
 						if (Helpers.isNumeric(precioAux)) {
 							if (!comboBoxCat.getSelectedItem().equals(
-									"--- Desplegar Lista ---")) {
+									"---- Desplegar Lista ----")) {
 								BigDecimal precio = new BigDecimal(Integer
 										.parseInt(textFieldPrecio.getText()));
 								CategoryVO cat = buscaEnLista(comboBoxCat
