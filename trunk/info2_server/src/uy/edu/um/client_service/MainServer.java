@@ -6,10 +6,10 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.client_service.business.articleOrder.interfaces.ArticleOrderMgt;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
+import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
@@ -37,6 +37,18 @@ public class MainServer {
 					.exportObject((Remote) oOrderRemoteMgr, 0);
 
 			oRegistry.rebind(name, oStub);
+
+			//componente de categorias
+
+			name = "CategoryRemoteMgr";
+
+			CategoryRemoteMgt oCategoryRemoteMgr = BusinessFacade.getInstance().getCategoryRemote();
+
+			CategoryRemoteMgt oStubCategory = (CategoryRemoteMgt) UnicastRemoteObject
+					.exportObject((Remote) oCategoryRemoteMgr, 0);
+
+			oRegistry.rebind(name, oStubCategory);
+
 
 			// componente de articulos
 
