@@ -7,6 +7,4 @@ public interface ArticleOrderMgt {
 
 	public ArticleOrder getArticleOrder(ArticleOrderVO ao);
 
-
-
 }
