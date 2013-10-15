@@ -12,6 +12,11 @@ public class test2 {
 		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
 		CategoryMgt cMgt = ServiceFacade.getInstance().getCategoryMgt();
 		array = cMgt.allCategories();
+		for(CategoryVO c : array){
+			if (c != null){
+				System.out.println(c.getNombre()+" "+c.getId());
+			}
+		}
 	}
 
 }
