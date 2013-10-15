@@ -31,14 +31,13 @@ public class CategoryMgr implements CategoryMgt{
 	@Override
 	public Category createCategory(CategoryVO c) {
 		String nombre = c.getNombre();
-		int id = c.getId();
-		return new Category(nombre,id);
+		return new Category(nombre);
 
 	}
 
 	@Override
 	public ArrayList<CategoryVO> allCategories() {
 		CategoryDAO dao = CategoryDAO.getInstance();
-		return null;
+		return dao.getCategoryVO();
 	}
 }
