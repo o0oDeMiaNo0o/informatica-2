@@ -9,12 +9,10 @@ public class ArticleVO implements Serializable{
 
 	private String nombre;
 	private BigDecimal precio;
-	private int numProducto;
 	private CategoryVO category;
 
-	public ArticleVO(int numProducto, String nombre, BigDecimal precio, CategoryVO category) {
+	public ArticleVO(String nombre, BigDecimal precio, CategoryVO category) {
 		this.nombre=nombre;
-		this.numProducto = numProducto;
 		this.precio=precio;
 		this.category = category;
 	}
@@ -33,14 +31,6 @@ public class ArticleVO implements Serializable{
 
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
-	}
-
-	public int getNumProducto() {
-		return numProducto;
-	}
-
-	public void setNumProducto(int numProducto) {
-		this.numProducto = numProducto;
 	}
 
 	public CategoryVO getCategory() {
