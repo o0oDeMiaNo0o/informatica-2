@@ -29,7 +29,7 @@ public class ArticleMgr implements ArticleMgt{
 	public void addArticle(Article a) {
 		//obtener instancia del DAO con Singleton
 		ArticlesDAO dao = ArticlesDAO.getInstance();
-		dao.addArticle(a);
+	//	dao.addArticle(a);
 	}
 
 	@Override
