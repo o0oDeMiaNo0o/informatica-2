@@ -22,23 +22,6 @@ public class MensajeGenerico extends JDialog {
 		this.mensaje = a;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MensajeGenerico dialog = new MensajeGenerico(mensaje);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setLocationRelativeTo(null);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public MensajeGenerico(String error) {
 		setResizable(false);
 		setBounds(100, 100, 326, 107);
