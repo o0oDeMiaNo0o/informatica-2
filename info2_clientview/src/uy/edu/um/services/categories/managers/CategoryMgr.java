@@ -22,8 +22,8 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	public CategoryVO createCategoryVO(String nombre, int id) {
-		CategoryVO toReturn = new CategoryVO(nombre,id);
+	public CategoryVO createCategoryVO(int id, String nombre) {
+		CategoryVO toReturn = new CategoryVO(id,nombre);
 		return toReturn;
 	}
 

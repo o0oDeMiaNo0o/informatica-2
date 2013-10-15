@@ -6,7 +6,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public interface CategoryMgt {
 
-	public CategoryVO createCategoryVO(String nombre, int id);
+	public CategoryVO createCategoryVO(int id, String nombre);
 
 	public void sendCategoryVO(CategoryVO c);
 
