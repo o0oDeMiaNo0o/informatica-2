@@ -3,9 +3,11 @@ package uy.edu.um.client_service.persistance.DAO.clients;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public class ClientDAO {
 
@@ -75,6 +77,45 @@ public class ClientDAO {
 
 
 }
+	
+	public ArrayList<ClientVO> getClientsVO() {
+
+		try {
+
+			ArrayList<ClientVO> toReturn = new ArrayList<ClientVO>();
+
+			Statement oStatement = database.getConnection().createStatement();
+
+
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Clientes");
+
+			while (oResultSet.next()) {
+
+				int nCli = oResultSet.getInt(1);
+				int Ci = oResultSet.getInt(2);
+				String sName = oResultSet.getString(3);
+				String sApellido = oResultSet.getString(4);
+				String sMail = oResultSet.getString(5);
+				String sDir = oResultSet.getString(6);
+				int tel = oResultSet.getInt(7);
+				
+				ClientVO c = new ClientVO(nCli,Ci,sName,sApellido,tel,sDir,sMail);
+				toReturn.add(c);
+			}
+
+			oResultSet.close();
+			oStatement.close();
+			database.closeConnection();
+			return toReturn;
+		}
+			 catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
+
+
+		}
+
+	}
 
 
 
