@@ -26,7 +26,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void addTable(TableVO t) throws RemoteException {
+	public void addTable() throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
