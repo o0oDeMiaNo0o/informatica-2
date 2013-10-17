@@ -14,6 +14,8 @@ import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.services.people.clients.managers.ClientMgr;
 import uy.edu.um.services.people.waiters.interfaces.WaiterMgt;
 import uy.edu.um.services.people.waiters.managers.WaiterMgr;
+import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.services.table.managers.TableMgr;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.services.user.managers.UserMgr;
 
@@ -68,4 +70,7 @@ public class ServiceFacade {
 	}
 
 
+	public TableMgt getTableMgt(){
+		return TableMgr.getInstance();
+	}
 }
