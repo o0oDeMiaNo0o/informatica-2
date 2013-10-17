@@ -9,7 +9,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class Test3 {
 	public static void main(String[] args){
-		String nombre = "jajaja";
+		String nombre = "tomatoma";
 		BigDecimal precio = new BigDecimal(34);
 		CategoryVO category = new CategoryVO("pizzas");
 		ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
