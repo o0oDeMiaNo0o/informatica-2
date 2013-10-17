@@ -8,7 +8,7 @@ import uy.edu.um.value_object.table.TableVO;
 
 public interface TableRemoteMgt extends Remote{
 
-	public void addTable(TableVO t) throws RemoteException;
+	public void addTable() throws RemoteException;
 
 	public void closeTable() throws RemoteException;
 
