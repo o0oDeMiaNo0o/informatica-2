@@ -14,6 +14,6 @@ public class Test3 {
 		CategoryVO category = new CategoryVO("pizzas");
 		ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
 		ArticleVO toSend = aMgt.createArticleVO(nombre, precio, category);
-		aMgt.sendCliente(toSend);
+		aMgt.sendArticle(toSend);
 	}
 }
