@@ -24,7 +24,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void addTable(Table t) {
+	public void addTable() {
 		// TODO Auto-generated method stub
 
 	}
