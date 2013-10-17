@@ -28,7 +28,8 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category) {
+	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category){
+
 		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
@@ -86,4 +87,8 @@ public class ArticleMgr implements ArticleMgt {
 
 		return array;
 	}
+
+	//Metodos auxiliares
+
+
 }
