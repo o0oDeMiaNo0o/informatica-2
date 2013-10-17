@@ -11,5 +11,6 @@ public class test2 {
 		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
 		array = cMgt.allCategories();
+		int i = 34;
 	}
 }
