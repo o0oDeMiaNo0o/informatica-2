@@ -57,7 +57,5 @@ public class ArticleVO implements Serializable{
 		this.id = id;
 	}
 
-
-
 }
 

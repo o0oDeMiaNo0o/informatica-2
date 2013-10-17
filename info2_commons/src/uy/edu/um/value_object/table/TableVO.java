@@ -7,6 +7,8 @@ public class TableVO implements Serializable{
 	private int numero;
 	private boolean ocupado = false;
 
+	public TableVO(){}
+
 	public TableVO(int numero){
 		this.numero = numero;
 	}
