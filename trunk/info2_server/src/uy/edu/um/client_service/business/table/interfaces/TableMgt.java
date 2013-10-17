@@ -6,7 +6,7 @@ import uy.edu.um.value_object.table.TableVO;
 
 public interface TableMgt {
 
-	public void addTable(Table t);
+	public void addTable();
 
 	public void closeTable(Table t);
 
