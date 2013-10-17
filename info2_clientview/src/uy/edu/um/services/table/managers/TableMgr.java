@@ -17,15 +17,10 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void addTable(TableVO t) {
+	public void addTable() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
-	@Override
-	public TableVO createTableVO(int numero) {
-		return new TableVO(numero);
-
-	}
 
 }
