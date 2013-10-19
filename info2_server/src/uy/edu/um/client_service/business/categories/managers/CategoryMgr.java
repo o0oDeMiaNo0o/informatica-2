@@ -31,7 +31,8 @@ public class CategoryMgr implements CategoryMgt{
 	@Override
 	public Category createCategory(CategoryVO c) {
 		String nombre = c.getNombre();
-		return new Category(nombre);
+		int id = c.getId();
+		return new Category(nombre,id);
 
 	}
 

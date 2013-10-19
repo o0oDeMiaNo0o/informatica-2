@@ -51,6 +51,7 @@ public class ArticleMgr implements ArticleMgt{
 	//Metodos
 
 	public Article getArticle(ArticleVO a){
+		CategoryVO catVO = a.getCategory();
 		String nombre = a.getNombre();
 		BigDecimal precio = a.getPrecio();
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
