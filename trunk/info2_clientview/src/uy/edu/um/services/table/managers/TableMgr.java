@@ -2,9 +2,11 @@ package uy.edu.um.services.table.managers;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.value_object.table.TableVO;
 
 public class TableMgr implements TableMgt{
 
@@ -39,6 +41,32 @@ public class TableMgr implements TableMgt{
 			e.printStackTrace();
 
 		}
+
+	}
+
+	@Override
+	public ArrayList<TableVO> allTables() {
+
+		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
+
+		try {
+
+			String sObjectService = "TableRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			toReturn = oTableRemoteMgt.allTables();
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+		return toReturn;
 
 	}
 
