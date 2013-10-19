@@ -8,6 +8,11 @@ public class TableVO implements Serializable{
 	private boolean ocupado = false;
 
 	public TableVO(){}
+	
+	public TableVO(int id, boolean oc){
+		this.numero=id;
+		this.ocupado=oc;
+	}
 
 	public TableVO(int numero){
 		this.numero = numero;
