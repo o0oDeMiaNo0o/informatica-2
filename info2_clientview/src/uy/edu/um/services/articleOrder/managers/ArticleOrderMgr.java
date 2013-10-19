@@ -24,8 +24,8 @@ public class ArticleOrderMgr implements ArticleOrderMgt{
 	}
 
 	@Override
-	public ArticleOrderVO createArticleOrderVO(ArticleVO a, int cantidad) {
-		return new ArticleOrderVO(a,cantidad);
+	public ArticleOrderVO createArticleOrderVO(ArticleVO a, int cantidad, String especificaciones) {
+		return new ArticleOrderVO(a,cantidad,especificaciones);
 	}
 
 	@Override

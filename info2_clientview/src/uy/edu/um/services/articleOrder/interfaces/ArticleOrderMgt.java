@@ -7,6 +7,6 @@ public interface ArticleOrderMgt {
 
 	public void sendArticleOrder(ArticleOrderVO ao);
 
-	public ArticleOrderVO createArticleOrderVO(ArticleVO a, int cantidad);
+	public ArticleOrderVO createArticleOrderVO(ArticleVO a, int cantidad, String especificaciones);
 
 }
