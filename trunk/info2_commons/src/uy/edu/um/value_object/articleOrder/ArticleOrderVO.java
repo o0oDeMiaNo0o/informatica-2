@@ -3,11 +3,9 @@ package uy.edu.um.value_object.articleOrder;
 import java.io.Serializable;
 
 import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.table.TableVO;
 
 public class ArticleOrderVO implements Serializable {
 
-	private TableVO table;
 	private ArticleVO article;
 	private String especificaciones;
 	private int cantidad;
@@ -42,5 +40,6 @@ public class ArticleOrderVO implements Serializable {
 	public void setEspecificaciones(String especificaciones) {
 		this.especificaciones = especificaciones;
 	}
+
 
 }

@@ -14,7 +14,6 @@ public class OrderVO implements Serializable{
 	public OrderVO(ArrayList<ArticleOrderVO> articulos, TableVO table){
 		this.articulos = articulos;
 		this.table = table;
-
 	}
 
 	public ArrayList<ArticleOrderVO> getArticulos() {
