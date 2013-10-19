@@ -1,12 +1,16 @@
 package uy.edu.um.client_service.persistance.DAO.mesas;
 
+import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.categories.CategoryVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class TableDAO {
 	
@@ -20,11 +24,10 @@ public class TableDAO {
 		return instance;
 	}
 	
-	public void addTable(Table mesa){
+	public void addTable(){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO Mesa " +
-					"VALUES ("+mesa.getNumero()+",'Libre');");
+			oStatement.execute("INSERT INTO Mesa (Estado) VALUES (DEFAULT);");
 			oStatement.close();
 			database.closeConnection();
 			//Verificacion por consola
@@ -69,6 +72,40 @@ public void setLibre(Table mesa){
 			database.closeConnection();
 		}
 	}
+
+public ArrayList<TableVO> EstadosMesas(){
+	
+	ArrayList<TableVO> mesas = new ArrayList<TableVO>();
+	
+	try{
+		Statement oStatement = database.getConnection().createStatement();
+		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa");		
+		while (oResultSet.next()) {
+			boolean oc=false;
+			int nid = oResultSet.getInt(1);
+			String sOcupa = oResultSet.getString(2);
+			if(sOcupa.equals("Ocupado")){
+				oc=true;
+			}
+			
+			TableVO t = new TableVO(nid,oc);
+			mesas.add(t);
+		}
+		
+		
+		oStatement.close();
+		database.closeConnection();
+		
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			database.closeConnection();
+		}
+	
+	return mesas;
+	
+	
+}
 
 
 }
