@@ -15,11 +15,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -30,21 +28,19 @@ import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CajaPrincipal extends BasicoUsuario {
 
-	ArrayList<ArticleVO> pedidoAux = new ArrayList<ArticleVO>(); // Array de
-																	// pedido
+	ArrayList<ArticleOrderVO> pedidoAux = new ArrayList<ArticleOrderVO>(); // Array
+																			// de
+																			// pedido
 	ArrayList<ArticleVO> listaArticulos = cargoListado(); // Array
 															// de
 															// Articulos
 	ArrayList<CategoryVO> categoria = cargoCategorias();
 
-	private ArrayList<JLabel> coleccion;
-
-	private final Action action = new SwingAction();
-	private JTable table;
 	private String[] textos;
 	private JTable tablePrePedido;
 
@@ -107,14 +103,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		button_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-			}
-
-		}
-
-		);
-
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+				armarPedido();
 			}
 		});
 		transparentPanelPedido.add(button_2, "cell 5 6");
@@ -224,36 +213,56 @@ public class CajaPrincipal extends BasicoUsuario {
 		spinner.setValue(0);
 	}
 
+	// Arma el pedido y lo carga a la tabla
 	public void armarPedido() {
 		Object[][] aux;
 		if ((pedidoAux.size() != 0)) {
-			aux = new Object[pedidoAux.size() + 1][3];
+			aux = new Object[pedidoAux.size() + 1][4];
 			aux[0][0] = "Categoria";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Precio";
+			aux[0][3] = "Especificaciones";
 			for (int i = 0; i < pedidoAux.size(); i++) {
 				if (pedidoAux.get(i) != null) {
-					aux[i + 1][0] = pedidoAux.get(i).getCategory().getNombre();
-					aux[i + 1][1] = pedidoAux.get(i).getNombre();
-					aux[i + 1][2] = pedidoAux.get(i).getPrecio();
+					aux[i + 1][0] = pedidoAux.get(i).getArticle().getCategory()
+							.getNombre();
+					aux[i + 1][1] = pedidoAux.get(i).getArticle().getNombre();
+					aux[i + 1][2] = pedidoAux.get(i).getArticle().getPrecio();
+					aux[i + 1][3] = pedidoAux.get(i).getEspecificaciones();
 				}
 			}
 		} else {
-			aux = new Object[1][3];
+			aux = new Object[1][4];
 			aux[0][0] = "Categoria";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Precio";
+			aux[0][3] = "Especificaciones";
 		}
 		tablePrePedido.setModel(new DefaultTableModel(aux, new String[] {
-				"Nro Producto", "Nombre", "Precio" }));
+				"Categoria", "Nombre", "Precio", "Especificaciones" }));
 
 	}
 
-	// Agrega pedidos a la orden
+	// Cuenta cuantos menus se repiten
+	private String cuentaCantidad() {
+		Object[][] aux = null;
+		int cantidad = 0;
+		for (int i = 0; i < pedidoAux.size() - 1; i++) {
+			for (int j = 0; j < pedidoAux.size() - 1; j++) {
+				if (pedidoAux.get(i) == pedidoAux.get(j)) {
+					cantidad++;
+				}
+			}
+
+		}
+		return null;
+	}
+
+	// Agrega pedidos a la orden(tabla)
 	public boolean cuentaMenus(String op, JSpinner m) {
 		boolean bandera = false;
 		if ((!op.equals("---- Desplegar Lista ----")) && (!op.equals(""))) {
-			ArticleVO aux = null;
+			ArticleOrderVO aux = null;
 			int valor = (Integer) m.getValue();
 
 			for (int k = 0; k < valor; k++) {
@@ -273,7 +282,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		aux.add("");
 		int j = 0;
 		while ((j < listaArticulos.size())) {
-			if (listaArticulos.get(j).getCategory() == cat) {
+			if (listaArticulos.get(j).getCategory()== cat) {
 				aux.add(listaArticulos.get(j).getNombre());
 			}
 			j++;
@@ -286,11 +295,12 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	}
 
-	public ArticleVO buscaArticulo(ArrayList<ArticleVO> a, String b) {
-		ArticleVO aux = null;
+	// Busca ArticleVO de la lista
+	public ArticleOrderVO buscaArticulo(ArrayList<ArticleVO> a, String b) {
+		ArticleOrderVO aux = null;
 		for (int i = 0; i < a.size(); i++) {
 			if (a.get(i).getNombre().equals(b)) {
-				aux = a.get(i);
+				aux.setArticle(a.get(i));
 			}
 		}
 		return aux;
