@@ -3,18 +3,20 @@ package uy.edu.um.value_object.articleOrder;
 import java.io.Serializable;
 
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class ArticleOrderVO implements Serializable {
 
+	private TableVO table;
 	private ArticleVO article;
 	private String especificaciones;
 	private int cantidad;
 
-	public ArticleOrderVO(ArticleVO article, int cantidad,
-			String especificaciones) {
+	public ArticleOrderVO(ArticleVO article, int cantidad, String especificaciones){
 		this.article = article;
 		this.cantidad = cantidad;
 		this.especificaciones = especificaciones;
+
 	}
 
 	public ArticleVO getArticle() {
