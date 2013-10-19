@@ -1,7 +1,11 @@
 package uy.edu.um.client_service.business.articleOrder.managers;
 
+import uy.edu.um.client_service.business.BusinessFacade;
+import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.articleOrder.interfaces.ArticleOrderMgt;
+import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 
 public class ArticleOrderMgr implements ArticleOrderMgt{
@@ -19,8 +23,15 @@ public class ArticleOrderMgr implements ArticleOrderMgt{
 
 	@Override
 	public ArticleOrder getArticleOrder(ArticleOrderVO ao) {
-		// TODO Auto-generated method stub
-		return null;
+		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
+		Article a = aMgt.getArticle(ao.getArticle());
+		ArticleOrder toReturn = new ArticleOrder(a,ao.getCantidad());
+		return toReturn;
+	}
+
+	public ArticleOrderVO transition(ArticleVO a, int cantidad, String especifiaciones){
+		ArticleOrderVO toReturn = new ArticleOrderVO(a,cantidad,especifiaciones);
+		return toReturn;
 	}
 
 }
