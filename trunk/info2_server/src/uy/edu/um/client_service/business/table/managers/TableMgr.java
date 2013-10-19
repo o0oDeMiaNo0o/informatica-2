@@ -1,5 +1,7 @@
 package uy.edu.um.client_service.business.table.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
@@ -46,6 +48,12 @@ public class TableMgr implements TableMgt{
 	public void openTable(Table t) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<TableVO> allTables() {
+		TableDAO dao = TableDAO.getInstance();
+		return null;
 	}
 
 }
