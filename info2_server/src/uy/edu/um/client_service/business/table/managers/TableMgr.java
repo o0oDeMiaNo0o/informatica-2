@@ -3,6 +3,7 @@ package uy.edu.um.client_service.business.table.managers;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.client_service.persistance.DAO.mesas.TableDAO;
 import uy.edu.um.value_object.table.TableVO;
 
 public class TableMgr implements TableMgt{
@@ -25,7 +26,8 @@ public class TableMgr implements TableMgt{
 
 	@Override
 	public void addTable() {
-		// TODO Auto-generated method stub
+		TableDAO dao = TableDAO.getInstance();
+		dao.addTable();
 
 	}
 
