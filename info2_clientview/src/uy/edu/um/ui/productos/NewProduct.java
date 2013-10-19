@@ -112,10 +112,12 @@ public class NewProduct extends JFrame {
 								CategoryVO cat = buscaEnLista(comboBoxCat
 										.getSelectedItem().toString());
 
-								ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
-								ArticleVO toSend = a.createArticleVO(nombre,precio,cat);
+								ArticleMgt test = ServiceFacade.getInstance()
+										.getArticleMgt();
+								ArticleVO toSend = a.createArticleVO(nombre,
+										precio, cat);
 								test.sendArticle(toSend);
-								
+
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Producto Agregado Correctamente");
 								mensaje.setVisible(true);
@@ -169,7 +171,7 @@ public class NewProduct extends JFrame {
 
 	public CategoryVO buscaEnLista(String a) {
 		for (int i = 0; i < categorias.size(); i++) {
-			if (categorias.get(i).equals(a)) {
+			if (categorias.get(i).getNombre().equals(a)) {
 				return categorias.get(i);
 			}
 		}

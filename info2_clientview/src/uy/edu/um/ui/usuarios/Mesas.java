@@ -3,6 +3,8 @@ package uy.edu.um.ui.usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -12,7 +14,9 @@ import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
+import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.table.TableVO;
@@ -50,9 +54,23 @@ public class Mesas extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow]", "[grow][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][grow]",
+				"[grow][][grow]"));
 
-		cargaBotones(transparentPanel);
+		ImagePanel imagePanel = new ImagePanel(libre);
+		imagePanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
+		});
+		imagePanel.setSize(100, 100);
+		transparentPanel
+				.add(imagePanel, "cell 1 1,alignx center,aligny center");
+		imagePanel.setLayout(new MigLayout("", "[grow][61px][grow]",
+				"[grow][16px][grow]"));
+
+		JLabel lblMesa = new JLabel("Mesa 1");
+		imagePanel.add(lblMesa, "cell 1 1,growx,aligny top");
 	}
 
 	// Metodos auxiliares
@@ -85,8 +103,8 @@ public class Mesas extends BasicoUsuario {
 	}
 
 	private ArrayList<TableVO> cargoMesas() {
-		aux = null;
-		
+		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
+
 		return aux;
 	}
 }

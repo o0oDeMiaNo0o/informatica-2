@@ -14,13 +14,16 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+
 import java.awt.Color;
+
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 
 public class SeleccionaMesa extends BasicoUsuario {
-	ArrayList<ArticleVO> pedido;
+	ArrayList<ArticleOrderVO> pedido;
 	private JTable table;
 
 	/**
@@ -43,9 +46,9 @@ public class SeleccionaMesa extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public SeleccionaMesa(ArrayList<ArticleVO> pedido) {
+	public SeleccionaMesa(ArrayList<ArticleOrderVO> pedidoAux) {
 
-		this.pedido = pedido;
+		this.pedido = pedidoAux;
 
 		setTitle("Seleccionar Mesa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
