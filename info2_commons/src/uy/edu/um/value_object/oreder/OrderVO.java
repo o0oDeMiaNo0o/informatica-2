@@ -3,20 +3,18 @@ package uy.edu.um.value_object.oreder;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
-import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class OrderVO implements Serializable{
 
-	ArrayList<ArticleOrderVO> articulos = new ArrayList<ArticleOrderVO>(10);
-	ClientVO c = null;
-	String descripcion;
+	private ArrayList<ArticleOrderVO> articulos = new ArrayList<ArticleOrderVO>(10);
+	private TableVO table;
 
-	public OrderVO(ArrayList<ArticleOrderVO> articulos, ClientVO c, String descripcion){
+	public OrderVO(ArrayList<ArticleOrderVO> articulos, TableVO table){
 		this.articulos = articulos;
-		this.c = c;
-		this.descripcion = descripcion;
+		this.table = table;
+
 	}
 
 	public ArrayList<ArticleOrderVO> getArticulos() {
@@ -25,12 +23,13 @@ public class OrderVO implements Serializable{
 	public void setArticulos(ArrayList<ArticleOrderVO> articulos) {
 		this.articulos = articulos;
 	}
-	public ClientVO getC() {
-		return c;
-	}
-	public void setC(ClientVO c) {
-		this.c = c;
+
+	public TableVO getTable() {
+		return table;
 	}
 
+	public void setTable(TableVO table) {
+		this.table = table;
+	}
 
 }
