@@ -115,6 +115,7 @@ public class Mesas extends BasicoUsuario {
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 								user);
 						Confirm conf = new Confirm(toSend);
+						conf.setVisible(true);
 					}
 
 				});
