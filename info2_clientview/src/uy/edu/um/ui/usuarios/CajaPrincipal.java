@@ -33,8 +33,11 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.categories.CategoryVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public class CajaPrincipal extends BasicoUsuario {
+
+	UserVO user = cargaUsuario();
 
 	ArrayList<ArticleOrderVO> pedidoAux = new ArrayList<ArticleOrderVO>(); // Array
 																			// de
@@ -164,7 +167,7 @@ public class CajaPrincipal extends BasicoUsuario {
 					MensajeGenerico mensaje = new MensajeGenerico(
 							"Pedido Vacio");
 				} else {
-					Mesas nueva = new Mesas(pedidoAux, espTotal, null);
+					Mesas nueva = new Mesas(pedidoAux, espTotal, user);
 					nueva.setVisible(true);
 					cerrar();
 				}
@@ -200,6 +203,12 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 		}
 		return aux;
+	}
+
+	// Cargo Usuario
+	private UserVO cargaUsuario() {
+		UserVO usr = new UserVO("pepe", "1234", false);
+		return usr;
 	}
 
 	// Carga Articulos a arraylist
