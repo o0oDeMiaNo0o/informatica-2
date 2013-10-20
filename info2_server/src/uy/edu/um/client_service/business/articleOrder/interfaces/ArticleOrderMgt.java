@@ -8,5 +8,5 @@ public interface ArticleOrderMgt {
 
 	public ArticleOrder getArticleOrder(ArticleOrderVO ao);
 
-	public ArticleOrderVO transition(ArticleVO a, int cantidad, String especifiaciones);
+	public ArticleOrderVO transition(ArticleVO a, int cantidad);
 }

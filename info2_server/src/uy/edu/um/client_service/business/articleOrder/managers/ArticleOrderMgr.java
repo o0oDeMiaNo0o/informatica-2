@@ -29,8 +29,8 @@ public class ArticleOrderMgr implements ArticleOrderMgt{
 		return toReturn;
 	}
 
-	public ArticleOrderVO transition(ArticleVO a, int cantidad, String especifiaciones){
-		ArticleOrderVO toReturn = new ArticleOrderVO(a,cantidad,especifiaciones);
+	public ArticleOrderVO transition(ArticleVO a, int cantidad){
+		ArticleOrderVO toReturn = new ArticleOrderVO(a,cantidad);
 		return toReturn;
 	}
 
