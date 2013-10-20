@@ -35,7 +35,8 @@ public class TableMgr implements TableMgt{
 
 	@Override
 	public void closeTable(Table t) {
-		// TODO Auto-generated method stub
+		TableDAO dao = TableDAO.getInstance();
+		dao.setOcupada(t);
 
 	}
 
@@ -46,8 +47,8 @@ public class TableMgr implements TableMgt{
 
 	@Override
 	public void openTable(Table t) {
-		// TODO Auto-generated method stub
-
+		TableDAO dao = TableDAO.getInstance();
+		dao.setLibre(t);
 	}
 
 	@Override
