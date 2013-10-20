@@ -6,7 +6,9 @@ import uy.edu.um.services.table.interfaces.TableMgt;
 public class test1 {
 	public static void main(String[] args){
 		TableMgt tmgt = ServiceFacade.getInstance().getTableMgt();
-		tmgt.addTable();
+		for (int i=0 ; i<4 ; i++){
+			tmgt.addTable();
+		}
 
 	}
 }
