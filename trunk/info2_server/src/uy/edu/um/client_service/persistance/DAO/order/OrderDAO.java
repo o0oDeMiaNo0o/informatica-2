@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.persistance.JDBC;
 
@@ -27,20 +27,19 @@ public class OrderDAO {
 	
 	public void addOrder(Order orden){
 		try{
-			ArrayList <Article> articles = orden.getArticles();
+			ArrayList <ArticleOrder> articles = orden.getArticles();
 			Statement oStatement = database.getConnection().createStatement();
-			oStatement.execute("INSERT INTO pedido (idCliente) VALUES ("+orden.getC().getCi()+");");
-			
-			ResultSet oResultSet = oStatement.executeQuery("SELECT `idPedido` FROM `pedido` where `pedido`.`idCliente` = "+orden.getC().getCi()+";");
+			oStatement.execute("INSERT INTO pedido (Mesa_idMesa,Users_Username) VALUES ("+orden.getTable().getNumero()+",'"+orden.getUser().getUsername()+"');");
 			int nroPedido=0;
-			
-			while(oResultSet.next()){
-			nroPedido = oResultSet.getInt(1);
-			}
 		
-			
+
 			for(int i =0;i<articles.size();i++){
-				oStatement.execute("INSERT INTO `Pedido/Producto` (idPedido, idArticle, Nombre) VALUES ("+nroPedido+","+articles.get(i).getProdN()+",'"+articles.get(i).getNombre()+"');");
+				ResultSet oResultSet1 = oStatement.executeQuery("SELECT ID FROM ARTICLES WHERE ARTICLES.NAME='"+articles.get(i).getArticle().getNombre()+"';");
+				int nId= 0;
+				while(oResultSet1.next()){
+					nId = oResultSet1.getInt(1);
+				}
+				oStatement.execute("INSERT INTO `Pedido/Articulos` (pedido_idpedido, Articles_ID,Cantidad) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+");");
 			}
 			
 			oStatement.close();
