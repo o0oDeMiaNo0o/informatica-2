@@ -9,16 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.value_object.categories.CategoryVO;
-import javax.swing.JSpinner;
 
 public class NewTable extends JFrame {
 
@@ -26,6 +24,7 @@ public class NewTable extends JFrame {
 	private JLabel lblNewLabel;
 	private JButton btnCancelar;
 	private JSpinner spinner;
+	private TransparentPanel transparentPanel_1;
 
 	/**
 	 * Launch the application.
@@ -58,45 +57,51 @@ public class NewTable extends JFrame {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		contentPane.add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][92px][grow]", "[][][][29px][][][][][]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][92px][grow]", "[][][][29px][][][][grow][]"));
 
 		lblNewLabel = new JLabel("Cantidad Mesas");
-		transparentPanel.add(lblNewLabel, "cell 1 1,aligny baseline");
-		
+		transparentPanel.add(lblNewLabel, "cell 1 1,alignx center,aligny center");
+
 		spinner = new JSpinner();
 		transparentPanel.add(spinner, "cell 2 1,alignx center,aligny center");
 		
+		transparentPanel_1 = new TransparentPanel();
+		contentPane.add(transparentPanel_1, BorderLayout.SOUTH);
+				transparentPanel_1.setLayout(new MigLayout("", "[440px]", "[29px]"));
+		
 				JButton btnAceptar = new JButton("Aceptar");
+				transparentPanel_1.add(btnAceptar, "cell 0 0,alignx right,aligny center");
+				
+						btnCancelar = new JButton("Cancelar");
+						transparentPanel_1.add(btnCancelar, "cell 0 0,alignx right,aligny top");
+						btnCancelar.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								cerrar();
+							}
+
+						});
 				btnAceptar.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						if(!textFieldNombre.getText().isEmpty()){
-							//Agrego la categoria
-							CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
-							CategoryVO nuevaCatVO = cat.createCategoryVO(textFieldNombre.getText());
-							cat.sendCategoryVO(nuevaCatVO);
-						}else {
-							MensajeGenerico test = new MensajeGenerico("Nombre Vacio");
+
+						int valor = (Integer) spinner.getValue();
+						if (valor != 0) {
+							// Agrego Mesa
+							TableMgt test = ServiceFacade.getInstance().getTableMgt();
+							for (int i = 0; i < valor; i++) {
+								test.addTable();
+							}
+						} else {
+							MensajeGenerico test = new MensajeGenerico("Numero Vacio");
 						}
 					}
 				});
-				transparentPanel.add(btnAceptar, "flowx,cell 3 8,alignx right,aligny top");
-				
-				btnCancelar = new JButton("Cancelar");
-				btnCancelar.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						cerrar();
-					}
-
-					
-				});
-				transparentPanel.add(btnCancelar, "cell 3 8");
 	}
 
 	private void cerrar() {
 		this.dispose();
-		
+
 	}
 
 }

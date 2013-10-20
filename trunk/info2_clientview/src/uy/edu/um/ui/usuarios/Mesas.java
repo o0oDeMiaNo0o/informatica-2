@@ -20,13 +20,18 @@ import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.table.TableVO;
+import java.awt.Font;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
 
 public class Mesas extends BasicoUsuario {
 
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
-	public ArrayList<TableVO> mesas = cargoMesas();
-	private ArrayList<TableVO> aux;
+	public ArrayList<TableVO> mesas = new ArrayList<TableVO>();
+	public TableVO mesaSeleccionada = null;
 
 	/**
 	 * Launch the application.
@@ -48,29 +53,36 @@ public class Mesas extends BasicoUsuario {
 	 * Create the frame.
 	 */
 	public Mesas() {
+		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow]",
-				"[grow][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][grow]"));
+
+		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
+		transparentPanel.add(rigidArea, "cell 0 0");
+
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
+
+		JLabel lblMesas = new JLabel("MESAS");
+		lblMesas.setForeground(Color.WHITE);
+		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+		transparentPanel_1.add(lblMesas);
+		cargaBotones(transparentPanel);
 
 		ImagePanel imagePanel = new ImagePanel(libre);
-		imagePanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
-		imagePanel.setSize(100, 100);
 		transparentPanel
 				.add(imagePanel, "cell 1 1,alignx center,aligny center");
-		imagePanel.setLayout(new MigLayout("", "[grow][61px][grow]",
-				"[grow][16px][grow]"));
+		imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
+		JLabel lblNewLabel = new JLabel("DELIVERY");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		imagePanel.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		;
 
-		JLabel lblMesa = new JLabel("Mesa 1");
-		imagePanel.add(lblMesa, "cell 1 1,growx,aligny top");
 	}
 
 	// Metodos auxiliares
@@ -80,7 +92,8 @@ public class Mesas extends BasicoUsuario {
 			lbltemp.setForeground(Color.WHITE);
 			panel.add(lbltemp, "cell 0 0");
 		} else {
-			int n = 0, i = 1, j = 1;
+			int n = 0;
+			int i = 3, j = 1;
 			URL dir;
 			while (n < mesas.size()) {
 				if (mesas.get(n).isOcupado()) {
@@ -88,13 +101,26 @@ public class Mesas extends BasicoUsuario {
 				} else {
 					dir = libre;
 				}
-				TransparentButton transparentButton = new TransparentButton(dir);
-				transparentButton.setText("Mesa " + mesas.get(n).getNumero());
-				panel.add(transparentButton, "cell " + i + " " + j);
-				i++;
-				if (i == 10) {
+				ImagePanel imagePanel = new ImagePanel(dir);
+				panel.add(imagePanel, "cell " + i + " " + j);
+				imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
+				final TableVO mesa = mesas.get(n);
+				imagePanel.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						mesaSeleccionada = mesa;
+					}
+				});
+
+				JLabel lblNewLabel = new JLabel(Integer.toString(mesas.get(n)
+						.getNumero()));
+				lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+				imagePanel.add(lblNewLabel,
+						"cell 0 0,alignx center,aligny center");
+				i = i + 2;
+				if (i == 15) {
 					i = 1;
-					j++;
+					j = j + 2;
 				}
 				n++;
 
@@ -102,9 +128,25 @@ public class Mesas extends BasicoUsuario {
 		}
 	}
 
-	private ArrayList<TableVO> cargoMesas() {
-		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
+	private void cargoMesas() {
+		TableVO nuevo1 = new TableVO(1, true);
+		TableVO nuevo2 = new TableVO(2, false);
+		mesas.add(nuevo1);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
+		mesas.add(nuevo2);
 
-		return aux;
+		// TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
+		// nueva.
 	}
 }

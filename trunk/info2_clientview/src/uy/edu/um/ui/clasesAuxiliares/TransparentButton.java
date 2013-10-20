@@ -58,29 +58,28 @@ public class TransparentButton extends JButton {
 		Graphics2D g3 = (Graphics2D) g;
 		Graphics2D g4 = (Graphics2D) g;
 		g4.setColor(Color.RED);
-		if(clicked==false){
-		g3.setColor(Color.black);
+		if (clicked == false) {
+			g3.setColor(Color.black);
 		}
-		if(clicked==true){
+		if (clicked == true) {
 			g3.setColor(Color.white);
 		}
 
-		//		 fills the background
+		// fills the background
 		g3.fill3DRect(0, 0, this.getWidth(), this.getHeight(), true);
-		//		 sets a 50% translucent composite
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-				0.5f));
-
+		// sets a 50% translucent composite
+		// g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+		// 0.5f));
 
 		g2.setClip(0, 0, this.getWidth(), this.getHeight());
-		//		Set Font
+		// Set Font
 		Font newFont = g4.getFont().deriveFont(Font.BOLD, 32f);
 		g4.setFont(newFont);
 		g4.setClip(0, 0, this.getWidth(), this.getHeight());
-		//DRAW
+		// DRAW
 		g2.drawImage(img, 0, 0, null);
 
-		g4.drawString("HOLA",  0, 0);
+		g4.drawString("HOLA", 0, 0);
 		g2.dispose();
 		g3.dispose();
 		g4.dispose();
