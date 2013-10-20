@@ -53,7 +53,7 @@ public class TableMgr implements TableMgt{
 	@Override
 	public ArrayList<TableVO> allTables() {
 		TableDAO dao = TableDAO.getInstance();
-		return null;
+		return dao.EstadosMesas();
 	}
 
 }
