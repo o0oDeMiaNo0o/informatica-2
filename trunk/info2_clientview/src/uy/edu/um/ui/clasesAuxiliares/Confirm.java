@@ -16,6 +16,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 
+
 public class Confirm extends JFrame {
 
 	private JPanel contentPane;
@@ -31,7 +32,7 @@ public class Confirm extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public Confirm(final OrderVO toSend) {
