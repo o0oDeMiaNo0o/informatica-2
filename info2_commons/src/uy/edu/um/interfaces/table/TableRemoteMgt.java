@@ -13,10 +13,10 @@ public interface TableRemoteMgt extends Remote{
 
 	public void addTable() throws RemoteException;
 
-	public void closeTable() throws RemoteException;
+	public void closeTable(TableVO t) throws RemoteException;
 
 	public void addOrderToTable(TableVO t, OrderVO o) throws RemoteException;
 
-	public void openTable() throws RemoteException;
+	public void openTable(TableVO t) throws RemoteException;
 
 }
