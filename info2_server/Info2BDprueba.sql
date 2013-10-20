@@ -12,13 +12,13 @@ CREATE TABLE `Articles` (
   `Categorias_idCategorias` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `fk_Articles_Categorias1_idx` (`Categorias_idCategorias`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`idCategorias`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -63,10 +63,10 @@ CREATE TABLE `Linea de Factura` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Mesa` (
-  `idMesa` int(11) NOT NULL,
+  `idMesa` int(11) NOT NULL AUTO_INCREMENT,
   `Estado` enum('Ocupado','Libre') DEFAULT 'Libre',
   PRIMARY KEY (`idMesa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Pagos` (
   `idPagos` int(11) NOT NULL,
@@ -116,7 +116,6 @@ CREATE TABLE `Users` (
   `Puesto` varchar(45) NOT NULL,
   PRIMARY KEY (`idUsers`,`Username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
