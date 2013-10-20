@@ -3,7 +3,6 @@ package uy.edu.um.client_service.business.order.managers;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.articleOrder.interfaces.ArticleOrderMgt;
 import uy.edu.um.client_service.business.order.entities.Order;
@@ -11,12 +10,12 @@ import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.client_service.business.users.entities.User;
+import uy.edu.um.client_service.business.users.interfaces.UserMgt;
 import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
-import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.table.TableVO;
 
 public class OrderMgr implements OrderMgt{
 
@@ -42,22 +41,23 @@ public class OrderMgr implements OrderMgt{
 	@Override
 	public Order getOrder(OrderVO o) {
 		ArticleOrderMgt aoMgt = BusinessFacade.getInstance().getArticleOrder();
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		ArrayList<ArticleOrder> articleReturn = new ArrayList<ArticleOrder>(10);
 		ArrayList<ArticleOrderVO> articulos = o.getArticulos();
 		for(ArticleOrderVO current: articulos){
 			if(current != null){
 				ArticleVO aVO = current.getArticle();
-				String especificaciones = current.getEspecificaciones();
 				int currentCantidad = current.getCantidad();
-				ArticleOrderVO temp = aoMgt.transition(aVO, currentCantidad, especificaciones);
+				ArticleOrderVO temp = aoMgt.transition(aVO, currentCantidad);
 				ArticleOrder toAdd = aoMgt.getArticleOrder(temp);
 				articleReturn.add(toAdd);
 			}
 		}
-		TableVO t = o.getTable();
-		Table tAdd = tMgt.getTable(t);
-		Order toReturn = new Order(articleReturn,tAdd);
+		Table tAdd = tMgt.getTable(o.getTable());
+		User uAdd = uMgt.getUser(o.getUser());
+		String spec = o.getEspecificaciones();
+		Order toReturn = new Order(articleReturn,tAdd,uAdd,spec);
 		return toReturn;
 	}
 
@@ -67,11 +67,6 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
-	@Override
-	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> a, TableVO t) {
-		OrderVO toReturn = new OrderVO(a,t);
-		return toReturn;
-	}
 
 
 
