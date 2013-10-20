@@ -26,6 +26,8 @@ import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
+import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
+import javax.swing.JButton;
 
 public class Mesas extends BasicoUsuario {
 
@@ -69,6 +71,13 @@ public class Mesas extends BasicoUsuario {
 		JLabel lblNewLabel = new JLabel("DELIVERY");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		imagePanel.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		
+		TransparentPanel transparentPanel_2 = new TransparentPanel();
+		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
+		transparentPanel_2.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
+		
+		JButton btnNewButton = new JButton("Cancelar");
+		transparentPanel_2.add(btnNewButton, "cell 0 0,alignx right,aligny center");
 		;
 
 	}

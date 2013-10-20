@@ -3,6 +3,7 @@ package uy.edu.um.ui.usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -31,11 +33,6 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.categories.CategoryVO;
-import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
-import javax.swing.ListSelectionModel;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Font;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -74,7 +71,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CajaPrincipal frame = new CajaPrincipal();
+					CajaPrincipal frame = new CajaPrincipal(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -86,8 +83,10 @@ public class CajaPrincipal extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public CajaPrincipal() {
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido) {
 		super();
+		pedidoAux = pedido;
+		pedidoArticle = cargaArticleVO(pedidoAux);
 		setTitle("Pedido");
 
 		TransparentPanel transparentPanelPedido = new TransparentPanel();
@@ -162,9 +161,11 @@ public class CajaPrincipal extends BasicoUsuario {
 					MensajeGenerico mensaje = new MensajeGenerico(
 							"Pedido Vacio");
 				} else {
-					Mesas nueva = new Mesas(pedidoAux);
+					Mesas nueva = new Mesas(pedidoAux, espTotal, null);
+					cerrar();
 				}
 			}
+
 		});
 		transparentPanelBotonera.add(btnNewButton,
 				"cell 1 0,alignx center,aligny center");
@@ -185,6 +186,17 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Metodos Auxiliares
+
+	private ArrayList<ArticleVO> cargaArticleVO(
+			ArrayList<ArticleOrderVO> pedidoAux) {
+		ArrayList<ArticleVO> aux = null;
+		for (int i = 0; i < pedidoAux.size(); i++) {
+			for (int j = 0; j < pedidoAux.get(i).getCantidad(); j++) {
+				aux.add(pedidoAux.get(i).getArticle());
+			}
+		}
+		return aux;
+	}
 
 	// Carga Articulos a arraylist
 	public ArrayList<ArticleVO> cargoListado() {
@@ -361,6 +373,12 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 		}
 		return aux;
+	}
+
+	// Cerrar Ventana
+	private void cerrar() {
+		this.dispose();
+
 	}
 
 	private class SwingAction extends AbstractAction {
