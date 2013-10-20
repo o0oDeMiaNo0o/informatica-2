@@ -52,7 +52,8 @@ public class ClientMgr implements ClientMgt{
 		String direccion = c.getDireccion();
 		int tel = c.getTel();
 		int ci = c.getCi();
-		Client toReturn = new Client(nombre,apellido,ci,tel,direccion,mail);
+		int descuento = c.getDescuento();
+		Client toReturn = new Client(nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
 
