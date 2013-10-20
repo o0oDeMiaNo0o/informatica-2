@@ -10,8 +10,6 @@ import uy.edu.um.value_object.table.TableVO;
 
 public interface OrderMgt {
 
-	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> a , TableVO t);
-
 	public void addOrder(Order o);
 
 	public void getOrderClient(Client c);
