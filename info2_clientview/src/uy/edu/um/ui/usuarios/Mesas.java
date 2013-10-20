@@ -18,6 +18,7 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.Confirm;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -27,13 +28,14 @@ import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
 import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
+
 import javax.swing.JButton;
 
 public class Mesas extends BasicoUsuario {
 
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
-	public ArrayList<TableVO> mesas = new ArrayList<TableVO>();
+	public ArrayList<TableVO> mesas = cargoMesas();
 	public TableVO mesaSeleccionada = null;
 
 	/**
@@ -71,13 +73,15 @@ public class Mesas extends BasicoUsuario {
 		JLabel lblNewLabel = new JLabel("DELIVERY");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		imagePanel.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
-		
+
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
-		transparentPanel_2.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
-		
+		transparentPanel_2
+				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
+
 		JButton btnNewButton = new JButton("Cancelar");
-		transparentPanel_2.add(btnNewButton, "cell 0 0,alignx right,aligny center");
+		transparentPanel_2.add(btnNewButton,
+				"cell 0 0,alignx right,aligny center");
 		;
 
 	}
@@ -108,7 +112,8 @@ public class Mesas extends BasicoUsuario {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						mesaSeleccionada = mesa;
-						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp, user);
+						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
+								user);
 						Confirm conf = new Confirm(toSend);
 					}
 
@@ -139,25 +144,10 @@ public class Mesas extends BasicoUsuario {
 
 	}
 
-	private void cargoMesas() {
-		TableVO nuevo1 = new TableVO(1, true);
-		TableVO nuevo2 = new TableVO(2, false);
-		mesas.add(nuevo1);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
-		mesas.add(nuevo2);
+	private ArrayList<TableVO> cargoMesas() {
 
-		// TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
-		// nueva.
+		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
+		return nueva.allTables();
+		
 	}
 }
