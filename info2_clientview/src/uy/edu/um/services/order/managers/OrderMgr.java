@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
-import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
-import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.table.TableVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public class OrderMgr implements OrderMgt{
 
@@ -23,15 +24,9 @@ public class OrderMgr implements OrderMgt{
 		return instance;
 	}
 
-	@Override
-	public void getOrdersClient(ClientVO c) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
-	public void setClient(ArrayList<ArticleVO> a , ClientVO c) {
-		// TODO Auto-generated met
+	public void addOrder(OrderVO o) {
 		try {
 
 			String sObjectService = "OrderRemoteMgr";
@@ -40,17 +35,31 @@ public class OrderMgr implements OrderMgt{
 
 			OrderRemoteMgt oArticleRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 
-			OrderVO order = new OrderVO (a,c,null);
-			
-			oArticleRemoteMgt.addOrder(order);
+			oArticleRemoteMgt.addOrder(o);
 
-			System.out.println("articulo agregado");
-
+			System.out.println("orden agregada");
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
 
 		}
+
+
+	}
+
+
+	@Override
+	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t,
+			UserVO u, String spec) {
+		OrderVO toReturn = new OrderVO(ao,t,u,spec);
+		return toReturn;
+
+	}
+
+	@Override
+	public void removeOrder(OrderVO o) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
