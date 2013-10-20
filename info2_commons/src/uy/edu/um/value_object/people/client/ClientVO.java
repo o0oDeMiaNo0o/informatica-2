@@ -7,16 +7,18 @@ public class ClientVO implements Serializable {
 
 	private String nombre, apellido, email, direccion;
 	private int ci, tel, id;
+	private int descuento;
 
-	public ClientVO(String nombre, String apellido,int ci, int tel, String direccion, String email){
+	public ClientVO(String nombre, String apellido,int ci, int tel, String direccion, String email, int descuento){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.ci = ci;
 		this.tel = tel;
 		this.direccion = direccion;
 		this.email = email;
+		this.descuento = descuento;
 	}
-	
+
 	public ClientVO(int id,int ci, String nombre, String apellido, int tel, String direccion, String email){
 		this.id=id;
 		this.nombre = nombre;
@@ -26,8 +28,8 @@ public class ClientVO implements Serializable {
 		this.direccion = direccion;
 		this.email = email;
 	}
-	
-	
+
+
 
 	public int getId() {
 		return id;
@@ -83,6 +85,14 @@ public class ClientVO implements Serializable {
 
 	public void setTel(int tel) {
 		this.tel = tel;
+	}
+
+	public int getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(int descuento) {
+		this.descuento = descuento;
 	}
 
 
