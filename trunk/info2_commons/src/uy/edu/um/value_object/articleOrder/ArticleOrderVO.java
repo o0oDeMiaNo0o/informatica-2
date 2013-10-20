@@ -31,6 +31,4 @@ public class ArticleOrderVO implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-
-
 }
