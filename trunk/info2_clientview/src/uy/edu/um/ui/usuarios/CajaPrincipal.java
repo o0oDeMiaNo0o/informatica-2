@@ -162,7 +162,7 @@ public class CajaPrincipal extends BasicoUsuario {
 					MensajeGenerico mensaje = new MensajeGenerico(
 							"Pedido Vacio");
 				} else {
-					SeleccionaMesa nueva = new SeleccionaMesa(pedidoAux);
+					Mesas nueva = new Mesas(pedidoAux);
 				}
 			}
 		});

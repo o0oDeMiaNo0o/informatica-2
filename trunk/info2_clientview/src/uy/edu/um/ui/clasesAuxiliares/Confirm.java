@@ -1,7 +1,9 @@
-package uy.edu.um.ui;
+package uy.edu.um.ui.clasesAuxiliares;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,16 +11,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 
+import uy.edu.um.value_object.oreder.OrderVO;
 import net.miginfocom.swing.MigLayout;
 
-import com.jgoodies.forms.factories.Borders.EmptyBorder;
-
-public class Confirma extends JFrame {
+public class Confirm extends JFrame {
 
 	private JPanel contentPane;
-	private JPasswordField passwordField;
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
@@ -28,23 +27,12 @@ public class Confirma extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Confirma frame = new Confirma();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @param toSend 
 	 */
-	public Confirma() {
+	public Confirm(final OrderVO toSend) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -54,20 +42,25 @@ public class Confirma extends JFrame {
 
 		JPanel ZonaPassword = new JPanel();
 		contentPane.add(ZonaPassword, BorderLayout.CENTER);
-		ZonaPassword.setLayout(new MigLayout("", "[428px]", "[grow][16px][28px][grow]"));
+		ZonaPassword.setLayout(new MigLayout("", "[428px]",
+				"[grow][16px][grow]"));
 
-		JLabel lblContrasea = new JLabel(
-				"Ingrese Contrase\u00F1a Para Confirmacion");
+		JLabel lblContrasea = new JLabel("\u00BFConfirma Selecci\u00F3n?");
+		lblContrasea.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		lblContrasea.setForeground(Color.BLACK);
 		ZonaPassword.add(lblContrasea, "cell 0 1,alignx center,aligny top");
-
-		passwordField = new JPasswordField();
-		ZonaPassword.add(passwordField, "cell 0 2,growx,aligny top");
 
 		JPanel ZonaBotones = new JPanel();
 		contentPane.add(ZonaBotones, BorderLayout.SOUTH);
 		ZonaBotones.setLayout(new MigLayout("", "[grow][][]", "[]"));
 
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ConfirmFacturar nueva = new ConfirmFacturar(toSend);
+			}
+		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
 
 		JButton btnCancelar = new JButton("Cancelar");
