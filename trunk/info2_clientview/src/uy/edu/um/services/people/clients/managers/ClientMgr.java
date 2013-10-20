@@ -25,8 +25,8 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
-			int tel, String direccion, String mail) {
-		ClientVO toReturn = new ClientVO(nombre,apellido,ci,tel,direccion,mail);
+			int tel, String direccion, String mail, int descuento) {
+		ClientVO toReturn = new ClientVO(nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
 
