@@ -2,15 +2,17 @@ package uy.edu.um.services.order.interfaces;
 
 import java.util.ArrayList;
 
-import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
+import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public interface OrderMgt {
 
-	public void getOrdersClient(ClientVO c);
+	public void addOrder(OrderVO o);
 
-	public void setClient(ArrayList<ArticleVO> a, ClientVO c);
+	public void removeOrder(OrderVO o);
 
-
+	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t, UserVO u, String spec);
 
 }
