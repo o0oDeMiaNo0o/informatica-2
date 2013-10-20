@@ -30,8 +30,8 @@ public class TableRemoteMgr implements TableRemoteMgt{
 
 	@Override
 	public void addTable() throws RemoteException {
-		// TODO Auto-generated method stub
-
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		tMgt.addTable();
 	}
 
 	@Override
