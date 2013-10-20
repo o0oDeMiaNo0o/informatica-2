@@ -2,7 +2,6 @@ package uy.edu.um.ui.clasesAuxiliares;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,8 +11,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import uy.edu.um.value_object.oreder.OrderVO;
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.value_object.oreder.OrderVO;
 
 public class Confirm extends JFrame {
 
@@ -59,6 +60,8 @@ public class Confirm extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
+				nuevo.addOrder(toSend);
 				ConfirmFacturar nueva = new ConfirmFacturar(toSend);
 				nueva.setVisible(true);
 			}
