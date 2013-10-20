@@ -85,8 +85,11 @@ public class CajaPrincipal extends BasicoUsuario {
 	 */
 	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido) {
 		super();
-		pedidoAux = pedido;
-		pedidoArticle = cargaArticleVO(pedidoAux);
+		if (pedido != null) {
+			pedidoAux = pedido;
+			pedidoArticle = cargaArticleVO(pedidoAux);
+		}
+
 		setTitle("Pedido");
 
 		TransparentPanel transparentPanelPedido = new TransparentPanel();
