@@ -7,13 +7,11 @@ import uy.edu.um.value_object.article.ArticleVO;
 public class ArticleOrderVO implements Serializable {
 
 	private ArticleVO article;
-	private String especificaciones;
 	private int cantidad;
 
-	public ArticleOrderVO(ArticleVO article, int cantidad, String especificaciones){
+	public ArticleOrderVO(ArticleVO article, int cantidad){
 		this.article = article;
 		this.cantidad = cantidad;
-		this.especificaciones = especificaciones;
 
 	}
 
@@ -33,13 +31,6 @@ public class ArticleOrderVO implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-	public String getEspecificaciones() {
-		return especificaciones;
-	}
-
-	public void setEspecificaciones(String especificaciones) {
-		this.especificaciones = especificaciones;
-	}
 
 
 }
