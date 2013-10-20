@@ -122,6 +122,7 @@ public class NewProduct extends JFrame {
 										"Producto Agregado Correctamente");
 								mensaje.setVisible(true);
 								bandera = true;
+								resetearPosicion();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
@@ -176,5 +177,11 @@ public class NewProduct extends JFrame {
 			}
 		}
 		return null;
+	}
+
+	private void resetearPosicion() {
+		textFieldNombre.setText("");
+		textFieldPrecio.setText("");
+		comboBoxCat.setSelectedIndex(0);
 	}
 }

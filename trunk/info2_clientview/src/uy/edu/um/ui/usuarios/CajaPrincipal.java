@@ -165,6 +165,7 @@ public class CajaPrincipal extends BasicoUsuario {
 							"Pedido Vacio");
 				} else {
 					Mesas nueva = new Mesas(pedidoAux, espTotal, null);
+					nueva.setVisible(true);
 					cerrar();
 				}
 			}

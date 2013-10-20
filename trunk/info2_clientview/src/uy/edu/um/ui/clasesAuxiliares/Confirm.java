@@ -30,7 +30,8 @@ public class Confirm extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param toSend 
+	 * 
+	 * @param toSend
 	 */
 	public Confirm(final OrderVO toSend) {
 		setTitle("Confirma");
@@ -59,6 +60,7 @@ public class Confirm extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ConfirmFacturar nueva = new ConfirmFacturar(toSend);
+				nueva.setVisible(true);
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

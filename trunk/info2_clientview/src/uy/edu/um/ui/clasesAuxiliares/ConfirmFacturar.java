@@ -55,6 +55,7 @@ public class ConfirmFacturar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Facturacion factura = new Facturacion(toSend);
+				factura.setVisible(true);
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
