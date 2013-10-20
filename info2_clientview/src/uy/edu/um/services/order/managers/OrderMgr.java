@@ -31,7 +31,7 @@ public class OrderMgr implements OrderMgt{
 
 			String sObjectService = "OrderRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1299);
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
 
 			OrderRemoteMgt oArticleRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 
