@@ -2,29 +2,30 @@ package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
+import uy.edu.um.ui.clasesAuxiliares.Confirm;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
-import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
+import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
-import java.awt.Font;
-import java.awt.Component;
-import javax.swing.Box;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
+import uy.edu.um.value_object.user.UserVO;
 
 public class Mesas extends BasicoUsuario {
 
@@ -34,25 +35,11 @@ public class Mesas extends BasicoUsuario {
 	public TableVO mesaSeleccionada = null;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Mesas frame = new Mesas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
+	 * 
+	 * @param pedidoAux
 	 */
-	public Mesas() {
+	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp, UserVO user) {
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -60,7 +47,8 @@ public class Mesas extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][grow]", "[][][][][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][][grow]",
+				"[][][][][][][][grow]"));
 
 		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
 		transparentPanel.add(rigidArea, "cell 0 0");
@@ -72,7 +60,7 @@ public class Mesas extends BasicoUsuario {
 		lblMesas.setForeground(Color.WHITE);
 		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		transparentPanel_1.add(lblMesas);
-		cargaBotones(transparentPanel);
+		cargaBotones(transparentPanel, pedidoAux, esp, user);
 
 		ImagePanel imagePanel = new ImagePanel(libre);
 		transparentPanel
@@ -86,7 +74,9 @@ public class Mesas extends BasicoUsuario {
 	}
 
 	// Metodos auxiliares
-	private void cargaBotones(TransparentPanel panel) {
+	private void cargaBotones(TransparentPanel panel,
+			final ArrayList<ArticleOrderVO> pedidoAux, final String esp,
+			final UserVO user) {
 		if (mesas.isEmpty()) {
 			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
 			lbltemp.setForeground(Color.WHITE);
@@ -109,7 +99,10 @@ public class Mesas extends BasicoUsuario {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						mesaSeleccionada = mesa;
+						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp, user);
+						Confirm conf = new Confirm(toSend);
 					}
+
 				});
 
 				JLabel lblNewLabel = new JLabel(Integer.toString(mesas.get(n)
@@ -126,6 +119,15 @@ public class Mesas extends BasicoUsuario {
 
 			}
 		}
+	}
+
+	// Creo y envio OrderVO
+	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
+			TableVO mesa, String esp, UserVO user) {
+		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, user, esp);
+		return toSend;
+
 	}
 
 	private void cargoMesas() {
