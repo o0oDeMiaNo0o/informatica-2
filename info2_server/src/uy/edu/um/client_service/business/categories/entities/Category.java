@@ -4,8 +4,8 @@ public class Category {
 
 	private String nombre;
 	private int id;
-
-
+	
+	
 
 	public int getId() {
 		return id;
@@ -18,10 +18,10 @@ public class Category {
 	public Category(String nombre){
 		this.nombre = nombre;
 	}
-
-	public Category(String nombre, int id){
+	
+	public Category(String nombre,int id){
 		this.nombre = nombre;
-		this.id = id;
+		this.id=id;
 	}
 
 	public String getNombre() {
@@ -31,5 +31,5 @@ public class Category {
 		this.nombre = nombre;
 	}
 
-
+	
 }
