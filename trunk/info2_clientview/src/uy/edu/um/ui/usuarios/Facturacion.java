@@ -3,7 +3,9 @@ package uy.edu.um.ui.usuarios;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,21 +18,21 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.value_object.article.ArticleVO;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
-
-import java.awt.Component;
-
-import javax.swing.Box;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 public class Facturacion extends BasicoUsuario {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private URL logo = DirLocal.class.getResource("Logo.png");
+	private String montoPagar, pagaCon, vuelto;
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public Facturacion(OrderVO toSend) {
@@ -81,7 +83,7 @@ public class Facturacion extends BasicoUsuario {
 		JLabel lblSubtotal = new JLabel("Subtotal");
 		lblSubtotal.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblSubtotal, "cell 1 1");
-		
+
 		JLabel labelSub = new JLabel(cuentaPrecio(toSend));
 		labelSub.setForeground(Color.WHITE);
 		transparentPanel_1.add(labelSub, "cell 2 1,alignx left,aligny center");
@@ -111,8 +113,45 @@ public class Facturacion extends BasicoUsuario {
 	}
 
 	private String cuentaPrecio(OrderVO toSend) {
-		
-		return null;
+		BigDecimal subTotal = new BigDecimal(0);
+		ArrayList<ArticleOrderVO> ao = toSend.getArticulos();
+		for(ArticleOrderVO a : ao){
+			if(a!= null){
+				ArticleVO article = a.getArticle();
+				BigDecimal price = article.getPrecio();
+				int c = a.getCantidad();
+				BigDecimal cantidad = new BigDecimal(c);
+				BigDecimal temp = cantidad.multiply(price);
+				subTotal = subTotal.add(temp);
+			}
+		}
+		String toReturn = subTotal.toString();
+		return toReturn;
+	}
+
+	public String calcularVuelto(String pago, String monto){
+		int sPago = Integer.parseInt(pago);
+		int sMonto = Integer.parseInt(monto);
+		if(sPago < sMonto){
+			return "monto insuficiente";
+		}else{
+			BigDecimal dPago = new BigDecimal(sPago);
+			BigDecimal dMonto = new BigDecimal(sMonto);
+			BigDecimal vuelto = dPago.subtract(dMonto);
+			return vuelto.toString();
+		}
+
+	}
+
+	public String calcularDescuento(ClientVO c, String monto){
+		int discount = c.getDescuento();
+		BigDecimal hun = new BigDecimal(100);
+		BigDecimal dMonto = new BigDecimal(Integer.parseInt(monto));
+		BigDecimal dDis = new BigDecimal(discount);
+		BigDecimal tDis = hun.subtract(dDis);
+		BigDecimal trueDist = tDis.divide(hun);
+		BigDecimal total = dMonto.multiply(trueDist);
+		return total.toString();
 	}
 
 }
