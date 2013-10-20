@@ -68,6 +68,9 @@ public class ServiceFacade {
 	public ArticleOrderMgt getArticleOrderMgt(){
 		return ArticleOrderMgr.getInstance();
 	}
+	public TableMgt getTableMgt(){
+		return TableMgr.getInstance();
+	}
 
 
 	public TableMgt getTableMgt(){
