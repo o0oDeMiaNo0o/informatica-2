@@ -17,10 +17,11 @@ public class ClientTest {
 		String mail = "mliston";
 		int ci = 12345;
 		int tel = 12345345;
+		int descuento = 34;
 
 		ClientMgt cMgt = ServiceFacade.getInstance().getClientMgt();
 
-		ClientVO toSend = cMgt.createClientVO(nombre, apellido, ci, tel, direccion, mail);
+		ClientVO toSend = cMgt.createClientVO(nombre, apellido, ci, tel, direccion, mail, descuento);
 
 		cMgt.sendClientVO(toSend);
 
