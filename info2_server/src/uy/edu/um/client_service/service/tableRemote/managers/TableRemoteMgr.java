@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
+import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
@@ -34,17 +35,6 @@ public class TableRemoteMgr implements TableRemoteMgt{
 		tMgt.addTable();
 	}
 
-	@Override
-	public void closeTable() throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void openTable() throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public ArrayList<TableVO> allTables() throws RemoteException {
@@ -52,6 +42,22 @@ public class TableRemoteMgr implements TableRemoteMgt{
 		ArrayList<TableVO> array = new ArrayList<TableVO>(10);
 		array = tMgt.allTables();
 		return array;
+	}
+
+	@Override
+	public void closeTable(TableVO t) throws RemoteException {
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		Table toClose = tMgt.getTable(t);
+		tMgt.closeTable(toClose);
+
+	}
+
+	@Override
+	public void openTable(TableVO t) throws RemoteException {
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		Table toOpen = tMgt.getTable(t);
+		tMgt.openTable(toOpen);
+
 	}
 
 }
