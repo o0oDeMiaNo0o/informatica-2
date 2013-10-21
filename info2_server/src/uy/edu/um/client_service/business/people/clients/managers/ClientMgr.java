@@ -1,9 +1,12 @@
 package uy.edu.um.client_service.business.people.clients.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.persistance.DAO.clients.ClientDAO;
 import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public class ClientMgr implements ClientMgt{
 
@@ -61,6 +64,12 @@ public class ClientMgr implements ClientMgt{
 	public void getClients() {
 		ClientDAO dao = ClientDAO.getInstance();
 		dao.getClients();
+	}
+
+	@Override
+	public ArrayList<ClientVO> allClients() {
+		ClientDAO dao = ClientDAO.getInstance();
+		return null;
 	}
 
 }
