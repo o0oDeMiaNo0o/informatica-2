@@ -1,5 +1,11 @@
 package uy.edu.um.services.user.managers;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
+
+import uy.edu.um.interfaces.user.UserRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -17,8 +23,23 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void addUser(UserVO a) {
-		// TODO Auto-generated method stub
+	public void addUser(UserVO u) {
+		try {
+
+			String sObjectService = "UserRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
+
+			oUserRemoteMgt.addUser(u);
+
+			System.out.println("usuario agregado");
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+		}
 
 	}
 
@@ -33,6 +54,29 @@ public class UserMgr implements UserMgt{
 	public void searchUser(String nombre) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<UserVO> allUsers() {
+		ArrayList<UserVO> array = new ArrayList<UserVO>(10);
+
+		try {
+
+			String sObjectService = "UserRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			array = oUserRemoteMgt.allUsers();
+
+			} catch (Exception e) {
+				System.err.println("error:");
+				e.printStackTrace();
+			}
+
+		return array;
 	}
 
 }
