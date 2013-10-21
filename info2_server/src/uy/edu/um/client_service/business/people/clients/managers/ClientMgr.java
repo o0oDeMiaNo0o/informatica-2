@@ -31,7 +31,8 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public void editClient(Client c) {
-		// TODO Auto-generated method stub
+		ClientDAO dao = ClientDAO.getInstance();
+
 
 	}
 
@@ -43,7 +44,7 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public void removeClient(Client c) {
-		// TODO Auto-generated method stub
+		ClientDAO dao = ClientDAO.getInstance();
 
 	}
 
@@ -69,7 +70,7 @@ public class ClientMgr implements ClientMgt{
 	@Override
 	public ArrayList<ClientVO> allClients() {
 		ClientDAO dao = ClientDAO.getInstance();
-		return null;
+		return dao.getClientsVO();
 	}
 
 }

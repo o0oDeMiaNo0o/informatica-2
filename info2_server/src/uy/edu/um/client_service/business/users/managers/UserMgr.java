@@ -1,5 +1,7 @@
 package uy.edu.um.client_service.business.users.managers;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
@@ -43,6 +45,12 @@ public class UserMgr implements UserMgt{
 	public void removeUser(User u) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<UserVO> allUsers() {
+		UserDAO dao = UserDAO.getInstance();
+		return null;
 	}
 
 
