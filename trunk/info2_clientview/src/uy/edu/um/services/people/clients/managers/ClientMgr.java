@@ -2,6 +2,7 @@ package uy.edu.um.services.people.clients.managers;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
@@ -58,6 +59,12 @@ public class ClientMgr implements ClientMgt{
 	@Override
 	public void getClient(int ci) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public ArrayList<ClientVO> allClients() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
