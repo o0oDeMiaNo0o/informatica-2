@@ -1,16 +1,11 @@
 package uy.edu.um.services.bill.managers;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.bill.interfaces.BillMgt;
-import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class BillMgr implements BillMgt{
 
@@ -25,8 +20,8 @@ public class BillMgr implements BillMgt{
 		return instance;
 	}
 	@Override
-	public BillVO createBillVO(ArrayList<OrderVO> orders) {
-		return new BillVO(orders);
+	public BillVO createBillVO(ArrayList<OrderVO> orders, TableVO t) {
+		return new BillVO(orders,t);
 	}
 
 	@Override
