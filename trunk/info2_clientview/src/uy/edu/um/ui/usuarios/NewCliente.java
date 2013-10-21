@@ -18,6 +18,10 @@ import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.people.client.ClientVO;
+import javax.swing.JSpinner;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Font;
 
 public class NewCliente extends BasicoUsuario {
 
@@ -103,6 +107,9 @@ public class NewCliente extends BasicoUsuario {
 		textFieldDir.setColumns(10);
 		transparentPanel.add(textFieldDir, "cell 4 5,growx");
 
+		final JSpinner spinner = new JSpinner();
+		transparentPanel.add(spinner, "cell 2 7");
+
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -115,94 +122,75 @@ public class NewCliente extends BasicoUsuario {
 									if (!textFieldDir.getText().isEmpty()) {
 										ClientMgt client = ServiceFacade
 												.getInstance().getClientMgt();
-										ClientVO cliente = client.createClientVO(textFieldNom
-												.getText(), textFieldAp
-												.getText(),
-												Integer.parseInt(textFieldCi
-														.getText()), Integer
-														.parseInt(textFieldTel
+										ClientVO cliente = client.createClientVO(
+												textFieldNom.getText(),
+												textFieldAp.getText(), Integer
+														.parseInt(textFieldCi
 																.getText()),
+												Integer.parseInt(textFieldTel
+														.getText()),
 												textFieldDir.getText(),
-												textFieldEmail.getText());
+												textFieldEmail.getText(),
+												Integer.parseInt(spinner
+														.getValue().toString()));
 										client.sendClientVO(cliente);
 										MensajeGenerico new10 = new MensajeGenerico(
-												"Cliente Agregado");
+												"Cliente Agregado", contentPane);
 										new10.setVisible(true);
 									} else {
 										MensajeGenerico new6 = new MensajeGenerico(
-												"Direccion Vacia");
+												"Direccion Vacia", contentPane);
 										new6.setVisible(true);
 									}
 								} else {
 									MensajeGenerico new5 = new MensajeGenerico(
-											"Telefono Vacio o No Numerico");
+											"Telefono Vacio o No Numerico",
+											contentPane);
 									new5.setVisible(true);
 								}
 							} else {
 								MensajeGenerico new4 = new MensajeGenerico(
-										"Apellido Vacio");
+										"Apellido Vacio", contentPane);
 								new4.setVisible(true);
 							}
 						} else {
 							MensajeGenerico new3 = new MensajeGenerico(
-									"Email Vacio");
+									"Email Vacio", contentPane);
 							new3.setVisible(true);
 						}
 
 					} else {
 						MensajeGenerico new2 = new MensajeGenerico(
-								"Ci Vacio o No Numerico");
+								"Ci Vacio o No Numerico", contentPane);
 						new2.setVisible(true);
 					}
 				} else {
-					MensajeGenerico new1 = new MensajeGenerico("Nombre Vacio");
+					MensajeGenerico new1 = new MensajeGenerico("Nombre Vacio",
+							contentPane);
 					new1.setVisible(true);
 				}
 
 			}
 		});
+
+		JLabel lblDescuento = new JLabel("Descuento");
+		lblDescuento.setForeground(Color.WHITE);
+		transparentPanel.add(lblDescuento, "cell 1 7");
+
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		transparentPanel.add(horizontalStrut, "flowx,cell 2 7,alignx left");
 		transparentPanel.add(btnAceptar,
 				"flowx,cell 4 13,alignx right,aligny center");
 
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel.add(btnCancelar,
 				"cell 4 13,alignx right,aligny center");
+
+		JLabel lblNoIngresarDigito = new JLabel(
+				"No ingresar Digito Verificador");
+		lblNoIngresarDigito.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		lblNoIngresarDigito.setForeground(Color.WHITE);
+		transparentPanel.add(lblNoIngresarDigito, "cell 2 3");
 	}
 
-	public boolean chequeaDatos() {
-		boolean bandera = false;
-		if (!textFieldNom.getText().isEmpty()) {
-			if (Helpers.isNumeric(textFieldCi.getText())) {
-				if (!textFieldEmail.getText().isEmpty()) {
-					if (!textFieldAp.getText().isEmpty()) {
-						if (Helpers.isNumeric(textFieldTel.getText())) {
-							if (!textFieldDir.getText().isEmpty()) {
-								bandera = true;
-							} else {
-								MensajeGenerico new6 = new MensajeGenerico(
-										"Direccion Vacia");
-								new6.setVisible(true);
-							}
-						} else {
-							MensajeGenerico new5 = new MensajeGenerico(
-									"Telefono Vacio o No Numerico");
-						}
-					} else {
-						MensajeGenerico new4 = new MensajeGenerico(
-								"Apellido Vacio");
-					}
-				} else {
-					MensajeGenerico new3 = new MensajeGenerico("Email Vacio");
-				}
-
-			} else {
-				MensajeGenerico new2 = new MensajeGenerico(
-						"Ci Vacio o No Numerico");
-			}
-		} else {
-			MensajeGenerico new1 = new MensajeGenerico("Nombre Vacio");
-		}
-		return bandera;
-
-	}
 }

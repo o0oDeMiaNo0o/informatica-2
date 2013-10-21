@@ -9,16 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.value_object.categories.CategoryVO;
-import javax.swing.JRadioButton;
 
 public class NewUsuario extends JFrame {
 
@@ -61,7 +58,8 @@ public class NewUsuario extends JFrame {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		contentPane.add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[][92px,grow]", "[][][][29px][][][][][]"));
+		transparentPanel.setLayout(new MigLayout("", "[][92px,grow]",
+				"[][][][29px][][][][][]"));
 
 		lblNewLabel = new JLabel("Nombre");
 		transparentPanel.add(lblNewLabel, "cell 0 1,alignx left,aligny center");
@@ -74,30 +72,34 @@ public class NewUsuario extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(!textFieldNombre.getText().isEmpty()){
-					if(!textField.getText().isEmpty()){
+				if (!textFieldNombre.getText().isEmpty()) {
+					if (!textField.getText().isEmpty()) {
 						boolean admin = rdbtnNewRadioButton.isSelected();
-						
-					}else{
-						MensajeGenerico test = new MensajeGenerico("Contrase–a Vacio");
+
+					} else {
+						MensajeGenerico test = new MensajeGenerico(
+								"Contrase–a Vacia", contentPane);
 					}
-				}else {
-					MensajeGenerico test = new MensajeGenerico("Nombre Vacio");
+				} else {
+					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
+							contentPane);
 				}
 			}
 		});
-		
+
 		lblContrasea = new JLabel("Contrase\u00F1a");
 		transparentPanel.add(lblContrasea, "cell 0 2,alignx left");
-		
+
 		textField = new JTextField();
 		textField.setColumns(10);
 		transparentPanel.add(textField, "cell 1 2,growx");
-		
+
 		rdbtnNewRadioButton = new JRadioButton("Es Administrador");
-		transparentPanel.add(rdbtnNewRadioButton, "cell 1 3,alignx right,growy");
-		transparentPanel.add(btnAceptar, "flowx,cell 1 8,alignx right,aligny top");
-		
+		transparentPanel
+				.add(rdbtnNewRadioButton, "cell 1 3,alignx right,growy");
+		transparentPanel.add(btnAceptar,
+				"flowx,cell 1 8,alignx right,aligny top");
+
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -105,14 +107,13 @@ public class NewUsuario extends JFrame {
 				cerrar();
 			}
 
-			
 		});
 		transparentPanel.add(btnCancelar, "cell 1 8");
 	}
 
 	private void cerrar() {
 		this.dispose();
-		
+
 	}
 
 }
