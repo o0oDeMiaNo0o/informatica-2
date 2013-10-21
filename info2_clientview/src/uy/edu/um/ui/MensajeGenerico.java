@@ -2,15 +2,17 @@ package uy.edu.um.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MensajeGenerico extends JDialog {
 
@@ -22,9 +24,10 @@ public class MensajeGenerico extends JDialog {
 		this.mensaje = a;
 	}
 
-	public MensajeGenerico(String error) {
+	public MensajeGenerico(String error, JPanel contentPane) {
 		setResizable(false);
 		setBounds(100, 100, 326, 107);
+		this.setLocationRelativeTo(contentPane);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 326, 82);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

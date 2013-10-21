@@ -80,8 +80,12 @@ public class NewCategory extends JFrame {
 					CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 					CategoryVO nuevaCatVO = cat.createCategoryVO(textFieldNombre.getText());
 					cat.sendCategoryVO(nuevaCatVO);
+					textFieldNombre.setText("");
+					MensajeGenerico test = new MensajeGenerico("Categoria Agregada Correctamente",contentPane);
+					test.setVisible(true);
 				}else {
-					MensajeGenerico test = new MensajeGenerico("Nombre Vacio");
+					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",contentPane);
+					test.setVisible(true);
 				}
 			}
 		});

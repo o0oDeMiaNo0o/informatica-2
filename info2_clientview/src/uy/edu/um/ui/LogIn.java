@@ -12,6 +12,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LogIn extends BasicoUsuario {
 	private JTextField textField;
@@ -57,6 +59,12 @@ public class LogIn extends BasicoUsuario {
 		getContentPane().add(passwordField, "cell 2 2,growx");
 		
 		JButton btnNewButton = new JButton("Ingresar");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
 		getContentPane().add(btnNewButton, "cell 3 3,aligny top");
 	}
 

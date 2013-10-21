@@ -119,20 +119,20 @@ public class NewProduct extends JFrame {
 								test.sendArticle(toSend);
 
 								MensajeGenerico mensaje = new MensajeGenerico(
-										"Producto Agregado Correctamente");
+										"Producto Agregado Correctamente",contentPane);
 								mensaje.setVisible(true);
 								bandera = true;
 								resetearPosicion();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
-									"Precio No Numerico");
+									"Precio No Numerico",contentPane);
 							mensaje.setVisible(true);
 							bandera = true;
 						}
 					} else {
 						MensajeGenerico mensaje = new MensajeGenerico(
-								"Ingrese Nombre");
+								"Ingrese Nombre",contentPane);
 						mensaje.setVisible(true);
 						bandera = true;
 					}

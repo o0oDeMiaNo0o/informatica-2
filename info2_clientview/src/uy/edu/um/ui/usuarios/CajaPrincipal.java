@@ -165,7 +165,8 @@ public class CajaPrincipal extends BasicoUsuario {
 			public void mouseClicked(MouseEvent arg0) {
 				if (pedidoAux.size() == 0) {
 					MensajeGenerico mensaje = new MensajeGenerico(
-							"Pedido Vacio");
+							"Pedido Vacio", contentPane);
+					mensaje.setVisible(true);
 				} else {
 					Mesas nueva = new Mesas(pedidoAux, espTotal, user);
 					nueva.setVisible(true);
@@ -282,6 +283,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		for (int i = 0; i < combos.size(); i++) {
 			combos.get(i).setSelectedIndex(0);
 			spinners.get(i).setValue(0);
+			esp.get(i).setText("");
 		}
 	}
 
@@ -324,7 +326,9 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 			aux = new ArticleOrderVO(buscaArticulo(listaArticulos, op), valor);
 			pedidoAux.add(aux);
-			espTotal = espTotal + t.getSelectedText();
+			if(t.getText() != null){
+			espTotal = espTotal + t.getText() + " ; ";
+			}
 			bandera = true;
 		}
 		return bandera;

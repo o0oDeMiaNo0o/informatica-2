@@ -57,46 +57,57 @@ public class NewTable extends JFrame {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		contentPane.add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][92px][grow]", "[][][][29px][][][][grow][]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][92px][grow]",
+				"[][][][29px][][][][grow][]"));
 
 		lblNewLabel = new JLabel("Cantidad Mesas");
-		transparentPanel.add(lblNewLabel, "cell 1 1,alignx center,aligny center");
+		transparentPanel.add(lblNewLabel,
+				"cell 1 1,alignx center,aligny center");
 
 		spinner = new JSpinner();
 		transparentPanel.add(spinner, "cell 2 1,alignx center,aligny center");
-		
+
 		transparentPanel_1 = new TransparentPanel();
 		contentPane.add(transparentPanel_1, BorderLayout.SOUTH);
-				transparentPanel_1.setLayout(new MigLayout("", "[440px]", "[29px]"));
-		
-				JButton btnAceptar = new JButton("Aceptar");
-				transparentPanel_1.add(btnAceptar, "cell 0 0,alignx right,aligny center");
-				
-						btnCancelar = new JButton("Cancelar");
-						transparentPanel_1.add(btnCancelar, "cell 0 0,alignx right,aligny top");
-						btnCancelar.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								cerrar();
-							}
+		transparentPanel_1.setLayout(new MigLayout("", "[440px]", "[29px]"));
 
-						});
-				btnAceptar.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
+		JButton btnAceptar = new JButton("Aceptar");
+		transparentPanel_1.add(btnAceptar,
+				"cell 0 0,alignx right,aligny center");
 
-						int valor = (Integer) spinner.getValue();
-						if (valor != 0) {
-							// Agrego Mesa
-							TableMgt test = ServiceFacade.getInstance().getTableMgt();
-							for (int i = 0; i < valor; i++) {
-								test.addTable();
-							}
-						} else {
-							MensajeGenerico test = new MensajeGenerico("Numero Vacio");
-						}
+		btnCancelar = new JButton("Cancelar");
+		transparentPanel_1.add(btnCancelar, "cell 0 0,alignx right,aligny top");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cerrar();
+			}
+
+		});
+		btnAceptar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				int valor = (Integer) spinner.getValue();
+				if (valor != 0) {
+					// Agrego Mesa
+					TableMgt test = ServiceFacade.getInstance().getTableMgt();
+					for (int i = 0; i < valor; i++) {
+						test.addTable();
 					}
-				});
+
+					MensajeGenerico test1 = new MensajeGenerico(spinner
+							.getValue() + " mesas agregadas correctamente",
+							contentPane);
+					test1.setVisible(true);
+					spinner.setValue(0);
+				} else {
+					MensajeGenerico test = new MensajeGenerico("Numero Vacio",
+							contentPane);
+					test.setVisible(true);
+				}
+			}
+		});
 	}
 
 	private void cerrar() {
