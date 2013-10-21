@@ -11,8 +11,8 @@ import uy.edu.um.value_object.people.client.ClientVO;
 
 public class ClientTest {
 	public static void main(String[] args) {
-		String nombre = "matias";
-		String apellido = "liston";
+		String nombre = "bernardo";
+		String apellido = "forrisi";
 		String direccion = "asd";
 		String mail = "mliston";
 		int ci = 12345;
@@ -23,7 +23,7 @@ public class ClientTest {
 
 		ClientVO toSend = cMgt.createClientVO(nombre, apellido, ci, tel, direccion, mail, descuento);
 
-		cMgt.sendClientVO(toSend);
+		cMgt.addClientVO(toSend);
 
 		System.out.println("cliente agregado");
 	}

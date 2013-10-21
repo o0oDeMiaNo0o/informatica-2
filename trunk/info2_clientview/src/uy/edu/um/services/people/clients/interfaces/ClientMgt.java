@@ -11,7 +11,11 @@ public interface ClientMgt {
 
 	//public void addClient(String nombre, String apellido,int ci, int tel, String direccion, String mail);
 
-	public void sendClientVO(ClientVO c);
+	public void addClientVO(ClientVO c);
+
+	public void removeClientVO(ClientVO c);
+
+	public void editClientVO(ClientVO c);
 
 	public void getClient(int ci);
 
