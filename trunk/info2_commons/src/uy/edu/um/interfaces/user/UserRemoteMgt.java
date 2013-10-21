@@ -2,6 +2,8 @@ package uy.edu.um.interfaces.user;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 import uy.edu.um.value_object.user.UserVO;
 
 
@@ -13,6 +15,6 @@ public interface UserRemoteMgt extends Remote{
 
 	public void editUser(UserVO a) throws RemoteException;
 
-
+	public ArrayList<UserVO> allUsers() throws RemoteException;
 
 }

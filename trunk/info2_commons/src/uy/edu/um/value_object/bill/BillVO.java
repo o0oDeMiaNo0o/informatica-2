@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class BillVO implements Serializable{
 
 	private ArrayList<OrderVO> orders = new ArrayList<OrderVO>(10);
 	private BigDecimal costoTotal;
+	private TableVO t;
 
-	public BillVO(ArrayList<OrderVO> orders){
+	public BillVO(ArrayList<OrderVO> orders, TableVO t){
 		this.orders = orders;
 		this.costoTotal = getTotal();
+		this.t = t;
 	}
 
 	public ArrayList<OrderVO> getOrders() {
@@ -39,5 +42,21 @@ public class BillVO implements Serializable{
 			}
 		}
 		return total;
+	}
+
+	public TableVO getT() {
+		return t;
+	}
+
+	public void setT(TableVO t) {
+		this.t = t;
+	}
+
+	public void setOrders(ArrayList<OrderVO> orders) {
+		this.orders = orders;
+	}
+
+	public void setCostoTotal(BigDecimal costoTotal) {
+		this.costoTotal = costoTotal;
 	}
 }
