@@ -1,5 +1,7 @@
 package uy.edu.um.services.people.clients.interfaces;
 
+import java.util.ArrayList;
+
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public interface ClientMgt {
@@ -12,5 +14,7 @@ public interface ClientMgt {
 	public void sendClientVO(ClientVO c);
 
 	public void getClient(int ci);
+
+	public ArrayList<ClientVO> allClients();
 
 }

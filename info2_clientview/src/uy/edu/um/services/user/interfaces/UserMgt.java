@@ -9,4 +9,5 @@ public interface UserMgt {
 	public UserVO createUserVO(String nombre, String password, boolean admin);
 
 	public void searchUser(String nombre);
+
 }
