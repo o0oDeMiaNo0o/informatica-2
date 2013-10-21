@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.service.userRemote.manager;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.users.entities.User;
@@ -43,6 +44,12 @@ public class UserRemoteMgr implements UserRemoteMgt{
 	public void editUser(UserVO a) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<UserVO> allUsers() throws RemoteException {
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		return null;
 	}
 
 }
