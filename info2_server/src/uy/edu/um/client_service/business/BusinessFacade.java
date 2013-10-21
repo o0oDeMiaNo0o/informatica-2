@@ -103,7 +103,7 @@ public class BusinessFacade {
 		return WaiterRemoteMgr.getInstance();
 	}
 
-	public WaiterMgt getWaiterMgr(){
+	public WaiterMgt getWaiterMgt(){
 		return WaiterMgr.getInstance();
 	}
 
