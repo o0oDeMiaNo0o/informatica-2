@@ -11,30 +11,13 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class UserTest {
 	public static void main(String[] args) {
+		String nombre = "pep";
+		String pass = "jos";
+		boolean admin = false;
+		UserMgt uMgt = ServiceFacade.getInstance().getUserMgt();
+		UserVO u = uMgt.createUserVO(nombre, pass, admin);
+		uMgt.addUser(u);
 
-		try {
-
-			String sObjectService = "UserRemoteMgr";
-
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
-			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
-
-			String name = "agonzalez";
-			String password = "asd";
-			boolean isAdmin = false;
-
-			UserMgt uMgt = ServiceFacade.getInstance().getUserMgt();
-
-			UserVO toSend = uMgt.createUserVO(name, password, isAdmin);
-
-			oUserRemoteMgt.addUser(toSend);
-
-			System.out.println("usuario agregado");
-
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-		}
 	}
+
 }
