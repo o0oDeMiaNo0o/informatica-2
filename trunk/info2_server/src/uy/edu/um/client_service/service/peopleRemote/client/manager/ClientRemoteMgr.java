@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.service.peopleRemote.client.manager;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
@@ -47,6 +48,12 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 	public void showClient(ClientVO c) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<ClientVO> allClients() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
