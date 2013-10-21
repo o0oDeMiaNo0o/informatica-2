@@ -1,5 +1,7 @@
 package uy.edu.um.client_service.business.people.waiters.interfaces;
 
+import java.util.ArrayList;
+
 import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
 import uy.edu.um.value_object.people.waiters.WaiterVO;
 
@@ -12,5 +14,7 @@ public interface WaiterMgt {
 	public void removeWaiter(Waiter w);
 
 	public void editWaiter(Waiter w);
+
+	public ArrayList<WaiterVO> allWaiters();
 
 }

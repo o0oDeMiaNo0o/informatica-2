@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.business.people.waiters.managers;
 
+import java.util.ArrayList;
 import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
 import uy.edu.um.client_service.business.people.waiters.interfaces.WaiterMgt;
 import uy.edu.um.value_object.people.waiters.WaiterVO;
@@ -45,6 +46,12 @@ public class WaiterMgr implements WaiterMgt{
 	public void removeWaiter(Waiter w) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<WaiterVO> allWaiters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
