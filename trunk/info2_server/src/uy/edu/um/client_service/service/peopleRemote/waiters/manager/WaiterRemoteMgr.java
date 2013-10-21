@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.service.peopleRemote.waiters.manager;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
@@ -23,7 +24,7 @@ public class WaiterRemoteMgr implements WaiterRemoteMgt{
 
 	@Override
 	public void addWaiter(WaiterVO w) throws RemoteException {
-		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgr();
+		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
 		Waiter toAdd = wMgt.getWaiter(w);
 		wMgt.addWaiter(toAdd);
 
@@ -32,13 +33,17 @@ public class WaiterRemoteMgr implements WaiterRemoteMgt{
 
 	@Override
 	public void editWaiter(WaiterVO w) throws RemoteException {
-		// TODO Auto-generated method stub
+		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
+		Waiter toEdit = wMgt.getWaiter(w);
+		wMgt.editWaiter(toEdit);
 
 	}
 
 	@Override
 	public void removeWaiter(WaiterVO w) throws RemoteException {
-		// TODO Auto-generated method stub
+		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
+		Waiter toRemove = wMgt.getWaiter(w);
+		wMgt.removeWaiter(toRemove);
 
 	}
 
@@ -46,6 +51,12 @@ public class WaiterRemoteMgr implements WaiterRemoteMgt{
 	public void showWaiter(WaiterVO w) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<WaiterVO> allWaiters() throws RemoteException {
+		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
+		return wMgt.allWaiters();
 	}
 
 }
