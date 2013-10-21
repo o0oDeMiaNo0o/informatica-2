@@ -32,15 +32,18 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 	@Override
 	public void editClient(ClientVO c) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		Client toEdit = cMgt.getClient(c);
+		cMgt.editClient(toEdit);
 	}
 
 
 
 	@Override
 	public void removeClient(ClientVO c) throws RemoteException {
-		// TODO Auto-generated method stub
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		Client toRemove = cMgt.getClient(c);
+		cMgt.editClient(toRemove);
 
 	}
 
@@ -52,8 +55,8 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 	@Override
 	public ArrayList<ClientVO> allClients() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		return cMgt.allClients();
 	}
 
 
