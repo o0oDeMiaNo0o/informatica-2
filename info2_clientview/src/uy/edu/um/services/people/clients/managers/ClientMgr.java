@@ -32,7 +32,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void sendClientVO(ClientVO c) {
+	public void addClientVO(ClientVO c) {
 		try {
 
 			String sObjectService = "ClientRemoteMgr";
@@ -41,9 +41,6 @@ public class ClientMgr implements ClientMgt{
 
 			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
-
-			//ClientMgt aMgt = ServiceFacade.getInstance().getClientMgt();
 
 			oArticleRemoteMgt.addClient(c);
 
@@ -63,9 +60,71 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public ArrayList<ClientVO> allClients() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<ClientVO> array = new ArrayList<ClientVO>(10);
+
+		try {
+
+			String sObjectService = "ClientRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			array = oClientRemoteMgt.allClients();
+
+			} catch (Exception e) {
+				System.err.println("error:");
+				e.printStackTrace();
+			}
+
+		return array;
+
 	}
 
+	@Override
+	public void editClientVO(ClientVO c) {
+		try {
+
+			String sObjectService = "ClientRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			oArticleRemoteMgt.addClient(c);
+
+			System.out.println("Cliente agregado");
+			} catch (Exception e) {
+				System.err.println("error:");
+				e.printStackTrace();
+
+			}
+
+	}
+
+	@Override
+	public void removeClientVO(ClientVO c) {
+		try {
+
+			String sObjectService = "ClientRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			oClientRemoteMgt.removeClient(c);
+
+			System.out.println("Cliente agregado");
+			} catch (Exception e) {
+				System.err.println("error:");
+				e.printStackTrace();
+
+			}
+
+	}
 
 }

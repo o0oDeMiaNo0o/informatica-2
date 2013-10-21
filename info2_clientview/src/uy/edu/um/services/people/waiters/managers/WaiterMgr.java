@@ -57,7 +57,7 @@ public class WaiterMgr implements WaiterMgt{
 	}
 
 	@Override
-	public void editWaiter(WaiterVO w) {
+	public void editWaiterVO(WaiterVO w) {
 		try {
 
 			String sObjectService = "WaiterRemoteMgr";
@@ -81,7 +81,7 @@ public class WaiterMgr implements WaiterMgt{
 	}
 
 	@Override
-	public void removeWaiter(WaiterVO w) {
+	public void removeWaiterVO(WaiterVO w) {
 		try {
 
 			String sObjectService = "WaiterRemoteMgr";

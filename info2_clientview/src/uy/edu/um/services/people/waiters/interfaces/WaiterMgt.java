@@ -11,9 +11,9 @@ public interface WaiterMgt {
 
 	public void addWaiterVO(WaiterVO w);
 
-	public void editWaiter(WaiterVO w);
+	public void editWaiterVO(WaiterVO w);
 
-	public void removeWaiter(WaiterVO w);
+	public void removeWaiterVO(WaiterVO w);
 
 	public ArrayList<WaiterVO> allWaiters();
 
