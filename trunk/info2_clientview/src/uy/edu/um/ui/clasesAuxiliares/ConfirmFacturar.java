@@ -28,7 +28,7 @@ public class ConfirmFacturar extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmFacturar(final OrderVO toSend) {
+	public ConfirmFacturar(final OrderVO toSend, final JFrame mesas) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -56,6 +56,8 @@ public class ConfirmFacturar extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				Facturacion factura = new Facturacion(toSend);
 				factura.setVisible(true);
+				toSend.getTable().setOcupado(false);
+				mesas.dispose();
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
@@ -64,6 +66,8 @@ public class ConfirmFacturar extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				mesas.dispose();
+				toSend.getTable().setOcupado(true);
 				cerrar();
 			}
 		});

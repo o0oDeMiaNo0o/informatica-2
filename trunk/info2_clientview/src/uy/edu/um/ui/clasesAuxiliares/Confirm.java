@@ -72,6 +72,7 @@ public class Confirm extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				mesas.dispose();
 				cerrar();
 			}
 		});

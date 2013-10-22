@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -27,9 +28,6 @@ import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
-import uy.edu.um.ui.clasesAuxiliares.TransparentButton;
-
-import javax.swing.JButton;
 
 public class Mesas extends BasicoUsuario {
 
@@ -114,7 +112,9 @@ public class Mesas extends BasicoUsuario {
 						mesaSeleccionada = mesa;
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 								user);
-						Confirm conf = new Confirm(toSend);
+						Confirm conf = new Confirm(toSend,
+								"Confirma Seleccion De : Mesa "
+										+ mesa.getNumero() + " ?", devuelve());
 						conf.setVisible(true);
 					}
 
@@ -145,10 +145,19 @@ public class Mesas extends BasicoUsuario {
 
 	}
 
+	private JFrame devuelve() {
+		return this;
+	}
+
+	private void cerrar() {
+		this.dispose();
+
+	}
+
 	private ArrayList<TableVO> cargoMesas() {
 
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
-		
+
 	}
 }
