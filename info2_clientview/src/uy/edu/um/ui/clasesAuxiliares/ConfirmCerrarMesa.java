@@ -16,7 +16,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 
-public class ConfirmaCerrar extends JFrame {
+public class ConfirmCerrarMesa extends JFrame {
 
 	private JPanel contentPane;
 
@@ -34,7 +34,7 @@ public class ConfirmaCerrar extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmaCerrar() {
+	public ConfirmCerrarMesa(final OrderVO toSend) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -60,10 +60,7 @@ public class ConfirmaCerrar extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-				nuevo.addOrder(toSend);
-				ConfirmFacturar nueva = new ConfirmFacturar(toSend,mesas);
-				nueva.setVisible(true);
+				
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
