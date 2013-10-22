@@ -102,10 +102,40 @@ public class ArticlesDAO {
 			
 		}
 		catch(SQLException e){
+			database.closeConnection();
+			throw new RuntimeException(e);
 			
 		}
 		return c;
 		
 	}
+	
+	public Article searchArticle(int id){
+	Article result = null;
+	try {
+		Statement oStatement = database.getConnection().createStatement();
+		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
+		
+		while(oResultSet.next()){
+			String sName = oResultSet.getString(2);
+			BigDecimal nPrice = oResultSet.getBigDecimal(3);
+			int catID = oResultSet.getInt(4);
+			Category c = getCategory(catID);
+			
+			result = new Article(id,sName,nPrice,c);
+
+		}
+		oResultSet.close();
+		oStatement.close();
+
+
+	} catch (SQLException e) {
+		database.closeConnection();
+		throw new RuntimeException(e);
+	}
+	return result;
+
+
+}
 
 }
