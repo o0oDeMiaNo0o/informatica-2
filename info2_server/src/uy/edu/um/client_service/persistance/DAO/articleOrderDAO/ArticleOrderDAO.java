@@ -32,7 +32,7 @@ public class ArticleOrderDAO {
 		
 		try{
 			Statement oStatement = database.getConnection().createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT (Article_ID,Cantidad) FROM `Pedido/Articulos` WHERE pedido_idpedido ="+nOrder+";");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT `Articles_ID`,`Cantidad` FROM `Pedido/Articulos` WHERE pedido_idpedido ="+nOrder+";");
 
 			while (oResultSet.next()) {
 				
