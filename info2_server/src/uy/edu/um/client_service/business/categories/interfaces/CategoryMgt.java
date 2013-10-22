@@ -13,4 +13,6 @@ public interface CategoryMgt {
 
 	public ArrayList<CategoryVO> allCategories();
 
+	public CategoryVO getCategoryVO(Category c);
+
 }

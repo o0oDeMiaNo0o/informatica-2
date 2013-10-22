@@ -39,6 +39,21 @@ public class CategoryMgr implements CategoryMgt{
 	@Override
 	public ArrayList<CategoryVO> allCategories() {
 		CategoryDAO dao = CategoryDAO.getInstance();
-		return dao.getCategoryVO();
+		ArrayList<Category> categories =  dao.getCategory();
+		ArrayList<CategoryVO> toReturn = new ArrayList<CategoryVO>(10);
+		for(Category c : categories){
+			if(c!=null){
+				CategoryVO toAdd = this.getCategoryVO(c);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
+	}
+
+	@Override
+	public CategoryVO getCategoryVO(Category c) {
+		int id = c.getId();
+		String nombre = c.getNombre();
+		return new CategoryVO(id,nombre);
 	}
 }
