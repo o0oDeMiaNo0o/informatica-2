@@ -22,4 +22,5 @@ public interface ClientMgt {
 
 	public ArrayList<ClientVO> allClients();
 
+	public ClientVO getClientVO(Client c);
 }

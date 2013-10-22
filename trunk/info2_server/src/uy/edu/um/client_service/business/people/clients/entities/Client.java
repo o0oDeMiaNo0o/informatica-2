@@ -4,7 +4,7 @@ public class Client{
 
 	//atributos
 	private String nombre, apellido, direccion, mail;
-	private int tel, ci;
+	private int tel, ci, id;
 	private int descuento;
 
 	//getters y setter
@@ -51,6 +51,12 @@ public class Client{
 	public void setCi(int ci) {
 		this.ci = ci;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	//constructor
 	public Client(String nombre, String apellido,int ci, int tel, String direccion, String mail, int descuento){
 		this.nombre = nombre;
@@ -61,4 +67,15 @@ public class Client{
 		this.mail = mail;
 		this.descuento = descuento;
 	}
+
+	public Client(int id,String nombre, String apellido,int ci, int tel, String direccion, String mail, int descuento){
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.ci = ci;
+		this.tel = tel;
+		this.direccion = direccion;
+		this.mail = mail;
+		this.descuento = descuento;
+	}
+
 }
