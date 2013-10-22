@@ -54,7 +54,23 @@ public class TableMgr implements TableMgt{
 	@Override
 	public ArrayList<TableVO> allTables() {
 		TableDAO dao = TableDAO.getInstance();
-		return dao.EstadosMesas();
+		ArrayList<Table> tables = dao.EstadosMesas();
+		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
+		for(Table t : tables){
+			if(t != null){
+				TableVO toAdd = this.getTableVO(t);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
+	}
+
+	@Override
+	public TableVO getTableVO(Table t) {
+		int numero = t.getNumero();
+		boolean estado = t.isOcuapdo();
+		return new TableVO(numero,estado);
+
 	}
 
 }
