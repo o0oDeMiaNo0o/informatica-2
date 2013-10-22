@@ -20,4 +20,6 @@ public interface TableMgt {
 
 	public Table getTable(TableVO t);
 
+	public TableVO getTableVO(Table t);
+
 }
