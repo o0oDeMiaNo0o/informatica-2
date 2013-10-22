@@ -5,11 +5,20 @@ import java.math.BigDecimal;
 import uy.edu.um.client_service.business.categories.entities.Category;
 
 public class Article {
+	private int id;
 	private String nombre;
 	private BigDecimal precio;
 	private Category category;
 
 	public Article(String nombre, BigDecimal precio, Category category) {
+		this.nombre=nombre;
+		this.precio=precio;
+		this.category = category;
+	}
+	
+
+	public Article(int id,String nombre, BigDecimal precio, Category category) {
+		this.id=id;
 		this.nombre=nombre;
 		this.precio=precio;
 		this.category = category;
