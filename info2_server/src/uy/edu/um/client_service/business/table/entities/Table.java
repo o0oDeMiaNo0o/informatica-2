@@ -3,11 +3,17 @@ package uy.edu.um.client_service.business.table.entities;
 public class Table {
 
 	private int numero;
-	private boolean ocuapdo = false;
+	private boolean ocupado = false;
 
 	public Table(int numero){
 		this.numero = numero;
 	}
+	public Table(int numero,boolean ocupado){
+		this.numero = numero;
+		this.ocupado=ocupado;
+	}
+	
+	
 
 	public int getNumero() {
 		return numero;
@@ -18,11 +24,11 @@ public class Table {
 	}
 
 	public boolean isOcuapdo() {
-		return ocuapdo;
+		return ocupado;
 	}
 
 	public void setOcuapdo(boolean ocuapdo) {
-		this.ocuapdo = ocuapdo;
+		this.ocupado = ocuapdo;
 	}
 
 
