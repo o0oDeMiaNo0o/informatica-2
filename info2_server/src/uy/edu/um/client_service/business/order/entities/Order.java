@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.business.order.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.table.entities.Table;
@@ -14,6 +15,7 @@ public class Order {
 	private String spec;
 	private boolean done=false;
 	private int id;
+	private Date time;
 
 	public boolean isDone() {
 		return done;
@@ -39,6 +41,35 @@ public class Order {
 		this.spec = spec;
 	}
 	
+	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, boolean e, Date d){
+		this.articles = articles;
+		this.table = table;
+		this.user = user;
+		this.spec = spec;
+		this.done=e;
+		this.time=d;
+	}
+	
+	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, boolean e, Date d){
+		this.id=id;
+		this.articles = articles;
+		this.table = table;
+		this.user = user;
+		this.done=e;
+		this.time=d;
+	}
+	
+	
+	
+	
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
 	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, boolean e){
 		this.articles = articles;
 		this.table = table;
