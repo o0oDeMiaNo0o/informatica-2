@@ -2,7 +2,6 @@ package uy.edu.um.client_service.business.users.entities;
 
 public class User {
 
-
 	private String Username;
 	private String Password;
 	boolean admin = false;
