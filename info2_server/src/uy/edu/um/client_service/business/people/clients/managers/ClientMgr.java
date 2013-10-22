@@ -73,4 +73,17 @@ public class ClientMgr implements ClientMgt{
 		return dao.getClientsVO();
 	}
 
+	@Override
+	public ClientVO getClientVO(Client c) {
+		String nombre = c.getNombre();
+		String apellido = c.getApellido();
+		String direccion = c.getDireccion();
+		String email = c.getMail();
+		int id = c.getId();
+		int ci = c.getCi();
+		int tel = c.getTel();
+		int descuento = c.getDescuento();
+		return new ClientVO(id,ci,nombre,apellido,tel,direccion,email,descuento);
+	}
+
 }
