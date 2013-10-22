@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -34,13 +35,20 @@ public class Mesas extends BasicoUsuario {
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public ArrayList<TableVO> mesas = cargoMesas();
-	public TableVO mesaSeleccionada = null;
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param pedidoAux
-	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Mesas frame = new Mesas(null, null, null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp, UserVO user) {
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,13 +117,14 @@ public class Mesas extends BasicoUsuario {
 				imagePanel.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						mesaSeleccionada = mesa;
+
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 								user);
 						Confirm conf = new Confirm(toSend,
 								"Confirma Seleccion De : Mesa "
 										+ mesa.getNumero() + " ?", devuelve());
 						conf.setVisible(true);
+
 					}
 
 				});

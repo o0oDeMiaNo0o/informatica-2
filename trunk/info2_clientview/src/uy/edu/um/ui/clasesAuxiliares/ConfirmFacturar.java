@@ -58,6 +58,7 @@ public class ConfirmFacturar extends JFrame {
 				factura.setVisible(true);
 				toSend.getTable().setOcupado(false);
 				mesas.dispose();
+				cerrar();
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
