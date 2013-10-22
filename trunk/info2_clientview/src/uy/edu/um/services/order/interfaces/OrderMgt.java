@@ -15,4 +15,6 @@ public interface OrderMgt {
 
 	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t, UserVO u, String spec);
 
+	public ArrayList<OrderVO> allOrders();
+
 }
