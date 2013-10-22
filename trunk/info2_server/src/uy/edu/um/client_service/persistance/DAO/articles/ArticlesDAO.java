@@ -48,7 +48,7 @@ public class ArticlesDAO {
 	}
 
 
-	public ArrayList<Article> getArticlesVO() {
+	public ArrayList<Article> getArticles() {
 
 		try {
 
@@ -107,43 +107,5 @@ public class ArticlesDAO {
 		return c;
 		
 	}
-	
-	
-	
-	
 
-
-	public void getArticles() {
-
-		try {
-
-			Statement oStatement = database.getConnection().createStatement();
-
-
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
-
-			while (oResultSet.next()) {
-
-				int nId = oResultSet.getInt(1);
-				int nProd = oResultSet.getInt(2);
-				String sName = oResultSet.getString(3);
-				BigDecimal nPrice = oResultSet.getBigDecimal(4);
-
-				System.out.println("Article. ID: " + nId +" Product Nr: "+nProd+ " Nombre: " + sName + " Precio: " + nPrice);
-
-			}
-
-			oResultSet.close();
-			oStatement.close();
-			database.closeConnection();
-
-
-		}
-			 catch (SQLException e) {
-			database.closeConnection();
-			throw new RuntimeException(e);
-
-
-		}
-	}
 }
