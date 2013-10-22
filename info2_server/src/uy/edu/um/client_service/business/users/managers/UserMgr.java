@@ -53,6 +53,14 @@ public class UserMgr implements UserMgt{
 		return null;
 	}
 
+	@Override
+	public UserVO getUserVO(User u) {
+		String username = u.getUsername();
+		String pass = u.getPassword();
+		boolean isAdmin = u.isAdmin();
+		return new UserVO(username,pass,isAdmin);
+	}
+
 
 
 }
