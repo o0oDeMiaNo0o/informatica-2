@@ -1,10 +1,13 @@
 package uy.edu.um.client_service.persistance.DAO.mesas;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.persistance.JDBC;
 
@@ -102,6 +105,33 @@ public ArrayList<Table> EstadosMesas(){
 	return mesas;
 	
 	
+}
+
+public Table searchTable(int id){
+	Table result = null;
+	try {
+		Statement oStatement = database.getConnection().createStatement();
+		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Mesa` where `Mesa`.`idMesa` = "+id+";");
+
+		while(oResultSet.next()){
+			boolean oc=false;
+			int nId = oResultSet.getInt(1);
+			String sEstado = oResultSet.getString(2);
+			
+			if(sEstado.equals("Ocupado")){
+				oc=true;
+			}
+			
+			result = new Table(nId,oc);
+		}
+		oResultSet.close();
+		oStatement.close();
+	}
+	catch (SQLException e) {
+		database.closeConnection();
+		throw new RuntimeException(e);
+	}
+	return result;
 }
 
 

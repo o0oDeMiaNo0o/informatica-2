@@ -1,8 +1,10 @@
 package uy.edu.um.client_service.persistance.DAO.users;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.JDBC;
 
@@ -42,6 +44,38 @@ public class UserDAO {
 
 
 		}
+		
+		public User searchUser(String Username){
+			User u = null;
+			try {
+				Statement oStatement = database.getConnection().createStatement();
+				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where `Users`.`Username` = '"+Username+"';");
+
+				while(oResultSet.next()){
+					boolean adm=false;
+					String nPass = oResultSet.getString(3);
+					int nAdm = oResultSet.getInt(4);
+					
+					if(nAdm==1){
+						adm=true;
+					}
+					
+					u = new User(Username,nPass,adm);
+				}
+				oResultSet.close();
+				oStatement.close();
+			}
+			catch (SQLException e) {
+				database.closeConnection();
+				throw new RuntimeException(e);
+			}
+			return u;
+		}
+		
+		
+		
+		
+
 
 
 	}
