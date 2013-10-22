@@ -19,7 +19,8 @@ public class ClientVO implements Serializable {
 		this.descuento = descuento;
 	}
 
-	public ClientVO(int id,int ci, String nombre, String apellido, int tel, String direccion, String email){
+	public ClientVO(int id,int ci, String nombre, String apellido, int tel, String direccion, String email,
+			int descuento){
 		this.id=id;
 		this.nombre = nombre;
 		this.apellido = apellido;

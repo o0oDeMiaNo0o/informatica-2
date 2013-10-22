@@ -13,6 +13,7 @@ public class OrderVO implements Serializable{
 	private TableVO table;
 	private UserVO user;
 	private String especificaciones;
+	private boolean estado;
 
 	public OrderVO(ArrayList<ArticleOrderVO> articulos, TableVO table, UserVO u, String spec){
 		this.articulos = articulos;
