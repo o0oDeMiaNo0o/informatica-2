@@ -16,7 +16,6 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 
-
 public class Confirm extends JFrame {
 
 	private JPanel contentPane;
@@ -32,10 +31,10 @@ public class Confirm extends JFrame {
 
 	/**
 	 * Create the frame.
-	 *
+	 * 
 	 * @param toSend
 	 */
-	public Confirm(final OrderVO toSend) {
+	public Confirm(final OrderVO toSend, String text, final JFrame mesas) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -48,7 +47,7 @@ public class Confirm extends JFrame {
 		ZonaPassword.setLayout(new MigLayout("", "[428px]",
 				"[grow][16px][grow]"));
 
-		JLabel lblContrasea = new JLabel("\u00BFConfirma Selecci\u00F3n?");
+		JLabel lblContrasea = new JLabel(text);
 		lblContrasea.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblContrasea.setForeground(Color.BLACK);
 		ZonaPassword.add(lblContrasea, "cell 0 1,alignx center,aligny top");
@@ -63,7 +62,7 @@ public class Confirm extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 				nuevo.addOrder(toSend);
-				ConfirmFacturar nueva = new ConfirmFacturar(toSend);
+				ConfirmFacturar nueva = new ConfirmFacturar(toSend,mesas);
 				nueva.setVisible(true);
 			}
 		});
