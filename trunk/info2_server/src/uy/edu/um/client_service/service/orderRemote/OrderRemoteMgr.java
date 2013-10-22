@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.service.orderRemote;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.order.entities.Order;
@@ -33,6 +34,12 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	public void getOrdersClient(ClientVO c) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<OrderVO> allOrders() throws RemoteException {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		return oMgt.allOrders();
 	}
 
 }
