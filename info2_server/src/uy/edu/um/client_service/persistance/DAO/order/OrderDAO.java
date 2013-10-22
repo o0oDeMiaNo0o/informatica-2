@@ -36,7 +36,6 @@ public class OrderDAO {
 			ArrayList <ArticleOrder> articles = orden.getArticles();
 			Statement oStatement = database.getConnection().createStatement();
 			oStatement.execute("INSERT INTO pedido (Mesa_idMesa,Users_Username) VALUES ("+orden.getTable().getNumero()+",'"+orden.getUser().getUsername()+"');");
-			int nroPedido=0;
 		
 
 			for(int i =0;i<articles.size();i++){
