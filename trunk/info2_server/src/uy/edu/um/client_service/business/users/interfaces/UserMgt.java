@@ -17,4 +17,6 @@ public interface UserMgt {
 
 	public ArrayList<UserVO> allUsers();
 
+	public UserVO getUserVO(User u);
+
 }

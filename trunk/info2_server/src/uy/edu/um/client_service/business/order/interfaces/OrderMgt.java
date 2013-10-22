@@ -16,4 +16,8 @@ public interface OrderMgt {
 
 	public Order getOrder(OrderVO o);
 
+	public ArrayList<OrderVO> allOrders();
+
+	public OrderVO getOrderVO(Order o);
+
 }
