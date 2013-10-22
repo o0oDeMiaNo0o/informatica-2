@@ -12,7 +12,7 @@ CREATE TABLE `Articles` (
   `Categorias_idCategorias` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `fk_Articles_Categorias1_idx` (`Categorias_idCategorias`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
@@ -66,7 +66,7 @@ CREATE TABLE `Mesa` (
   `idMesa` int(11) NOT NULL AUTO_INCREMENT,
   `Estado` enum('Ocupado','Libre') DEFAULT 'Libre',
   PRIMARY KEY (`idMesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Pagos` (
   `idPagos` int(11) NOT NULL,
@@ -82,14 +82,14 @@ CREATE TABLE `pedido` (
   `idpedido` int(11) NOT NULL AUTO_INCREMENT,
   `HoraPedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Mesa_idMesa` int(11) DEFAULT NULL,
-  `Estado` varchar(45) DEFAULT NULL,
+  `Estado` enum('En Preparacion','Entregado') DEFAULT 'En Preparacion',
   `Facturas_idFacturas` int(11) DEFAULT NULL,
-  `Users_Username` varchar(45) NOT NULL,
+  `Users_Username` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idpedido`),
   KEY `fk_pedido_Mesa1_idx` (`Mesa_idMesa`),
   KEY `fk_pedido_Facturas1_idx` (`Facturas_idFacturas`),
   KEY `fk_pedido_Users1_idx` (`Users_Username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Pedido/Articulos` (
   `pedido_idpedido` int(11) NOT NULL,
@@ -111,9 +111,7 @@ CREATE TABLE `Users` (
   `idUsers` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(45) NOT NULL,
   `Password` varchar(45) DEFAULT NULL,
-  `Admin` tinyint(4) DEFAULT NULL,
-  `Nombre` varchar(45) NOT NULL,
-  `Puesto` varchar(45) NOT NULL,
+  `Admin` int(1) DEFAULT NULL,
   PRIMARY KEY (`idUsers`,`Username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
