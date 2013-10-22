@@ -7,9 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
+import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticlesDAO {
 
@@ -48,41 +47,12 @@ public class ArticlesDAO {
 
 	}
 
-//	public ArticleVO searchArticle(int prodnum){
-//		ArticleVO result = null;
-//		try {
-//			Statement oStatement = database.getConnection().createStatement();
-//
-//
-//			ResultSet oResultSet = oStatement.executeQuery("SELECT `PROD_N`,`NAME`,`PRICE` FROM `Articles` where `Articles`.`PROD_N` = "+prodnum+";");
-//
-//
-//
-//			while(oResultSet.next()){
-//				String sName = oResultSet.getString(1);
-//				BigDecimal nPrice = oResultSet.getBigDecimal(2);
-//				result = new ArticleVO(sName,nPrice);
-//
-//			}
-//
-//
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return result;
-//
-//
-//	}
-//
 
-
-	@SuppressWarnings("null")
-	public ArrayList<ArticleVO> getArticlesVO() {
+	public ArrayList<Article> getArticlesVO() {
 
 		try {
 
-			ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>(10);
+			ArrayList<Article> toReturn = new ArrayList<Article>(10);
 
 			Statement oStatement = database.getConnection().createStatement();
 
@@ -90,12 +60,13 @@ public class ArticlesDAO {
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
 
 			while (oResultSet.next()) {
-
+				
+				int nid = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
 				BigDecimal nPrice = oResultSet.getBigDecimal(3);
 				int id = oResultSet.getInt(4);
-				CategoryVO c = getCategoryVO(id);
-				ArticleVO a = new ArticleVO(sName,nPrice,c);
+				Category c = getCategory(id);
+				Article a = new Article(nid,sName,nPrice,c);
 				toReturn.add(a);
 			}
 
@@ -113,8 +84,8 @@ public class ArticlesDAO {
 
 	}
 	
-	public CategoryVO getCategoryVO(int catId){
-		CategoryVO c=null;
+	public Category getCategory(int catId){
+		Category c=null;
 		
 		try{
 			Statement oStatement = database.getConnection().createStatement();
@@ -122,7 +93,7 @@ public class ArticlesDAO {
 			
 			while (oResultSet1.next()){
 				String sName = oResultSet1.getString(1);
-				c = new CategoryVO(catId,sName);
+				c = new Category(sName,catId);
 
 			}
 			
