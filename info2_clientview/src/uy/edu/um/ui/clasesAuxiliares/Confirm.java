@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.usuarios.CajaPrincipal;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class Confirm extends JFrame {
@@ -60,10 +61,18 @@ public class Confirm extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-				nuevo.addOrder(toSend);
-				ConfirmFacturar nueva = new ConfirmFacturar(toSend,mesas);
-				nueva.setVisible(true);
+				if (toSend.getArticulos() != null) {
+					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
+					nuevo.addOrder(toSend);
+					ConfirmFacturar nueva = new ConfirmFacturar(toSend, mesas);
+					nueva.setVisible(true);
+				} else {
+					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
+							.getTable());
+					nuevo.setVisible(true);
+					mesas.dispose();
+					cerrar();
+				}
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

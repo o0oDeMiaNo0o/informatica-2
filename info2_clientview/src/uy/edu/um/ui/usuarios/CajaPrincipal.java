@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -26,13 +27,16 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
-import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
+import uy.edu.um.ui.clasesAuxiliares.ConfirmFacturar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.categories.CategoryVO;
+import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
 
 public class CajaPrincipal extends BasicoUsuario {
@@ -64,8 +68,6 @@ public class CajaPrincipal extends BasicoUsuario {
 	private String[] textos;
 	private JTable tablePrePedido;
 
-	private URL dir = DirLocal.class.getResource("IconoCerrar.gif");
-	private URL dirFlecha = DirLocal.class.getResource("IconoFlechaAbajo.png");
 
 	/**
 	 * Launch the application.
@@ -74,7 +76,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CajaPrincipal frame = new CajaPrincipal(null);
+					CajaPrincipal frame = new CajaPrincipal(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -86,7 +88,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido) {
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) {
 		super();
 		if (pedido != null) {
 			pedidoAux = pedido;
@@ -120,7 +122,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		TransparentPanel transparentPanelTabla = new TransparentPanel();
 		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
 		transparentPanelTabla.setLayout(new MigLayout("",
-				"[1px][grow][grow][][grow]", "[1px][grow]"));
+				"[1px][grow][grow][grow]", "[1px][grow]"));
 
 		tablePrePedido = new JTable();
 		tablePrePedido.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -129,14 +131,6 @@ public class CajaPrincipal extends BasicoUsuario {
 		tablePrePedido.setRowSelectionAllowed(false);
 		armarPedido(); // Creo Tabla Con Pedido Actual
 		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
-
-		ImagePanel imagePanel = new ImagePanel(dirFlecha);
-		transparentPanelTabla.add(imagePanel,
-				"flowy,cell 3 1,alignx center,aligny top");
-
-		ImagePanel imagePanel_1 = new ImagePanel(dir);
-		transparentPanelTabla.add(imagePanel_1,
-				"cell 3 1,alignx center,aligny top");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
 		button_2.addMouseListener(new MouseAdapter() {
@@ -152,33 +146,41 @@ public class CajaPrincipal extends BasicoUsuario {
 		});
 		transparentPanelPedido.add(button_2, "cell 5 6");
 
-		JButton btnFacturar = new JButton("Facturar");
-		btnFacturar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
-
-		JButton btnNewButton = new JButton("Agregar a Mesa");
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (pedidoAux.size() == 0) {
-					MensajeGenerico mensaje = new MensajeGenerico(
-							"Pedido Vacio", contentPane);
-					mensaje.setVisible(true);
-				} else {
-					Mesas nueva = new Mesas(pedidoAux, espTotal, user);
-					nueva.setVisible(true);
-					cerrar();
+		if (mesa != null) {
+			JButton btnFacturar = new JButton("Facturar");
+			btnFacturar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					OrderVO toSend = enviarPedido(pedidoAux, mesa, espTotal,
+							user);
+					ConfirmFacturar nuevo = new ConfirmFacturar(toSend,
+							devuelve());
+					nuevo.setVisible(true);
 				}
-			}
+			});
+			transparentPanelBotonera.add(btnFacturar,
+					"cell 2 0,alignx center,aligny center");
+		} else {
 
-		});
-		transparentPanelBotonera.add(btnNewButton,
-				"cell 1 0,alignx center,aligny center");
-		transparentPanelBotonera.add(btnFacturar,
-				"cell 2 0,alignx center,aligny center");
+			JButton btnNewButton = new JButton("Agregar a Mesa");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					if (pedidoAux.size() == 0) {
+						MensajeGenerico mensaje = new MensajeGenerico(
+								"Pedido Vacio", contentPane);
+						mensaje.setVisible(true);
+					} else {
+						Mesas nueva = new Mesas(pedidoAux, espTotal, user);
+						nueva.setVisible(true);
+						cerrar();
+					}
+				}
+
+			});
+			transparentPanelBotonera.add(btnNewButton,
+					"cell 2 0,alignx center,aligny center");
+		}
 
 		JButton btnVaciar = new JButton("Vaciar Pedido");
 		btnVaciar.addMouseListener(new MouseAdapter() {
@@ -189,6 +191,16 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 		});
 		transparentPanelBotonera.add(btnVaciar,
+				"cell 1 0,alignx center,aligny center");
+
+		JButton btnCancelar = new JButton("Cancelar");
+		btnVaciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				cerrar();
+			}
+		});
+		transparentPanelBotonera.add(btnCancelar,
 				"cell 3 0,alignx center,aligny center");
 
 	}
@@ -326,8 +338,8 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 			aux = new ArticleOrderVO(buscaArticulo(listaArticulos, op), valor);
 			pedidoAux.add(aux);
-			if(t.getText() != null){
-			espTotal = espTotal + t.getText() + " ; ";
+			if (t.getText() != null) {
+				espTotal = espTotal + t.getText() + " ; ";
 			}
 			bandera = true;
 		}
@@ -396,6 +408,20 @@ public class CajaPrincipal extends BasicoUsuario {
 	private void cerrar() {
 		this.dispose();
 
+	}
+
+	// Creo y envio OrderVO
+	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
+			TableVO mesa, String esp, UserVO user) {
+		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, user, esp);
+		return toSend;
+
+	}
+
+	// Devuelve este JFrame para cerrarlo dsp
+	private JFrame devuelve() {
+		return this;
 	}
 
 	private class SwingAction extends AbstractAction {
