@@ -20,4 +20,6 @@ public interface ArticleMgt {
 	public ArticleVO consultArticle(int numProducto);
 
 	public ArrayList<ArticleVO> allArticles();
+
+	public ArticleVO getArticleVO(Article a);
 }

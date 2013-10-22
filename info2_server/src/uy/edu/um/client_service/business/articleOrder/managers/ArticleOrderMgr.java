@@ -34,4 +34,13 @@ public class ArticleOrderMgr implements ArticleOrderMgt{
 		return toReturn;
 	}
 
+	@Override
+	public ArticleOrderVO getArticleOrderVO(ArticleOrder ao) {
+		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
+		Article a = ao.getArticle();
+		int cantidad = ao.getCantidad();
+		ArticleVO aVO = aMgt.getArticleVO(a);
+		return new ArticleOrderVO(aVO,cantidad);
+	}
+
 }

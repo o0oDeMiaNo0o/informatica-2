@@ -76,7 +76,26 @@ public class ArticleMgr implements ArticleMgt{
 	@Override
 	public ArrayList<ArticleVO> allArticles() {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
-		return dao.getArticlesVO();
+		ArrayList<Article> articles =  dao.getArticles();
+		ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>(10);
+		for(Article a : articles){
+			if(a!=null){
+				ArticleVO toAdd = this.getArticleVO(a);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
+	}
+
+	@Override
+	public ArticleVO getArticleVO(Article a) {
+		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
+		int id = a.getId();
+		String nombre = a.getNombre();
+		Category c = a.getCategory();
+		BigDecimal precio = a.getPrecio();
+		CategoryVO catVO = cMgt.getCategoryVO(c);
+		return new ArticleVO(id,nombre,precio,catVO);
 	}
 
 
