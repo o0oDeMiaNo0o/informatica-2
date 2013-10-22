@@ -14,14 +14,19 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.MensajeGenerico;
-import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.people.client.ClientVO;
+
 import javax.swing.JSpinner;
+
 import java.awt.Component;
+
 import javax.swing.Box;
+
 import java.awt.Font;
+
+import javax.swing.SpinnerNumberModel;
 
 public class NewCliente extends BasicoUsuario {
 
@@ -108,7 +113,8 @@ public class NewCliente extends BasicoUsuario {
 		transparentPanel.add(textFieldDir, "cell 4 5,growx");
 
 		final JSpinner spinner = new JSpinner();
-		transparentPanel.add(spinner, "cell 2 7");
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		transparentPanel.add(spinner, "cell 2 7,alignx left,growy");
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addMouseListener(new MouseAdapter() {
@@ -133,7 +139,7 @@ public class NewCliente extends BasicoUsuario {
 												textFieldEmail.getText(),
 												Integer.parseInt(spinner
 														.getValue().toString()));
-										client.sendClientVO(cliente);
+										client.addClientVO(cliente);
 										MensajeGenerico new10 = new MensajeGenerico(
 												"Cliente Agregado", contentPane);
 										new10.setVisible(true);
@@ -176,9 +182,6 @@ public class NewCliente extends BasicoUsuario {
 		JLabel lblDescuento = new JLabel("Descuento");
 		lblDescuento.setForeground(Color.WHITE);
 		transparentPanel.add(lblDescuento, "cell 1 7");
-
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		transparentPanel.add(horizontalStrut, "flowx,cell 2 7,alignx left");
 		transparentPanel.add(btnAceptar,
 				"flowx,cell 4 13,alignx right,aligny center");
 

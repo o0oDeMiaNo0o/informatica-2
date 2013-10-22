@@ -21,7 +21,6 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
-import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
 import uy.edu.um.ui.clasesAuxiliares.Confirm;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
