@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryDAO {
 
@@ -43,11 +42,11 @@ public class CategoryDAO {
 
 	}
 	
-	public ArrayList<CategoryVO> getCategoryVO() {
+	public ArrayList<Category> getCategory() {
 
 		try {
 
-			ArrayList<CategoryVO> toReturn = new ArrayList<CategoryVO>();
+			ArrayList<Category> toReturn = new ArrayList<Category>();
 
 			Statement oStatement = database.getConnection().createStatement();
 
@@ -59,7 +58,7 @@ public class CategoryDAO {
 				int nCat = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
 				
-				CategoryVO c = new CategoryVO(nCat,sName);
+				Category c = new Category(sName,nCat);
 				toReturn.add(c);
 			}
 

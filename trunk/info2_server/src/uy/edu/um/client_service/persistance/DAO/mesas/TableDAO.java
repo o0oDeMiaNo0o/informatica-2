@@ -1,6 +1,5 @@
 package uy.edu.um.client_service.persistance.DAO.mesas;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,9 +7,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.categories.CategoryVO;
-import uy.edu.um.value_object.table.TableVO;
+
 
 public class TableDAO {
 	
@@ -73,9 +70,9 @@ public void setLibre(Table mesa){
 		}
 	}
 
-public ArrayList<TableVO> EstadosMesas(){
+public ArrayList<Table> EstadosMesas(){
 	
-	ArrayList<TableVO> mesas = new ArrayList<TableVO>();
+	ArrayList<Table> mesas = new ArrayList<Table>();
 	
 	try{
 		Statement oStatement = database.getConnection().createStatement();
@@ -88,7 +85,7 @@ public ArrayList<TableVO> EstadosMesas(){
 				oc=true;
 			}
 			
-			TableVO t = new TableVO(nid,oc);
+			Table t = new Table(nid,oc);
 			mesas.add(t);
 		}
 		
