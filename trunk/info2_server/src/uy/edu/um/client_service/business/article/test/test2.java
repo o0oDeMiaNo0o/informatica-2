@@ -12,11 +12,6 @@ public class test2 {
 		ArrayList<ArticleVO> articles = new ArrayList<ArticleVO>(10);
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		articles = aMgt.allArticles();
-		for(int i = 0; i < 5 ; i++){
-			if(articles.get(i) != null){
-				String nombre = articles.get(i).getNombre();
-				System.out.println(nombre);
-			}
-		}
+		int v = 54;
 	}
 }

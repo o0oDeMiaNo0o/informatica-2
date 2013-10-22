@@ -9,4 +9,6 @@ public interface ArticleOrderMgt {
 	public ArticleOrder getArticleOrder(ArticleOrderVO ao);
 
 	public ArticleOrderVO transition(ArticleVO a, int cantidad);
+
+	public ArticleOrderVO getArticleOrderVO(ArticleOrder ao);
 }
