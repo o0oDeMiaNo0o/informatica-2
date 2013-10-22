@@ -2,7 +2,10 @@ package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,11 +14,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.ui.clasesAuxiliares.BasicoUsuario;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.people.clients.interfaces.ClientMgt;
+import uy.edu.um.ui.MensajeGenerico;
+import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
@@ -24,17 +31,28 @@ import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public class Facturacion extends BasicoUsuario {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textFieldCliente;
+	private JTextField textFieldPagaCon;
+	private JTextField textFieldVuelto;
 	private URL logo = DirLocal.class.getResource("Logo.png");
-	private String montoPagar, pagaCon, vuelto;
+	private ArrayList<ClientVO> clientes = cargaClientes();
+	private boolean tieneDescuento = false;
+	private BigDecimal descuento = new BigDecimal(0);
+	private BigDecimal montoPagar, pagaCon, vuelto;
 
-	/**
-	 * Create the frame.
-	 *
-	 * @param toSend
-	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Facturacion frame = new Facturacion(null);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
 	public Facturacion(OrderVO toSend) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -42,7 +60,8 @@ public class Facturacion extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]", "[grow][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]",
+				"[grow][][][][grow]"));
 
 		ImagePanel imagePanel = new ImagePanel(logo);
 		transparentPanel
@@ -59,9 +78,15 @@ public class Facturacion extends BasicoUsuario {
 		lblCliente.setForeground(Color.WHITE);
 		transparentPanel.add(lblCliente, "cell 1 2,alignx left");
 
-		textField = new JTextField();
-		transparentPanel.add(textField, "flowx,cell 2 2,growx");
-		textField.setColumns(10);
+		textFieldCliente = new JTextField();
+		textFieldCliente.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
+		});
+		transparentPanel.add(textFieldCliente, "flowx,cell 2 2,growx");
+		textFieldCliente.setColumns(10);
 
 		JButton btnVerLista = new JButton("Ver Lista");
 		transparentPanel
@@ -71,9 +96,28 @@ public class Facturacion extends BasicoUsuario {
 		lblPagaCon.setForeground(Color.WHITE);
 		transparentPanel.add(lblPagaCon, "cell 1 3,alignx left");
 
-		textField_1 = new JTextField();
-		transparentPanel.add(textField_1, "flowx,cell 2 3,growx");
-		textField_1.setColumns(10);
+		textFieldPagaCon = new JTextField();
+		textFieldPagaCon.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (textFieldPagaCon.getText().isEmpty()) {
+
+				} else if (Helpers.isNumeric(textFieldPagaCon.getText())) {
+					textFieldVuelto.setText(calcularVuelto(
+							textFieldPagaCon.getText(), montoPagar.toString()));
+				} else {
+					MensajeGenerico nuevo = new MensajeGenerico(
+							textFieldPagaCon.getText() + " no es un numero",
+							null);
+					nuevo.setVisible(true);
+					textFieldPagaCon.setText("");
+				}
+
+			}
+
+		});
+		transparentPanel.add(textFieldPagaCon, "flowx,cell 2 3,growx");
+		textFieldPagaCon.setColumns(10);
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_1, "cell 2 4,grow");
@@ -92,6 +136,10 @@ public class Facturacion extends BasicoUsuario {
 		lblDescuento.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblDescuento, "cell 1 2");
 
+		JLabel labelDescuento = new JLabel(descuento.toString());
+		labelDescuento.setForeground(Color.WHITE);
+		transparentPanel_1.add(labelDescuento, "flowx,cell 2 2");
+
 		JLabel lblTotal = new JLabel("TOTAL");
 		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
 		lblTotal.setForeground(Color.WHITE);
@@ -103,20 +151,35 @@ public class Facturacion extends BasicoUsuario {
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel_1.add(btnCancelar, "cell 2 5,alignx right");
 
+		JLabel labelTotal = new JLabel(calculaTotal());
+		labelTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
+		labelTotal.setForeground(Color.ORANGE);
+		transparentPanel_1.add(labelTotal, "cell 2 3");
+
 		JLabel lblVuelto = new JLabel("Vuelto");
 		lblVuelto.setForeground(Color.WHITE);
 		transparentPanel.add(lblVuelto, "cell 2 3,alignx left");
 
-		textField_2 = new JTextField();
-		transparentPanel.add(textField_2, "cell 2 3,growx");
-		textField_2.setColumns(10);
+		textFieldVuelto = new JTextField();
+		textFieldVuelto.setEditable(false);
+		transparentPanel.add(textFieldVuelto, "cell 2 3,growx");
+		textFieldVuelto.setColumns(10);
+	}
+
+	private String calculaTotal() {
+		if (tieneDescuento == true) {
+
+		} else {
+
+		}
+		return null;
 	}
 
 	private String cuentaPrecio(OrderVO toSend) {
 		BigDecimal subTotal = new BigDecimal(0);
 		ArrayList<ArticleOrderVO> ao = toSend.getArticulos();
-		for(ArticleOrderVO a : ao){
-			if(a!= null){
+		for (ArticleOrderVO a : ao) {
+			if (a != null) {
 				ArticleVO article = a.getArticle();
 				BigDecimal price = article.getPrecio();
 				int c = a.getCantidad();
@@ -125,16 +188,18 @@ public class Facturacion extends BasicoUsuario {
 				subTotal = subTotal.add(temp);
 			}
 		}
+		montoPagar = subTotal;
 		String toReturn = subTotal.toString();
+
 		return toReturn;
 	}
 
-	public String calcularVuelto(String pago, String monto){
+	public String calcularVuelto(String pago, String monto) {
 		int sPago = Integer.parseInt(pago);
 		int sMonto = Integer.parseInt(monto);
-		if(sPago < sMonto){
+		if (sPago < sMonto) {
 			return "monto insuficiente";
-		}else{
+		} else {
 			BigDecimal dPago = new BigDecimal(sPago);
 			BigDecimal dMonto = new BigDecimal(sMonto);
 			BigDecimal vuelto = dPago.subtract(dMonto);
@@ -143,7 +208,7 @@ public class Facturacion extends BasicoUsuario {
 
 	}
 
-	public String calcularDescuento(ClientVO c, String monto){
+	public String calcularDescuento(ClientVO c, String monto) {
 		int discount = c.getDescuento();
 		BigDecimal hun = new BigDecimal(100);
 		BigDecimal dMonto = new BigDecimal(Integer.parseInt(monto));
@@ -151,7 +216,25 @@ public class Facturacion extends BasicoUsuario {
 		BigDecimal tDis = hun.subtract(dDis);
 		BigDecimal trueDist = tDis.divide(hun);
 		BigDecimal total = dMonto.multiply(trueDist);
+		descuento = total;
 		return total.toString();
+	}
+
+	public ArrayList<ClientVO> cargaClientes() {
+		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
+		return nuevo.allClients();
+
+	}
+
+	public void buscaCliente(int ci) {
+		for (int i = 0; i < clientes.size(); i++) {
+			if (clientes.get(i).getCi() == ci) {
+				if (clientes.get(i).getDescuento() != 0) {
+					tieneDescuento = true;
+					descuento = new BigDecimal(clientes.get(i).getDescuento());
+				}
+			}
+		}
 	}
 
 }
