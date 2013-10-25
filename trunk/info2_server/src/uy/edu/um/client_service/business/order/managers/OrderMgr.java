@@ -72,7 +72,15 @@ public class OrderMgr implements OrderMgt{
 	@Override
 	public ArrayList<OrderVO> allOrders() {
 		OrderDAO dao = OrderDAO.getInstance();
-		return null;
+		ArrayList<Order> orders = dao.getOrders();
+		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>(10);
+		for(Order o : orders){
+			if(o!=null){
+				OrderVO toAdd = this.getOrderVO(o);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
@@ -91,7 +99,10 @@ public class OrderMgr implements OrderMgt{
 			}
 		}
 		TableVO tAdd = tMgt.getTableVO(o.getTable());
-		UserVO uAdd = uMgt.getUserVO(o.getUser());
+		UserVO uAdd = null;
+		if(o.getUser()!=null){
+			uAdd = uMgt.getUserVO(o.getUser());
+		}
 
 		OrderVO toReturn = new OrderVO(aoVO,tAdd,uAdd,o.getSpec());
 
