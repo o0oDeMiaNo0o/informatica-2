@@ -54,4 +54,15 @@ public class WaiterMgr implements WaiterMgt{
 		return null;
 	}
 
+	@Override
+	public WaiterVO getWaiterVO(Waiter w) {
+		String nombre = w.getNombre();
+		String apellido = w.getApellido();
+		String direccion = w.getDireccion();
+		String mail = w.getMail();
+		int ci = w.getCi();
+		int tel = w.getTel();
+		return new WaiterVO(nombre,apellido,ci,tel,direccion,mail);
+	}
+
 }

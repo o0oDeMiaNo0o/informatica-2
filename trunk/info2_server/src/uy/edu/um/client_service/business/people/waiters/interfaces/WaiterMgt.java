@@ -9,6 +9,8 @@ public interface WaiterMgt {
 
 	public void addWaiter(Waiter w);
 
+	public WaiterVO getWaiterVO(Waiter w);
+
 	public Waiter getWaiter(WaiterVO w);
 
 	public void removeWaiter(Waiter w);
