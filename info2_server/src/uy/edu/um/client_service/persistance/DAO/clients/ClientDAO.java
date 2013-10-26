@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.persistance.DAO.clients;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.persistance.JDBC;
-import uy.edu.um.value_object.people.client.ClientVO;
 
 public class ClientDAO {
 
@@ -40,49 +40,49 @@ public class ClientDAO {
 		}
 	}
 
-	public void getClients() {
+//	public void getClients() {
+//
+//		try {
+//
+//			Statement oStatement = database.getConnection().createStatement();
+//
+//
+//			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM CLIENTES");
+//
+//			while (oResultSet.next()) {
+//
+//				int nId = oResultSet.getInt(1);
+//				String sName = oResultSet.getString(2);
+//				String sApellido = oResultSet.getString(3);
+//				String sMail = oResultSet.getString(4);
+//				String sDir = oResultSet.getString(5);
+//				int ntel = oResultSet.getInt(6);
+//
+//				System.out.println("Cient. Ci: " + nId +" Nombre: "+sName+ " " + sApellido + ". Mail: " + sMail+" Direccion: "+sDir+". Telefono:"+ntel);
+//
+//			}
+//
+//			oResultSet.close();
+//			oStatement.close();
+//			database.closeConnection();
+//
+//
+//		}
+//			 catch (SQLException e) {
+//			database.closeConnection();
+//			throw new RuntimeException(e);
+//
+//		}
+//
 
-		try {
 
-			Statement oStatement = database.getConnection().createStatement();
-
-
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM CLIENTES");
-
-			while (oResultSet.next()) {
-
-				int nId = oResultSet.getInt(1);
-				String sName = oResultSet.getString(2);
-				String sApellido = oResultSet.getString(3);
-				String sMail = oResultSet.getString(4);
-				String sDir = oResultSet.getString(5);
-				int ntel = oResultSet.getInt(6);
-
-				System.out.println("Cient. Ci: " + nId +" Nombre: "+sName+ " " + sApellido + ". Mail: " + sMail+" Direccion: "+sDir+". Telefono:"+ntel);
-
-			}
-
-			oResultSet.close();
-			oStatement.close();
-			database.closeConnection();
-
-
-		}
-			 catch (SQLException e) {
-			database.closeConnection();
-			throw new RuntimeException(e);
-
-		}
-
-
-
-}
+//}
 	
-	public ArrayList<ClientVO> getClientsVO() {
+	public ArrayList<Client> getClients() {
 
 		try {
 
-			ArrayList<ClientVO> toReturn = new ArrayList<ClientVO>();
+			ArrayList<Client> toReturn = new ArrayList<Client>();
 
 			Statement oStatement = database.getConnection().createStatement();
 
@@ -98,8 +98,9 @@ public class ClientDAO {
 				String sMail = oResultSet.getString(5);
 				String sDir = oResultSet.getString(6);
 				int tel = oResultSet.getInt(7);
+				BigDecimal desc = oResultSet.getBigDecimal(8);
 				
-				ClientVO c = new ClientVO(nCli,Ci,sName,sApellido,tel,sDir,sMail);
+				Client c = new Client(nCli,sName,sApellido,Ci,tel,sDir,sMail,desc);
 				toReturn.add(c);
 			}
 
