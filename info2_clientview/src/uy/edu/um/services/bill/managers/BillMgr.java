@@ -10,6 +10,7 @@ import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
 import uy.edu.um.value_object.people.waiters.WaiterVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class BillMgr implements BillMgt{
 
@@ -45,15 +46,13 @@ public class BillMgr implements BillMgt{
 
 		}
 
-
-
 	}
 
 	@Override
-	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, WaiterVO w) {
-		BillVO toReturn = new BillVO(orders,c,w);
+	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c,
+			WaiterVO w, TableVO t) {
+		BillVO toReturn = new BillVO(orders,c,w,t);
 		return toReturn;
-
 	}
 
 }
