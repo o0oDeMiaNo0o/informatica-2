@@ -1,15 +1,16 @@
 package uy.edu.um.value_object.people.client;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 public class ClientVO implements Serializable {
 
 	private String nombre, apellido, email, direccion;
 	private int ci, tel, id;
-	private int descuento;
+	private BigDecimal descuento;
 
-	public ClientVO(String nombre, String apellido,int ci, int tel, String direccion, String email, int descuento){
+	public ClientVO(String nombre, String apellido,int ci, int tel, String direccion, String email, BigDecimal descuento){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.ci = ci;
@@ -20,7 +21,7 @@ public class ClientVO implements Serializable {
 	}
 
 	public ClientVO(int id,int ci, String nombre, String apellido, int tel, String direccion, String email,
-			int descuento){
+			BigDecimal descuento){
 		this.id=id;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -88,11 +89,11 @@ public class ClientVO implements Serializable {
 		this.tel = tel;
 	}
 
-	public int getDescuento() {
+	public BigDecimal getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(int descuento) {
+	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
 	}
 
