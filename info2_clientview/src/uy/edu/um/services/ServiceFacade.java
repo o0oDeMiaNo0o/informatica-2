@@ -21,7 +21,7 @@ import uy.edu.um.services.user.managers.UserMgr;
 
 public class ServiceFacade {
 	//instancia para implementar la instancia de Singleton
-	private static ServiceFacade instance = new ServiceFacade();
+	private static ServiceFacade instance = null;
 	//constructor privado para instanciarlo solo en la clase
 	private ServiceFacade(){
 
@@ -33,8 +33,6 @@ public class ServiceFacade {
 		}
 		return instance;
 	}
-
-
 
 	public ArticleMgt getArticleMgt(){
 		return ArticleMgr.getInstance();
