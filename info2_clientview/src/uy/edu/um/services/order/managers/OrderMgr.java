@@ -89,4 +89,10 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public void setDone(OrderVO o) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
