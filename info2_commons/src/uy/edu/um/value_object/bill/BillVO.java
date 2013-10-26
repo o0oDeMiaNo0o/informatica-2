@@ -16,13 +16,21 @@ public class BillVO implements Serializable{
 	private ArrayList<OrderVO> orders = new ArrayList<OrderVO>(10);
 	private WaiterVO waiter;
 	private ClientVO client;
+	private TableVO table;
+	private int id;
 
 
-	public BillVO(ArrayList<OrderVO> orders, ClientVO client, WaiterVO waiter){
+	public BillVO(ArrayList<OrderVO> orders, ClientVO client, WaiterVO waiter,TableVO t){
 		this.orders = orders;
 		this.client = client;
 		this.waiter = waiter;
+	}
 
+	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, WaiterVO waiter,TableVO t){
+		this.id = id;
+		this.orders = orders;
+		this.client = client;
+		this.waiter = waiter;
 	}
 
 	public ArrayList<OrderVO> getOrders() {
@@ -59,6 +67,22 @@ public class BillVO implements Serializable{
 			}
 		}
 		return total;
+	}
+
+	public TableVO getTable() {
+		return table;
+	}
+
+	public void setTable(TableVO table) {
+		this.table = table;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
