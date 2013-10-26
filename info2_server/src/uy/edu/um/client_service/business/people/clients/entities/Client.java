@@ -1,18 +1,20 @@
 package uy.edu.um.client_service.business.people.clients.entities;
 
+import java.math.BigDecimal;
+
 public class Client{
 
 	//atributos
 	private String nombre, apellido, direccion, mail;
 	private int tel, ci, id;
-	private int descuento;
+	private BigDecimal descuento;
 
 	//getters y setter
 
-	public int getDescuento() {
+	public BigDecimal getDescuento() {
 		return descuento;
 	}
-	public void setDescuento(int descuento) {
+	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
 	}
 	public String getNombre() {
@@ -58,7 +60,7 @@ public class Client{
 		this.id = id;
 	}
 	//constructor
-	public Client(String nombre, String apellido,int ci, int tel, String direccion, String mail, int descuento){
+	public Client(String nombre, String apellido,int ci, int tel, String direccion, String mail, BigDecimal descuento){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.ci = ci;
@@ -68,7 +70,7 @@ public class Client{
 		this.descuento = descuento;
 	}
 
-	public Client(int id,String nombre, String apellido,int ci, int tel, String direccion, String mail, int descuento){
+	public Client(int id,String nombre, String apellido,int ci, int tel, String direccion, String mail, BigDecimal descuento){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.ci = ci;
@@ -76,6 +78,7 @@ public class Client{
 		this.direccion = direccion;
 		this.mail = mail;
 		this.descuento = descuento;
+		this.id=id;
 	}
 
 }
