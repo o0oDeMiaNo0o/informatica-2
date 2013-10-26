@@ -1,5 +1,6 @@
 package uy.edu.um.services.people.clients.interfaces;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.value_object.people.client.ClientVO;
@@ -7,7 +8,7 @@ import uy.edu.um.value_object.people.client.ClientVO;
 public interface ClientMgt {
 
 	public ClientVO createClientVO(String nombre, String apellido,int ci, int tel, String direccion, String mail
-			, int descuento);
+			, BigDecimal descuento);
 
 	//public void addClient(String nombre, String apellido,int ci, int tel, String direccion, String mail);
 
