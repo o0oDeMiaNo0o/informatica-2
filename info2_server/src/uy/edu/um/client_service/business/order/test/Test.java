@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class Test {
@@ -14,6 +15,15 @@ public class Test {
 
 		toReturn = oMgt.allOrders();
 
-		int v =45;
+		for (OrderVO o : toReturn){
+			if(o!=null){
+				ArrayList<ArticleOrderVO> articles = o.getArticulos();
+				for(ArticleOrderVO a : articles){
+					System.out.println("Articulo : "+a.getArticle().getNombre()+", cantidad : "+
+							a.getCantidad());
+				}
+				System.out.println("||||||||||||||||||||||||||||||||");
+			}
+		}
 	}
 }
