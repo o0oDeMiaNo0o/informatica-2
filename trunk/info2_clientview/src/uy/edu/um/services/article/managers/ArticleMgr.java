@@ -12,7 +12,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class ArticleMgr implements ArticleMgt {
 	// respeta patron singleton
-	private static ArticleMgr instance = new ArticleMgr();
+	private static ArticleMgr instance = null;
 
 	// constructor privado para que lo inicialize esta clase
 	private ArticleMgr() {
