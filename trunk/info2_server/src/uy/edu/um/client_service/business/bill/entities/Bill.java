@@ -6,22 +6,35 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
+import uy.edu.um.client_service.business.table.entities.Table;
 
 public class Bill {
 
 	private ArrayList<Order> orders = new ArrayList<Order>(10);
-	private BigDecimal costoTotal;
+	private Waiter waiter;
+	private Client client;
+	private Table table;
+	private int id;
 
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
-	public BigDecimal getCostoTotal() {
-		return costoTotal;
+
+	public Bill(int id, ArrayList<Order> orders,Client client, Table table, Waiter waiter){
+		this.id = id;
+		this.orders = orders;
+		this.client = client;
+		this.waiter = waiter;
+		this.table = table;
 	}
 
-	public Bill(ArrayList<Order> orders){
+	public Bill(ArrayList<Order> orders,Client client, Table table, Waiter waiter){
 		this.orders = orders;
-		this.costoTotal = costoTotal();
+		this.client = client;
+		this.table = table;
+		this.waiter = waiter;
 	}
 
 	private BigDecimal costoTotal(){
@@ -39,5 +52,41 @@ public class Bill {
 			}
 		}
 		return total;
+	}
+
+	public Waiter getWaiter() {
+		return waiter;
+	}
+
+	public void setWaiter(Waiter waiter) {
+		this.waiter = waiter;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Table getTable() {
+		return table;
+	}
+
+	public void setTable(Table table) {
+		this.table = table;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setOrders(ArrayList<Order> orders) {
+		this.orders = orders;
 	}
 }
