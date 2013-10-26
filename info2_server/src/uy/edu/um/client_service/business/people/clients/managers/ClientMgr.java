@@ -1,12 +1,13 @@
 package uy.edu.um.client_service.business.people.clients.managers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.persistance.DAO.clients.ClientDAO;
 import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.user.UserVO;
 
 public class ClientMgr implements ClientMgt{
 
@@ -56,7 +57,7 @@ public class ClientMgr implements ClientMgt{
 		String direccion = c.getDireccion();
 		int tel = c.getTel();
 		int ci = c.getCi();
-		int descuento = c.getDescuento();
+		BigDecimal descuento = c.getDescuento();
 		Client toReturn = new Client(nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
@@ -69,8 +70,19 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public ArrayList<ClientVO> allClients() {
+		//manager
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+
 		ClientDAO dao = ClientDAO.getInstance();
-		return dao.getClientsVO();
+		ArrayList<Client> clients =  dao.getClients();
+		ArrayList<ClientVO> toReturn = new ArrayList<ClientVO>(10);
+		for(Client c : clients){
+			if(c!=null){
+				ClientVO tAdd = cMgt.getClientVO(c);
+				toReturn.add(tAdd);
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
@@ -82,7 +94,7 @@ public class ClientMgr implements ClientMgt{
 		int id = c.getId();
 		int ci = c.getCi();
 		int tel = c.getTel();
-		int descuento = c.getDescuento();
+		BigDecimal descuento = c.getDescuento();
 		return new ClientVO(id,ci,nombre,apellido,tel,direccion,email,descuento);
 	}
 
