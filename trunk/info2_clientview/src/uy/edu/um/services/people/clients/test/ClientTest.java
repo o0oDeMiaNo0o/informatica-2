@@ -1,10 +1,7 @@
 package uy.edu.um.services.people.clients.test;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.math.BigDecimal;
 
-
-import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
@@ -17,7 +14,7 @@ public class ClientTest {
 		String mail = "mliston";
 		int ci = 12345;
 		int tel = 12345345;
-		int descuento = 34;
+		BigDecimal descuento = new BigDecimal(34);
 
 		ClientMgt cMgt = ServiceFacade.getInstance().getClientMgt();
 

@@ -1,13 +1,11 @@
 package uy.edu.um.services.people.clients.managers;
 
+import java.math.BigDecimal;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
-import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 
@@ -26,7 +24,7 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
-			int tel, String direccion, String mail, int descuento) {
+			int tel, String direccion, String mail, BigDecimal descuento) {
 		ClientVO toReturn = new ClientVO(nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
