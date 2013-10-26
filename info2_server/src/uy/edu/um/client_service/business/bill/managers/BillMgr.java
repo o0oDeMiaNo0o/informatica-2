@@ -7,6 +7,12 @@ import uy.edu.um.client_service.business.bill.entities.Bill;
 import uy.edu.um.client_service.business.bill.interfaces.BillMgt;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
+import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
+import uy.edu.um.client_service.business.people.waiters.interfaces.WaiterMgt;
+import uy.edu.um.client_service.business.table.entities.Table;
+import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
@@ -31,16 +37,25 @@ public class BillMgr implements BillMgt{
 
 	@Override
 	public Bill getBill(BillVO b) {
+		//managers
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+
 		ArrayList<OrderVO> orderVO = b.getOrders();
 		ArrayList<Order> orders = new ArrayList<Order>(10);
 		for(OrderVO o : orderVO){
 			if(o != null){
-				OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 				Order toAdd = oMgt.getOrder(o);
 				orders.add(toAdd);
 			}
 		}
-		Bill toReturn = new Bill(orders);
+		Table tAdd = tMgt.getTable(b.getTable());
+		Waiter wAdd = wMgt.getWaiter(b.getWaiter());
+		Client cAdd = cMgt.getClient(b.getClient());
+
+		Bill toReturn = new Bill(orders,cAdd,tAdd,wAdd);
 		return toReturn;
 	}
 
