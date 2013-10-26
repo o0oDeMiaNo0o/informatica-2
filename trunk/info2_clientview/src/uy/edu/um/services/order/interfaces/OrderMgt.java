@@ -17,4 +17,6 @@ public interface OrderMgt {
 
 	public ArrayList<OrderVO> allOrders();
 
+	public void setDone(OrderVO o);
+
 }
