@@ -1,304 +1,208 @@
+-- Categorias
+
+INSERT INTO `Info2`.`Categorias` (`Nombre`)
+VALUES
+("Hamburguesas");
+
+INSERT INTO `Info2`.`Categorias` (`Nombre`)
+VALUES
+("Chivitos");
+
+INSERT INTO `Info2`.`Categorias` (`Nombre`)
+VALUES
+('Pizzas');
+
+INSERT INTO `Info2`.`Categorias` (`Nombre`)
+VALUES
+("Minutas");
+
+INSERT INTO `Info2`.`Categorias` (`Nombre`)
+VALUES
+('Bebidas');
 
 
 
-
--- Ingreso del Menu a la BD
-
-
-
-
--- ----------------------------------------------------------------------
-
--- Chivitos
+-- Articulos
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(101,
-"CHIVITO CHILDREN",
-220);
+("CHIVITO CHILDREN",220,2);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(102,
-"CHIVITO CANADIENSE",
-260);
+("CHIVITO CANADIENSE",260,2);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(103,
-"CHIVITO AL PLATO (PARA DOS PERSONAS)",
-400);
+("CHIVITO AL PLATO (PARA DOS PERSONAS)",400,2);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(104,
-"CHIVITO DE LA CASA",
-220);
+("CHIVITO DE LA CASA",240,2);
 
 -- Hambuguresas
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(201,
-"HAMBURGUESA CON FRITAS",
-150);
+("HAMBURGUESA CON FRITAS",150,1);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(202,
-"CHISBUGER",
-200);
+("CHISBUGER",200,1);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(203,
-"HAMBUERGUESA COMPLETA",
-260);
+("HAMBUERGUESA COMPLETA",260,1);
 
 -- Muzzrella 
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(301,
-"PIZZA",50);
-
+("PIZZA",50,3);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(302,
-"MUZZARELLA",
-80);
-
+("MUZZARELLA",80,3);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(303,
-"MUZZARELLA CON JAMON",
-100);
-
+("MUZZARELLA CON JAMON",100,3);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(304,
-"MUZZARELLA CON PANCETA",
-100);
+("MUZZARELLA CON PANCETA",100,3);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(305,
-"FAINA",
-50);
+("FAINA",50,3);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(306,
-"FAINA CON MUZZARELLA",
-70);
+("FAINA CON MUZZARELLA",70,3);
 
  -- Minutas
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(401,
-"MILANESA",
-180);
+("MILANESA",180,4);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(402,
-"MILANESA CON PROVOLONES",
-220);
+("MILANESA CON PROVOLONE",220,4);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(403,
-"NAPOLITANA",
-250);
+("NAPOLITANA",250,4);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(404,
-"MILANESA RELLENA",
-250);
+("MILANESA RELLENA",250,4);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(405,
-"MILANESA DE LA CASA (PARA DOS)",
-350);
+("MILANESA DE LA CASA (PARA DOS)",350,4);
 
 -- Bebidas
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(501,
-"AGUA (CON/SIN)",
-50);
+("AGUA (CON/SIN)",50,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(502,
-"REFRESCO CHICO (300ML)",
-60);
+("REFRESCO CHICO (300ML)",60,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(503,
-"REFRESCO GRANDE (1.5L)",
-110);
+("REFRESCO GRANDE (1.5L)",110,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(504,
-"WHISKEY NACIONAL",
-80);
+("WHISKEY NACIONAL",80,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(505,
-"RED BULL",
-80);
+("RED BULL",80,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(506,
-"GATORADE",
-60);
+("GATORADE",60,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(507,
-"COCKTAIL SECRETO DE LA CASA",
-100);
+("COCKTAIL SECRETO DE LA CASA",100,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(508,
-"CERVEZA 1L",
-120);
+("CERVEZA 1L",120,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(509,
-"CHOPP",
-80);
+("CHOPP",80,5);
 
 INSERT INTO `Info2`.`Articles`
-(
-`PROD_N`,
-`NAME`,
-`PRICE`)
+(`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-(510,
-"CAFE COLOMBIANO",
-60);
+("CAFE COLOMBIANO",60,5);
+
+-- Mesas
+
+-- Mesa1
+INSERT INTO `Info2`.`Mesa`
+(`Estado`)
+VALUES
+(DEFAULT);
+
+-- Mesa2
+INSERT INTO `Info2`.`Mesa`
+(`Estado`)
+VALUES
+(DEFAULT);
+
+-- Mesa3
+INSERT INTO `Info2`.`Mesa`
+(`Estado`)
+VALUES
+(DEFAULT);
 
 
+-- Usuarios
+
+INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
+VALUES
+("MatiasG","789456123",1);
+
+INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
+VALUES
+("FacundoL","uss",1);
+
+INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
+VALUES
+("Bernardo","bern",0);
