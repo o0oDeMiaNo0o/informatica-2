@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Frame;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -23,7 +21,7 @@ import uy.edu.um.ui.cocina.Pedidos;
 public class BasicoUsuario extends JFrame {
 
 	public ImagePanel contentPane;
-	public URL DirFondo = DirLocal.class.getResource("Fondo.jpeg");
+	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 
 	/**
 	 * Launch the application.
@@ -66,19 +64,21 @@ public class BasicoUsuario extends JFrame {
 		JMenuItem mntmVerMesas = new JMenuItem("Ver Mesas");
 		mntmVerMesas.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				Mesas nuevo = new Mesas(null, null, null);
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		menuCaja.add(mntmVerMesas);
 
-		JMenuItem mntmPedidoLocal = new JMenuItem("Realizar Pedido");
+		JMenuItem mntmPedidoLocal = new JMenuItem("Caja Principal");
 		mntmPedidoLocal.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				CajaPrincipal nuevo = new CajaPrincipal(null, null);
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 
@@ -94,9 +94,10 @@ public class BasicoUsuario extends JFrame {
 		JMenuItem mntmVerCocina = new JMenuItem("Ver");
 		mntmVerCocina.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				Pedidos nuevo = new Pedidos(null);
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		menuCocina.add(mntmVerCocina);
@@ -111,9 +112,10 @@ public class BasicoUsuario extends JFrame {
 		JMenuItem mntmAgregarCliente = new JMenuItem("Agregar Nuevo");
 		mntmAgregarCliente.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				NewCliente nuevo = new NewCliente();
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		mnClientes.add(mntmAgregarCliente);
@@ -137,6 +139,10 @@ public class BasicoUsuario extends JFrame {
 		menuItem_7.setForeground(Color.BLACK);
 		menuItem_7.setBackground(Color.RED);
 		menuUsuario.add(menuItem_7);
+	}
+
+	private void cerrar() {
+		this.dispose();
 	}
 
 }
