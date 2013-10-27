@@ -19,10 +19,14 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.admin.productos.NewProduct;
 import uy.edu.um.ui.cocina.Pedidos;
 import uy.edu.um.ui.usuarios.NewCliente;
+import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
+import net.miginfocom.swing.MigLayout;
 
 public class BasicoAdmin extends JFrame {
 
 	public JPanel contentPane;
+	private URL dirLogo = DirLocal.class.getResource("Logo.png");
 
 	/**
 	 * Launch the application.
@@ -49,10 +53,18 @@ public class BasicoAdmin extends JFrame {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.PINK);
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		TransparentPanel transparentPanel = new TransparentPanel();
+		contentPane.add(transparentPanel, BorderLayout.NORTH);
+		transparentPanel.setLayout(new MigLayout("", "[100px,grow]", "[96px]"));
+
+		ImagePanel imagePanel = new ImagePanel(dirLogo);
+		transparentPanel
+				.add(imagePanel, "cell 0 0,alignx center,aligny center");
 
 		// Menu Opciones
 		JMenuBar menuBar = new JMenuBar();
