@@ -34,7 +34,7 @@ public class Facturacion extends BasicoUsuario {
 	private JTextField textFieldCliente;
 	private JTextField textFieldPagaCon;
 	private JTextField textFieldVuelto;
-	private URL logo = DirLocal.class.getResource("Logo.png");
+	private URL logo = DirLocal.class.getResource("Bernie's.png");
 	private ArrayList<ClientVO> clientes = cargaClientes();
 	private boolean tieneDescuento = false;
 	private BigDecimal descuento = new BigDecimal(0);
