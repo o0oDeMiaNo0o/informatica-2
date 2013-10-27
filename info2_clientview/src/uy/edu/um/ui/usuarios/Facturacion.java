@@ -209,10 +209,9 @@ public class Facturacion extends BasicoUsuario {
 	}
 
 	public String calcularDescuento(ClientVO c, String monto) {
-		int discount = c.getDescuento();
 		BigDecimal hun = new BigDecimal(100);
 		BigDecimal dMonto = new BigDecimal(Integer.parseInt(monto));
-		BigDecimal dDis = new BigDecimal(discount);
+		BigDecimal dDis = c.getDescuento();
 		BigDecimal tDis = hun.subtract(dDis);
 		BigDecimal trueDist = tDis.divide(hun);
 		BigDecimal total = dMonto.multiply(trueDist);
@@ -229,9 +228,9 @@ public class Facturacion extends BasicoUsuario {
 	public void buscaCliente(int ci) {
 		for (int i = 0; i < clientes.size(); i++) {
 			if (clientes.get(i).getCi() == ci) {
-				if (clientes.get(i).getDescuento() != 0) {
+				if (clientes.get(i).getDescuento().equals(0)) {
 					tieneDescuento = true;
-					descuento = new BigDecimal(clientes.get(i).getDescuento());
+					descuento = clientes.get(i).getDescuento();
 				}
 			}
 		}
