@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.ui.admin.productos.NewProduct;
+import uy.edu.um.ui.admin.edicion.NewProduct;
 import uy.edu.um.ui.cocina.Pedidos;
 import uy.edu.um.ui.usuarios.NewCliente;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
