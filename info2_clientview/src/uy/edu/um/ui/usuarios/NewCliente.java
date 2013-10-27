@@ -5,10 +5,13 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
@@ -17,16 +20,6 @@ import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.people.client.ClientVO;
-
-import javax.swing.JSpinner;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-
-import java.awt.Font;
-
-import javax.swing.SpinnerNumberModel;
 
 public class NewCliente extends BasicoUsuario {
 
@@ -88,12 +81,14 @@ public class NewCliente extends BasicoUsuario {
 		textFieldCi.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if(textFieldCi.getText().equals("No Ingresar Digito Verificador"))
-				textFieldCi.setText("");
+				if (textFieldCi.getText().equals(
+						"No Ingresar Digito Verificador"))
+					textFieldCi.setText("");
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
-				if(textFieldCi.getText().equals("")){
+				if (textFieldCi.getText().equals("")) {
 					textFieldCi.setText("No Ingresar Digito Verificador");
 				}
 			}
@@ -141,6 +136,9 @@ public class NewCliente extends BasicoUsuario {
 							if (!textFieldAp.getText().isEmpty()) {
 								if (Helpers.isNumeric(textFieldTel.getText())) {
 									if (!textFieldDir.getText().isEmpty()) {
+										BigDecimal descuento = new BigDecimal(
+												Integer.parseInt(spinner
+														.getValue().toString()));
 										ClientMgt client = ServiceFacade
 												.getInstance().getClientMgt();
 										ClientVO cliente = client.createClientVO(
@@ -152,8 +150,7 @@ public class NewCliente extends BasicoUsuario {
 														.getText()),
 												textFieldDir.getText(),
 												textFieldEmail.getText(),
-												Integer.parseInt(spinner
-														.getValue().toString()));
+												descuento);
 										client.addClientVO(cliente);
 										MensajeGenerico new10 = new MensajeGenerico(
 												"Cliente Agregado", contentPane);

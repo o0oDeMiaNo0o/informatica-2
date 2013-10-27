@@ -7,12 +7,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.ui.usuarios.MainUsuario;
 
 public class MensajeGenerico extends JDialog {
 
@@ -44,7 +44,6 @@ public class MensajeGenerico extends JDialog {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				contentPane.setVisible(false);
 				cerrar();
 			}
 		});
