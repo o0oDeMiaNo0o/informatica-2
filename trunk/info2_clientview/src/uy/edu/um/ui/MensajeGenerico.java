@@ -24,7 +24,7 @@ public class MensajeGenerico extends JDialog {
 		this.mensaje = a;
 	}
 
-	public MensajeGenerico(String error, JPanel contentPane) {
+	public MensajeGenerico(String error, final JPanel contentPane) {
 		setResizable(false);
 		setBounds(100, 100, 326, 107);
 		this.setLocationRelativeTo(contentPane);
@@ -44,6 +44,7 @@ public class MensajeGenerico extends JDialog {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				contentPane.setVisible(false);
 				cerrar();
 			}
 		});

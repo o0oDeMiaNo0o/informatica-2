@@ -85,6 +85,20 @@ public class NewCliente extends BasicoUsuario {
 		transparentPanel.add(lblCi, "cell 1 3,alignx left,aligny center");
 
 		textFieldCi = new JTextField();
+		textFieldCi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if(textFieldCi.getText().equals("No Ingresar Digito Verificador"))
+				textFieldCi.setText("");
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(textFieldCi.getText().equals("")){
+					textFieldCi.setText("No Ingresar Digito Verificador");
+				}
+			}
+		});
+		textFieldCi.setText("No Ingresar Digito Verificador");
 		textFieldCi.setColumns(10);
 		transparentPanel.add(textFieldCi, "flowx,cell 2 3,growx");
 
@@ -113,7 +127,8 @@ public class NewCliente extends BasicoUsuario {
 		transparentPanel.add(textFieldDir, "cell 4 5,growx");
 
 		final JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0),
+				null, new Integer(1)));
 		transparentPanel.add(spinner, "cell 2 7,alignx left,growy");
 
 		JButton btnAceptar = new JButton("Aceptar");
@@ -188,12 +203,6 @@ public class NewCliente extends BasicoUsuario {
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel.add(btnCancelar,
 				"cell 4 13,alignx right,aligny center");
-
-		JLabel lblNoIngresarDigito = new JLabel(
-				"No ingresar Digito Verificador");
-		lblNoIngresarDigito.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		lblNoIngresarDigito.setForeground(Color.WHITE);
-		transparentPanel.add(lblNoIngresarDigito, "cell 2 3");
 	}
 
 }

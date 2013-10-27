@@ -37,6 +37,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
+import javax.swing.border.LineBorder;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -66,7 +67,6 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	private String[] textos;
 	private JTable tablePrePedido;
-
 
 	/**
 	 * Launch the application.
@@ -124,6 +124,7 @@ public class CajaPrincipal extends BasicoUsuario {
 				"[1px][grow][grow][grow]", "[1px][grow]"));
 
 		tablePrePedido = new JTable();
+		tablePrePedido.setBorder(new LineBorder(Color.ORANGE, 2, true));
 		tablePrePedido.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		tablePrePedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePrePedido.setEnabled(false);
@@ -143,7 +144,17 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 
 		});
-		transparentPanelPedido.add(button_2, "cell 5 6");
+		double cat = categoria.size();
+		double pos = (cat / 2);
+		if (pos % 1 != 0) {
+			pos = pos - (pos % 1);
+		}
+		int j = 2;
+		for (int i = 0; i < pos; i++) {
+			j = j + 2;
+		}
+
+		transparentPanelPedido.add(button_2, "cell 5 " + j);
 
 		if (mesa != null) {
 			JButton btnFacturar = new JButton("Facturar");
