@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -15,15 +17,13 @@ import javax.swing.JMenuItem;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.ui.admin.productos.NewCategory;
-import uy.edu.um.ui.admin.productos.NewProduct;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.cocina.Pedidos;
 
 public class BasicoUsuario extends JFrame {
 
 	public ImagePanel contentPane;
-	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
+	public URL DirFondo = DirLocal.class.getResource("Fondo.jpeg");
 
 	/**
 	 * Launch the application.
@@ -124,19 +124,19 @@ public class BasicoUsuario extends JFrame {
 		JMenuItem mntmEliminarCliente = new JMenuItem("Eliminar");
 		mntmEliminarCliente.setBackground(Color.WHITE);
 		mnClientes.add(mntmEliminarCliente);
-		
-				JMenu menuUsuario = new JMenu("Sesi\u00F3n Usuario");
-				menuUsuario.setForeground(Color.BLACK);
-				menuUsuario.setBackground(Color.DARK_GRAY);
-				menuBar.add(menuUsuario);
-				
-						JMenuItem mntmVerLista = new JMenuItem("Ver Info");
-						menuUsuario.add(mntmVerLista);
-						
-								JMenuItem menuItem_7 = new JMenuItem("Salir");
-								menuItem_7.setForeground(Color.BLACK);
-								menuItem_7.setBackground(Color.RED);
-								menuUsuario.add(menuItem_7);
+
+		JMenu menuUsuario = new JMenu("Sesi\u00F3n Usuario");
+		menuUsuario.setForeground(Color.BLACK);
+		menuUsuario.setBackground(Color.DARK_GRAY);
+		menuBar.add(menuUsuario);
+
+		JMenuItem mntmVerLista = new JMenuItem("Ver Info");
+		menuUsuario.add(mntmVerLista);
+
+		JMenuItem menuItem_7 = new JMenuItem("Salir");
+		menuItem_7.setForeground(Color.BLACK);
+		menuItem_7.setBackground(Color.RED);
+		menuUsuario.add(menuItem_7);
 	}
 
 }
