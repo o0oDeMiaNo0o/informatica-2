@@ -118,7 +118,7 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					Edit nuevo = new Edit(devuelveArticulo(Integer
+					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
 							.parseInt(textFieldID.getText())), contentPane,
 							true, "");
 					nuevo.setVisible(true);
@@ -138,7 +138,7 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					Edit nuevo = new Edit(devuelveArticulo(Integer
+					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
 							.parseInt(textFieldID.getText())), contentPane,
 							false, "Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);

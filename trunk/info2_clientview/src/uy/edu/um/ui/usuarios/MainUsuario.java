@@ -26,7 +26,7 @@ public class MainUsuario extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainAdmin frame = new MainAdmin();
+					MainUsuario frame = new MainUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,22 +50,27 @@ public class MainUsuario extends BasicoUsuario {
 		ImagePanel imagePanel = new ImagePanel(dirFondo);
 		transparentPanel
 				.add(imagePanel, "cell 0 0,alignx center,aligny center");
-		
+
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		getContentPane().add(transparentPanel_1, BorderLayout.CENTER);
-		transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]", "[][][][grow][]"));
-		
-		JLabel lblBienvenidoAlPanel = new JLabel("Bienvenido Al Panel De Usuario");
+		transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]",
+				"[][][][grow][]"));
+
+		JLabel lblBienvenidoAlPanel = new JLabel(
+				"Bienvenido Al Panel De Usuario");
 		lblBienvenidoAlPanel.setFont(new Font("Lucida Grande", Font.PLAIN, 35));
 		transparentPanel_1.add(lblBienvenidoAlPanel, "cell 1 1,alignx center");
-		
+
 		JLabel lblUstedSeLogueo = new JLabel("Usted Se Logueo Como : ");
-		transparentPanel_1.add(lblUstedSeLogueo, "flowx,cell 1 2,alignx center,aligny center");
-		
+		transparentPanel_1.add(lblUstedSeLogueo,
+				"flowx,cell 1 2,alignx center,aligny center");
+
 		JLabel lblNewLabel = new JLabel("New label");
-		transparentPanel_1.add(lblNewLabel, "cell 1 2,alignx center,aligny center");
-		
-		JLabel lblParaElegirAcciones = new JLabel("Para Elegir Acciones, Ir A Esquina Superior Izquierda De Pantalla");
+		transparentPanel_1.add(lblNewLabel,
+				"cell 1 2,alignx center,aligny center");
+
+		JLabel lblParaElegirAcciones = new JLabel(
+				"Para Elegir Acciones, Ir A Esquina Superior Izquierda De Pantalla");
 		transparentPanel_1.add(lblParaElegirAcciones, "cell 1 4,alignx center");
 	}
 

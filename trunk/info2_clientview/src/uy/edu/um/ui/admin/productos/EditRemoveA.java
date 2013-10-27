@@ -24,7 +24,7 @@ import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import java.awt.Font;
 
-public class Edit extends JFrame {
+public class EditRemoveA extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
@@ -41,7 +41,7 @@ public class Edit extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public Edit(ArticleVO articulo, JPanel cPanel, final boolean editable,
+	public EditRemoveA(ArticleVO articulo, JPanel cPanel, final boolean editable,
 			String mensaje) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
