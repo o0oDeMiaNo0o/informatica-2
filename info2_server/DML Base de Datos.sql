@@ -197,7 +197,7 @@ VALUES
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("MatiasG","789456123",1);
+("MatiasG","aaa",1);
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
