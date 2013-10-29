@@ -2,15 +2,11 @@ package uy.edu.um.ui.admin.edicion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -19,8 +15,8 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -28,12 +24,11 @@ import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
 
-public class RemoveUser extends BasicoAdmin {
-	private ArrayList<ArticleVO> listaUser = cargoListado();
-	private ArrayList<ArticleVO> listaTabla = new ArrayList<ArticleVO>();
+public class UserList extends BasicoAdmin {
+	private ArrayList<UserVO> listaUser = cargoListado();
 	private String[] textos;
 	private JTable table;
-	private JTextField textFieldID;
+	private JTextField textFieldNombre;
 	private UserVO user;
 
 	/**
@@ -43,7 +38,7 @@ public class RemoveUser extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RemoveUser frame = new RemoveUser(null);
+					UserList frame = new UserList(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +52,7 @@ public class RemoveUser extends BasicoAdmin {
 	 * 
 	 * @param user
 	 */
-	public RemoveUser(UserVO user) {
+	public UserList(UserVO user) {
 
 		this.user = user; // Usuario Actual
 
@@ -75,9 +70,9 @@ public class RemoveUser extends BasicoAdmin {
 		JLabel lblIdUsuario = new JLabel("Usuario: ");
 		transparentPanel_2.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
 
-		textFieldID = new JTextField();
-		textFieldID.setColumns(10);
-		transparentPanel_2.add(textFieldID, "cell 0 1,alignx center");
+		textFieldNombre = new JTextField();
+		textFieldNombre.setColumns(10);
+		transparentPanel_2.add(textFieldNombre, "cell 0 1,alignx center");
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -85,7 +80,8 @@ public class RemoveUser extends BasicoAdmin {
 			public void mousePressed(MouseEvent e) {
 				int i = table.getSelectedRow();
 				if (i > 0) {
-					textFieldID.setText("" + listaTabla.get(i - 1).getId());
+					textFieldNombre
+							.setText("" + listaUser.get(i - 1).getUser());
 				}
 			}
 		});
@@ -96,10 +92,10 @@ public class RemoveUser extends BasicoAdmin {
 		btnEditarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(
-							devuelveArticulo(Integer.parseInt(textFieldID
-									.getText())), contentPane, true, "");
+				if (buscaUsuario(textFieldNombre.getText())) {
+					EditRemoveU nuevo = new EditRemoveU(
+							devuelveUser(textFieldNombre.getText()),
+							contentPane, true, "");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -116,11 +112,10 @@ public class RemoveUser extends BasicoAdmin {
 		btnEliminarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(
-							devuelveArticulo(Integer.parseInt(textFieldID
-									.getText())), contentPane, false,
-							"Desea Eliminar El Siguiente Articulo?");
+				if (buscaUsuario(textFieldNombre.getText())) {
+					EditRemoveU nuevo = new EditRemoveU(
+							devuelveUser(textFieldNombre.getText()),
+							contentPane, false, "Desea Eliminar Este Usuario?");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -129,104 +124,58 @@ public class RemoveUser extends BasicoAdmin {
 				}
 			}
 		});
-		transparentPanel_2.add(btnEliminarUsuario, "cell 0 2,alignx center,aligny top");
+		transparentPanel_2.add(btnEliminarUsuario,
+				"cell 0 2,alignx center,aligny top");
 		cargaATabla();
 	}
 
 	// Metodos Auxiliares
 
-	private boolean buscaArticulo(String text) {
+	private boolean buscaUsuario(String text) {
 		for (int i = 0; i < listaUser.size(); i++) {
-			if (listaUser.get(i).getId() == Integer.parseInt(text)) {
+			if (listaUser.get(i).getUser().equals(text)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private ArticleVO devuelveArticulo(int id) {
-		for (int i = 0; i < listaArticulos.size(); i++) {
-			if (listaArticulos.get(i).getId() == id) {
-				return listaArticulos.get(i);
+	private UserVO devuelveUser(String name) {
+		for (int i = 0; i < listaUser.size(); i++) {
+			if (listaUser.get(i).getUser().equals(name)) {
+				return listaUser.get(i);
 			}
 		}
 		return null;
 	}
 
-	private String[] cargaAlCombo(JComboBox a) {
-		ArrayList<String> aux = new ArrayList<String>();
-		aux.add("---- Desplegar Lista ----");
-		aux.add("");
-		int j = 0;
-		while (j < categorias.size()) {
-			aux.add(categorias.get(j).getNombre());
-			j++;
-		}
-		textos = new String[aux.size() + 1];
-		for (int i = 0; i < textos.length - 1; i++) {
-			textos[i] = aux.get(i);
-		}
-		return textos;
-	}
-
-	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() {
-		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
-		return cat.allCategories();
-	}
-
-	// Cargo a Tabla Articulos
+	// Cargo a Tabla Users
 	public void cargaATabla() {
 		Object[][] aux = null;
-		if ((listaTabla.size() != 0)) {
-			aux = new Object[listaTabla.size() + 1][3];
+		if ((listaUser.size() != 0)) {
+			aux = new Object[listaUser.size() + 1][3];
 			aux[0][0] = "Nombre";
 			aux[0][1] = "Contrase–a";
 			aux[0][2] = "Es Administrador";
-			for (int i = 0; i < listaTabla.size(); i++) {
-				aux[i + 1][0] = listaTabla.get(i).getId();
-				aux[i + 1][1] = listaTabla.get(i).getNombre();
-				aux[i + 1][2] = listaTabla.get(i).getPrecio();
+			for (int i = 0; i < listaUser.size(); i++) {
+				aux[i + 1][0] = listaUser.get(i).getUser();
+				aux[i + 1][1] = listaUser.get(i).getPassword();
+				aux[i + 1][2] = Boolean.toString(listaUser.get(i).isAdmin());
 			}
 
 		} else {
 			aux = new Object[1][3];
-			aux[0][0] = "Id";
-			aux[0][1] = "Nombre";
-			aux[0][2] = "Precio";
+			aux[0][0] = "Nombre";
+			aux[0][1] = "Contrase–a";
+			aux[0][2] = "Es Administrador";
 		}
-		table.setModel(new DefaultTableModel(aux, new String[] { "Categoria",
-				"Nombre", "Precio" }));
+		table.setModel(new DefaultTableModel(aux, new String[] { "Nombre",
+				"Contrase–a", "Es Administrador" }));
 	}
 
-	// Ve que categoria eligo
-	public CategoryVO buscaEnLista(String a) {
-		for (int i = 0; i < categorias.size(); i++) {
-			if (categorias.get(i).getNombre().equals(a)) {
-				return categorias.get(i);
-			}
-		}
-		return null;
-
-	}
-
-	// Cargo articulos
-	public void cargaALista(CategoryVO cat) {
-		if (listaTabla.size() != 0) {
-			listaTabla.clear();
-		}
-		for (int i = 0; i < listaArticulos.size(); i++) {
-			if (listaArticulos.get(i).getCategory().getId() == cat.getId()) {
-				listaTabla.add(listaArticulos.get(i));
-			}
-		}
-	}
-
-	public ArrayList<ArticleVO> cargoListado() {
-		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
-		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
-		sol = test.allArticles();
-		return sol;
+	public ArrayList<UserVO> cargoListado() {
+		UserMgt usr = ServiceFacade.getInstance().getUserMgt();
+		return usr.allUsers();
 	}
 
 }
