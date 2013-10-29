@@ -81,7 +81,7 @@ public class UserDAO {
 			
 			try{
 				Statement oStatement = database.getConnection().createStatement();
-				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where (`Users`.`Username` = '"+u.getUsername()+"') AND (`Vigente`=`Activo`);");
+				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where (`Users`.`Username` = '"+u.getUsername()+"') AND (`Vigente`='Activo');");
 				
 				while(oResultSet.next()){
 					boolean pass=false;
@@ -116,7 +116,7 @@ public class UserDAO {
 			try {
 				ArrayList<User> toReturn = new ArrayList<User>();
 				Statement oStatement = database.getConnection().createStatement();
-				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Users WHERE `Vigente` = `Activo`");
+				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Users WHERE `Vigente` = 'Activo'");
 
 				while (oResultSet.next()) {
 					boolean admi = false;
