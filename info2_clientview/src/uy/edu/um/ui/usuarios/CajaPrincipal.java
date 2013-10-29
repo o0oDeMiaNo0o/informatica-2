@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
@@ -20,10 +19,10 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -37,11 +36,10 @@ import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
-import javax.swing.border.LineBorder;
 
 public class CajaPrincipal extends BasicoUsuario {
 
-	UserVO user = cargaUsuario();
+	UserVO user;
 
 	ArrayList<ArticleOrderVO> pedidoAux = new ArrayList<ArticleOrderVO>(); // Array
 																			// de
@@ -75,7 +73,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CajaPrincipal frame = new CajaPrincipal(null, null);
+					CajaPrincipal frame = new CajaPrincipal(null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -87,8 +85,13 @@ public class CajaPrincipal extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) {
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa,
+			final UserVO user) {
+
 		super();
+		
+		this.user = user;
+		
 		if (pedido != null) {
 			pedidoAux = pedido;
 			pedidoArticle = cargaArticleVO(pedidoAux);
@@ -228,18 +231,10 @@ public class CajaPrincipal extends BasicoUsuario {
 		return aux;
 	}
 
-	// Cargo Usuario
-	private UserVO cargaUsuario() {
-		UserVO usr = new UserVO("pepe", "1234", false);
-		return usr;
-	}
-
 	// Carga Articulos a arraylist
 	public ArrayList<ArticleVO> cargoListado() {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
-		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
-		sol = test.allArticles();
-		return sol;
+		return test.allArticles();
 	}
 
 	// Cargo categorias a arraylist

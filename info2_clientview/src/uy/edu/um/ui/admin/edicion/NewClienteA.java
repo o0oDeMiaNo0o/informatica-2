@@ -1,4 +1,4 @@
-package uy.edu.um.ui.usuarios;
+package uy.edu.um.ui.admin.edicion;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,11 +17,12 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.MensajeGenerico;
+import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.people.client.ClientVO;
 
-public class NewCliente extends BasicoUsuario {
+public class NewClienteA extends BasicoAdmin {
 
 	private JTextField textFieldNom;
 	private JTextField textFieldCi;
@@ -37,7 +38,7 @@ public class NewCliente extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewCliente frame = new NewCliente();
+					NewClienteA frame = new NewClienteA();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +50,7 @@ public class NewCliente extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public NewCliente() {
+	public NewClienteA() {
 		super();
 
 		TransparentPanel transparentPanel = new TransparentPanel();

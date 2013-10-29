@@ -16,10 +16,12 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.usuarios.CajaPrincipal;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public class Confirm extends JFrame {
 
 	private JPanel contentPane;
+	UserVO user;
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
@@ -35,7 +37,11 @@ public class Confirm extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public Confirm(final OrderVO toSend, String text, final JFrame mesas) {
+	public Confirm(final OrderVO toSend, String text, final JFrame mesas,
+			final UserVO user) {
+
+		this.user = user;
+
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -68,7 +74,7 @@ public class Confirm extends JFrame {
 					nueva.setVisible(true);
 				} else {
 					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
-							.getTable());
+							.getTable(), user);
 					nuevo.setVisible(true);
 					mesas.dispose();
 					cerrar();

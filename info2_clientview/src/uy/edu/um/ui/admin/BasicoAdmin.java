@@ -18,17 +18,22 @@ import javax.swing.border.LineBorder;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.ConfirmSesion;
-import uy.edu.um.ui.MensajeGenerico;
+import uy.edu.um.ui.admin.edicion.NewCategory;
 import uy.edu.um.ui.admin.edicion.NewProduct;
+import uy.edu.um.ui.admin.edicion.NewTable;
+import uy.edu.um.ui.admin.edicion.NewUser;
+import uy.edu.um.ui.admin.edicion.ProductList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.cocina.Pedidos;
-import uy.edu.um.ui.usuarios.NewCliente;
+import uy.edu.um.ui.usuarios.NewClienteU;
+import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoAdmin extends JFrame {
 
 	public JPanel contentPane;
 	private URL dirLogo = DirLocal.class.getResource("Logo.png");
+	private UserVO user = null;
 
 	/**
 	 * Launch the application.
@@ -88,27 +93,31 @@ public class BasicoAdmin extends JFrame {
 
 		menuArticle.add(mntmNArticle);
 
-		JMenuItem mntmEditarArticulo = new JMenuItem("Editar Articulo");
+		JMenuItem mntmEditarArticulo = new JMenuItem("Editar/Eliminar");
+		mntmEditarArticulo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				ProductList nuevo = new ProductList(user);
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		menuArticle.add(mntmEditarArticulo);
-
-		JMenuItem mntmVer = new JMenuItem("Ver Articulos");
-		menuArticle.add(mntmVer);
-
-		JMenuItem mntmEArticle = new JMenuItem("Eliminar Articulo");
-		menuArticle.add(mntmEArticle);
 
 		JMenu mnCategorias = new JMenu("Categorias");
 		mnCategorias.setBackground(Color.DARK_GRAY);
 		menuBar.add(mnCategorias);
 
 		JMenuItem menuItem_1 = new JMenuItem("Nueva Categor\u00EDa");
+		menuItem_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				NewCategory nuevo = new NewCategory();
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		mnCategorias.add(menuItem_1);
-
-		JMenuItem mntmEditarCategora = new JMenuItem("Editar Categor\u00EDa");
-		mnCategorias.add(mntmEditarCategora);
-
-		JMenuItem mntmVerCategorias = new JMenuItem("Ver Categor\u00EDas");
-		mnCategorias.add(mntmVerCategorias);
 
 		JMenuItem menuItem_3 = new JMenuItem("Eliminar Categor\u00EDa");
 		mnCategorias.add(menuItem_3);
@@ -117,18 +126,16 @@ public class BasicoAdmin extends JFrame {
 		menuMesas.setBackground(Color.DARK_GRAY);
 		menuBar.add(menuMesas);
 
-		JMenuItem mntmVerCocina = new JMenuItem("Ver Mesas");
-		mntmVerCocina.addMouseListener(new MouseAdapter() {
+		JMenuItem mntmNuevaMesa = new JMenuItem("Nueva Mesa");
+		mntmNuevaMesa.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent arg0) {
-				Pedidos nuevo = new Pedidos(null);
-				nuevo.setVisible(true);
+			public void mousePressed(MouseEvent e) {
+				NewTable nueva = new NewTable();
+				nueva.setVisible(true);
+				cerrar();
 			}
 		});
-
-		JMenuItem mntmNuevaMesa = new JMenuItem("Nueva Mesa");
 		menuMesas.add(mntmNuevaMesa);
-		menuMesas.add(mntmVerCocina);
 
 		JMenuItem mntmEnviarMensaje = new JMenuItem("Eliminar Mesa");
 		menuMesas.add(mntmEnviarMensaje);
@@ -138,6 +145,13 @@ public class BasicoAdmin extends JFrame {
 		menuBar.add(Usuarios);
 
 		JMenuItem mntmNuevoUsuario = new JMenuItem("Nuevo Usuario");
+		mntmNuevoUsuario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				NewUser nuevo = new NewUser();
+				nuevo.setVisible(true);
+			}
+		});
 		Usuarios.add(mntmNuevoUsuario);
 
 		JMenuItem mntmEditarUsuario = new JMenuItem("Editar Usuario");
@@ -157,7 +171,7 @@ public class BasicoAdmin extends JFrame {
 		mntmAgregarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewCliente nuevo = new NewCliente();
+				NewClienteU nuevo = new NewClienteU();
 				nuevo.setVisible(true);
 				cerrar();
 			}

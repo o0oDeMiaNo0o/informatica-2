@@ -18,11 +18,13 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.cocina.Pedidos;
+import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoUsuario extends JFrame {
 
 	public ImagePanel contentPane;
 	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
+	UserVO user;
 
 	/**
 	 * Launch the application.
@@ -77,7 +79,7 @@ public class BasicoUsuario extends JFrame {
 		mntmPedidoLocal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				CajaPrincipal nuevo = new CajaPrincipal(null, null);
+				CajaPrincipal nuevo = new CajaPrincipal(null, null, user);
 				nuevo.setVisible(true);
 				cerrar();
 			}
@@ -114,7 +116,7 @@ public class BasicoUsuario extends JFrame {
 		mntmAgregarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewCliente nuevo = new NewCliente();
+				NewClienteU nuevo = new NewClienteU();
 				nuevo.setVisible(true);
 				cerrar();
 			}

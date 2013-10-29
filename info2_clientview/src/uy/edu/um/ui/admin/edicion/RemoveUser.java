@@ -28,9 +28,8 @@ import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
 
-public class ProductList extends BasicoAdmin {
-	private ArrayList<CategoryVO> categorias = cargoCategorias();
-	private ArrayList<ArticleVO> listaArticulos = cargoListado();
+public class RemoveUser extends BasicoAdmin {
+	private ArrayList<ArticleVO> listaUser = cargoListado();
 	private ArrayList<ArticleVO> listaTabla = new ArrayList<ArticleVO>();
 	private String[] textos;
 	private JTable table;
@@ -44,7 +43,7 @@ public class ProductList extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProductList frame = new ProductList(null);
+					RemoveUser frame = new RemoveUser(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,12 +54,13 @@ public class ProductList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
-	 * @param user 
+	 * 
+	 * @param user
 	 */
-	public ProductList(UserVO user) {
-		
-		this.user = user; //Usuario Actual
-		
+	public RemoveUser(UserVO user) {
+
+		this.user = user; // Usuario Actual
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -68,37 +68,12 @@ public class ProductList extends BasicoAdmin {
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
-		TransparentPanel transparentPanel_1 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
-		transparentPanel_1.setLayout(new MigLayout("", "[grow][][][][grow]",
-				"[grow][][grow]"));
-
-		JLabel lblCategorias = new JLabel("Categorias:");
-		transparentPanel_1.add(lblCategorias, "cell 1 1,alignx trailing");
-
-		final JComboBox comboBox = new JComboBox();
-		comboBox.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				if (!comboBox.getSelectedItem().toString()
-						.equals("---- Desplegar Lista ----")) {
-					cargaALista(buscaEnLista(comboBox.getSelectedItem()
-							.toString()));
-					cargaATabla();
-				}
-			}
-		});
-
-		String[] textosMenu = cargaAlCombo(comboBox); // cargaCategorias
-		comboBox.setModel(new DefaultComboBoxModel(textosMenu));
-		transparentPanel_1.add(comboBox, "cell 2 1,alignx center");
-
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
 		transparentPanel_2.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
 
-		JLabel label = new JLabel("Id Articulo: ");
-		transparentPanel_2.add(label, "flowx,cell 0 1,alignx center");
+		JLabel lblIdUsuario = new JLabel("Usuario: ");
+		transparentPanel_2.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
 
 		textFieldID = new JTextField();
 		textFieldID.setColumns(10);
@@ -117,14 +92,14 @@ public class ProductList extends BasicoAdmin {
 		table.setSurrendersFocusOnKeystroke(true);
 		transparentPanel.add(table, "cell 1 0,grow");
 
-		JButton button = new JButton("Editar Producto");
-		button.addMouseListener(new MouseAdapter() {
+		JButton btnEditarUsuario = new JButton("Editar Usuario");
+		btnEditarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
-							.parseInt(textFieldID.getText())), contentPane,
-							true, "");
+					EditRemoveA nuevo = new EditRemoveA(
+							devuelveArticulo(Integer.parseInt(textFieldID
+									.getText())), contentPane, true, "");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -134,17 +109,18 @@ public class ProductList extends BasicoAdmin {
 			}
 
 		});
-		transparentPanel_2.add(button,
+		transparentPanel_2.add(btnEditarUsuario,
 				"flowx,cell 0 2,alignx center,aligny top");
 
-		JButton button_1 = new JButton("Eliminar Producto");
-		button_1.addMouseListener(new MouseAdapter() {
+		JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
+		btnEliminarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
-							.parseInt(textFieldID.getText())), contentPane,
-							false, "Desea Eliminar El Siguiente Articulo?");
+					EditRemoveA nuevo = new EditRemoveA(
+							devuelveArticulo(Integer.parseInt(textFieldID
+									.getText())), contentPane, false,
+							"Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -153,15 +129,15 @@ public class ProductList extends BasicoAdmin {
 				}
 			}
 		});
-		transparentPanel_2.add(button_1, "cell 0 2,alignx center,aligny top");
+		transparentPanel_2.add(btnEliminarUsuario, "cell 0 2,alignx center,aligny top");
 		cargaATabla();
 	}
 
 	// Metodos Auxiliares
 
 	private boolean buscaArticulo(String text) {
-		for (int i = 0; i < listaArticulos.size(); i++) {
-			if (listaArticulos.get(i).getId() == Integer.parseInt(text)) {
+		for (int i = 0; i < listaUser.size(); i++) {
+			if (listaUser.get(i).getId() == Integer.parseInt(text)) {
 				return true;
 			}
 		}
@@ -204,9 +180,9 @@ public class ProductList extends BasicoAdmin {
 		Object[][] aux = null;
 		if ((listaTabla.size() != 0)) {
 			aux = new Object[listaTabla.size() + 1][3];
-			aux[0][0] = "Id";
-			aux[0][1] = "Nombre";
-			aux[0][2] = "Precio";
+			aux[0][0] = "Nombre";
+			aux[0][1] = "Contrase–a";
+			aux[0][2] = "Es Administrador";
 			for (int i = 0; i < listaTabla.size(); i++) {
 				aux[i + 1][0] = listaTabla.get(i).getId();
 				aux[i + 1][1] = listaTabla.get(i).getNombre();
