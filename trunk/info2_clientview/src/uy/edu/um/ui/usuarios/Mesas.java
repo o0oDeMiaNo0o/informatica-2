@@ -35,6 +35,8 @@ public class Mesas extends BasicoUsuario {
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public ArrayList<TableVO> mesas = cargoMesas();
 
+	UserVO user;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,6 +51,9 @@ public class Mesas extends BasicoUsuario {
 	}
 
 	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp, UserVO user) {
+		
+		this.user = user; //Usuario
+		
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -95,6 +100,8 @@ public class Mesas extends BasicoUsuario {
 	private void cargaBotones(TransparentPanel panel,
 			final ArrayList<ArticleOrderVO> pedidoAux, final String esp,
 			final UserVO user) {
+
+
 		if (mesas.isEmpty()) {
 			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
 			lbltemp.setForeground(Color.WHITE);
@@ -121,7 +128,8 @@ public class Mesas extends BasicoUsuario {
 								user);
 						Confirm conf = new Confirm(toSend,
 								"Confirma Seleccion De : Mesa "
-										+ mesa.getNumero() + " ?", devuelve());
+										+ mesa.getNumero() + " ?", devuelve(),
+								user);
 						conf.setVisible(true);
 
 					}

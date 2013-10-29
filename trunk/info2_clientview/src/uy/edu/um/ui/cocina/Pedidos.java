@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ConfirmCerrarMesa;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -33,7 +35,7 @@ public class Pedidos extends JFrame {
 	private JPanel contentPane;
 	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
 	private JTable table;
-	private ArrayList<OrderVO> arrayOrdenes;
+	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
 
 	/**
 	 * Launch the application.
@@ -189,7 +191,9 @@ public class Pedidos extends JFrame {
 
 	}
 
+	//Carga Ordenes
 	private ArrayList<OrderVO> cargaOrdenes() {
-		return null;
+		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
+		return nuevo.allOrders();
 	}
 }
