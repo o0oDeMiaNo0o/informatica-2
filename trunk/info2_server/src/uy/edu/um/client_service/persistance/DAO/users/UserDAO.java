@@ -24,6 +24,7 @@ public class UserDAO {
 		return instance;
 	}
 
+	//Eliminar usuario y cambiar contrase–a.
 
 		public void addUser(User usuario){
 			try{
@@ -43,8 +44,6 @@ public class UserDAO {
 				e.printStackTrace();
 				database.closeConnection();
 			}
-
-
 		}
 		
 		public User searchUser(String Username){
