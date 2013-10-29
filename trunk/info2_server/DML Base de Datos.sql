@@ -20,6 +20,31 @@ INSERT INTO `Info2`.`Categorias` (`Nombre`)
 VALUES
 ('Bebidas');
 
+UPDATE `Info2`.`Categorias`
+SET
+`idCategorias` = 1
+WHERE `Nombre` = 'Hamburguesas';
+
+UPDATE `Info2`.`Categorias`
+SET
+`idCategorias` = 2
+WHERE `Nombre` = 'Chivitos';
+
+UPDATE `Info2`.`Categorias`
+SET
+`idCategorias` = 3
+WHERE `Nombre` = 'Pizzas';
+
+UPDATE `Info2`.`Categorias`
+SET
+`idCategorias` = 4
+WHERE `Nombre` = 'Minutas';
+
+UPDATE `Info2`.`Categorias`
+SET
+`idCategorias` = 5
+WHERE `Nombre` = 'Bebidas';
+
 
 
 -- Articulos
@@ -27,150 +52,150 @@ VALUES
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHIVITO CHILDREN",220,12);
+("CHIVITO CHILDREN",220,2);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHIVITO CANADIENSE",260,12);
+("CHIVITO CANADIENSE",260,2);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHIVITO AL PLATO (PARA DOS PERSONAS)",400,12);
+("CHIVITO AL PLATO (PARA DOS PERSONAS)",400,2);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHIVITO DE LA CASA",240,12);
+("CHIVITO DE LA CASA",240,2);
 
 -- Hambuguresas
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("HAMBURGUESA CON FRITAS",150,11);
+("HAMBURGUESA CON FRITAS",150,1);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHISBUGER",200,11);
+("CHISBUGER",200,1);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("HAMBUERGUESA COMPLETA",260,11);
+("HAMBUERGUESA COMPLETA",260,1);
 
 -- Muzzrella 
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("PIZZA",50,13);
+("PIZZA",50,3);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MUZZARELLA",80,13);
+("MUZZARELLA",80,3);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MUZZARELLA CON JAMON",100,13);
+("MUZZARELLA CON JAMON",100,3);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MUZZARELLA CON PANCETA",100,13);
+("MUZZARELLA CON PANCETA",100,3);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("FAINA",50,13);
+("FAINA",50,3);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("FAINA CON MUZZARELLA",70,13);
+("FAINA CON MUZZARELLA",70,3);
 
  -- Minutas
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MILANESA",180,14);
+("MILANESA",180,4);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MILANESA CON PROVOLONE",220,14);
+("MILANESA CON PROVOLONE",220,4);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("NAPOLITANA",250,14);
+("NAPOLITANA",250,4);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MILANESA RELLENA",250,14);
+("MILANESA RELLENA",250,4);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("MILANESA DE LA CASA (PARA DOS)",350,14);
+("MILANESA DE LA CASA (PARA DOS)",350,4);
 
 -- Bebidas
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("AGUA (CON/SIN)",50,15);
+("AGUA (CON/SIN)",50,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("REFRESCO CHICO (300ML)",60,15);
+("REFRESCO CHICO (300ML)",60,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("REFRESCO GRANDE (1.5L)",110,15);
+("REFRESCO GRANDE (1.5L)",110,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("WHISKEY NACIONAL",80,15);
+("WHISKEY NACIONAL",80,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("RED BULL",80,15);
+("RED BULL",80,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("GATORADE",60,15);
+("GATORADE",60,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("COCKTAIL SECRETO DE LA CASA",100,15);
+("COCKTAIL SECRETO DE LA CASA",100,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CERVEZA 1L",120,15);
+("CERVEZA 1L",120,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CHOPP",80,15);
+("CHOPP",80,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("CAFE COLOMBIANO",60,15);
+("CAFE COLOMBIANO",60,5);
 
 -- Mesas
 
