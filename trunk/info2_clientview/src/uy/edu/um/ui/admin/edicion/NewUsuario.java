@@ -1,4 +1,4 @@
-package uy.edu.um.ui.admin;
+package uy.edu.um.ui.admin.edicion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.MensajeGenerico;
+import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 

@@ -20,7 +20,7 @@ public class ConfirmFacturar extends JFrame {
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
-		this.setVisible(false);
+		this.dispose();
 	}
 
 	/**
