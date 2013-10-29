@@ -1,10 +1,12 @@
 package uy.edu.um.client_service.persistance.DAO.users;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.table.entities.Table;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.JDBC;
 
@@ -72,12 +74,82 @@ public class UserDAO {
 			return u;
 		}
 		
+		public ArrayList<Boolean> checkUser(User u){
+			// Devuelve un ArrayList de booleans. El 1er elemento es si usuario y contrase–a estan bien, el 2do 
+			// indica si es administrador o no
+			ArrayList<Boolean> checked = new ArrayList<Boolean>();
+			
+			try{
+				Statement oStatement = database.getConnection().createStatement();
+				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where `Users`.`Username` = '"+u.getUsername()+"';");
+				
+				while(oResultSet.next()){
+					boolean pass=false;
+					boolean adm= false;
+					String sPass = oResultSet.getString(2);
+					int nAdm = oResultSet.getInt(3);
+					
+					if(sPass.equals(u.getPassword())){
+						pass=true;
+					}
+					if(nAdm==1){
+						adm=true;
+					}
+					checked.add(pass);
+					checked.add(adm);
+				}
+				oResultSet.close();
+				oStatement.close();
+				database.closeConnection();				
+				
+			}
+			catch(SQLException e){
+				database.closeConnection();
+				throw new RuntimeException(e);
+				
+			}
+			return checked;
+		}
 		
-		
-		
+		public ArrayList<User> getUsers() {
+
+			try {
+
+				ArrayList<User> toReturn = new ArrayList<User>();
+
+				Statement oStatement = database.getConnection().createStatement();
 
 
+				ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Users");
 
+				while (oResultSet.next()) {
+					boolean admi = false;
+					String sUname = oResultSet.getString(2);
+					String sPass = oResultSet.getString(3);
+					int adm = oResultSet.getInt(4);
+					
+					if(adm==1){
+						admi=true;
+					}
+					
+					User u = new User(sUname,sPass,admi);
+					toReturn.add(u);
+				}
+
+				oResultSet.close();
+				oStatement.close();
+				database.closeConnection();
+				return toReturn;
+			}
+				 catch (SQLException e) {
+				database.closeConnection();
+				throw new RuntimeException(e);
+
+
+			}
+
+		}
+		
 	}
 
 
