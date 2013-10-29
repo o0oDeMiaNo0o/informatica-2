@@ -111,7 +111,7 @@ public class UserDAO {
 			return checked;
 		}
 		
-		public ArrayList<User> getUsers() {
+		public ArrayList<User> allUsers() {
 
 			try {
 				ArrayList<User> toReturn = new ArrayList<User>();
