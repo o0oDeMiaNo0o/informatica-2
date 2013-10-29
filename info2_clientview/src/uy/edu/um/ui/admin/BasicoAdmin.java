@@ -15,13 +15,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.ui.ConfirmSesion;
+import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.edicion.NewProduct;
+import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
+import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.cocina.Pedidos;
 import uy.edu.um.ui.usuarios.NewCliente;
-import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
-import net.miginfocom.swing.MigLayout;
 
 public class BasicoAdmin extends JFrame {
 
@@ -78,7 +80,7 @@ public class BasicoAdmin extends JFrame {
 		JMenuItem mntmNArticle = new JMenuItem("Nuevo Articulo");
 		mntmNArticle.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				NewProduct nuevo = new NewProduct();
 				nuevo.setVisible(true);
 			}
@@ -118,7 +120,7 @@ public class BasicoAdmin extends JFrame {
 		JMenuItem mntmVerCocina = new JMenuItem("Ver Mesas");
 		mntmVerCocina.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				Pedidos nuevo = new Pedidos(null);
 				nuevo.setVisible(true);
 			}
@@ -154,9 +156,10 @@ public class BasicoAdmin extends JFrame {
 		JMenuItem mntmAgregarCliente = new JMenuItem("Agregar Nuevo Cliente");
 		mntmAgregarCliente.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent arg0) {
 				NewCliente nuevo = new NewCliente();
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		mnClientes.add(mntmAgregarCliente);
@@ -180,9 +183,25 @@ public class BasicoAdmin extends JFrame {
 		menuUsuario.add(mntmVerLista);
 
 		JMenuItem menuItem_7 = new JMenuItem("Salir");
+		menuItem_7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				ConfirmSesion nuevo = new ConfirmSesion("Desea Cerrar Sesion?",
+						ventana());
+				nuevo.setVisible(true);
+			}
+		});
 		menuItem_7.setForeground(Color.BLACK);
 		menuItem_7.setBackground(Color.RED);
 		menuUsuario.add(menuItem_7);
+	}
+
+	private JFrame ventana() {
+		return this;
+	}
+
+	private void cerrar() {
+		this.dispose();
 	}
 
 }

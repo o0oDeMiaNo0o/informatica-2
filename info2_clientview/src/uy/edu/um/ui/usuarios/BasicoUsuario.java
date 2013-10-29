@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.cocina.Pedidos;
 
@@ -136,9 +137,24 @@ public class BasicoUsuario extends JFrame {
 		menuUsuario.add(mntmVerLista);
 
 		JMenuItem menuItem_7 = new JMenuItem("Salir");
+		menuItem_7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				ConfirmSesion nuevo = new ConfirmSesion("Desea Cerrar Sesion?",
+						ventana());
+				nuevo.setVisible(true);
+				cerrar();
+
+			}
+		});
 		menuItem_7.setForeground(Color.BLACK);
 		menuItem_7.setBackground(Color.RED);
 		menuUsuario.add(menuItem_7);
+	}
+
+	// Metodos Auxiliares
+	private JFrame ventana() {
+		return this;
 	}
 
 	private void cerrar() {
