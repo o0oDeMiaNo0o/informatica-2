@@ -31,6 +31,7 @@ public class ConfirmFacturar extends JFrame {
 	public ConfirmFacturar(final OrderVO toSend, final JFrame mesas) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(mesas);
 		setBounds(100, 100, 460, 254);
 		contentPane = new JPanel();
 		setContentPane(contentPane);

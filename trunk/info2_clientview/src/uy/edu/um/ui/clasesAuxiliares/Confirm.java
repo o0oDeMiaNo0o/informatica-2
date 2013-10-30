@@ -25,7 +25,7 @@ public class Confirm extends JFrame {
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
-		this.setVisible(false);
+		this.dispose();
 	}
 
 	/**
@@ -44,6 +44,7 @@ public class Confirm extends JFrame {
 
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(mesas);
 		setBounds(100, 100, 460, 254);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -70,8 +71,10 @@ public class Confirm extends JFrame {
 				if (toSend.getArticulos() != null) {
 					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 					nuevo.addOrder(toSend);
+					toSend.getTable().setOcupado(true);
 					ConfirmFacturar nueva = new ConfirmFacturar(toSend, mesas);
 					nueva.setVisible(true);
+					cerrar();
 				} else {
 					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
 							.getTable(), user);
@@ -87,7 +90,6 @@ public class Confirm extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				mesas.dispose();
 				cerrar();
 			}
 		});

@@ -23,9 +23,9 @@ import uy.edu.um.ui.admin.edicion.NewProduct;
 import uy.edu.um.ui.admin.edicion.NewTable;
 import uy.edu.um.ui.admin.edicion.NewUser;
 import uy.edu.um.ui.admin.edicion.ProductList;
+import uy.edu.um.ui.admin.edicion.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.cocina.Pedidos;
 import uy.edu.um.ui.usuarios.NewClienteU;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -154,14 +154,28 @@ public class BasicoAdmin extends JFrame {
 		});
 		Usuarios.add(mntmNuevoUsuario);
 
-		JMenuItem mntmEditarUsuario = new JMenuItem("Editar Usuario");
+		JMenuItem mntmEditarUsuario = new JMenuItem("Editar/Eliminar");
+		mntmEditarUsuario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				UserList nuevo = new UserList(user, true);
+				nuevo.setVisible(true);
+				cerrar();
+
+			}
+		});
+
+		JMenuItem mntmVerLista_1 = new JMenuItem("Ver Lista");
+		mntmVerLista_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				UserList nuevo = new UserList(user, false);
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
+		Usuarios.add(mntmVerLista_1);
 		Usuarios.add(mntmEditarUsuario);
-
-		JMenuItem mntmVerUsuarios = new JMenuItem("Ver Usuarios");
-		Usuarios.add(mntmVerUsuarios);
-
-		JMenuItem mntmEliminarUsuarios = new JMenuItem("Eliminar Usuarios");
-		Usuarios.add(mntmEliminarUsuarios);
 
 		JMenu mnClientes = new JMenu("Clientes");
 		mnClientes.setBackground(Color.DARK_GRAY);
