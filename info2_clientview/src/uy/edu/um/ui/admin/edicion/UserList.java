@@ -38,7 +38,7 @@ public class UserList extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserList frame = new UserList(null);
+					UserList frame = new UserList(null, true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class UserList extends BasicoAdmin {
 	 * 
 	 * @param user
 	 */
-	public UserList(UserVO user) {
+	public UserList(UserVO user, boolean editable) {
 
 		this.user = user; // Usuario Actual
 
@@ -63,69 +63,77 @@ public class UserList extends BasicoAdmin {
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
-		TransparentPanel transparentPanel_2 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
-		transparentPanel_2.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
+		if (editable == true) {
+			TransparentPanel transparentPanel_2 = new TransparentPanel();
+			transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
+			transparentPanel_2.setLayout(new MigLayout("", "[]",
+					"[grow][][grow]"));
 
-		JLabel lblIdUsuario = new JLabel("Usuario: ");
-		transparentPanel_2.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
+			JLabel lblIdUsuario = new JLabel("Usuario: ");
+			transparentPanel_2
+					.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
 
-		textFieldNombre = new JTextField();
-		textFieldNombre.setColumns(10);
-		transparentPanel_2.add(textFieldNombre, "cell 0 1,alignx center");
+			textFieldNombre = new JTextField();
+			textFieldNombre.setColumns(10);
+			transparentPanel_2.add(textFieldNombre, "cell 0 1,alignx center");
+
+			JButton btnEditarUsuario = new JButton("Editar Usuario");
+			btnEditarUsuario.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					if (buscaUsuario(textFieldNombre.getText())) {
+						EditRemoveU nuevo = new EditRemoveU(
+								devuelveUser(textFieldNombre.getText()),
+								contentPane, true, "");
+						nuevo.setVisible(true);
+					} else {
+						MensajeGenerico nuevo = new MensajeGenerico(
+								"Producto No Existe", contentPane);
+						nuevo.setVisible(true);
+					}
+				}
+
+			});
+			transparentPanel_2.add(btnEditarUsuario,
+					"flowx,cell 0 2,alignx center,aligny top");
+
+			JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
+			btnEliminarUsuario.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					if (buscaUsuario(textFieldNombre.getText())) {
+						EditRemoveU nuevo = new EditRemoveU(
+								devuelveUser(textFieldNombre.getText()),
+								contentPane, false,
+								"Desea Eliminar Este Usuario?");
+						nuevo.setVisible(true);
+					} else {
+						MensajeGenerico nuevo = new MensajeGenerico(
+								"Producto No Existe", contentPane);
+						nuevo.setVisible(true);
+					}
+				}
+			});
+			transparentPanel_2.add(btnEliminarUsuario,
+					"cell 0 2,alignx center,aligny top");
+		}
 
 		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				int i = table.getSelectedRow();
-				if (i > 0) {
-					textFieldNombre
-							.setText("" + listaUser.get(i - 1).getUser());
+		if (editable == true) {
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int i = table.getSelectedRow();
+					if (i > 0) {
+						textFieldNombre.setText(""
+								+ listaUser.get(i - 1).getUser());
+					}
 				}
-			}
-		});
-		table.setSurrendersFocusOnKeystroke(true);
+			});
+			table.setSurrendersFocusOnKeystroke(true);
+		}
 		transparentPanel.add(table, "cell 1 0,grow");
 
-		JButton btnEditarUsuario = new JButton("Editar Usuario");
-		btnEditarUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (buscaUsuario(textFieldNombre.getText())) {
-					EditRemoveU nuevo = new EditRemoveU(
-							devuelveUser(textFieldNombre.getText()),
-							contentPane, true, "");
-					nuevo.setVisible(true);
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							"Producto No Existe", contentPane);
-					nuevo.setVisible(true);
-				}
-			}
-
-		});
-		transparentPanel_2.add(btnEditarUsuario,
-				"flowx,cell 0 2,alignx center,aligny top");
-
-		JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
-		btnEliminarUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (buscaUsuario(textFieldNombre.getText())) {
-					EditRemoveU nuevo = new EditRemoveU(
-							devuelveUser(textFieldNombre.getText()),
-							contentPane, false, "Desea Eliminar Este Usuario?");
-					nuevo.setVisible(true);
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							"Producto No Existe", contentPane);
-					nuevo.setVisible(true);
-				}
-			}
-		});
-		transparentPanel_2.add(btnEliminarUsuario,
-				"cell 0 2,alignx center,aligny top");
 		cargaATabla();
 	}
 

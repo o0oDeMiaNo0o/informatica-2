@@ -22,7 +22,7 @@ import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.people.client.ClientVO;
 
-public class NewClienteA extends BasicoAdmin {
+public class NewClientA extends BasicoAdmin {
 
 	private JTextField textFieldNom;
 	private JTextField textFieldCi;
@@ -38,7 +38,7 @@ public class NewClienteA extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewClienteA frame = new NewClienteA();
+					NewClientA frame = new NewClientA();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class NewClienteA extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public NewClienteA() {
+	public NewClientA() {
 		super();
 
 		TransparentPanel transparentPanel = new TransparentPanel();

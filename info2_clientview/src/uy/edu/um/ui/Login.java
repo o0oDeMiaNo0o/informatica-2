@@ -24,6 +24,8 @@ import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.usuarios.MainUsuario;
 import uy.edu.um.value_object.user.UserVO;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -82,6 +84,11 @@ public class Login extends JFrame {
 		transparentPanel.add(lblContrasea, "cell 1 2,alignx trailing");
 
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+		});
 		transparentPanel.add(passwordField, "cell 2 2,growx");
 
 		transparentPanel_1 = new TransparentPanel();
@@ -117,15 +124,13 @@ public class Login extends JFrame {
 
 	// Carga Users
 	private ArrayList<UserVO> cargaUsers() {
-		/*
 		UserVO user = new UserVO("fmlg", "hola", false);
 		ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
 		nuevo.add(user);
 		return nuevo;
-		 */
-		
-		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-		return nuevo.allUsers();
+
+		// UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
+		// return nuevo.allUsers();
 	}
 
 	// Chequea User
