@@ -50,8 +50,8 @@ public class OrderMgr implements OrderMgt{
 
 	@Override
 	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t,
-			UserVO u, String spec) {
-		OrderVO toReturn = new OrderVO(ao,t,u,spec);
+			UserVO u, String spec,int estado) {
+		OrderVO toReturn = new OrderVO(ao,t,u,spec,estado);
 		return toReturn;
 
 	}

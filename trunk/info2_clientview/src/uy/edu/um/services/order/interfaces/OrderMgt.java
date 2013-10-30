@@ -13,7 +13,7 @@ public interface OrderMgt {
 
 	public void removeOrder(OrderVO o);
 
-	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t, UserVO u, String spec);
+	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t, UserVO u, String spec, int estado);
 
 	public ArrayList<OrderVO> allOrders();
 
