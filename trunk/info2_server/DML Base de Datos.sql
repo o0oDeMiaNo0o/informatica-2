@@ -218,6 +218,7 @@ VALUES
 (DEFAULT);
 
 
+
 -- Usuarios
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
