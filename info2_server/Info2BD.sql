@@ -112,10 +112,12 @@ CREATE TABLE `Tipos de Pagos` (
 CREATE TABLE `Users` (
   `idUsers` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(45) NOT NULL,
-  `Password` varchar(45) DEFAULT NULL,
-  `Admin` int(1) DEFAULT NULL,
+  `Password` varchar(45) NOT NULL,
+  `Admin` int(1) NOT NULL,
+  `Vigente` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
   PRIMARY KEY (`idUsers`,`Username`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
