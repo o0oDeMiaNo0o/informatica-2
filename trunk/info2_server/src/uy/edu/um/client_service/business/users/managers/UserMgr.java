@@ -50,7 +50,15 @@ public class UserMgr implements UserMgt{
 	@Override
 	public ArrayList<UserVO> allUsers() {
 		UserDAO dao = UserDAO.getInstance();
-		return null;
+		ArrayList<UserVO> toReturn = new ArrayList<UserVO>(10);
+		ArrayList<User> users = dao.allUsers();
+		for(User u : users){
+			if(u!=null){
+				UserVO uAdd = this.getUserVO(u);
+				toReturn.add(uAdd);
+			}
+		}
+		return toReturn;
 	}
 
 	@Override
