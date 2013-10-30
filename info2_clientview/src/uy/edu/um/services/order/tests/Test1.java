@@ -33,7 +33,7 @@ public class Test1 {
 		ArrayList<ArticleOrderVO> toAdd = new ArrayList<ArticleOrderVO>(2);
 		toAdd.add(ao1); toAdd.add(ao2);
 		TableVO t1 = allTables.get(0);
-		OrderVO toSend = orderMgt.createOrderVO(toAdd, t1, user, null);
+		OrderVO toSend = orderMgt.createOrderVO(toAdd, t1, user, null,1);
 		orderMgt.addOrder(toSend);
 
 
