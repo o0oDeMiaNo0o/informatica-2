@@ -13,17 +13,9 @@ public class Order {
 	private Table table=null;
 	private User user=null;
 	private String spec;
-	private boolean done=false;
-	private int id;
+	private int id,estado;
 	private Date time;
 
-	public boolean isDone() {
-		return done;
-	}
-
-	public void setDone(boolean done) {
-		this.done = done;
-	}
 
 	public int getId() {
 		return id;
@@ -41,21 +33,21 @@ public class Order {
 		this.spec = spec;
 	}
 	
-	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, boolean e, Date d){
+	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, int estado, Date d){
 		this.articles = articles;
 		this.table = table;
 		this.user = user;
 		this.spec = spec;
-		this.done=e;
+		this.estado=estado;
 		this.time=d;
 	}
 	
-	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, boolean e, Date d){
+	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, Date d){
 		this.id=id;
 		this.articles = articles;
 		this.table = table;
 		this.user = user;
-		this.done=e;
+		this.estado=e;
 		this.time=d;
 	}
 	
@@ -70,12 +62,12 @@ public class Order {
 		this.time = time;
 	}
 
-	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, boolean e){
+	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, int e){
 		this.articles = articles;
 		this.table = table;
 		this.user = user;
 		this.spec = spec;
-		this.done=e;
+		this.estado=e;
 	}
 	
 	public Order(ArrayList<ArticleOrder> articles, Table table, User user){
@@ -106,6 +98,15 @@ public class Order {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
 
 	public String getSpec() {
