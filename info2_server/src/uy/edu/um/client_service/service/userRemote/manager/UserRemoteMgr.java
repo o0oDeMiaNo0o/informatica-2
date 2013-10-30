@@ -49,7 +49,7 @@ public class UserRemoteMgr implements UserRemoteMgt{
 	@Override
 	public ArrayList<UserVO> allUsers() throws RemoteException {
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
-		return null;
+		return uMgt.allUsers();
 	}
 
 }
