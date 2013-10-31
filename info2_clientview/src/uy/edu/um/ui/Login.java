@@ -36,7 +36,6 @@ public class Login extends JFrame {
 	private TransparentPanel transparentPanel_1;
 	private JButton btnNewButton;
 	private ArrayList<UserVO> listaUsers = cargaUsers();
-	private UserVO user = null;
 
 	/**
 	 * Launch the application.
@@ -87,6 +86,22 @@ public class Login extends JFrame {
 		passwordField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					String pass = conviertePass(passwordField.getPassword());
+					
+					if (chequeaUser(textField.getText(), pass)) {
+						UserVO user = getUserVO(textField.getText(),pass);
+						if (user.isAdmin()) {
+							MainAdmin nuevo = new MainAdmin();
+							nuevo.setVisible(true);
+							cerrar();
+						} else {
+							MainUsuario nuevo = new MainUsuario();
+							nuevo.setVisible(true);
+							cerrar();
+						}
+					}
+				}
 			}
 		});
 		transparentPanel.add(passwordField, "cell 2 2,growx");
@@ -101,18 +116,18 @@ public class Login extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String pass = conviertePass(passwordField.getPassword());
-				System.out.println(pass);
 				if (chequeaUser(textField.getText(), pass)) {
+					UserVO user = getUserVO(textField.getText(),pass);
 					if (user.isAdmin()) {
-						user = getUserVO(textField.getText(),pass);
-						CurrentUser nuevo1 = new CurrentUser(user);
+						user = getUserVO(textField.getText(), pass);
+						CurrentUser usuario = new CurrentUser(user);
 						MainAdmin nuevo = new MainAdmin();
 						nuevo.setVisible(true);
 						cerrar();
 					} else {
-						user = getUserVO(textField.getText(),pass);
-						CurrentUser nuevo1 = new CurrentUser(user);
-						MainUsuario nuevo = new MainUsuario(user);
+						user = getUserVO(textField.getText(), pass);
+						CurrentUser usuario = new CurrentUser(user);
+						MainUsuario nuevo = new MainUsuario();
 						nuevo.setVisible(true);
 						cerrar();
 					}
@@ -128,10 +143,10 @@ public class Login extends JFrame {
 
 	// Carga Users
 	private ArrayList<UserVO> cargaUsers() {
-		//UserVO user = new UserVO("fmlg", "hola", false);
-		//ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
-		//nuevo.add(user);
-		//return nuevo;
+		// UserVO user = new UserVO("fmlg", "hola", false);
+		// ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
+		// nuevo.add(user);
+		// return nuevo;
 
 		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 		return nuevo.allUsers();
@@ -142,7 +157,6 @@ public class Login extends JFrame {
 		for (int i = 0; i < listaUsers.size(); i++) {
 			if ((listaUsers.get(i).getUser().equals(usr))
 					&& (listaUsers.get(i).getPassword().equals(psw))) {
-				user = listaUsers.get(i);
 				return true;
 			}
 		}
@@ -162,12 +176,12 @@ public class Login extends JFrame {
 		this.dispose();
 	}
 
-	private UserVO getUserVO(String nombre,String psw){
+	private UserVO getUserVO(String nombre, String psw) {
 		UserVO toReturn = null;
 		ArrayList<UserVO> allUsers = cargaUsers();
-		for(UserVO u : allUsers){
-			if(u!=null){
-				if(u.getUser().equals(nombre) && u.getPassword().equals(psw)){
+		for (UserVO u : allUsers) {
+			if (u != null) {
+				if (u.getUser().equals(nombre) && u.getPassword().equals(psw)) {
 					toReturn = u;
 				}
 			}

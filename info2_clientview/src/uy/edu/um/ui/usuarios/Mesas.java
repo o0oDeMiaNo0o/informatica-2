@@ -36,13 +36,11 @@ public class Mesas extends BasicoUsuario {
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public ArrayList<TableVO> mesas = cargoMesas();
 
-	UserVO user;
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Mesas frame = new Mesas(null, null, null);
+					Mesas frame = new Mesas(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,9 +49,7 @@ public class Mesas extends BasicoUsuario {
 		});
 	}
 
-	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp, UserVO user) {
-
-		this.user = user; //Usuario
+	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp) {
 
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +71,7 @@ public class Mesas extends BasicoUsuario {
 		lblMesas.setForeground(Color.WHITE);
 		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		transparentPanel_1.add(lblMesas);
-		cargaBotones(transparentPanel, pedidoAux, esp, user);
+		cargaBotones(transparentPanel, pedidoAux, esp);
 
 		ImagePanel imagePanel = new ImagePanel(libre);
 		transparentPanel
@@ -99,9 +95,7 @@ public class Mesas extends BasicoUsuario {
 
 	// Metodos auxiliares
 	private void cargaBotones(TransparentPanel panel,
-			final ArrayList<ArticleOrderVO> pedidoAux, final String esp,
-			final UserVO user) {
-
+			final ArrayList<ArticleOrderVO> pedidoAux, final String esp) {
 
 		if (mesas.isEmpty()) {
 			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
@@ -126,11 +120,10 @@ public class Mesas extends BasicoUsuario {
 					public void mouseClicked(MouseEvent e) {
 
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
-								user);
+								CurrentUser.getUser());
 						Confirm conf = new Confirm(toSend,
 								"Confirma Seleccion De : Mesa "
-										+ mesa.getNumero() + " ?", devuelve(),
-								user);
+										+ mesa.getNumero() + " ?", devuelve());
 						conf.setVisible(true);
 
 					}
@@ -157,8 +150,9 @@ public class Mesas extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user) {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
-		//compilo tiene valor por defecto 0 q es en preparacion
-		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, CurrentUser.getUser() , esp,0);
+		// compilo tiene valor por defecto 0 q es en preparacion
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
+				CurrentUser.getUser(), esp, 0);
 		return toSend;
 
 	}

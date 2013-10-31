@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.usuarios.CajaPrincipal;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -37,10 +38,7 @@ public class Confirm extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public Confirm(final OrderVO toSend, String text, final JFrame mesas,
-			final UserVO user) {
-
-		this.user = user;
+	public Confirm(final OrderVO toSend, String text, final JFrame mesas) {
 
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +75,7 @@ public class Confirm extends JFrame {
 					cerrar();
 				} else {
 					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
-							.getTable(), user);
+							.getTable());
 					nuevo.setVisible(true);
 					mesas.dispose();
 					cerrar();

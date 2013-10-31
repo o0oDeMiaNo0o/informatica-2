@@ -24,7 +24,6 @@ public class BasicoUsuario extends JFrame {
 
 	public ImagePanel contentPane;
 	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
-	UserVO user;
 
 	/**
 	 * Launch the application.
@@ -68,7 +67,7 @@ public class BasicoUsuario extends JFrame {
 		mntmVerMesas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				Mesas nuevo = new Mesas(null, null, null);
+				Mesas nuevo = new Mesas(null, null);
 				nuevo.setVisible(true);
 				cerrar();
 			}
@@ -79,7 +78,7 @@ public class BasicoUsuario extends JFrame {
 		mntmPedidoLocal.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				CajaPrincipal nuevo = new CajaPrincipal(null, null, user);
+				CajaPrincipal nuevo = new CajaPrincipal(null, null);
 				nuevo.setVisible(true);
 				cerrar();
 			}
@@ -145,8 +144,6 @@ public class BasicoUsuario extends JFrame {
 				ConfirmSesion nuevo = new ConfirmSesion("Desea Cerrar Sesion?",
 						ventana());
 				nuevo.setVisible(true);
-				cerrar();
-
 			}
 		});
 		menuItem_7.setForeground(Color.BLACK);

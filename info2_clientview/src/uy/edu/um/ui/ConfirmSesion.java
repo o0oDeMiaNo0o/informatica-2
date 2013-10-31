@@ -44,6 +44,7 @@ public class ConfirmSesion extends JDialog {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				CurrentUser.setUser(null);
 				Login nuevo = new Login();
 				nuevo.setVisible(true);
 				ventana.dispose();
