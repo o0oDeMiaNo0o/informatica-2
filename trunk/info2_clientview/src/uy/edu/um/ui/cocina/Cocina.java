@@ -44,7 +44,7 @@ public class Cocina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Cocina frame = new Cocina(null);
+					Cocina frame = new Cocina();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class Cocina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Cocina(OrderVO pedido) {
+	public Cocina() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
