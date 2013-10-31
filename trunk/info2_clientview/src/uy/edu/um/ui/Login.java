@@ -143,11 +143,6 @@ public class Login extends JFrame {
 
 	// Carga Users
 	private ArrayList<UserVO> cargaUsers() {
-		// UserVO user = new UserVO("fmlg", "hola", false);
-		// ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
-		// nuevo.add(user);
-		// return nuevo;
-
 		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 		return nuevo.allUsers();
 	}
