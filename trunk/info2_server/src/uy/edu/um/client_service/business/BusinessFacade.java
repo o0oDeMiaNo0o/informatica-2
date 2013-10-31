@@ -22,7 +22,7 @@ import uy.edu.um.client_service.service.BillRemote.managers.BillRemoteMgr;
 import uy.edu.um.client_service.service.articleOrderRemote.managers.ArticleOrderRemoteMgr;
 import uy.edu.um.client_service.service.articleRemote.manager.ArticleRemoteMgr;
 import uy.edu.um.client_service.service.categoriesRemote.manager.CategoryRemoteMgr;
-import uy.edu.um.client_service.service.orderRemote.OrderRemoteMgr;
+import uy.edu.um.client_service.service.orderRemote.manager.OrderRemoteMgr;
 import uy.edu.um.client_service.service.peopleRemote.client.manager.ClientRemoteMgr;
 import uy.edu.um.client_service.service.peopleRemote.waiters.manager.WaiterRemoteMgr;
 import uy.edu.um.client_service.service.tableRemote.managers.TableRemoteMgr;
