@@ -22,8 +22,6 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class OrderMgr implements OrderMgt{
 
-	private OrderDAO dao = OrderDAO.getInstance();
-
 	private static OrderMgr instance = null;
 
 	private OrderMgr(){
@@ -115,11 +113,6 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
-	@Override
-	public void delivery(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void isPreparing(OrderVO o) throws RemoteException {

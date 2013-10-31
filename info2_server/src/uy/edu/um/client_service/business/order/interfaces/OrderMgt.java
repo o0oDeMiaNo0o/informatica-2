@@ -27,7 +27,6 @@ public interface OrderMgt {
 
 	public void rejected(OrderVO o) throws RemoteException;
 
-	public void delivery(OrderVO o) throws RemoteException;
 
 
 }
