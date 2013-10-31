@@ -77,7 +77,7 @@ public class OrderMgr implements OrderMgt{
 
 			array = oOrderRemoteMgt.allOrders();
 
-			System.out.println("orden agregada");
+			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
