@@ -19,4 +19,12 @@ public interface OrderMgt {
 
 	public void setDone(OrderVO o);
 
+	public void rejected(OrderVO o);
+
+	public void isWaiting(OrderVO o);
+
+	public void isDone(OrderVO o);
+
+	public void delivery(OrderVO o);
+
 }

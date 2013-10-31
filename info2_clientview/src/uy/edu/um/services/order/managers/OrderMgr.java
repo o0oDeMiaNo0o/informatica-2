@@ -95,4 +95,28 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public void delivery(OrderVO o) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void isDone(OrderVO o) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void isWaiting(OrderVO o) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rejected(OrderVO o) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
