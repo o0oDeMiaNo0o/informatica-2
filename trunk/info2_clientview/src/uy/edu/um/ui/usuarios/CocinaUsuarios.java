@@ -1,4 +1,4 @@
-package uy.edu.um.ui.cocina;
+package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,7 +30,7 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
-public class Pedidos extends JFrame {
+public class CocinaUsuarios extends BasicoUsuario {
 
 	private JPanel contentPane;
 	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
@@ -44,7 +44,7 @@ public class Pedidos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Pedidos frame = new Pedidos(null);
+					CocinaUsuarios frame = new CocinaUsuarios(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class Pedidos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Pedidos(OrderVO pedido) {
+	public CocinaUsuarios(OrderVO pedido) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -75,7 +75,7 @@ public class Pedidos extends JFrame {
 				"[][263.00][][][][][][grow]"));
 
 		// Creo los elementos
-		armarPedido(pedido, transparentPanel);
+		armarPedido(transparentPanel);
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		imagePanel.add(transparentPanel_1, BorderLayout.NORTH);
@@ -87,12 +87,12 @@ public class Pedidos extends JFrame {
 		transparentPanel_1.add(lblCocina, "cell 1 0");
 	}
 
-	private void armarPedido(final OrderVO orden, JPanel transparentPanel) {
-		if (orden != null) {
-			arrayOrdenes.add(orden);
+	private void armarPedido(JPanel transparentPanel) {
+		if (arrayOrdenes.size() != 0) {
 			int i = 1, j = 1;
 			for (int n = 0; n < arrayOrdenes.size(); n++) {
 
+				final OrderVO orden = arrayOrdenes.get(i);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
 				panel.setBorder(new LineBorder(Color.ORANGE, 3));
@@ -191,7 +191,7 @@ public class Pedidos extends JFrame {
 
 	}
 
-	//Carga Ordenes
+	// Carga Ordenes
 	private ArrayList<OrderVO> cargaOrdenes() {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();

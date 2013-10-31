@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
-import uy.edu.um.ui.cocina.Pedidos;
+import uy.edu.um.ui.cocina.Cocina;
 import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoUsuario extends JFrame {
@@ -97,7 +97,7 @@ public class BasicoUsuario extends JFrame {
 		mntmVerCocina.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				Pedidos nuevo = new Pedidos(null);
+				CocinaUsuarios nuevo = new CocinaUsuarios(null);
 				nuevo.setVisible(true);
 				cerrar();
 			}
