@@ -16,7 +16,6 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class MainUsuario extends BasicoUsuario {
 	private URL dirFondo = DirLocal.class.getResource("Bernie's.png");
-	private UserVO user;
 
 	/**
 	 * Launch the application.
@@ -25,7 +24,7 @@ public class MainUsuario extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainUsuario frame = new MainUsuario(null);
+					MainUsuario frame = new MainUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,9 +36,7 @@ public class MainUsuario extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public MainUsuario(UserVO user) {
-
-		this.user = user; // User
+	public MainUsuario() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

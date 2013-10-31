@@ -5,7 +5,7 @@ import uy.edu.um.value_object.user.UserVO;
 public class CurrentUser {
 	private static UserVO user;
 
-	public CurrentUser(UserVO user){
+	public CurrentUser(UserVO user) {
 		this.user = user;
 	}
 
@@ -13,9 +13,8 @@ public class CurrentUser {
 		return user;
 	}
 
-	public void setUser(UserVO user) {
-		this.user = user;
+	public static void setUser(UserVO user) {
+		CurrentUser.user = user;
 	}
-
 
 }

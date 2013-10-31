@@ -74,7 +74,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CajaPrincipal frame = new CajaPrincipal(null, null, null);
+					CajaPrincipal frame = new CajaPrincipal(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -86,8 +86,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa,
-			final UserVO user) {
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) {
 
 		super();
 
@@ -185,7 +184,7 @@ public class CajaPrincipal extends BasicoUsuario {
 								"Pedido Vacio", contentPane);
 						mensaje.setVisible(true);
 					} else {
-						Mesas nueva = new Mesas(pedidoAux, espTotal, user);
+						Mesas nueva = new Mesas(pedidoAux, espTotal);
 						nueva.setVisible(true);
 						cerrar();
 					}
@@ -420,8 +419,9 @@ public class CajaPrincipal extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user) {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
-		//compilo debe haber algo mal
-		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, CurrentUser.getUser(), esp,0);
+		// compilo debe haber algo mal
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
+				CurrentUser.getUser(), esp, 0);
 		return toSend;
 
 	}
@@ -431,13 +431,4 @@ public class CajaPrincipal extends BasicoUsuario {
 		return this;
 	}
 
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
 }
