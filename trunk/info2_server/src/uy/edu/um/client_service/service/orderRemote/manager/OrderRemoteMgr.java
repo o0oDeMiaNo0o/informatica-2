@@ -1,4 +1,4 @@
-package uy.edu.um.client_service.service.orderRemote;
+package uy.edu.um.client_service.service.orderRemote.manager;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -40,6 +40,30 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	public ArrayList<OrderVO> allOrders() throws RemoteException {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		return oMgt.allOrders();
+	}
+
+	@Override
+	public void delivery(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void isPreparing(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void isReady(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rejected(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
 	}
 
 }
