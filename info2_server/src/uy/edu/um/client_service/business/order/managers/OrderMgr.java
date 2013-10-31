@@ -104,7 +104,9 @@ public class OrderMgr implements OrderMgt{
 			uAdd = uMgt.getUserVO(o.getUser());
 		}
 
-		OrderVO toReturn = new OrderVO(aoVO,tAdd,uAdd,o.getSpec());
+		int estado = o.getEstado();
+
+		OrderVO toReturn = new OrderVO(aoVO,tAdd,uAdd,o.getSpec(),estado);
 
 		return toReturn;
 
