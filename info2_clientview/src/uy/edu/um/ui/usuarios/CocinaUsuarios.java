@@ -44,7 +44,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CocinaUsuarios frame = new CocinaUsuarios(null);
+					CocinaUsuarios frame = new CocinaUsuarios();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public CocinaUsuarios(OrderVO pedido) {
+	public CocinaUsuarios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);

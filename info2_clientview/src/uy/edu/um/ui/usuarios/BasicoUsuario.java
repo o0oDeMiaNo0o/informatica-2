@@ -97,7 +97,7 @@ public class BasicoUsuario extends JFrame {
 		mntmVerCocina.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				CocinaUsuarios nuevo = new CocinaUsuarios(null);
+				CocinaUsuarios nuevo = new CocinaUsuarios();
 				nuevo.setVisible(true);
 				cerrar();
 			}
