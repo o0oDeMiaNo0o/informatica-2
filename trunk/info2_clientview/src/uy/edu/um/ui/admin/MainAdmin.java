@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.user.UserVO;
@@ -29,7 +30,7 @@ public class MainAdmin extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainAdmin frame = new MainAdmin(null);
+					MainAdmin frame = new MainAdmin();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,9 +42,9 @@ public class MainAdmin extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public MainAdmin(UserVO user) {
+	public MainAdmin() {
 
-		this.user = user; // User Actual
+		this.user = CurrentUser.getUser(); // User Actual
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

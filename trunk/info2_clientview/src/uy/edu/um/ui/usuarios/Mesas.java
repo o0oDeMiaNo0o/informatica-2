@@ -21,6 +21,7 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.clasesAuxiliares.Confirm;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -51,9 +52,9 @@ public class Mesas extends BasicoUsuario {
 	}
 
 	public Mesas(ArrayList<ArticleOrderVO> pedidoAux, String esp, UserVO user) {
-		
+
 		this.user = user; //Usuario
-		
+
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -156,7 +157,8 @@ public class Mesas extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user) {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
-		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, user, esp);
+		//compilo tiene valor por defecto 0 q es en preparacion
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, CurrentUser.getUser() , esp,0);
 		return toSend;
 
 	}

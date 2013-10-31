@@ -27,6 +27,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.ConfirmFacturar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -89,9 +90,9 @@ public class CajaPrincipal extends BasicoUsuario {
 			final UserVO user) {
 
 		super();
-		
-		this.user = user;
-		
+
+		this.user = CurrentUser.getUser();
+
 		if (pedido != null) {
 			pedidoAux = pedido;
 			pedidoArticle = cargaArticleVO(pedidoAux);
@@ -419,7 +420,8 @@ public class CajaPrincipal extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user) {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
-		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, user, esp);
+		//compilo debe haber algo mal
+		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa, CurrentUser.getUser(), esp,0);
 		return toSend;
 
 	}
