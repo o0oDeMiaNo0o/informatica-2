@@ -68,7 +68,6 @@ public class ConfirmFacturar extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				mesas.dispose();
 				toSend.getTable().setOcupado(true);
 				cerrar();
 			}
