@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.business.order.managers;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
@@ -20,6 +21,8 @@ import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
 
 public class OrderMgr implements OrderMgt{
+
+	private OrderDAO dao = OrderDAO.getInstance();
 
 	private static OrderMgr instance = null;
 
@@ -112,8 +115,28 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public void delivery(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
 
+	}
 
+	@Override
+	public void isPreparing(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void isReady(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rejected(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
 
 }
