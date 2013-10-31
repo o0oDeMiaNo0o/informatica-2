@@ -75,7 +75,7 @@ public class Cocina extends JFrame {
 				"[][263.00][][][][][][grow]"));
 
 		// Creo los elementos
-		armarPedido(pedido, transparentPanel);
+		armarPedido(transparentPanel);
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		imagePanel.add(transparentPanel_1, BorderLayout.NORTH);
@@ -87,12 +87,12 @@ public class Cocina extends JFrame {
 		transparentPanel_1.add(lblCocina, "cell 1 0");
 	}
 
-	private void armarPedido(final OrderVO orden, JPanel transparentPanel) {
-		if (orden != null) {
-			arrayOrdenes.add(orden);
+	private void armarPedido(JPanel transparentPanel) {
+		if (arrayOrdenes.size() != 0) {
 			int i = 1, j = 1;
 			for (int n = 0; n < arrayOrdenes.size(); n++) {
 
+				final OrderVO orden = arrayOrdenes.get(i);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
 				panel.setBorder(new LineBorder(Color.ORANGE, 3));
@@ -191,7 +191,7 @@ public class Cocina extends JFrame {
 
 	}
 
-	//Carga Ordenes
+	// Carga Ordenes
 	private ArrayList<OrderVO> cargaOrdenes() {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
