@@ -5,6 +5,17 @@ import uy.edu.um.value_object.delivery.DeliveryVO;
 
 public class DeliveryMgr implements DeliveryMgt{
 
+	private static DeliveryMgr instance = null;
+
+	private DeliveryMgr(){}
+
+	public static DeliveryMgr getInstance(){
+		if(instance == null){
+			instance = new DeliveryMgr();
+		}
+		return instance;
+	}
+
 	@Override
 	public void addOrder(DeliveryVO d) {
 		// TODO Auto-generated method stub
