@@ -2,6 +2,7 @@ package uy.edu.um.value_object.oreder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.table.TableVO;
@@ -13,13 +14,15 @@ public class OrderVO implements Serializable{
 	private TableVO table;
 	private UserVO user;
 	private String especificaciones;
-	private boolean estado;
+	private int estado;
+	private Date time;
 
-	public OrderVO(ArrayList<ArticleOrderVO> articulos, TableVO table, UserVO u, String spec){
+	public OrderVO(ArrayList<ArticleOrderVO> articulos, TableVO table, UserVO u, String spec,int estado){
 		this.articulos = articulos;
 		this.table = table;
 		this.user = u;
 		this.especificaciones = spec;
+		this.estado = estado;
 	}
 
 	public ArrayList<ArticleOrderVO> getArticulos() {
@@ -53,12 +56,22 @@ public class OrderVO implements Serializable{
 		this.especificaciones = especificaciones;
 	}
 
-	public boolean isEstado() {
+	public int getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(int estado) {
 		this.estado = estado;
 	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+
 
 }
