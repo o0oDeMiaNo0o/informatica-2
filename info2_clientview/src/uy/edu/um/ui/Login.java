@@ -104,10 +104,14 @@ public class Login extends JFrame {
 				System.out.println(pass);
 				if (chequeaUser(textField.getText(), pass)) {
 					if (user.isAdmin()) {
-						MainAdmin nuevo = new MainAdmin(user);
+						user = getUserVO(textField.getText(),pass);
+						CurrentUser nuevo1 = new CurrentUser(user);
+						MainAdmin nuevo = new MainAdmin();
 						nuevo.setVisible(true);
 						cerrar();
 					} else {
+						user = getUserVO(textField.getText(),pass);
+						CurrentUser nuevo1 = new CurrentUser(user);
 						MainUsuario nuevo = new MainUsuario(user);
 						nuevo.setVisible(true);
 						cerrar();
@@ -124,13 +128,13 @@ public class Login extends JFrame {
 
 	// Carga Users
 	private ArrayList<UserVO> cargaUsers() {
-		UserVO user = new UserVO("fmlg", "hola", false);
-		ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
-		nuevo.add(user);
-		return nuevo;
+		//UserVO user = new UserVO("fmlg", "hola", false);
+		//ArrayList<UserVO> nuevo = new ArrayList<UserVO>();
+		//nuevo.add(user);
+		//return nuevo;
 
-		// UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-		// return nuevo.allUsers();
+		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
+		return nuevo.allUsers();
 	}
 
 	// Chequea User
@@ -156,6 +160,19 @@ public class Login extends JFrame {
 
 	private void cerrar() {
 		this.dispose();
+	}
+
+	private UserVO getUserVO(String nombre,String psw){
+		UserVO toReturn = null;
+		ArrayList<UserVO> allUsers = cargaUsers();
+		for(UserVO u : allUsers){
+			if(u!=null){
+				if(u.getUser().equals(nombre) && u.getPassword().equals(psw)){
+					toReturn = u;
+				}
+			}
+		}
+		return toReturn;
 	}
 
 }
