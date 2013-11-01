@@ -14,8 +14,10 @@ public interface ArticleMgt {
 
 	public ArticleVO searchArticle(int numProducto);
 
-
-
-
 	public ArrayList<ArticleVO> allArticles();
+
+	public void editArticle(ArticleVO a);
+
+	public void descontinuarArticulo(ArticleVO a);
+
 }
