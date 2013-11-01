@@ -217,6 +217,12 @@ INSERT INTO `Info2`.`Mesa`
 VALUES
 (DEFAULT);
 
+-- Mesa Mostrador
+INSERT INTO `info2`.`Mesa`
+(`idMesa`)
+VALUES
+(0);
+
 
 
 -- Usuarios

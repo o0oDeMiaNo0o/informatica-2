@@ -52,8 +52,6 @@ public class Order {
 	}
 	
 	
-	
-	
 	public Date getTime() {
 		return time;
 	}
