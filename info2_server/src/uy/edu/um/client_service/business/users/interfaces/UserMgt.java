@@ -19,4 +19,6 @@ public interface UserMgt {
 
 	public UserVO getUserVO(User u);
 
+	public boolean checkLogin(String username,String psw);
+
 }

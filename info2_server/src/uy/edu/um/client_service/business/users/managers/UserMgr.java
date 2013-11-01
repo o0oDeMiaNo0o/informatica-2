@@ -69,6 +69,16 @@ public class UserMgr implements UserMgt{
 		return new UserVO(username,pass,isAdmin);
 	}
 
+	@Override
+	public boolean checkLogin(String username, String psw) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private String encrypPass(String pass){
+
+		return null;
+	}
 
 
 }
