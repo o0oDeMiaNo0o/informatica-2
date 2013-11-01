@@ -39,14 +39,14 @@ public class ArticleMgr implements ArticleMgt{
 	@Override
 	public void editArticle(Article a) {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
-		//
+		dao.editArticle(a);
 
 	}
 
 	@Override
 	public void removeArticle(Article a) {
-		// TODO Auto-generated method stub
-
+		ArticlesDAO dao = ArticlesDAO.getInstance();
+		dao.deleteArticle(a);
 	}
 
 	//Metodos
