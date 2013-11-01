@@ -7,12 +7,12 @@ import javax.swing.plaf.basic.BasicComboBoxEditor;
 public class Java2sAutoComboBox extends JComboBox {
 	private class AutoTextFieldEditor extends BasicComboBoxEditor {
 
-		private Java2sAutoTextField getAutoTextFieldEditor() {
-			return (Java2sAutoTextField) editor;
+		private TextFieldAutocompletar getAutoTextFieldEditor() {
+			return (TextFieldAutocompletar) editor;
 		}
 
 		AutoTextFieldEditor(java.util.List list) {
-			editor = new Java2sAutoTextField(list, Java2sAutoComboBox.this);
+			editor = new TextFieldAutocompletar(list, Java2sAutoComboBox.this);
 		}
 	}
 
