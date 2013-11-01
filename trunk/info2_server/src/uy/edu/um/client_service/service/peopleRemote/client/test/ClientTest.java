@@ -1,35 +1,27 @@
 package uy.edu.um.client_service.service.peopleRemote.client.test;
 
-import java.rmi.Remote;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
+import java.math.BigDecimal;
 
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
+import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
+import uy.edu.um.value_object.people.client.ClientVO;
 
 
 public class ClientTest {
 
 	public static void main(String[] args) {
-		try {
-			String name = "ClientRemoteMgr";
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		String nombre = "pablo";
+		String apellido = "lk;j";
+		String direccion = "asdfgf";
+		String email = "asdfsdfh";
+		BigDecimal descuento = new BigDecimal(34);
+		int tel = 45246; int ci = 23456;
+		ClientVO toAdd = new ClientVO(nombre,apellido,ci,tel,direccion,email,descuento);
+		Client cAdd = cMgt.getClient(toAdd);
+		cMgt.addClient(cAdd);
 
-			ClientRemoteMgt oArticleRemoteMgr = BusinessFacade.getInstance().getClientRemote();
-
-			ClientRemoteMgt oStub = (ClientRemoteMgt) UnicastRemoteObject
-					.exportObject((Remote) oArticleRemoteMgr, 0);
-
-			Registry oRegistry = LocateRegistry.createRegistry(1099);
-
-			oRegistry.rebind(name, oStub);
-
-			System.out.println("Ready and waiting");
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-		}
 	}
 
 }
