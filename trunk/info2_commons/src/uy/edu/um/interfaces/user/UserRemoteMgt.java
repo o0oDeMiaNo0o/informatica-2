@@ -19,4 +19,6 @@ public interface UserRemoteMgt extends Remote{
 
 	public boolean checkLogin(String username, String psw) throws RemoteException;
 
+	public boolean checkUsername(String username) throws RemoteException;
+
 }
