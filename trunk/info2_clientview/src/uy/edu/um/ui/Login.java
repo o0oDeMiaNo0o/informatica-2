@@ -85,17 +85,20 @@ public class Login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyPressed(final KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					String pass = conviertePass(passwordField.getPassword());
-					
 					if (chequeaUser(textField.getText(), pass)) {
-						UserVO user = getUserVO(textField.getText(),pass);
+						UserVO user = getUserVO(textField.getText(), pass);
 						if (user.isAdmin()) {
+							user = getUserVO(textField.getText(), pass);
+							CurrentUser usuario = new CurrentUser(user);
 							MainAdmin nuevo = new MainAdmin();
 							nuevo.setVisible(true);
 							cerrar();
 						} else {
+							user = getUserVO(textField.getText(), pass);
+							CurrentUser usuario = new CurrentUser(user);
 							MainUsuario nuevo = new MainUsuario();
 							nuevo.setVisible(true);
 							cerrar();
@@ -117,7 +120,7 @@ public class Login extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String pass = conviertePass(passwordField.getPassword());
 				if (chequeaUser(textField.getText(), pass)) {
-					UserVO user = getUserVO(textField.getText(),pass);
+					UserVO user = getUserVO(textField.getText(), pass);
 					if (user.isAdmin()) {
 						user = getUserVO(textField.getText(), pass);
 						CurrentUser usuario = new CurrentUser(user);

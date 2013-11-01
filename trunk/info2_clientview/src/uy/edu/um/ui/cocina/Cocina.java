@@ -24,7 +24,6 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
-import uy.edu.um.ui.clasesAuxiliares.ConfirmCerrarMesa;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
@@ -92,7 +91,7 @@ public class Cocina extends JFrame {
 			int i = 1, j = 1;
 			for (int n = 0; n < arrayOrdenes.size(); n++) {
 
-				final OrderVO orden = arrayOrdenes.get(i);
+				final OrderVO orden = arrayOrdenes.get(n);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
 				panel.setBorder(new LineBorder(Color.ORANGE, 3));
@@ -101,7 +100,8 @@ public class Cocina extends JFrame {
 				panel.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						ConfirmCerrarMesa nueva = new ConfirmCerrarMesa(orden);
+						OpcionesCocina nueva = new OpcionesCocina(orden);
+						nueva.setVisible(true);
 					}
 				});
 
