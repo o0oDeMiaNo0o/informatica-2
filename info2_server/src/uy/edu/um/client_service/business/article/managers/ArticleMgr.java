@@ -56,7 +56,7 @@ public class ArticleMgr implements ArticleMgt{
 		BigDecimal precio = a.getPrecio();
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
 		Category cat = cMgt.createCategory(a.getCategory());
-		Article aReturn = new Article(nombre, precio,cat);
+		Article aReturn = new Article(a.getId(), nombre, precio,cat);
 		return aReturn;
 	}
 

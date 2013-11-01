@@ -58,7 +58,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	public void editArtile(ArticleVO a) throws RemoteException {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		Article article = aMgt.getArticle(a);
-
+		aMgt.editArticle(article);
 	}
 
 	@Override
