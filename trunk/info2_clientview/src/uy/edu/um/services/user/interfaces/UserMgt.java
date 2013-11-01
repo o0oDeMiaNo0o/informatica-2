@@ -14,4 +14,6 @@ public interface UserMgt {
 
 	public ArrayList<UserVO> allUsers();
 
+	public boolean checkLogin(String username, String psw);
+
 }

@@ -4,8 +4,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
-import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.article.exceptions.HasNumberException;
+import uy.edu.um.services.article.exceptions.NotNumberException;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -23,6 +25,11 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	public CategoryVO createCategoryVO(String nombre) {
+		try {
+			hasNumbers(nombre);
+		} catch (HasNumberException e) {
+			e.printStackTrace();
+		}
 		CategoryVO toReturn = new CategoryVO(nombre);
 		return toReturn;
 	}
@@ -73,5 +80,20 @@ public class CategoryMgr implements CategoryMgt{
 		return array;
 
 	}
+
+	//metodos auxiliares
+
+	private static void isNumeric(String id) throws NotNumberException{
+		if(Verificacion.isNumeric(id)){
+			throw new NotNumberException("el campo ingresado no es numerico");
+		}
+	}
+
+	private static void hasNumbers(String s) throws HasNumberException{
+		if(Verificacion.hasNumbers(s)){
+			throw new HasNumberException("un campo ingresado tiene numeros que no deberia");
+		}
+	}
+
 
 }

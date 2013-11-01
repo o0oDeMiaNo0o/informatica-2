@@ -5,7 +5,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.interfaces.user.UserRemoteMgt;
-import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -77,6 +76,33 @@ public class UserMgr implements UserMgt{
 			}
 
 		return array;
+	}
+
+	@Override
+	public boolean checkLogin(String username, String psw) {
+
+		boolean toReturn = false;
+
+		// TODO Auto-generated method stub
+		try {
+
+			String sObjectService = "UserRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
+
+			toReturn = oUserRemoteMgt.checkLogin(username,psw);
+
+			System.out.println("usuario agregado");
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+		}
+
+		return toReturn;
+
 	}
 
 }
