@@ -1,4 +1,4 @@
-package uy.edu.um.ui.admin.edicion;
+package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -23,6 +23,7 @@ import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.edicion.EditRemoveA;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;

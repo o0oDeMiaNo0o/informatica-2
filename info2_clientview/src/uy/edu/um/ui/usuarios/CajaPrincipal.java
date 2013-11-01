@@ -29,7 +29,7 @@ import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.ConfirmFacturar;
 import uy.edu.um.ui.clasesAuxiliares.Java2sAutoComboBox;
-import uy.edu.um.ui.clasesAuxiliares.Java2sAutoTextField;
+import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
@@ -143,7 +143,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanel.add(lblBusquedaRpida,
 				"cell 1 0,alignx center,aligny bottom");
 
-		final Java2sAutoTextField textoAutocompletado = new Java2sAutoTextField(
+		final TextFieldAutocompletar textoAutocompletado = new TextFieldAutocompletar(
 				devuelveProductos());
 		textoAutocompletado.setText("");
 		transparentPanel.add(textoAutocompletado, "cell 1 1,growx");

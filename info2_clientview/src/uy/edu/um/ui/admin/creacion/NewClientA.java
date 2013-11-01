@@ -1,4 +1,4 @@
-package uy.edu.um.ui.admin.edicion;
+package uy.edu.um.ui.admin.creacion;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

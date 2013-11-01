@@ -1,4 +1,4 @@
-package uy.edu.um.ui.admin.edicion;
+package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -15,17 +15,16 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.people.clients.interfaces.ClientMgt;
+import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.categories.CategoryVO;
 
-public class ClientList extends BasicoAdmin {
-
+public class CategoryList extends BasicoAdmin {
+	private ArrayList<CategoryVO> categorias = cargoCategorias();
 	private JTable table;
 	private JTextField textFieldID;
-	private ArrayList<ClientVO> clientes = cargoClientes();
 
 	/**
 	 * Launch the application.
@@ -34,7 +33,7 @@ public class ClientList extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClientList frame = new ClientList();
+					CategoryList frame = new CategoryList();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,21 +45,20 @@ public class ClientList extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public ClientList() {
+	public CategoryList() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][]", "[grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow]"));
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_2, "cell 1 0,grow");
-		transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]",
-				"[grow][][][grow]"));
-
-		JLabel lblICliente = new JLabel("Id Cliente: ");
-		transparentPanel_2.add(lblICliente, "flowx,cell 1 1,alignx center");
+		transparentPanel.add(transparentPanel_2, "cell 2 1,grow");
+		transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][grow]"));
+		
+				JLabel lblIdCategoria = new JLabel("Id Categoria: ");
+				transparentPanel_2.add(lblIdCategoria, "flowx,cell 1 1,alignx center");
 
 		textFieldID = new JTextField();
 		textFieldID.setColumns(10);
@@ -72,14 +70,14 @@ public class ClientList extends BasicoAdmin {
 			public void mousePressed(MouseEvent e) {
 				int i = table.getSelectedRow();
 				if (i > 0) {
-					textFieldID.setText("" + clientes.get(i - 1).getId());
+					textFieldID.setText("" + categorias.get(i - 1).getId());
 				}
 			}
 		});
 		table.setSurrendersFocusOnKeystroke(true);
-		transparentPanel.add(table, "cell 0 0,grow");
+		transparentPanel.add(table, "cell 1 1,grow");
 
-		JButton btnEliminarCategoria = new JButton("Eliminar Cliente");
+		JButton btnEliminarCategoria = new JButton("Eliminar Categoria");
 		btnEliminarCategoria.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -92,9 +90,6 @@ public class ClientList extends BasicoAdmin {
 			}
 
 		});
-
-		JButton btnEditarCliente = new JButton("Editar Cliente");
-		transparentPanel_2.add(btnEditarCliente, "flowx,cell 1 2");
 		transparentPanel_2.add(btnEliminarCategoria,
 				"cell 1 2,alignx center,aligny top");
 		cargaATabla();
@@ -104,8 +99,8 @@ public class ClientList extends BasicoAdmin {
 
 	// Busca categoria elegida
 	private boolean buscaCategoria(String text) {
-		for (int i = 0; i < clientes.size(); i++) {
-			if (clientes.get(i).getId() == Integer.parseInt(text)) {
+		for(int i = 0;i<categorias.size();i++){
+			if(categorias.get(i).getId() == Integer.parseInt(text)){
 				return true;
 			}
 		}
@@ -113,53 +108,37 @@ public class ClientList extends BasicoAdmin {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<ClientVO> cargoClientes() {
-		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
-		return nuevo.allClients();
+	private ArrayList<CategoryVO> cargoCategorias() {
+		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
+		return cat.allCategories();
 	}
 
-	// Cargo a Tabla Clientes
+	// Cargo a Tabla Categorias
 	public void cargaATabla() {
 		Object[][] aux = null;
-		if ((clientes.size() != 0)) {
-			aux = new Object[clientes.size() + 1][7];
+		if ((categorias.size() != 0)) {
+			aux = new Object[categorias.size() + 1][2];
 			aux[0][0] = "Id";
 			aux[0][1] = "Nombre";
-			aux[0][2] = "Apellido";
-			aux[0][3] = "Direccion";
-			aux[0][4] = "Telefono";
-			aux[0][5] = "Email";
-			aux[0][6] = "Descuento";
-			for (int i = 0; i < clientes.size(); i++) {
-				aux[i + 1][0] = clientes.get(i).getId();
-				aux[i + 1][1] = clientes.get(i).getNombre();
-				aux[i + 1][2] = clientes.get(i).getApellido();
-				aux[i + 1][3] = clientes.get(i).getDireccion();
-				aux[i + 1][4] = clientes.get(i).getTel();
-				aux[i + 1][5] = clientes.get(i).getEmail();
-				aux[i + 1][6] = clientes.get(i).getDescuento();
+			for (int i = 0; i < categorias.size(); i++) {
+				aux[i + 1][0] = categorias.get(i).getId();
+				aux[i + 1][1] = categorias.get(i).getNombre();
 			}
 
 		} else {
-			aux = new Object[1][7];
+			aux = new Object[1][3];
 			aux[0][0] = "Id";
 			aux[0][1] = "Nombre";
-			aux[0][2] = "Apellido";
-			aux[0][3] = "Direccion";
-			aux[0][4] = "Telefono";
-			aux[0][5] = "Email";
-			aux[0][6] = "Descuento";
 		}
-		table.setModel(new DefaultTableModel(aux, new String[] { "Id",
-				"Nombre", "Apellido", "Direccion", "Telefono", "Email",
-				"Descuento" }));
+		table.setModel(new DefaultTableModel(aux, new String[] { "Categoria",
+				"Nombre" }));
 	}
 
 	// Ve que categoria eligo
-	public ClientVO buscaEnLista(String a) {
-		for (int i = 0; i < clientes.size(); i++) {
-			if (clientes.get(i).getNombre().equals(a)) {
-				return clientes.get(i);
+	public CategoryVO buscaEnLista(String a) {
+		for (int i = 0; i < categorias.size(); i++) {
+			if (categorias.get(i).getNombre().equals(a)) {
+				return categorias.get(i);
 			}
 		}
 		return null;

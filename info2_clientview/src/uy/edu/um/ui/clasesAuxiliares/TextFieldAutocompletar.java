@@ -10,7 +10,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-public class Java2sAutoTextField extends JTextField {
+public class TextFieldAutocompletar extends JTextField {
 	class AutoDocument extends PlainDocument {
 
 		public void replace(int i, int j, String s, AttributeSet attributeset)
@@ -63,7 +63,7 @@ public class Java2sAutoTextField extends JTextField {
 
 	}
 
-	public Java2sAutoTextField(List list) {
+	public TextFieldAutocompletar(List list) {
 		isCaseSensitive = false;
 		isStrict = true;
 		autoComboBox = null;
@@ -76,7 +76,7 @@ public class Java2sAutoTextField extends JTextField {
 		}
 	}
 
-	Java2sAutoTextField(List list, Java2sAutoComboBox b) {
+	TextFieldAutocompletar(List list, Java2sAutoComboBox b) {
 		isCaseSensitive = false;
 		isStrict = true;
 		autoComboBox = null;
