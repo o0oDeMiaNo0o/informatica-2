@@ -1,4 +1,4 @@
-package uy.edu.um.client_service.persistance.DAO.deliveryDAO;
+package uy.edu.um.client_service.persistance.DAO.delivery;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
