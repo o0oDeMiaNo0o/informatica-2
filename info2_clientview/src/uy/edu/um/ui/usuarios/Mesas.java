@@ -34,6 +34,8 @@ public class Mesas extends BasicoUsuario {
 
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
+	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
+	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
 	public ArrayList<TableVO> mesas = cargoMesas();
 
 	public static void main(String[] args) {
@@ -58,8 +60,7 @@ public class Mesas extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][grow]",
-				"[][][][][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]", "[][][][][][][][grow]"));
 
 		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
 		transparentPanel.add(rigidArea, "cell 0 0");
@@ -73,13 +74,13 @@ public class Mesas extends BasicoUsuario {
 		transparentPanel_1.add(lblMesas);
 		cargaBotones(transparentPanel, pedidoAux, esp);
 
-		ImagePanel imagePanel = new ImagePanel(libre);
+		ImagePanel imagePanelDelivery = new ImagePanel(delivery);
 		transparentPanel
-				.add(imagePanel, "cell 1 1,alignx center,aligny center");
-		imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
+				.add(imagePanelDelivery, "cell 1 1,alignx center,aligny center");
+		imagePanelDelivery.setLayout(new MigLayout("", "[150px]", "[100px]"));
 		JLabel lblNewLabel = new JLabel("DELIVERY");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		imagePanel.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		imagePanelDelivery.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
@@ -106,10 +107,15 @@ public class Mesas extends BasicoUsuario {
 			int i = 3, j = 1;
 			URL dir;
 			while (n < mesas.size()) {
+				String nombre = String.valueOf(mesas.get(n).getNumero());
 				if (mesas.get(n).isOcupado()) {
 					dir = ocupado;
 				} else {
 					dir = libre;
+				}
+				if(mesas.get(n).getNumero() == 0){
+					dir = mostrador;
+					nombre = "MOSTRADOR";
 				}
 				ImagePanel imagePanel = new ImagePanel(dir);
 				panel.add(imagePanel, "cell " + i + " " + j);
@@ -130,8 +136,7 @@ public class Mesas extends BasicoUsuario {
 
 				});
 
-				JLabel lblNewLabel = new JLabel(Integer.toString(mesas.get(n)
-						.getNumero()));
+				JLabel lblNewLabel = new JLabel(nombre);
 				lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 				imagePanel.add(lblNewLabel,
 						"cell 0 0,alignx center,aligny center");
