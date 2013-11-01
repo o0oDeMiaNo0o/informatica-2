@@ -42,7 +42,9 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 
 	@Override
 	public void removeArticle(ArticleVO a) throws RemoteException {
-		// TODO Auto-generated method stub
+		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
+		Article article = aMgt.getArticle(a);
+		aMgt.removeArticle(article);
 
 	}
 
