@@ -10,16 +10,16 @@ CREATE TABLE `Articles` (
   `NAME` varchar(255) NOT NULL,
   `PRICE` int(11) NOT NULL,
   `Categorias_idCategorias` int(11) NOT NULL,
-  `En uso` enum('Activo','Descartado') NOT NULL DEFAULT 'Activo',
+  `Estado` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
   PRIMARY KEY (`ID`),
   KEY `fk_Articles_Categorias1_idx` (`Categorias_idCategorias`)
-) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`idCategorias`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ CREATE TABLE `Mesa` (
   `idMesa` int(11) NOT NULL AUTO_INCREMENT,
   `Estado` enum('Ocupado','Libre') DEFAULT 'Libre',
   PRIMARY KEY (`idMesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Pagos` (
   `idPagos` int(11) NOT NULL AUTO_INCREMENT,
@@ -84,9 +84,10 @@ CREATE TABLE `pedido` (
   `idpedido` int(11) NOT NULL AUTO_INCREMENT,
   `HoraPedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Mesa_idMesa` int(11) DEFAULT NULL,
-  `Estado` enum('En Preparacion','Entregado') DEFAULT 'En Preparacion',
+  `Estado` enum('En Preparacion','Entregado','Rechazado','Delivery') DEFAULT 'En Preparacion',
   `Facturas_idFacturas` int(11) DEFAULT NULL,
   `Users_Username` varchar(45) DEFAULT NULL,
+  `Especificaciones` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`idpedido`),
   KEY `fk_pedido_Mesa1_idx` (`Mesa_idMesa`),
   KEY `fk_pedido_Facturas1_idx` (`Facturas_idFacturas`),
@@ -96,7 +97,6 @@ CREATE TABLE `pedido` (
 CREATE TABLE `Pedido/Articulos` (
   `pedido_idpedido` int(11) NOT NULL,
   `Articles_ID` int(11) NOT NULL,
-  `Especificaciones` varchar(45) DEFAULT NULL,
   `Cantidad` int(11) NOT NULL,
   PRIMARY KEY (`pedido_idpedido`,`Articles_ID`),
   KEY `fk_Pedido/Producto_pedido_idx` (`pedido_idpedido`),
@@ -117,7 +117,6 @@ CREATE TABLE `Users` (
   `Vigente` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
   PRIMARY KEY (`idUsers`,`Username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
