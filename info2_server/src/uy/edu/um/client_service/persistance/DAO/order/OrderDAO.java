@@ -145,8 +145,6 @@ public class OrderDAO {
 			break;
 		case 2: estado="Rechazado";
 			break;
-		case 3: estado="Delivery";
-			break;
 		
 		default:
 			estado=null;
