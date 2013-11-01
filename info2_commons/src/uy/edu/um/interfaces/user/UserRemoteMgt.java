@@ -17,4 +17,6 @@ public interface UserRemoteMgt extends Remote{
 
 	public ArrayList<UserVO> allUsers() throws RemoteException;
 
+	public boolean checkLogin(String username, String psw) throws RemoteException;
+
 }
