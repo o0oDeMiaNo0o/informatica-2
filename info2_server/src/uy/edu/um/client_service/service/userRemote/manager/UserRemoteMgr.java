@@ -52,4 +52,17 @@ public class UserRemoteMgr implements UserRemoteMgt{
 		return uMgt.allUsers();
 	}
 
+	@Override
+	public boolean checkLogin(String username, String psw) throws RemoteException {
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		return false;
+	}
+
+	@Override
+	public boolean checkUsername(String username) throws RemoteException {
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		return uMgt.checkUsername(username);
+
+	}
+
 }

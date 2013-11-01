@@ -80,5 +80,11 @@ public class UserMgr implements UserMgt{
 		return null;
 	}
 
+	@Override
+	public boolean checkUsername(String username) {
+		UserDAO dao = UserDAO.getInstance();
+		return false;
+	}
+
 
 }
