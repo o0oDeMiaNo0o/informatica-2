@@ -79,7 +79,7 @@ public class DeliveryMgr implements DeliveryMgt{
 		//managers
 		ArticleOrderMgt oMgt = BusinessFacade.getInstance().getArticleOrder();
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
-		ArrayList<ArticleOrder> articles = d.getArticulos();
+		ArrayList<ArticleOrder> articles = d.getArticles();
 		ArrayList<ArticleOrderVO> articlesAdd = new ArrayList<ArticleOrderVO>(10);
 		for(ArticleOrder a : articles){
 			if(a!=null){
