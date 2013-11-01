@@ -138,5 +138,27 @@ public class ArticleMgr implements ArticleMgt {
 		return new ArticleVO(id,nombre,precio,category);
 	}
 
+	@Override
+	public void removeArticle(ArticleVO a) {
+		try {
+
+			String sObjectService = "ArticleRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+			.lookup(sObjectService);
+
+			 oArticleRemoteMgt.editArtile(a);
+
+
+		}catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+	}
+
 
 }
