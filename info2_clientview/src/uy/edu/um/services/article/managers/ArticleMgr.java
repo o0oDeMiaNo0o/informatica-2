@@ -5,7 +5,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
+import uy.edu.um.services.article.exceptions.HasNumberException;
+import uy.edu.um.services.article.exceptions.NotNumberException;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
@@ -29,7 +32,18 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category){
-
+		try {
+			hasNumbers(category.getNombre());
+		} catch (HasNumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			hasNumbers(nombre);
+		} catch (HasNumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
@@ -135,6 +149,16 @@ public class ArticleMgr implements ArticleMgt {
 	@Override
 	public ArticleVO createArticleVOid(int id, String nombre,
 			BigDecimal precio, CategoryVO category) {
+		try {
+			isNumeric(Integer.toString(id));
+		} catch (NotNumberException e) {
+			e.printStackTrace();
+		}
+		try {
+			hasNumbers(nombre);
+		} catch (HasNumberException e) {
+			e.printStackTrace();
+		}
 		return new ArticleVO(id,nombre,precio,category);
 	}
 
@@ -160,5 +184,28 @@ public class ArticleMgr implements ArticleMgt {
 
 	}
 
+	//Metodos auxiliares
+	private static void isNumeric(String number) throws NotNumberException{
+		if(Verificacion.isNumeric(number)){
+			throw new NotNumberException("un campo ingresado no es numerico");
+		}
+	}
+
+	private static void hasNumbers(String s) throws HasNumberException{
+		if(Verificacion.hasNumbers(s)){
+			throw new HasNumberException("un campo ingresado tiene numeros que no deberia");
+		}
+	}
+
+	@Override
+	public void checkArticleVO(ArticleVO a) throws HasNumberException, NotNumberException{
+		String nombre = a.getNombre();
+		BigDecimal precio = (a.getPrecio());
+		int id = a.getId();
+		CategoryVO cat = a.getCategory();
+		//comienzo con las verificaciones
+		hasNumbers(nombre);
+
+	}
 
 }

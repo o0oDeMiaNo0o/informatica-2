@@ -3,6 +3,8 @@ package uy.edu.um.services.article.interfaces;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import uy.edu.um.services.article.exceptions.HasNumberException;
+import uy.edu.um.services.article.exceptions.NotNumberException;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -23,5 +25,7 @@ public interface ArticleMgt {
 	public void descontinuarArticulo(ArticleVO a);
 
 	public void removeArticle(ArticleVO a);
+
+	public void checkArticleVO(ArticleVO a) throws HasNumberException, NotNumberException;
 
 }
