@@ -47,6 +47,22 @@ public class ArticlesDAO {
 
 	}
 
+	public void deleteArticle(Article articulo){
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+articulo.getId()+";");
+			oStatement.close();
+			database.closeConnection();
+			//Verificacion por consola
+			System.out.println("articulo eliminado correctamente");
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			database.closeConnection();
+		}
+
+
+	}
 
 	public ArrayList<Article> getArticles() {
 
