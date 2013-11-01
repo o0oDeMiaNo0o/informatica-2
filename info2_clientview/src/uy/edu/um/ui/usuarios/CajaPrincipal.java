@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +28,8 @@ import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.ConfirmFacturar;
+import uy.edu.um.ui.clasesAuxiliares.Java2sAutoComboBox;
+import uy.edu.um.ui.clasesAuxiliares.Java2sAutoTextField;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
@@ -133,6 +133,36 @@ public class CajaPrincipal extends BasicoUsuario {
 		tablePrePedido.setEnabled(false);
 		tablePrePedido.setRowSelectionAllowed(false);
 		armarPedido(); // Creo Tabla Con Pedido Actual
+
+		TransparentPanel transparentPanel = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
+		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow][][grow]"));
+
+		JLabel lblBusquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
+		lblBusquedaRpida.setForeground(Color.WHITE);
+		transparentPanel.add(lblBusquedaRpida,
+				"cell 1 0,alignx center,aligny bottom");
+
+		final Java2sAutoTextField textoAutocompletado = new Java2sAutoTextField(
+				devuelveProductos());
+		textoAutocompletado.setText("");
+		transparentPanel.add(textoAutocompletado, "cell 1 1,growx");
+
+		JButton btnAgregarAPedido = new JButton("Agregar A Pedido");
+		btnAgregarAPedido.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ArticleVO nuevo = buscaArticuloString(listaArticulos,
+						textoAutocompletado.getText());
+				ArticleOrderVO aux = new ArticleOrderVO(nuevo, 1);
+				pedidoAux.add(aux);
+				pedidoArticle.add(nuevo);
+				armarPedido();
+
+			}
+		});
+		transparentPanel.add(btnAgregarAPedido,
+				"cell 2 1,alignx center,aligny center");
 		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
@@ -219,6 +249,15 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Metodos Auxiliares
+
+	// Devuelve articulos para el jText autocompletado
+	private ArrayList<String> devuelveProductos() {
+		ArrayList<String> aux = new ArrayList<String>();
+		for (int i = 0; i < listaArticulos.size(); i++) {
+			aux.add(listaArticulos.get(i).getNombre());
+		}
+		return aux;
+	}
 
 	private ArrayList<ArticleVO> cargaArticleVO(
 			ArrayList<ArticleOrderVO> pedidoAux) {
@@ -339,12 +378,14 @@ public class CajaPrincipal extends BasicoUsuario {
 			ArticleOrderVO aux = null;
 			int valor = (Integer) m.getValue();
 			for (int i = 0; i < valor; i++) {
-				pedidoArticle.add(buscaArticulo(listaArticulos, op));
+				pedidoArticle.add(buscaArticuloCombo(listaArticulos, op));
 			}
-			aux = new ArticleOrderVO(buscaArticulo(listaArticulos, op), valor);
+			aux = new ArticleOrderVO(buscaArticuloCombo(listaArticulos, op),
+					valor);
 			pedidoAux.add(aux);
 			if (t.getText() != null) {
-				espTotal = espTotal + t.getText() + " ; ";
+				espTotal = espTotal + op.getSelectedItem().toString() + ": "
+						+ t.getText() + " ; ";
 			}
 			bandera = true;
 		}
@@ -398,7 +439,17 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Busca ArticleVO de la lista
-	public ArticleVO buscaArticulo(ArrayList<ArticleVO> a, JComboBox b) {
+	public ArticleVO buscaArticuloString(ArrayList<ArticleVO> a, String b) {
+		ArticleVO aux = null;
+		for (int i = 0; i < a.size(); i++) {
+			if (a.get(i).getNombre().equals(b)) {
+				aux = a.get(i);
+			}
+		}
+		return aux;
+	}
+
+	public ArticleVO buscaArticuloCombo(ArrayList<ArticleVO> a, JComboBox b) {
 		ArticleVO aux = null;
 		for (int i = 0; i < a.size(); i++) {
 			String test = a.get(i).getNombre();

@@ -19,6 +19,7 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.admin.edicion.NewCategory;
+import uy.edu.um.ui.admin.edicion.NewClientA;
 import uy.edu.um.ui.admin.edicion.NewProduct;
 import uy.edu.um.ui.admin.edicion.NewTable;
 import uy.edu.um.ui.admin.edicion.NewUser;
@@ -26,7 +27,6 @@ import uy.edu.um.ui.admin.edicion.ProductList;
 import uy.edu.um.ui.admin.edicion.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.usuarios.NewClienteU;
 import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoAdmin extends JFrame {
@@ -185,7 +185,7 @@ public class BasicoAdmin extends JFrame {
 		mntmAgregarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewClienteU nuevo = new NewClienteU();
+				NewClientA nuevo = new NewClientA();
 				nuevo.setVisible(true);
 				cerrar();
 			}
