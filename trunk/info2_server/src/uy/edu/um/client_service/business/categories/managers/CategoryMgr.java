@@ -56,4 +56,8 @@ public class CategoryMgr implements CategoryMgt{
 		String nombre = c.getNombre();
 		return new CategoryVO(id,nombre);
 	}
+
+	private String encryptPass(String pass){
+		return null;
+	}
 }
