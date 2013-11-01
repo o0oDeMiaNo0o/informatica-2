@@ -393,7 +393,7 @@ public class CajaPrincipal extends BasicoUsuario {
 			pedidoAux.add(aux);
 			if ((t.getText() != null) && (!t.getText().equals(""))) {
 				espTotal = espTotal + op.getSelectedItem().toString() + ": "
-						+ t.getText() + " ; ";
+						+ t.getText() + "\n ";
 			}
 			bandera = true;
 		}
