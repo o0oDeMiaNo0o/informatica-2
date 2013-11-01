@@ -1,5 +1,6 @@
 package uy.edu.um.services.article.test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.services.ServiceFacade;
@@ -15,14 +16,15 @@ public class test {
 
 		array = aMgt.allArticles();
 
-		int i = 0;
+		ArticleVO toEdit = array.get(18);
 
-		for(ArticleVO a : array){
-			String nombre = a.getNombre();
-			System.out.println(nombre);
-			i++;
+		BigDecimal newPrice = new BigDecimal(678);
 
-		}
+		toEdit.setPrecio(newPrice);
+
+		aMgt.editArticle(toEdit);
+
+		int v = 45;
 	}
 
 }
