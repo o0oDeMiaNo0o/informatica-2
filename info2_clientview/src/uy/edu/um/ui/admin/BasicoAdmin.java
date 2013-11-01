@@ -23,6 +23,8 @@ import uy.edu.um.ui.admin.creacion.NewClientA;
 import uy.edu.um.ui.admin.creacion.NewProduct;
 import uy.edu.um.ui.admin.creacion.NewTable;
 import uy.edu.um.ui.admin.creacion.NewUser;
+import uy.edu.um.ui.admin.edicion.EditRemoveC;
+import uy.edu.um.ui.admin.listas.ClientList;
 import uy.edu.um.ui.admin.listas.ProductList;
 import uy.edu.um.ui.admin.listas.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -97,7 +99,7 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarArticulo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				ProductList nuevo = new ProductList(user);
+				ProductList nuevo = new ProductList();
 				nuevo.setVisible(true);
 				cerrar();
 			}
@@ -192,15 +194,18 @@ public class BasicoAdmin extends JFrame {
 		});
 		mnClientes.add(mntmAgregarCliente);
 
-		JMenuItem mntmEditarCliente = new JMenuItem("Editar Cliente");
+		JMenuItem mntmEditarCliente = new JMenuItem("Editar/Eliminar Cliente");
+		mntmEditarCliente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				ClientList nuevo = new ClientList();
+				nuevo.setVisible(true);
+			}
+		});
 		mnClientes.add(mntmEditarCliente);
 
-		JMenuItem mntmListadoClientes = new JMenuItem("Ver Clientes");
+		JMenuItem mntmListadoClientes = new JMenuItem("Ver Lista Clientes");
 		mnClientes.add(mntmListadoClientes);
-
-		JMenuItem mntmEliminarCliente = new JMenuItem("Eliminar Cliente");
-		mntmEliminarCliente.setBackground(Color.WHITE);
-		mnClientes.add(mntmEliminarCliente);
 
 		JMenu menuUsuario = new JMenu("Sesi\u00F3n");
 		menuUsuario.setForeground(Color.BLACK);

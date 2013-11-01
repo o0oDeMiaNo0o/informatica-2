@@ -18,19 +18,26 @@ import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
-import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
+import uy.edu.um.value_object.people.client.ClientVO;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class EditRemoveC extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textFieldNombre;
-	private JTextField textFieldPrecio;
-	private ArrayList<CategoryVO> categorias = cargoCategorias();
+	private JTextField textFieldAp;
+	private JTextField textFieldDir;
+	private ArrayList<ClientVO> clientes = cargoClientes();
 	String[] textos;
+	private JTextField textFieldCi;
+	private JTextField textFieldNom;
+	private JTextField textFieldMail;
+	private JTextField textFieldTel;
 
 	/**
 	 * Launch the application.
@@ -41,11 +48,11 @@ public class EditRemoveC extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public EditRemoveC(ArticleVO articulo, JPanel cPanel, final boolean editable,
+	public EditRemoveC(ClientVO cliente, JPanel cPanel, final boolean editable,
 			String mensaje) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 561, 300);
+		setBounds(100, 100, 925, 315);
 		this.setLocationRelativeTo(cPanel);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -53,8 +60,8 @@ public class EditRemoveC extends JFrame {
 
 		JPanel ZonaEdicion = new JPanel();
 		contentPane.add(ZonaEdicion, BorderLayout.CENTER);
-		ZonaEdicion.setLayout(new MigLayout("", "[grow][][388.00px][grow]",
-				"[grow][][][16px][][grow]"));
+		ZonaEdicion.setLayout(new MigLayout("", "[][388.00px][][grow]",
+				"[grow][][16px][][grow]"));
 		if (!mensaje.equals("")) {
 			JLabel lblNewLabelMensaje = new JLabel(mensaje);
 			lblNewLabelMensaje
@@ -62,101 +69,76 @@ public class EditRemoveC extends JFrame {
 			ZonaEdicion.add(lblNewLabelMensaje, "cell 2 0,alignx center");
 		}
 
-		JLabel lblId = new JLabel("Id");
-		ZonaEdicion.add(lblId, "cell 1 1");
+		JLabel lblCi = new JLabel("Ci");
+		ZonaEdicion.add(lblCi, "cell 0 1,alignx left");
 
-		JLabel lblNewLabel = new JLabel("" + articulo.getId());
-		ZonaEdicion.add(lblNewLabel, "cell 2 1");
+		textFieldCi = new JTextField();
+		textFieldCi.setText(String.valueOf(cliente.getCi()));
+		textFieldCi.setEditable(editable);
+		textFieldCi.setColumns(10);
+		ZonaEdicion.add(textFieldCi, "cell 1 1,growx");
 
-		JLabel lblCategoria = new JLabel("Categoria");
-		ZonaEdicion.add(lblCategoria, "cell 1 2,alignx left,aligny center");
+		JLabel label = new JLabel("Nombre");
+		ZonaEdicion.add(label, "cell 2 1");
 
-		final JComboBox comboBox = new JComboBox();
-		String[] textosMenu = cargaAlCombo(comboBox);
-		comboBox.setModel(new DefaultComboBoxModel(textosMenu));
-		comboBox.setSelectedItem(articulo.getCategory().getNombre());
-		comboBox.setEditable(editable);
-		ZonaEdicion.add(comboBox, "cell 2 2,growx");
+		textFieldNom = new JTextField();
+		textFieldNom.setText(cliente.getNombre());
+		textFieldNom.setEditable(editable);
+		textFieldNom.setColumns(10);
+		ZonaEdicion.add(textFieldNom, "cell 3 1,growx");
 
-		JLabel lblNombre = new JLabel("Nombre");
-		ZonaEdicion.add(lblNombre, "cell 1 3,alignx left,aligny center");
+		JLabel lblAp = new JLabel("Apellido");
+		ZonaEdicion.add(lblAp, "cell 0 2,alignx left,aligny center");
 
-		textFieldNombre = new JTextField();
-		textFieldNombre.setText(articulo.getNombre());
-		textFieldNombre.setEditable(editable);
-		ZonaEdicion.add(textFieldNombre, "cell 2 3,growx");
-		textFieldNombre.setColumns(10);
+		textFieldAp = new JTextField();
+		textFieldAp.setText(cliente.getApellido());
+		textFieldAp.setEditable(editable);
+		ZonaEdicion.add(textFieldAp, "cell 1 2,growx");
+		textFieldAp.setColumns(10);
 
-		JLabel lblPrecio = new JLabel("Precio");
-		ZonaEdicion.add(lblPrecio, "cell 1 4,alignx left,aligny center");
+		JLabel lblNewLabel_1 = new JLabel("Mail");
+		ZonaEdicion.add(lblNewLabel_1, "cell 2 2");
 
-		textFieldPrecio = new JTextField();
-		textFieldPrecio.setText(articulo.getPrecio().toString());
-		textFieldPrecio.setEditable(editable);
-		textFieldPrecio.setColumns(10);
-		ZonaEdicion.add(textFieldPrecio, "cell 2 4,growx,aligny center");
+		textFieldMail = new JTextField();
+		textFieldMail.setText(cliente.getEmail());
+		textFieldMail.setEditable(editable);
+		textFieldMail.setColumns(10);
+		ZonaEdicion.add(textFieldMail, "cell 3 2,growx");
+
+		JLabel lblDir = new JLabel("Direcci\u00F3n");
+		ZonaEdicion.add(lblDir, "cell 0 3,alignx left,aligny center");
+
+		textFieldDir = new JTextField();
+		textFieldDir.setText(cliente.getDireccion());
+		textFieldDir.setEditable(editable);
+		textFieldDir.setColumns(10);
+		ZonaEdicion.add(textFieldDir, "cell 1 3,growx,aligny center");
+
+		JLabel lblNewLabel = new JLabel("Telefono");
+		ZonaEdicion.add(lblNewLabel, "cell 2 3");
+
+		textFieldTel = new JTextField();
+		textFieldTel.setText(String.valueOf(cliente.getTel()));
+		textFieldTel.setEditable(editable);
+		textFieldTel.setColumns(10);
+		ZonaEdicion.add(textFieldTel, "cell 3 3,growx");
+
+		JLabel lblDescuento = new JLabel("Descuento");
+		ZonaEdicion.add(lblDescuento, "cell 0 4");
+
+		JSpinner spinner = new JSpinner();
+		spinner.setEnabled(editable);
+		spinner.setModel(new SpinnerNumberModel(Integer.parseInt(cliente
+				.getDescuento().toString()), new Integer(0), null, new Integer(
+				1)));
+
+		ZonaEdicion.add(spinner, "cell 1 4,alignx left,aligny center");
 
 		JPanel ZonaBotones = new JPanel();
 		contentPane.add(ZonaBotones, BorderLayout.SOUTH);
 		ZonaBotones.setLayout(new MigLayout("", "[grow][][]", "[]"));
 
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ArticleMgt a = ServiceFacade.getInstance().getArticleMgt();
-				String nombre = textFieldNombre.getText();
-				boolean bandera = false;
-				while (bandera == false) {
-					String precioAux = textFieldPrecio.getText();
-					if (!nombre.equals("")) {
-						if (Helpers.isNumeric(precioAux)) {
-							if (!comboBox.getSelectedItem().equals(
-									"---- Desplegar Lista ----")) {
-								if (editable == true) {
-
-									BigDecimal precio = new BigDecimal(
-											Integer.parseInt(textFieldPrecio
-													.getText()));
-									CategoryVO cat = buscaEnLista(comboBox
-											.getSelectedItem().toString());
-
-									ArticleMgt test = ServiceFacade
-											.getInstance().getArticleMgt();
-									ArticleVO toSend = a.createArticleVO(
-											nombre, precio, cat);
-									test.sendArticle(toSend);
-
-									MensajeGenerico mensaje = new MensajeGenerico(
-											"Producto Editado Correctamente",
-											contentPane);
-									mensaje.setVisible(true);
-									bandera = true;
-								} else {
-									MensajeGenerico mensaje = new MensajeGenerico(
-											"Producto Eliminado Correctamente",
-											contentPane);
-									mensaje.setVisible(true);
-									bandera = true;
-								}
-							}
-						} else {
-							MensajeGenerico mensaje = new MensajeGenerico(
-									"Precio No Numerico", contentPane);
-							mensaje.setVisible(true);
-							bandera = true;
-						}
-					} else {
-						MensajeGenerico mensaje = new MensajeGenerico(
-								"Ingrese Nombre", contentPane);
-						mensaje.setVisible(true);
-						bandera = true;
-					}
-				}
-
-			}
-
-		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -174,36 +156,19 @@ public class EditRemoveC extends JFrame {
 		this.setVisible(false);
 	}
 
-	// Cargar al combo box
-	private String[] cargaAlCombo(JComboBox a) {
-		ArrayList<String> aux = new ArrayList<String>();
-		aux.add("---- Desplegar Lista ----");
-		aux.add("");
-		int j = 0;
-		while (j < categorias.size()) {
-			aux.add(categorias.get(j).getNombre());
-			j++;
-		}
-		textos = new String[aux.size() + 1];
-		for (int i = 0; i < textos.length - 1; i++) {
-			textos[i] = aux.get(i);
-		}
-		return textos;
-	}
-
 	// busca en lsita
-	public CategoryVO buscaEnLista(String a) {
-		for (int i = 0; i < categorias.size(); i++) {
-			if (categorias.get(i).getNombre().equals(a)) {
-				return categorias.get(i);
+	public ClientVO buscaEnLista(String a) {
+		for (int i = 0; i < clientes.size(); i++) {
+			if (clientes.get(i).getNombre().equals(a)) {
+				return clientes.get(i);
 			}
 		}
 		return null;
 	}
 
-	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() {
-		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
-		return cat.allCategories();
+	// Cargo Clientes a arraylist
+	private ArrayList<ClientVO> cargoClientes() {
+		ClientMgt cli = ServiceFacade.getInstance().getClientMgt();
+		return cli.allClients();
 	}
 }

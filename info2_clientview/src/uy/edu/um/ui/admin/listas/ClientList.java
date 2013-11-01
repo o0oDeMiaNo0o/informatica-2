@@ -60,11 +60,11 @@ public class ClientList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
-		transparentPanel_1
-				.setLayout(new MigLayout("", "[][grow][]", "[][][][]"));
+		transparentPanel_1.setLayout(new MigLayout("", "[][grow][]",
+				"[grow][][][grow]"));
 
 		JLabel lblBsquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
-		transparentPanel_1.add(lblBsquedaRpida, "cell 1 1");
+		transparentPanel_1.add(lblBsquedaRpida, "cell 1 1,alignx center");
 
 		TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
 				devuelveNombres());
@@ -92,7 +92,7 @@ public class ClientList extends BasicoAdmin {
 			public void mousePressed(MouseEvent e) {
 				int i = table.getSelectedRow();
 				if (i > 0) {
-					textFieldID.setText("" + clientes.get(i - 1).getId());
+					textFieldID.setText("" + clientes.get(i - 1).getCi());
 				}
 			}
 		});
@@ -118,6 +118,21 @@ public class ClientList extends BasicoAdmin {
 		});
 
 		JButton btnEditarCliente = new JButton("Editar Cliente");
+		btnEditarCliente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ClientVO cliente = buscaEnLista(textFieldID.getText());
+				if (cliente != null) {
+					EditRemoveC nuevo = new EditRemoveC(cliente, contentPane,
+							true, "");
+					nuevo.setVisible(true);
+				} else {
+					MensajeGenerico nuevo = new MensajeGenerico(
+							"Cliente No Existe", contentPane);
+					nuevo.setVisible(true);
+				}
+			}
+		});
 		transparentPanel_2.add(btnEditarCliente, "flowx,cell 1 2");
 		transparentPanel_2.add(btnEliminarCategoria,
 				"cell 1 2,alignx center,aligny top");
@@ -146,7 +161,7 @@ public class ClientList extends BasicoAdmin {
 		Object[][] aux = null;
 		if ((clientes.size() != 0)) {
 			aux = new Object[clientes.size() + 1][7];
-			aux[0][0] = "Id";
+			aux[0][0] = "Ci";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Apellido";
 			aux[0][3] = "Direccion";
@@ -154,18 +169,18 @@ public class ClientList extends BasicoAdmin {
 			aux[0][5] = "Email";
 			aux[0][6] = "Descuento";
 			for (int i = 0; i < clientes.size(); i++) {
-				aux[i + 1][0] = clientes.get(i).getId();
+				aux[i + 1][0] = clientes.get(i).getCi();
 				aux[i + 1][1] = clientes.get(i).getNombre();
 				aux[i + 1][2] = clientes.get(i).getApellido();
 				aux[i + 1][3] = clientes.get(i).getDireccion();
 				aux[i + 1][4] = clientes.get(i).getTel();
 				aux[i + 1][5] = clientes.get(i).getEmail();
-				aux[i + 1][6] = clientes.get(i).getDescuento();
+				aux[i + 1][6] = clientes.get(i).getDescuento().toString();
 			}
 
 		} else {
 			aux = new Object[1][7];
-			aux[0][0] = "Id";
+			aux[0][0] = "Ci";
 			aux[0][1] = "Nombre";
 			aux[0][2] = "Apellido";
 			aux[0][3] = "Direccion";
@@ -173,7 +188,7 @@ public class ClientList extends BasicoAdmin {
 			aux[0][5] = "Email";
 			aux[0][6] = "Descuento";
 		}
-		table.setModel(new DefaultTableModel(aux, new String[] { "Id",
+		table.setModel(new DefaultTableModel(aux, new String[] { "Ci",
 				"Nombre", "Apellido", "Direccion", "Telefono", "Email",
 				"Descuento" }));
 	}
@@ -181,7 +196,7 @@ public class ClientList extends BasicoAdmin {
 	// Ve que clinte es elegido eligo
 	public ClientVO buscaEnLista(String a) {
 		for (int i = 0; i < clientes.size(); i++) {
-			if (clientes.get(i).getNombre().equals(a)) {
+			if (clientes.get(i).getCi() == Integer.parseInt(a)) {
 				return clientes.get(i);
 			}
 		}
