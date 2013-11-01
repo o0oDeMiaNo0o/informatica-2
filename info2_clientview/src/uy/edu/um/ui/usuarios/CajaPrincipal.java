@@ -37,6 +37,8 @@ import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -62,7 +64,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	ArrayList<JSpinner> spinners = new ArrayList<JSpinner>(categoria.size());
 	ArrayList<JComboBox> combos = new ArrayList<JComboBox>(categoria.size());
 	ArrayList<JTextField> esp = new ArrayList<JTextField>(categoria.size());
-	String espTotal;
+	String espTotal = "";
 
 	private String[] textos;
 	private JTable tablePrePedido;
@@ -136,7 +138,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
-		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][grow][]",
+				"[grow][][grow]"));
 
 		JLabel lblBusquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
 		lblBusquedaRpida.setForeground(Color.WHITE);
@@ -296,19 +299,24 @@ public class CajaPrincipal extends BasicoUsuario {
 				posicion = "cell 1 " + j + ",alignx left";
 				a.add(lblTemp, posicion);
 
+				// Spinners
+				final JSpinner spinnerTemp = new JSpinner();
+				posicion = "cell 3 " + j + ",alignx center";
+				a.add(spinnerTemp, posicion);
+				spinners.add(spinnerTemp);
+
 				// Combobox's
 				JComboBox comboBoxTemp = new JComboBox();
 				String[] textosMenu = cargaPedidos(categoria.get(i)); // cargaPedidos
 				comboBoxTemp.setModel(new DefaultComboBoxModel(textosMenu));
+				comboBoxTemp.addItemListener(new ItemListener() {
+					public void itemStateChanged(ItemEvent arg0) {
+						spinnerTemp.setValue(1);
+					}
+				});
 				posicion = "cell 2 " + j + ",grow";
 				a.add(comboBoxTemp, posicion);
 				combos.add(comboBoxTemp);
-
-				// Spinners
-				JSpinner spinnerTemp = new JSpinner();
-				posicion = "cell 3 " + j + ",alignx center";
-				a.add(spinnerTemp, posicion);
-				spinners.add(spinnerTemp);
 
 				// JText's
 				JTextField textFieldTemp = new JTextField();
@@ -373,17 +381,17 @@ public class CajaPrincipal extends BasicoUsuario {
 	// Agrega pedidos a la orden(pedidoAux)
 	public boolean cuentaMenus(JComboBox op, JSpinner m, JTextField t) {
 		boolean bandera = false;
+		int valor = (Integer) m.getValue();
 		if ((!op.getSelectedItem().equals("---- Desplegar Lista ----"))
-				&& (!op.getSelectedItem().equals(""))) {
+				&& (!op.getSelectedItem().equals("")) && (valor != 0)) {
 			ArticleOrderVO aux = null;
-			int valor = (Integer) m.getValue();
 			for (int i = 0; i < valor; i++) {
 				pedidoArticle.add(buscaArticuloCombo(listaArticulos, op));
 			}
 			aux = new ArticleOrderVO(buscaArticuloCombo(listaArticulos, op),
 					valor);
 			pedidoAux.add(aux);
-			if (t.getText() != null) {
+			if ((t.getText() != null) && (!t.getText().equals(""))) {
 				espTotal = espTotal + op.getSelectedItem().toString() + ": "
 						+ t.getText() + " ; ";
 			}
