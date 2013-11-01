@@ -15,5 +15,13 @@ public interface OrderRemoteMgt extends Remote{
 
 	public ArrayList<OrderVO> allOrders() throws RemoteException;
 
+	public void isReady(OrderVO o) throws RemoteException;
+
+	public void isPreparing(OrderVO o) throws RemoteException;
+
+	public void rejected(OrderVO o) throws RemoteException;
+
+	public void delivery(OrderVO o) throws RemoteException;
+
 }
 
