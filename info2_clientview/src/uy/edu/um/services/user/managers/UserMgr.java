@@ -105,4 +105,10 @@ public class UserMgr implements UserMgt{
 
 	}
 
+	@Override
+	public boolean existUsername(String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

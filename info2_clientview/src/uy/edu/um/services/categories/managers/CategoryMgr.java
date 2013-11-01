@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
-import uy.edu.um.services.article.exceptions.HasNumberException;
-import uy.edu.um.services.article.exceptions.NotNumberException;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.exceptions.HasNumberException;
+import uy.edu.um.services.exceptions.NotNumberException;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryMgr implements CategoryMgt{
@@ -25,12 +25,13 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	public CategoryVO createCategoryVO(String nombre) {
+		CategoryVO toReturn = null;
 		try {
 			hasNumbers(nombre);
+			toReturn = new CategoryVO(nombre);
 		} catch (HasNumberException e) {
 			e.printStackTrace();
 		}
-		CategoryVO toReturn = new CategoryVO(nombre);
 		return toReturn;
 	}
 
