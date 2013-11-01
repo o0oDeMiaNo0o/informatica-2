@@ -41,8 +41,9 @@ public class EditRemoveA extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public EditRemoveA(ArticleVO articulo, JPanel cPanel, final boolean editable,
-			String mensaje) {
+	public EditRemoveA(final ArticleVO articulo, JPanel cPanel,
+			final boolean editable, String mensaje) {
+
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 561, 300);
@@ -104,56 +105,65 @@ public class EditRemoveA extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
 				ArticleMgt a = ServiceFacade.getInstance().getArticleMgt();
-				String nombre = textFieldNombre.getText();
-				boolean bandera = false;
-				while (bandera == false) {
-					String precioAux = textFieldPrecio.getText();
-					if (!nombre.equals("")) {
-						if (Helpers.isNumeric(precioAux)) {
-							if (!comboBox.getSelectedItem().equals(
-									"---- Desplegar Lista ----")) {
-								if (editable == true) {
 
-									BigDecimal precio = new BigDecimal(
-											Integer.parseInt(textFieldPrecio
-													.getText()));
-									CategoryVO cat = buscaEnLista(comboBox
-											.getSelectedItem().toString());
+				if (editable == true) {
+					String nombre = textFieldNombre.getText();
+					boolean bandera = false;
+					while (bandera == false) {
+						String precioAux = textFieldPrecio.getText();
+						if (!nombre.equals("")) {
+							if (Helpers.isNumeric(precioAux)) {
+								if (!comboBox.getSelectedItem().equals(
+										"---- Desplegar Lista ----")) {
+									if (editable == true) {
 
-									ArticleMgt test = ServiceFacade
-											.getInstance().getArticleMgt();
-									ArticleVO toSend = a.createArticleVO(
-											nombre, precio, cat);
-									test.sendArticle(toSend);
+										BigDecimal precio = new BigDecimal(
+												Integer.parseInt(textFieldPrecio
+														.getText()));
+										CategoryVO cat = buscaEnLista(comboBox
+												.getSelectedItem().toString());
+										ArticleVO toSend = a.createArticleVOid(
+												articulo.getId(), nombre,
+												precio, cat);
 
-									MensajeGenerico mensaje = new MensajeGenerico(
-											"Producto Editado Correctamente",
-											contentPane);
-									mensaje.setVisible(true);
-									bandera = true;
-								} else {
-									MensajeGenerico mensaje = new MensajeGenerico(
-											"Producto Eliminado Correctamente",
-											contentPane);
-									mensaje.setVisible(true);
-									bandera = true;
+										a.editArticle(toSend);
+
+										MensajeGenerico mensaje = new MensajeGenerico(
+												"Producto Editado Correctamente",
+												contentPane);
+										mensaje.setVisible(true);
+										bandera = true;
+									} else {
+										MensajeGenerico mensaje = new MensajeGenerico(
+												"Producto Eliminado Correctamente",
+												contentPane);
+										mensaje.setVisible(true);
+										bandera = true;
+									}
 								}
+							} else {
+								MensajeGenerico mensaje = new MensajeGenerico(
+										"Precio No Numerico", contentPane);
+								mensaje.setVisible(true);
+								bandera = true;
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
-									"Precio No Numerico", contentPane);
+									"Ingrese Nombre", contentPane);
 							mensaje.setVisible(true);
 							bandera = true;
 						}
-					} else {
-						MensajeGenerico mensaje = new MensajeGenerico(
-								"Ingrese Nombre", contentPane);
-						mensaje.setVisible(true);
-						bandera = true;
 					}
+					cerrar();
+				} else {
+					a.removeArticle(articulo);
+					MensajeGenerico mensaje = new MensajeGenerico(
+							"Producto Editado Correctamente", contentPane);
+					mensaje.setVisible(true);
+					cerrar();
 				}
-
 			}
 
 		});
