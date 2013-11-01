@@ -132,5 +132,11 @@ public class ArticleMgr implements ArticleMgt {
 
 	}
 
+	@Override
+	public ArticleVO createArticleVOid(int id, String nombre,
+			BigDecimal precio, CategoryVO category) {
+		return new ArticleVO(id,nombre,precio,category);
+	}
+
 
 }

@@ -10,6 +10,8 @@ public interface ArticleMgt {
 
 	public ArticleVO createArticleVO(String nombre , BigDecimal precio, CategoryVO category);
 
+	public ArticleVO createArticleVOid(int id,String nombre , BigDecimal precio, CategoryVO category);
+
 	public void sendArticle(ArticleVO a);
 
 	public ArticleVO searchArticle(int numProducto);
