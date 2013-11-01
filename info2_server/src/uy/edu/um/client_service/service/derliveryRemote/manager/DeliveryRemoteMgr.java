@@ -3,6 +3,7 @@ package uy.edu.um.client_service.service.derliveryRemote.manager;
 import java.rmi.RemoteException;
 
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
+import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
@@ -19,33 +20,42 @@ public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 	}
 
 	@Override
-	public void addOrder(OrderVO o) throws RemoteException {
+	public void addOrder(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void facturado(OrderVO o) throws RemoteException {
+	public void enViaje(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void isDone(OrderVO o) throws RemoteException {
+	public void facturado(DeliveryVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void rejected(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void isPreaparing(OrderVO o) throws RemoteException {
+	public void enPreparacion(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void rejected(OrderVO o) throws RemoteException {
+	public void listo(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 }
