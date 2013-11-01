@@ -28,6 +28,15 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
+import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
+import java.util.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ProductList extends BasicoAdmin {
 	private ArrayList<CategoryVO> categorias = cargoCategorias();
@@ -36,7 +45,6 @@ public class ProductList extends BasicoAdmin {
 	private String[] textos;
 	private JTable table;
 	private JTextField textFieldID;
-	private UserVO user;
 
 	/**
 	 * Launch the application.
@@ -45,7 +53,7 @@ public class ProductList extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProductList frame = new ProductList(null);
+					ProductList frame = new ProductList();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,12 +64,11 @@ public class ProductList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
-	 * @param user 
+	 * 
+	 * @param user
 	 */
-	public ProductList(UserVO user) {
-		
-		this.user = user; //Usuario Actual
-		
+	public ProductList() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -71,18 +78,17 @@ public class ProductList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
-		transparentPanel_1.setLayout(new MigLayout("", "[grow][][][][grow]",
-				"[grow][][grow]"));
+		transparentPanel_1.setLayout(new MigLayout("",
+				"[grow][grow][][][grow]", "[grow][][][][grow]"));
 
 		JLabel lblCategorias = new JLabel("Categorias:");
 		transparentPanel_1.add(lblCategorias, "cell 1 1,alignx trailing");
 
 		final JComboBox comboBox = new JComboBox();
-		comboBox.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				if (!comboBox.getSelectedItem().toString()
-						.equals("---- Desplegar Lista ----")) {
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if ((!comboBox.getSelectedItem().toString()
+						.equals("---- Desplegar Lista ----"))) {
 					cargaALista(buscaEnLista(comboBox.getSelectedItem()
 							.toString()));
 					cargaATabla();
@@ -93,6 +99,32 @@ public class ProductList extends BasicoAdmin {
 		String[] textosMenu = cargaAlCombo(comboBox); // cargaCategorias
 		comboBox.setModel(new DefaultComboBoxModel(textosMenu));
 		transparentPanel_1.add(comboBox, "cell 2 1,alignx center");
+
+		JLabel lblBsquedaRapida = new JLabel("B\u00FAsqueda Rapida");
+		transparentPanel_1.add(lblBsquedaRapida,
+				"cell 1 3 2 1,alignx center,aligny center");
+
+		final TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
+				devuelveLista());
+		textFieldAutocompletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				textFieldAutocompletar.setText("");
+			}
+		});
+		textFieldAutocompletar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					listaTabla = devuelvoParaTabla(textFieldAutocompletar
+							.getText());
+					cargaATabla();
+				}
+			}
+		});
+		textFieldAutocompletar.setText("");
+		transparentPanel_1.add(textFieldAutocompletar,
+				"cell 1 4 2 1,growx,aligny top");
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
@@ -123,9 +155,9 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
-							.parseInt(textFieldID.getText())), contentPane,
-							true, "");
+					EditRemoveA nuevo = new EditRemoveA(
+							devuelveArticulo(Integer.parseInt(textFieldID
+									.getText())), contentPane, true, "");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -143,9 +175,10 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
-					EditRemoveA nuevo = new EditRemoveA(devuelveArticulo(Integer
-							.parseInt(textFieldID.getText())), contentPane,
-							false, "Desea Eliminar El Siguiente Articulo?");
+					EditRemoveA nuevo = new EditRemoveA(
+							devuelveArticulo(Integer.parseInt(textFieldID
+									.getText())), contentPane, false,
+							"Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -252,6 +285,26 @@ public class ProductList extends BasicoAdmin {
 		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
 		sol = test.allArticles();
 		return sol;
+	}
+
+	// Metodo para la busqueda facil
+	private ArrayList<String> devuelveLista() {
+		ArrayList<String> aux = new ArrayList<String>();
+		for (int i = 0; i < listaArticulos.size(); i++) {
+			aux.add(listaArticulos.get(i).getNombre());
+		}
+		return aux;
+	}
+
+	// Cambio la lista de la tabla siguiendo un parametro
+	private ArrayList<ArticleVO> devuelvoParaTabla(String a) {
+		ArrayList<ArticleVO> aux = new ArrayList<ArticleVO>();
+		for (int i = 0; i < listaArticulos.size(); i++) {
+			if (listaArticulos.get(i).getNombre().equals(a)) {
+				aux.add(listaArticulos.get(i));
+			}
+		}
+		return aux;
 	}
 
 }
