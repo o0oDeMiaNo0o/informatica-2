@@ -39,6 +39,8 @@ public class ClientDAO {
 			database.closeConnection();
 		}
 	}
+	
+
 
 //	public void getClients() {
 //
