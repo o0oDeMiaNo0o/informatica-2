@@ -92,13 +92,13 @@ public class Login extends JFrame {
 						UserVO user = getUserVO(textField.getText(), pass);
 						if (user.isAdmin()) {
 							user = getUserVO(textField.getText(), pass);
-							CurrentUser usuario = new CurrentUser(user);
+							CurrentUser.setUser(user);
 							MainAdmin nuevo = new MainAdmin();
 							nuevo.setVisible(true);
 							cerrar();
 						} else {
 							user = getUserVO(textField.getText(), pass);
-							CurrentUser usuario = new CurrentUser(user);
+							CurrentUser.setUser(user);
 							MainUsuario nuevo = new MainUsuario();
 							nuevo.setVisible(true);
 							cerrar();
@@ -123,13 +123,13 @@ public class Login extends JFrame {
 					UserVO user = getUserVO(textField.getText(), pass);
 					if (user.isAdmin()) {
 						user = getUserVO(textField.getText(), pass);
-						CurrentUser usuario = new CurrentUser(user);
+						CurrentUser.setUser(user);
 						MainAdmin nuevo = new MainAdmin();
 						nuevo.setVisible(true);
 						cerrar();
 					} else {
 						user = getUserVO(textField.getText(), pass);
-						CurrentUser usuario = new CurrentUser(user);
+						CurrentUser.setUser(user);
 						MainUsuario nuevo = new MainUsuario();
 						nuevo.setVisible(true);
 						cerrar();

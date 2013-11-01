@@ -60,7 +60,8 @@ public class Mesas extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]", "[][][][][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
+				"[][][][][][][][grow]"));
 
 		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
 		transparentPanel.add(rigidArea, "cell 0 0");
@@ -75,12 +76,13 @@ public class Mesas extends BasicoUsuario {
 		cargaBotones(transparentPanel, pedidoAux, esp);
 
 		ImagePanel imagePanelDelivery = new ImagePanel(delivery);
-		transparentPanel
-				.add(imagePanelDelivery, "cell 1 1,alignx center,aligny center");
+		transparentPanel.add(imagePanelDelivery,
+				"cell 1 1,alignx center,aligny center");
 		imagePanelDelivery.setLayout(new MigLayout("", "[150px]", "[100px]"));
 		JLabel lblNewLabel = new JLabel("DELIVERY");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		imagePanelDelivery.add(lblNewLabel, "cell 0 0,alignx center,aligny center");
+		imagePanelDelivery.add(lblNewLabel,
+				"cell 0 0,alignx center,aligny center");
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
@@ -108,15 +110,17 @@ public class Mesas extends BasicoUsuario {
 			URL dir;
 			while (n < mesas.size()) {
 				String nombre = String.valueOf(mesas.get(n).getNumero());
+
 				if (mesas.get(n).isOcupado()) {
 					dir = ocupado;
 				} else {
 					dir = libre;
 				}
-				if(mesas.get(n).getNumero() == 0){
+				if (mesas.get(n).getNumero() == 0) {
 					dir = mostrador;
 					nombre = "MOSTRADOR";
 				}
+				final String nom2 = nombre;
 				ImagePanel imagePanel = new ImagePanel(dir);
 				panel.add(imagePanel, "cell " + i + " " + j);
 				imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
@@ -128,8 +132,8 @@ public class Mesas extends BasicoUsuario {
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 								CurrentUser.getUser());
 						Confirm conf = new Confirm(toSend,
-								"Confirma Seleccion De : Mesa "
-										+ mesa.getNumero() + " ?", devuelve());
+								"Confirma Seleccion De : Mesa " + nom2 + " ?",
+								devuelve());
 						conf.setVisible(true);
 
 					}
@@ -141,7 +145,7 @@ public class Mesas extends BasicoUsuario {
 				imagePanel.add(lblNewLabel,
 						"cell 0 0,alignx center,aligny center");
 				i = i + 2;
-				if (i == 15) {
+				if (i == 13) {
 					i = 1;
 					j = j + 2;
 				}
@@ -164,11 +168,6 @@ public class Mesas extends BasicoUsuario {
 
 	private JFrame devuelve() {
 		return this;
-	}
-
-	private void cerrar() {
-		this.dispose();
-
 	}
 
 	private ArrayList<TableVO> cargoMesas() {
