@@ -1,6 +1,7 @@
 package uy.edu.um.ui.admin.edicion;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -19,10 +20,10 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.MensajeGenerico;
+import uy.edu.um.ui.admin.listas.ProductList;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
-import java.awt.Font;
 
 public class EditRemoveA extends JFrame {
 
@@ -41,7 +42,7 @@ public class EditRemoveA extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public EditRemoveA(final ArticleVO articulo, JPanel cPanel,
+	public EditRemoveA(final ArticleVO articulo, final JFrame cPanel,
 			final boolean editable, String mensaje) {
 
 		setTitle("Confirma");
@@ -129,6 +130,10 @@ public class EditRemoveA extends JFrame {
 												precio, cat);
 
 										a.editArticle(toSend);
+
+										ProductList nuevo = new ProductList();
+										nuevo.setVisible(true);
+										cPanel.dispose();
 
 										MensajeGenerico mensaje = new MensajeGenerico(
 												"Producto Editado Correctamente",

@@ -157,7 +157,7 @@ public class ProductList extends BasicoAdmin {
 				if (buscaArticulo(textFieldID.getText())) {
 					EditRemoveA nuevo = new EditRemoveA(
 							devuelveArticulo(Integer.parseInt(textFieldID
-									.getText())), contentPane, true, "");
+									.getText())), devuelve(), true, "");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -177,7 +177,7 @@ public class ProductList extends BasicoAdmin {
 				if (buscaArticulo(textFieldID.getText())) {
 					EditRemoveA nuevo = new EditRemoveA(
 							devuelveArticulo(Integer.parseInt(textFieldID
-									.getText())), contentPane, false,
+									.getText())), devuelve(), false,
 							"Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);
 				} else {
@@ -305,6 +305,11 @@ public class ProductList extends BasicoAdmin {
 			}
 		}
 		return aux;
+	}
+
+	// devueve frame
+	private JFrame devuelve() {
+		return this;
 	}
 
 }
