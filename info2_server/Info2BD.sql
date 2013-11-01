@@ -33,6 +33,20 @@ CREATE TABLE `Clientes` (
   PRIMARY KEY (`id`,`Ci`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `Delivery` (
+  `idDelivery` int(11) NOT NULL AUTO_INCREMENT,
+  `HoraDelivery` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Estado` enum('En Preparacion','Entregado','Rechazado') NOT NULL DEFAULT 'En Preparacion',
+  `Facturas_idFacturas` int(11) DEFAULT NULL,
+  `Users_Username` varchar(45) NOT NULL,
+  `Especificaciones` varchar(250) NOT NULL,
+  `EnCocina` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idDelivery`),
+  KEY `fk_Delivery_Facturas1_idx` (`Facturas_idFacturas`),
+  KEY `fk_Delivery_Users1_idx` (`Users_Username`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
 CREATE TABLE `Facturas` (
   `idFacturas` int(11) NOT NULL,
   `Fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
