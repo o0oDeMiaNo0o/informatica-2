@@ -16,5 +16,8 @@ public interface ArticleRemoteMgt extends Remote{
 
 	public ArrayList<ArticleVO> getArticlesVO() throws RemoteException;
 
+	public void editArtile(ArticleVO a) throws RemoteException;
+
+	public void descontinuarArticle(ArticleVO a) throws RemoteException;
 
 }
