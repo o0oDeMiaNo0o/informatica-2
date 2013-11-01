@@ -16,4 +16,6 @@ public interface UserMgt {
 
 	public boolean checkLogin(String username, String psw);
 
+	public boolean existUsername(String username);
+
 }

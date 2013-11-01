@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.services.article.exceptions.HasNumberException;
-import uy.edu.um.services.article.exceptions.NotNumberException;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
+import uy.edu.um.services.exceptions.HasNumberException;
+import uy.edu.um.services.exceptions.NotNumberException;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -32,43 +32,33 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category){
+		ArticleVO  aReturn = null;
 		try {
 			hasNumbers(category.getNombre());
-		} catch (HasNumberException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			hasNumbers(nombre);
-		} catch (HasNumberException e) {
-			// TODO Auto-generated catch block
+			isNumeric(precio.toString());
+			aReturn = new ArticleVO(nombre, precio,category);
+		}catch(NotNumberException e){
+			e.printStackTrace();
+		}catch(HasNumberException e){
 			e.printStackTrace();
 		}
-		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
 
 	@Override
 	public void sendArticle(ArticleVO a) {
 		try {
-
 			String sObjectService = "ArticleRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oArticleRemoteMgt.addArticle(a);
-
 			System.out.println("articulo agregado");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
 	}
 
 	@Override
@@ -78,66 +68,42 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArrayList<ArticleVO> allArticles() {
-
 		ArrayList<ArticleVO> array = new ArrayList<ArticleVO>(10);
-
 		try {
-
 			String sObjectService = "ArticleRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
-
 			array = oArticleRemoteMgt.getArticlesVO();
-
-
 		}catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
 		return array;
 	}
 
 	@Override
 	public void editArticle(ArticleVO a) {
 		try {
-
 			String sObjectService = "ArticleRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
-			.lookup(sObjectService);
-
+					.lookup(sObjectService);
 			 oArticleRemoteMgt.editArtile(a);
-
-
 		}catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
 	}
 
 	@Override
 	public void descontinuarArticulo(ArticleVO a) {
 		try {
-
 			String sObjectService = "ArticleRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
-			.lookup(sObjectService);
-
-			 oArticleRemoteMgt.editArtile(a);
-
-
+					.lookup(sObjectService);
+			oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
@@ -149,17 +115,19 @@ public class ArticleMgr implements ArticleMgt {
 	@Override
 	public ArticleVO createArticleVOid(int id, String nombre,
 			BigDecimal precio, CategoryVO category) {
+		ArticleVO aReturn = null;
 		try {
 			isNumeric(Integer.toString(id));
+			hasNumbers(nombre);
+			hasNumbers(category.getNombre());
+			isNumeric(precio.toString());
+			aReturn = new ArticleVO(nombre, precio,category);
+		} catch (HasNumberException e) {
+			e.printStackTrace();
 		} catch (NotNumberException e) {
 			e.printStackTrace();
 		}
-		try {
-			hasNumbers(nombre);
-		} catch (HasNumberException e) {
-			e.printStackTrace();
-		}
-		return new ArticleVO(id,nombre,precio,category);
+		return aReturn;
 	}
 
 	@Override
@@ -186,7 +154,7 @@ public class ArticleMgr implements ArticleMgt {
 
 	//Metodos auxiliares
 	private static void isNumeric(String number) throws NotNumberException{
-		if(Verificacion.isNumeric(number)){
+		if(Verificacion.isNumeric(number) == false){
 			throw new NotNumberException("un campo ingresado no es numerico");
 		}
 	}
@@ -197,15 +165,5 @@ public class ArticleMgr implements ArticleMgt {
 		}
 	}
 
-	@Override
-	public void checkArticleVO(ArticleVO a) throws HasNumberException, NotNumberException{
-		String nombre = a.getNombre();
-		BigDecimal precio = (a.getPrecio());
-		int id = a.getId();
-		CategoryVO cat = a.getCategory();
-		//comienzo con las verificaciones
-		hasNumbers(nombre);
-
-	}
 
 }

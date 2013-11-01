@@ -1,4 +1,4 @@
-package uy.edu.um.services.article.exceptions;
+package uy.edu.um.services.exceptions;
 
 public class HasNumberException extends Exception{
 	public HasNumberException(String msg){
