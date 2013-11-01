@@ -7,6 +7,17 @@ import uy.edu.um.value_object.oreder.OrderVO;
 
 public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 
+	private static DeliveryRemoteMgr instance = null;
+
+	private DeliveryRemoteMgr(){}
+
+	public static DeliveryRemoteMgr getInstance(){
+		if(instance == null){
+			instance = new DeliveryRemoteMgr();
+		}
+		return instance;
+	}
+
 	@Override
 	public void addOrder(OrderVO o) throws RemoteException {
 		// TODO Auto-generated method stub
