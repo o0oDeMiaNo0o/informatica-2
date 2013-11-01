@@ -7,7 +7,7 @@ public interface DeliveryMgt {
 
 	public Delivery getDelivery(DeliveryVO d);
 
-	public DeliveryVO getDeliveryVO(DeliveryVO d);
+	public DeliveryVO getDeliveryVO(Delivery d);
 
 	public void addDelivery(DeliveryVO d);
 

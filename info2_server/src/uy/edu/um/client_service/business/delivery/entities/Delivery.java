@@ -23,5 +23,53 @@ public class Delivery {
 		this.estado = estado;
 		this.enCocina = enCocina;
 	}
+
+	public ArrayList<ArticleOrder> getArticulos() {
+		return articulos;
+	}
+
+	public void setArticulos(ArrayList<ArticleOrder> articulos) {
+		this.articulos = articulos;
+	}
+
+	public String getSpecs() {
+		return specs;
+	}
+
+	public void setSpecs(String specs) {
+		this.specs = specs;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public boolean isEnCocina() {
+		return enCocina;
+	}
+
+	public void setEnCocina(boolean enCocina) {
+		this.enCocina = enCocina;
+	}
 }
 

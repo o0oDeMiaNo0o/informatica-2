@@ -8,6 +8,8 @@ import uy.edu.um.client_service.business.bill.interfaces.BillMgt;
 import uy.edu.um.client_service.business.bill.managers.BillMgr;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.business.categories.managers.CategoryMgr;
+import uy.edu.um.client_service.business.delivery.interfaces.DeliveryMgt;
+import uy.edu.um.client_service.business.delivery.manager.DeliveryMgr;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.order.managers.OrderMgr;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
@@ -22,6 +24,7 @@ import uy.edu.um.client_service.service.BillRemote.managers.BillRemoteMgr;
 import uy.edu.um.client_service.service.articleOrderRemote.managers.ArticleOrderRemoteMgr;
 import uy.edu.um.client_service.service.articleRemote.manager.ArticleRemoteMgr;
 import uy.edu.um.client_service.service.categoriesRemote.manager.CategoryRemoteMgr;
+import uy.edu.um.client_service.service.derliveryRemote.manager.DeliveryRemoteMgr;
 import uy.edu.um.client_service.service.orderRemote.manager.OrderRemoteMgr;
 import uy.edu.um.client_service.service.peopleRemote.client.manager.ClientRemoteMgr;
 import uy.edu.um.client_service.service.peopleRemote.waiters.manager.WaiterRemoteMgr;
@@ -31,6 +34,7 @@ import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
+import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.interfaces.people.waiters.WaiterRemoteMgt;
@@ -129,6 +133,14 @@ public class BusinessFacade {
 
 	public ArticleOrderMgt getArticleOrder(){
 		return ArticleOrderMgr.getInstance();
+	}
+
+	public DeliveryRemoteMgt getDeliveryRemote(){
+		return DeliveryRemoteMgr.getInstance();
+	}
+
+	public DeliveryMgt getDeliveryMgt(){
+		return DeliveryMgr.getInstance();
 	}
 
 
