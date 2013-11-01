@@ -22,4 +22,6 @@ public interface ArticleMgt {
 
 	public void descontinuarArticulo(ArticleVO a);
 
+	public void removeArticle(ArticleVO a);
+
 }
