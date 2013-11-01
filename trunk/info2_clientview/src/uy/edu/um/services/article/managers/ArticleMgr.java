@@ -88,7 +88,49 @@ public class ArticleMgr implements ArticleMgt {
 		return array;
 	}
 
-	//Metodos auxiliares
+	@Override
+	public void editArticle(ArticleVO a) {
+		try {
+
+			String sObjectService = "ArticleRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+			.lookup(sObjectService);
+
+			 oArticleRemoteMgt.editArtile(a);
+
+
+		}catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+	}
+
+	@Override
+	public void descontinuarArticulo(ArticleVO a) {
+		try {
+
+			String sObjectService = "ArticleRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+			.lookup(sObjectService);
+
+			 oArticleRemoteMgt.editArtile(a);
+
+
+		}catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+	}
 
 
 }
