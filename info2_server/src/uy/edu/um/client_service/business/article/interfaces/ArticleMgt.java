@@ -22,4 +22,6 @@ public interface ArticleMgt {
 	public ArrayList<ArticleVO> allArticles();
 
 	public ArticleVO getArticleVO(Article a);
+
+	public void descontinuarArticle(Article a);
 }
