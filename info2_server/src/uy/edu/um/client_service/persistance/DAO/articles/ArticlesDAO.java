@@ -57,7 +57,7 @@ public class ArticlesDAO {
 			Statement oStatement = database.getConnection().createStatement();
 
 
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES WHERE `Estado` = 'Activo'");
 
 			while (oResultSet.next()) {
 				
@@ -82,6 +82,24 @@ public class ArticlesDAO {
 
 		}
 
+	}
+	
+	
+	public void editArticle(Article a){	
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
+			oStatement.close();
+			database.closeConnection();
+			addArticle(a);
+			System.out.println("Articulo editado correctamente");
+			
+		}
+		catch(SQLException e){
+			database.closeConnection();
+			throw new RuntimeException(e);
+		}	
+		
 	}
 	
 	public Category getCategory(int catId){

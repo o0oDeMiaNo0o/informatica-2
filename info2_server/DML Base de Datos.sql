@@ -165,7 +165,7 @@ VALUES
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
 VALUES
-("WHISKEY NACIONAL",80,5);
+("WHISKY NACIONAL",80,5);
 
 INSERT INTO `Info2`.`Articles`
 (`NAME`,`PRICE`,`Categorias_idCategorias`)
