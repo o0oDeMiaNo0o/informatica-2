@@ -1,32 +1,19 @@
 package uy.edu.um.client_service.service.userRemote.test;
 
-import java.rmi.Remote;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-
 import uy.edu.um.client_service.business.BusinessFacade;
-import uy.edu.um.interfaces.article.ArticleRemoteMgt;
-import uy.edu.um.interfaces.user.UserRemoteMgt;
+import uy.edu.um.client_service.business.users.entities.User;
+import uy.edu.um.client_service.business.users.interfaces.UserMgt;
+import uy.edu.um.value_object.user.UserVO;
 
 public class UserRemoteTest {
 	public static void main(String[] args) {
-		try {
-			String name = "UserRemoteMgr";
-
-			UserRemoteMgt oArticleRemoteMgr = BusinessFacade.getInstance().getUserRemote();
-
-			UserRemoteMgt oStub = (UserRemoteMgt) UnicastRemoteObject
-					.exportObject((Remote) oArticleRemoteMgr, 0);
-
-			Registry oRegistry = LocateRegistry.createRegistry(1099);
-
-			oRegistry.rebind(name, oStub);
-
-			System.out.println("Ready and waiting");
-		} catch (Exception e) {
-			System.err.println("error:");
-			e.printStackTrace();
-		}
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		String username = "bernardou";
+		String psw = "omaaag";
+//		UserVO u = new UserVO(username,psw,false);
+//		User uNew = uMgt.getUser(u);
+//		uMgt.addUser(uNew);
+		boolean check = uMgt.checkLogin(username, psw);
+		System.out.println(check);
 	}
 }

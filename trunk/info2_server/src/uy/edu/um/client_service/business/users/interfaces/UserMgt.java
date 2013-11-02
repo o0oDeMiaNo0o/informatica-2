@@ -23,4 +23,6 @@ public interface UserMgt {
 
 	public boolean checkUsername(String username);
 
+	public String hashPassword(String password);
+
 }

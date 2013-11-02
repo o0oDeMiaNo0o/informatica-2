@@ -1,5 +1,8 @@
 package uy.edu.um.client_service.business.users.managers;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.users.entities.User;
@@ -23,7 +26,9 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void addUser(User u) {
 		UserDAO dao = UserDAO.getInstance();
-		dao.addUser(u);
+		String crypted = this.hashPassword(u.getPassword());
+		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
+		dao.addUser(uNew);
 	}
 
 	@Override
@@ -71,20 +76,28 @@ public class UserMgr implements UserMgt{
 
 	@Override
 	public boolean checkLogin(String username, String psw) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private String encrypPass(String pass){
-
-		return null;
+		UserDAO dao = UserDAO.getInstance();
+		String crypted = this.hashPassword(psw);
+		return dao.checklogin(username, crypted);
 	}
 
 	@Override
 	public boolean checkUsername(String username) {
 		UserDAO dao = UserDAO.getInstance();
-		return false;
+		return dao.checkUsername(username);
 	}
 
-
+	//metodos de la clase
+	public String hashPassword(String password) {
+		String hashword = null;
+		try {
+			MessageDigest md5 = MessageDigest.getInstance("MD5");
+			md5.update(password.getBytes());
+			BigInteger hash = new BigInteger(1, md5.digest());
+			hashword = hash.toString(16);
+		} catch (NoSuchAlgorithmException nsae) {
+			// ignore
+		}
+		return hashword;
+	}
 }
