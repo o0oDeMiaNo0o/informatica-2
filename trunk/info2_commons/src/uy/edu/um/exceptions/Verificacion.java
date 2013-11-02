@@ -46,6 +46,28 @@ public class Verificacion {
 		return status;
 	}
 
+	/**
+	 * Metodo que busca si un string tiene espacios, puede servir para rechazar
+	 * contraseñas con espacios
+	 * @param s
+	 * @return
+	 */
 
+	public static boolean hasSpaces(String s){
+		boolean status = false;
+		for(int i=0; i<s.length(); i++){
+			char current = s.charAt(i);
+			boolean check = false;
+			if(Character.isWhitespace(current)){
+				check = true;
+			}
+			status = status || check;
+			if(status == true) {
+				break;
+			}
+		}
+		return status;
+
+	}
 
 }
