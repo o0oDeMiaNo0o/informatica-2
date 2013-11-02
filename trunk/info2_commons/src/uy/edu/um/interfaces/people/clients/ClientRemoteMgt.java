@@ -18,4 +18,6 @@ public interface ClientRemoteMgt extends Remote{
 
 	public ArrayList<ClientVO> allClients() throws RemoteException;
 
+	public boolean existeCliente(String nombre, int ci) throws RemoteException;
+
 }

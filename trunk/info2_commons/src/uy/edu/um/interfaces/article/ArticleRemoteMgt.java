@@ -20,4 +20,6 @@ public interface ArticleRemoteMgt extends Remote{
 
 	public void descontinuarArticle(ArticleVO a) throws RemoteException;
 
+	public boolean existeArticle(String nombre) throws RemoteException;
+
 }
