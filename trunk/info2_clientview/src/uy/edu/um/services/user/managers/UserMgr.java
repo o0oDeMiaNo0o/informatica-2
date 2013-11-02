@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
+import uy.edu.um.services.exceptions.ErrorLoginException;
 import uy.edu.um.services.exceptions.ExisteUsuarioException;
 import uy.edu.um.services.exceptions.HasBlanksException;
 import uy.edu.um.services.user.interfaces.UserMgt;
@@ -116,6 +117,13 @@ public class UserMgr implements UserMgt{
 	public static void checkBlanks(String s) throws HasBlanksException{
 		if(Verificacion.hasSpaces(s)){
 			throw new HasBlanksException("la contraseña y/o el nombre de usuario tiene espacios en blanco");
+		}
+	}
+
+	@Override
+	public void login(String username, String psw) throws ErrorLoginException {
+		if(checkLogin(username,psw) == false){
+			throw new ErrorLoginException("Usuario y contraseña no coinciden");
 		}
 	}
 }
