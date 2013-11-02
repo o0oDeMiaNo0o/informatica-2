@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
+import uy.edu.um.services.exceptions.ExisteArticleException;
 import uy.edu.um.services.exceptions.HasNumberException;
 import uy.edu.um.services.exceptions.NotNumberException;
 import uy.edu.um.value_object.article.ArticleVO;
@@ -34,13 +35,9 @@ public class ArticleMgr implements ArticleMgt {
 	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category){
 		ArticleVO  aReturn = null;
 		try {
-			hasNumbers(category.getNombre());
-			hasNumbers(nombre);
-			isNumeric(precio.toString());
+			checkArticle(nombre);
 			aReturn = new ArticleVO(nombre, precio,category);
-		}catch(NotNumberException e){
-			e.printStackTrace();
-		}catch(HasNumberException e){
+		}catch(ExisteArticleException e){
 			e.printStackTrace();
 		}
 		return aReturn;
@@ -117,14 +114,9 @@ public class ArticleMgr implements ArticleMgt {
 			BigDecimal precio, CategoryVO category) {
 		ArticleVO aReturn = null;
 		try {
-			isNumeric(Integer.toString(id));
-			hasNumbers(nombre);
-			hasNumbers(category.getNombre());
-			isNumeric(precio.toString());
+			checkArticle(nombre);
 			aReturn = new ArticleVO(nombre, precio,category);
-		} catch (HasNumberException e) {
-			e.printStackTrace();
-		} catch (NotNumberException e) {
+		} catch (ExisteArticleException e) {
 			e.printStackTrace();
 		}
 		return aReturn;
@@ -150,17 +142,26 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	//Metodos auxiliares
-	private static void isNumeric(String number) throws NotNumberException{
-		if(Verificacion.isNumeric(number) == false){
-			throw new NotNumberException("un campo ingresado no es numerico");
+
+	@Override
+	public boolean existeArticle(String nombre) {
+		boolean check = false;
+		try {
+			String sObjectService = "ArticleRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
+			.lookup(sObjectService);
+			check = oArticleRemoteMgt.existeArticle(nombre);
+		}catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
 		}
+		return check;
 	}
 
-	private static void hasNumbers(String s) throws HasNumberException{
-		if(Verificacion.hasNumbers(s)){
-			throw new HasNumberException("un campo ingresado tiene numeros que no deberia");
+	private void checkArticle(String nombre) throws ExisteArticleException{
+		if(existeArticle(nombre)){
+			throw new ExisteArticleException("El nombre "+nombre+" ya existe en Articulos");
 		}
 	}
-
-
 }

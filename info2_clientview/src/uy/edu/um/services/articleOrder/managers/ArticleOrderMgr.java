@@ -31,26 +31,17 @@ public class ArticleOrderMgr implements ArticleOrderMgt{
 	@Override
 	public void sendArticleOrder(ArticleOrderVO ao) {
 		try {
-
 			String sObjectService = "ArticleOrderRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
-
 			ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
-
 			System.out.println("articulo agregado");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
-
 	}
+
 
 }
