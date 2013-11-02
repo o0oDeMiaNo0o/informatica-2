@@ -23,4 +23,6 @@ public interface ClientMgt {
 	public ArrayList<ClientVO> allClients();
 
 	public ClientVO getClientVO(Client c);
+
+	public boolean existeClient(String nombre, int ci);
 }

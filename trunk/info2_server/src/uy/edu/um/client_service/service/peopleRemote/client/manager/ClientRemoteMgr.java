@@ -59,5 +59,11 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 		return cMgt.allClients();
 	}
 
+	@Override
+	public boolean existeCliente(String nombre, int ci) throws RemoteException {
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		return cMgt.existeClient(nombre, ci);
+	}
+
 
 }

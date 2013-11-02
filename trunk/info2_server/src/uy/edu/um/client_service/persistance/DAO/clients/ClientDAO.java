@@ -39,7 +39,7 @@ public class ClientDAO {
 			database.closeConnection();
 		}
 	}
-	
+
 
 
 //	public void getClients() {
@@ -79,7 +79,7 @@ public class ClientDAO {
 
 
 //}
-	
+
 	public ArrayList<Client> getClients() {
 
 		try {
@@ -101,7 +101,7 @@ public class ClientDAO {
 				String sDir = oResultSet.getString(6);
 				int tel = oResultSet.getInt(7);
 				BigDecimal desc = oResultSet.getBigDecimal(8);
-				
+
 				Client c = new Client(nCli,sName,sApellido,Ci,tel,sDir,sMail,desc);
 				toReturn.add(c);
 			}
@@ -120,7 +120,28 @@ public class ClientDAO {
 
 	}
 
-
-
+	public boolean existeCliente(String nombre, int ci){
+		boolean check = false;
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `clientes` WHERE  " +
+					"Nombre = '"+nombre+"';");
+			while(oResultSet.next()){
+				int ciTaken = oResultSet.getInt(2);
+				if(ci == ciTaken){
+					check = true;
+				}
+			}
+			oStatement.close();
+			database.closeConnection();
+			//Verificacion por consola
+			//System.out.println("Cliente agregado correctamente");
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			database.closeConnection();
+		}
+		return check;
+	}
 
 }
