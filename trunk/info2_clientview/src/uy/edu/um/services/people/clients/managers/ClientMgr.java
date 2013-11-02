@@ -142,25 +142,11 @@ public class ClientMgr implements ClientMgt{
 		if(Verificacion.hasNumbers(apellido)){
 			throw new HasNumberException("El campo apellido tiene numeros");
 		}
-		if(	Verificacion.hasSpaces(nombre)){
-			throw new HasBlanksException("El campo nombre tiene espacios");
-		}
 		if(Verificacion.hasSpaces(apellido)){
 			throw new HasBlanksException("El campo apellido tiene espacios");
 		}
 	}
 
-//	private static void isNumeric(String number) throws NotNumberException{
-//		if(Verificacion.isNumeric(number) == false){
-//			throw new NotNumberException("un campo ingresado no es numerico");
-//		}
-//	}
-//
-//	private static void hasNumbers(String s) throws HasNumberException{
-//		if(Verificacion.hasNumbers(s)){
-//			throw new HasNumberException("un campo ingresado tiene numeros que no deberia");
-//		}
-//	}
 
 
 }
