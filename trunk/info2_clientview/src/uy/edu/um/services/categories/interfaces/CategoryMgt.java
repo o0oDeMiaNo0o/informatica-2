@@ -2,6 +2,7 @@ package uy.edu.um.services.categories.interfaces;
 
 import java.util.ArrayList;
 
+import uy.edu.um.services.categories.exceptions.ExisteCategoryException;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public interface CategoryMgt {
@@ -12,6 +13,7 @@ public interface CategoryMgt {
 
 	public ArrayList<CategoryVO> allCategories();
 
+	public boolean existCategory(String nombre);
 }
 
 

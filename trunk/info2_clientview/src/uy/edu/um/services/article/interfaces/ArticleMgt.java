@@ -26,4 +26,6 @@ public interface ArticleMgt {
 
 	public void removeArticle(ArticleVO a);
 
+	public boolean existeArticle(String nombre);
+
 }

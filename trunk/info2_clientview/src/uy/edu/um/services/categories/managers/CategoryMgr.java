@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
+import uy.edu.um.services.categories.exceptions.ExisteCategoryException;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
+import uy.edu.um.services.exceptions.HasBlanksException;
 import uy.edu.um.services.exceptions.HasNumberException;
 import uy.edu.um.services.exceptions.NotNumberException;
 import uy.edu.um.value_object.categories.CategoryVO;
@@ -27,9 +29,13 @@ public class CategoryMgr implements CategoryMgt{
 	public CategoryVO createCategoryVO(String nombre) {
 		CategoryVO toReturn = null;
 		try {
-			hasNumbers(nombre);
+			checkCatgory(nombre);
 			toReturn = new CategoryVO(nombre);
 		} catch (HasNumberException e) {
+			e.printStackTrace();
+		} catch (ExisteCategoryException e){
+			e.printStackTrace();
+		} catch (HasBlanksException e) {
 			e.printStackTrace();
 		}
 		return toReturn;
@@ -82,17 +88,38 @@ public class CategoryMgr implements CategoryMgt{
 
 	}
 
-	//metodos auxiliares
+	@Override
+	public boolean existCategory(String nombre){
+		boolean checker = false;
+		try {
 
-	private static void isNumeric(String id) throws NotNumberException{
-		if(Verificacion.isNumeric(id)){
-			throw new NotNumberException("el campo ingresado no es numerico");
+			String sObjectService = "CategoryRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
+					.lookup(sObjectService);
+			checker = oCategoryRemoteMgt.existsCategory(nombre);
+			System.out.println("nada colapso");
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
 		}
+		return  checker;
 	}
 
-	private static void hasNumbers(String s) throws HasNumberException{
-		if(Verificacion.hasNumbers(s)){
-			throw new HasNumberException("un campo ingresado tiene numeros que no deberia");
+	//metodos auxiliares
+
+	private void checkCatgory(String nombre) throws ExisteCategoryException, HasNumberException, HasBlanksException{
+		if(existCategory(nombre) == true){
+			throw new ExisteCategoryException("Ya existe la categoria "+nombre);
+		}
+		if(Verificacion.hasNumbers(nombre)){
+			throw new HasNumberException("El campo nombre tiene numeros y no debe");
+		}
+		if(Verificacion.hasSpaces(nombre)){
+			throw new HasBlanksException("El campo nombre tiene espacios y no de debe");
 		}
 	}
 
