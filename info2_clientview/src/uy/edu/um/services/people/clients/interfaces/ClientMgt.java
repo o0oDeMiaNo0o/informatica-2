@@ -3,6 +3,7 @@ package uy.edu.um.services.people.clients.interfaces;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import uy.edu.um.services.exceptions.ExisteClientException;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public interface ClientMgt {
@@ -21,5 +22,7 @@ public interface ClientMgt {
 	public void getClient(int ci);
 
 	public ArrayList<ClientVO> allClients();
+
+	public void existeCliente(String nombre, int ci) throws ExisteClientException;
 
 }
