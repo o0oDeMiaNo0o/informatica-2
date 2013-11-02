@@ -57,7 +57,10 @@ public class CategoryMgr implements CategoryMgt{
 		return new CategoryVO(id,nombre);
 	}
 
-	private String encryptPass(String pass){
-		return null;
+	@Override
+	public boolean existCategory(String nombre) {
+		CategoryDAO dao = CategoryDAO.getInstance();
+		return dao.existeCategory(nombre);
 	}
+
 }

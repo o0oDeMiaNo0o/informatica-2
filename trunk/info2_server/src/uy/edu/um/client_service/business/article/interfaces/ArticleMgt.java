@@ -24,4 +24,6 @@ public interface ArticleMgt {
 	public ArticleVO getArticleVO(Article a);
 
 	public void descontinuarArticle(Article a);
+
+	public boolean existeArticle(String nombre);
 }

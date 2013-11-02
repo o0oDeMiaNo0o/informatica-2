@@ -103,5 +103,11 @@ public class ArticleMgr implements ArticleMgt{
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 	}
 
+	@Override
+	public boolean existeArticle(String nombre) {
+		ArticlesDAO dao = ArticlesDAO.getInstance();
+		return dao.existeArticle(nombre);
+	}
+
 
 }
