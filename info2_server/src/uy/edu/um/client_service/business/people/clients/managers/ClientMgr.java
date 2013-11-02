@@ -98,4 +98,10 @@ public class ClientMgr implements ClientMgt{
 		return new ClientVO(id,ci,nombre,apellido,tel,direccion,email,descuento);
 	}
 
+	@Override
+	public boolean existeClient(String nombre, int ci) {
+		ClientDAO dao = ClientDAO.getInstance();
+		return dao.existeCliente(nombre,ci);
+	}
+
 }

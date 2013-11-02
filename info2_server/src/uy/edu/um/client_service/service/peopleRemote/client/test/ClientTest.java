@@ -20,7 +20,7 @@ public class ClientTest {
 		int tel = 45246; int ci = 23456;
 		ClientVO toAdd = new ClientVO(nombre,apellido,ci,tel,direccion,email,descuento);
 		Client cAdd = cMgt.getClient(toAdd);
-		cMgt.addClient(cAdd);
+		System.out.println(cMgt.existeClient(nombre,ci));
 
 	}
 
