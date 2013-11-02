@@ -143,13 +143,10 @@ public class ArticleMgr implements ArticleMgt {
 
 			 oArticleRemoteMgt.editArtile(a);
 
-
 		}catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
 	}
 
 	//Metodos auxiliares
