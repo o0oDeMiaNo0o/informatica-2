@@ -2,6 +2,7 @@ package uy.edu.um.services.user.interfaces;
 
 import java.util.ArrayList;
 
+import uy.edu.um.services.exceptions.ErrorLoginException;
 import uy.edu.um.services.exceptions.ExisteUsuarioException;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -14,6 +15,8 @@ public interface UserMgt {
 	public void searchUser(String nombre);
 
 	public ArrayList<UserVO> allUsers();
+
+	public void login(String username, String psw) throws ErrorLoginException;
 
 	public boolean checkLogin(String username, String psw);
 
