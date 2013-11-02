@@ -66,7 +66,12 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		Article article = aMgt.getArticle(a);
 		aMgt.descontinuarArticle(article);
+	}
 
+	@Override
+	public boolean existeArticle(String nombre) throws RemoteException {
+		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
+		return aMgt.existeArticle(nombre);
 	}
 
 }

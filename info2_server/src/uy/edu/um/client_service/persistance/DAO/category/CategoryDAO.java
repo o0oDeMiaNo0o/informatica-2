@@ -25,7 +25,7 @@ public class CategoryDAO {
 
 	public void addCategory(Category c){
 		try{
-			
+
 			Statement oStatement = database.getConnection().createStatement();
 			oStatement.execute("INSERT INTO CATEGORIAS (Nombre) " +
 					"VALUES ('"+c.getNombre()+"');");
@@ -41,7 +41,7 @@ public class CategoryDAO {
 
 
 	}
-	
+
 	public ArrayList<Category> getCategory() {
 
 		try {
@@ -57,7 +57,7 @@ public class CategoryDAO {
 
 				int nCat = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
-				
+
 				Category c = new Category(sName,nCat);
 				toReturn.add(c);
 			}
@@ -75,9 +75,26 @@ public class CategoryDAO {
 		}
 
 	}
-	
-	
 
+	public boolean existeCategory(String nombre){
+		boolean check = false;
+		try{
+			Statement oStatement = database.getConnection().createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias WHERE Nombre = '"+nombre+"';");
+
+			while (oResultSet.next()) {
+				check = true;
+			}
+			oResultSet.close();
+			oStatement.close();
+			database.closeConnection();
+			return check;
+		}
+		catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
+		}
+	}
 
 }
 

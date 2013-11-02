@@ -76,7 +76,7 @@ public class ArticlesDAO {
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES WHERE `Estado` = 'Activo'");
 
 			while (oResultSet.next()) {
-				
+
 				int nid = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
 				BigDecimal nPrice = oResultSet.getBigDecimal(3);
@@ -99,9 +99,9 @@ public class ArticlesDAO {
 		}
 
 	}
-	
-	
-	public void editArticle(Article a){	
+
+
+	public void editArticle(Article a){
 		try{
 			Statement oStatement = database.getConnection().createStatement();
 			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
@@ -109,67 +109,85 @@ public class ArticlesDAO {
 			database.closeConnection();
 			addArticle(a);
 			System.out.println("Articulo editado correctamente");
-			
+
 		}
 		catch(SQLException e){
 			database.closeConnection();
 			throw new RuntimeException(e);
-		}	
-		
+		}
+
 	}
-	
+
 	public Category getCategory(int catId){
 		Category c=null;
-		
+
 		try{
 			Statement oStatement = database.getConnection().createStatement();
 			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
-			
+
 			while (oResultSet1.next()){
 				String sName = oResultSet1.getString(1);
 				c = new Category(sName,catId);
 
 			}
-			
+
 			oResultSet1.close();
 			oStatement.close();
-			
+
 		}
 		catch(SQLException e){
 			database.closeConnection();
 			throw new RuntimeException(e);
-			
+
 		}
 		return c;
-		
+
 	}
-	
+
 	public Article searchArticle(int id){
-	Article result = null;
-	try {
-		Statement oStatement = database.getConnection().createStatement();
-		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
-		
-		while(oResultSet.next()){
-			String sName = oResultSet.getString(2);
-			BigDecimal nPrice = oResultSet.getBigDecimal(3);
-			int catID = oResultSet.getInt(4);
-			Category c = getCategory(catID);
-			
-			result = new Article(id,sName,nPrice,c);
+		Article result = null;
+		try {
+			Statement oStatement = database.getConnection().createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
 
+			while(oResultSet.next()){
+				String sName = oResultSet.getString(2);
+				BigDecimal nPrice = oResultSet.getBigDecimal(3);
+				int catID = oResultSet.getInt(4);
+				Category c = getCategory(catID);
+
+				result = new Article(id,sName,nPrice,c);
+
+			}
+			oResultSet.close();
+			oStatement.close();
+
+
+		} catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
 		}
-		oResultSet.close();
-		oStatement.close();
-
-
-	} catch (SQLException e) {
-		database.closeConnection();
-		throw new RuntimeException(e);
+		return result;
 	}
-	return result;
 
 
-}
+	public boolean existeArticle(String nombre){
+		boolean result = false;
+		try {
+			Statement oStatement = database.getConnection().createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where Name = '"+nombre+"' "+
+					"and Estado = 'Activo';");
+
+			while(oResultSet.next()){
+				result = true;
+			}
+			oResultSet.close();
+			oStatement.close();
+		} catch (SQLException e) {
+			database.closeConnection();
+			throw new RuntimeException(e);
+		}
+		return result;
+	}
 
 }

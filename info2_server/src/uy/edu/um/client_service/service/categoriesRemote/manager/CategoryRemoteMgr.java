@@ -35,4 +35,10 @@ public class CategoryRemoteMgr implements CategoryRemoteMgt{
 		return cMgt.allCategories();
 	}
 
+	@Override
+	public boolean existsCategory(String nombre) throws RemoteException {
+		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
+		return cMgt.existCategory(nombre);
+	}
+
 }

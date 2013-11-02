@@ -15,4 +15,6 @@ public interface CategoryMgt {
 
 	public CategoryVO getCategoryVO(Category c);
 
+	public boolean existCategory(String nombre);
+
 }

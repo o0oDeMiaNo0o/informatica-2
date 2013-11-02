@@ -8,9 +8,8 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class test2 {
 	public static void main(String[] args){
-		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
+		String nombre = "Pizzas";
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
-		array = cMgt.allCategories();
-		int i = 34;
+		System.out.println(cMgt.existCategory(nombre));
 	}
 }
