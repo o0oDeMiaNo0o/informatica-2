@@ -11,4 +11,6 @@ public interface CategoryRemoteMgt extends Remote{
 	public void addCategory(CategoryVO c) throws RemoteException;
 
 	public ArrayList<CategoryVO> allCategories() throws RemoteException;
+
+	public boolean existsCategory(String nombre) throws RemoteException;
 }
