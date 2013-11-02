@@ -118,7 +118,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void existeCliente(String nombre, int ci) throws ExisteClientException {
+	public boolean existeCliente(String nombre, int ci) throws ExisteClientException {
 		boolean check = false;
 		try {
 			String sObjectService = "ClientRemoteMgr";
@@ -131,9 +131,7 @@ public class ClientMgr implements ClientMgt{
 			System.err.println("error:");
 			e.printStackTrace();
 		}
-		if(check == true){
-			throw new ExisteClientException("El cliente ya existe");
-		}
+		return check;
 	}
 
 	//METODOS DE LA CLASE

@@ -23,6 +23,7 @@ public interface ClientMgt {
 
 	public ArrayList<ClientVO> allClients();
 
-	public void existeCliente(String nombre, int ci) throws ExisteClientException;
+	public boolean existeCliente(String nombre, int ci) throws ExisteClientException;
+
 
 }
