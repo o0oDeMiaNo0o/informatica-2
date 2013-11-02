@@ -1,19 +1,28 @@
 package uy.edu.um.services.people.clients.test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.exceptions.ExisteClientException;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public class TestAllClients {
 	public static void main(String[] args){
-		ArrayList<ClientVO> allClients = new ArrayList<ClientVO>(10);
 		ClientMgt cMgt = ServiceFacade.getInstance().getClientMgt();
-		allClients = cMgt.allClients();
-		for (ClientVO c : allClients){
-			System.out.println(c.getNombre()+", "+c.getApellido()+", "+c.getCi()+", "+c.getDireccion()
-					+", "+c.getEmail());
+		String nombre = "pablo";
+		String apellido = "lk;j";
+		String direccion = "asdfgf";
+		String email = "asdfsdfh";
+		BigDecimal descuento = new BigDecimal(34);
+		int tel = 45246; int ci = 23456;
+		ClientVO toAdd = new ClientVO(nombre,apellido,ci,tel,direccion,email,descuento);
+		try {
+			System.out.println(cMgt.existeCliente(nombre,ci));
+		} catch (ExisteClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
