@@ -2,6 +2,7 @@ package uy.edu.um.services.user.interfaces;
 
 import java.util.ArrayList;
 
+import uy.edu.um.services.exceptions.ExisteUsuarioException;
 import uy.edu.um.value_object.user.UserVO;
 
 public interface UserMgt {
@@ -16,6 +17,6 @@ public interface UserMgt {
 
 	public boolean checkLogin(String username, String psw);
 
-	public boolean existUsername(String username);
+	public void checkUsername(String username) throws ExisteUsuarioException;
 
 }
