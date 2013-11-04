@@ -3,8 +3,8 @@ package uy.edu.um.services.people.clients.test;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.exceptions.ExisteClientException;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 

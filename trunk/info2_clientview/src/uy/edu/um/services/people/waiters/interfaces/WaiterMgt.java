@@ -7,7 +7,7 @@ import uy.edu.um.value_object.people.waiters.WaiterVO;
 public interface WaiterMgt {
 
 	public WaiterVO createWaiterVO(String nombre, String apellido,int ci, int tel, String direccion,
-			String mail, boolean trabajando);
+			String mail);
 
 	public void addWaiterVO(WaiterVO w);
 

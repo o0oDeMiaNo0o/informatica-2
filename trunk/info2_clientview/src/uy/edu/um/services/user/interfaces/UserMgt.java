@@ -2,8 +2,8 @@ package uy.edu.um.services.user.interfaces;
 
 import java.util.ArrayList;
 
-import uy.edu.um.services.exceptions.ErrorLoginException;
-import uy.edu.um.services.exceptions.ExisteUsuarioException;
+import uy.edu.um.exceptions.checks.ErrorLoginException;
+import uy.edu.um.exceptions.checks.ExisteUsuarioException;
 import uy.edu.um.value_object.user.UserVO;
 
 public interface UserMgt {

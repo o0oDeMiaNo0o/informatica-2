@@ -3,11 +3,12 @@ package uy.edu.um.services.user.managers;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import uy.edu.um.exceptions.Verificacion;
+
+import uy.edu.um.exceptions.checks.ErrorLoginException;
+import uy.edu.um.exceptions.checks.ExisteUsuarioException;
+import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
-import uy.edu.um.services.exceptions.ErrorLoginException;
-import uy.edu.um.services.exceptions.ExisteUsuarioException;
-import uy.edu.um.services.exceptions.HasBlanksException;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.value_object.user.UserVO;
 

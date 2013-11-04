@@ -22,7 +22,7 @@ public class WaiterMgr implements WaiterMgt{
 
 	@Override
 	public WaiterVO createWaiterVO(String nombre, String apellido, int ci, int tel,
-			String direccion, String mail, boolean trabajando) {
+			String direccion, String mail) {
 		return new WaiterVO(nombre,apellido,ci,tel,direccion,mail);
 
 	}
