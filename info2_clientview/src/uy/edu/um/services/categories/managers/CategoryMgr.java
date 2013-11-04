@@ -4,13 +4,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-import uy.edu.um.exceptions.Verificacion;
+import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NotNumberException;
+import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.services.categories.exceptions.ExisteCategoryException;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
-import uy.edu.um.services.exceptions.HasBlanksException;
-import uy.edu.um.services.exceptions.HasNumberException;
-import uy.edu.um.services.exceptions.NotNumberException;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryMgr implements CategoryMgt{

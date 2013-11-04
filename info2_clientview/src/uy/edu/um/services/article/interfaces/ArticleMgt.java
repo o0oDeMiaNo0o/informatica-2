@@ -3,8 +3,8 @@ package uy.edu.um.services.article.interfaces;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import uy.edu.um.services.exceptions.HasNumberException;
-import uy.edu.um.services.exceptions.NotNumberException;
+import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NotNumberException;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
