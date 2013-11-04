@@ -16,9 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryList extends BasicoAdmin {
@@ -82,6 +82,8 @@ public class CategoryList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaCategoria(textFieldID.getText())) {
+					CategoryMgt nuevo = ServiceFacade.getInstance().getCategoryMgt();
+					//nuevo.
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Categoria No Existe", contentPane);

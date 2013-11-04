@@ -1,50 +1,44 @@
 package uy.edu.um.ui.admin.creacion;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
-import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
-
-import java.net.URL;
-import javax.swing.SpinnerNumberModel;
+import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.value_object.table.TableVO;
 
 public class NewTable extends BasicoAdmin {
 
-	private JPanel contentPane;
-	private JLabel lblNewLabel;
-	private JButton btnCancelar;
-	private JSpinner spinner;
-	private TransparentPanel transparentPanelBotones;
-	private TransparentPanel transparentPanelImagen;
-	private ImagePanel imagePanel;
+	public URL libre = DirLocal.class.getResource("Libre.jpg");
+	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
+	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
+	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
+	public ArrayList<TableVO> mesas = cargoMesas();
 
-	private URL bernie = DirLocal.class.getResource("Bernie's.png");
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					NewTable frame = new NewTable();
-					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,90 +47,109 @@ public class NewTable extends BasicoAdmin {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public NewTable() {
-		setTitle("Nueva Categoria");
+
+		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		TransparentPanel transparentPanel = new TransparentPanel();
-		contentPane.add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][92px][grow]",
-				"[][grow][]"));
+		getContentPane().add(transparentPanel);
+		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
+				"[][][][][][][][grow]"));
 
-		lblNewLabel = new JLabel("Cantidad Mesas");
-		transparentPanel.add(lblNewLabel,
-				"cell 1 0,alignx center,aligny center");
+		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
+		transparentPanel.add(rigidArea, "cell 0 0");
 
-		spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0),
-				null, new Integer(1)));
-		transparentPanel.add(spinner, "cell 2 0,alignx center,aligny center");
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
 
-		transparentPanelBotones = new TransparentPanel();
-		contentPane.add(transparentPanelBotones, BorderLayout.SOUTH);
-		transparentPanelBotones.setLayout(new MigLayout("", "[440px,grow]",
-				"[29px]"));
+		JLabel lblMesas = new JLabel("MESAS");
+		lblMesas.setForeground(Color.WHITE);
+		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+		transparentPanel_1.add(lblMesas);
+		cargaBotones(transparentPanel);
 
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
+		TransparentPanel transparentPanel_2 = new TransparentPanel();
+		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
+		transparentPanel_2
+				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
 
-				int valor = (Integer) spinner.getValue();
-				if (valor != 0) {
-					// Agrego Mesa
-					TableMgt test = ServiceFacade.getInstance().getTableMgt();
-					for (int i = 0; i < valor; i++) {
-						test.addTable();
+		JButton btnNewButton = new JButton("Cancelar");
+		transparentPanel_2.add(btnNewButton,
+				"cell 0 0,alignx right,aligny center");
+		;
+
+	}
+
+	// Metodos auxiliares
+	private void cargaBotones(TransparentPanel panel) {
+
+		if (mesas.isEmpty()) {
+			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
+			lbltemp.setForeground(Color.WHITE);
+			panel.add(lbltemp, "cell 0 0");
+		} else {
+			int n = 1;
+			int i = 1, j = 1;
+			URL dir;
+			while (n < mesas.size()) {
+				String nombre = String.valueOf(mesas.get(n).getNumero());
+
+				if (mesas.get(n).isOcupado()) {
+					dir = ocupado;
+				} else {
+					dir = libre;
+				}
+				if (mesas.get(n).getNumero() == 0) {
+					dir = mostrador;
+					nombre = "MOSTRADOR";
+				}
+				final String nom2 = nombre;
+				ImagePanel imagePanel = new ImagePanel(dir);
+				panel.add(imagePanel, "cell " + i + " " + j);
+				imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
+				final TableVO mesa = mesas.get(n);
+				imagePanel.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if (mesa.isOcupado()) {
+							MensajeGenerico nuevo = new MensajeGenerico(
+									"No Es Posible Eliminar Una Mesa Ocupada",
+									contentPane);
+							nuevo.setVisible(true);
+						} else {
+							
+						}
+
 					}
 
-					MensajeGenerico test1 = new MensajeGenerico(spinner
-							.getValue() + " mesas agregadas correctamente",
-							contentPane);
-					test1.setVisible(true);
-					spinner.setValue(0);
-				} else {
-					MensajeGenerico test = new MensajeGenerico("Numero Vacio",
-							contentPane);
-					test.setVisible(true);
+				});
+
+				JLabel lblNewLabel = new JLabel(nombre);
+				lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+				imagePanel.add(lblNewLabel,
+						"cell 0 0,alignx center,aligny center");
+				i = i + 2;
+				if (i == 17) {
+					i = 1;
+					j = j + 2;
 				}
+				n++;
+
 			}
-		});
-		transparentPanelBotones.add(btnAceptar,
-				"cell 0 0,alignx right,aligny center");
-
-		btnCancelar = new JButton("Cancelar");
-		transparentPanelBotones.add(btnCancelar,
-				"cell 0 0,alignx right,aligny top");
-
-		transparentPanelImagen = new TransparentPanel();
-		contentPane.add(transparentPanelImagen, BorderLayout.NORTH);
-		transparentPanelImagen.setLayout(new MigLayout("", "[100px,grow]",
-				"[96px]"));
-
-		imagePanel = new ImagePanel(bernie);
-		transparentPanelImagen.add(imagePanel,
-				"cell 0 0,alignx center,aligny center");
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cerrar();
-			}
-
-		});
-
+		}
 	}
 
-	private void cerrar() {
-		this.dispose();
-
+	private JFrame devuelve() {
+		return this;
 	}
 
+	private ArrayList<TableVO> cargoMesas() {
+
+		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
+		return nueva.allTables();
+
+	}
 }

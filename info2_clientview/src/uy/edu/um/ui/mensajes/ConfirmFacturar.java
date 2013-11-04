@@ -1,4 +1,4 @@
-package uy.edu.um.ui.clasesAuxiliares;
+package uy.edu.um.ui.mensajes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,31 +12,26 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.usuarios.Facturacion;
 import uy.edu.um.value_object.oreder.OrderVO;
 
-public class ConfirmCerrarMesa extends JFrame {
-
+public class ConfirmFacturar extends JFrame {
 	private JPanel contentPane;
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
-		this.setVisible(false);
+		this.dispose();
 	}
-
-	/**
-	 * Launch the application.
-	 */
 
 	/**
 	 * Create the frame.
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmCerrarMesa(final OrderVO toSend) {
+	public ConfirmFacturar(final OrderVO toSend, final JFrame mesas) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(mesas);
 		setBounds(100, 100, 460, 254);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -47,7 +42,7 @@ public class ConfirmCerrarMesa extends JFrame {
 		ZonaPassword.setLayout(new MigLayout("", "[428px]",
 				"[grow][16px][grow]"));
 
-		JLabel lblContrasea = new JLabel("Confirma Cerrar Mesa?");
+		JLabel lblContrasea = new JLabel("\u00BFDesea Cerrar Mesa y Facturar?");
 		lblContrasea.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblContrasea.setForeground(Color.BLACK);
 		ZonaPassword.add(lblContrasea, "cell 0 1,alignx center,aligny top");
@@ -60,7 +55,11 @@ public class ConfirmCerrarMesa extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				Facturacion factura = new Facturacion(toSend);
+				factura.setVisible(true);
+				toSend.getTable().setOcupado(false);
+				mesas.dispose();
+				cerrar();
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
@@ -69,6 +68,7 @@ public class ConfirmCerrarMesa extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				toSend.getTable().setOcupado(true);
 				cerrar();
 			}
 		});

@@ -16,9 +16,9 @@ import javax.swing.SpinnerNumberModel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public class NewClienteU extends BasicoUsuario {

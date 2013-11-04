@@ -17,7 +17,6 @@ import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.admin.creacion.NewCategory;
 import uy.edu.um.ui.admin.creacion.NewClientA;
 import uy.edu.um.ui.admin.creacion.NewProduct;
@@ -29,6 +28,7 @@ import uy.edu.um.ui.admin.listas.ProductList;
 import uy.edu.um.ui.admin.listas.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.ConfirmSesion;
 import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoAdmin extends JFrame {

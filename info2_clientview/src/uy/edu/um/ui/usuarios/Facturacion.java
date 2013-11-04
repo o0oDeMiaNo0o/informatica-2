@@ -21,14 +21,15 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

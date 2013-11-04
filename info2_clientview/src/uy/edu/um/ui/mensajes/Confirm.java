@@ -1,4 +1,4 @@
-package uy.edu.um.ui.clasesAuxiliares;
+package uy.edu.um.ui.mensajes;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,11 +12,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.ui.usuarios.Facturacion;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.CurrentUser;
+import uy.edu.um.ui.usuarios.CajaPrincipal;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.user.UserVO;
 
-public class ConfirmFacturar extends JFrame {
+public class Confirm extends JFrame {
+
 	private JPanel contentPane;
+	UserVO user;
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
@@ -24,11 +30,16 @@ public class ConfirmFacturar extends JFrame {
 	}
 
 	/**
+	 * Launch the application.
+	 */
+
+	/**
 	 * Create the frame.
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmFacturar(final OrderVO toSend, final JFrame mesas) {
+	public Confirm(final OrderVO toSend, String text, final JFrame mesas) {
+
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(mesas);
@@ -42,7 +53,7 @@ public class ConfirmFacturar extends JFrame {
 		ZonaPassword.setLayout(new MigLayout("", "[428px]",
 				"[grow][16px][grow]"));
 
-		JLabel lblContrasea = new JLabel("\u00BFDesea Cerrar Mesa y Facturar?");
+		JLabel lblContrasea = new JLabel(text);
 		lblContrasea.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblContrasea.setForeground(Color.BLACK);
 		ZonaPassword.add(lblContrasea, "cell 0 1,alignx center,aligny top");
@@ -55,11 +66,20 @@ public class ConfirmFacturar extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion factura = new Facturacion(toSend);
-				factura.setVisible(true);
-				toSend.getTable().setOcupado(false);
-				mesas.dispose();
-				cerrar();
+				if (toSend.getArticulos() != null) {
+					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
+					nuevo.addOrder(toSend);
+					toSend.getTable().setOcupado(true);
+					ConfirmFacturar nueva = new ConfirmFacturar(toSend, mesas);
+					nueva.setVisible(true);
+					cerrar();
+				} else {
+					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
+							.getTable());
+					nuevo.setVisible(true);
+					mesas.dispose();
+					cerrar();
+				}
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
@@ -68,7 +88,6 @@ public class ConfirmFacturar extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				toSend.getTable().setOcupado(true);
 				cerrar();
 			}
 		});

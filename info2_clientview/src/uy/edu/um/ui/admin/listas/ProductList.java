@@ -21,7 +21,6 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.admin.edicion.EditRemoveA;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -29,6 +28,8 @@ import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
+
 import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

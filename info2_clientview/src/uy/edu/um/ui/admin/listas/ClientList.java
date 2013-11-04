@@ -16,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.admin.edicion.EditRemoveC;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.people.client.ClientVO;
 import uy.edu.um.value_object.user.UserVO;
 
