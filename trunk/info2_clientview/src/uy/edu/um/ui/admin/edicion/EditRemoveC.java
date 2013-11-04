@@ -19,11 +19,12 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
-import uy.edu.um.ui.MensajeGenerico;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.people.client.ClientVO;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 

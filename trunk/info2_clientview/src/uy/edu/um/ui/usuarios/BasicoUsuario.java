@@ -15,9 +15,9 @@ import javax.swing.JMenuItem;
 import javax.swing.border.EmptyBorder;
 
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.ui.ConfirmSesion;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.cocina.Cocina;
+import uy.edu.um.ui.mensajes.ConfirmSesion;
 import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoUsuario extends JFrame {

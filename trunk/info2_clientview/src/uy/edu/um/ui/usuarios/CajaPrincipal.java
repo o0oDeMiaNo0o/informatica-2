@@ -26,17 +26,18 @@ import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.CurrentUser;
-import uy.edu.um.ui.MensajeGenerico;
-import uy.edu.um.ui.clasesAuxiliares.ConfirmFacturar;
 import uy.edu.um.ui.clasesAuxiliares.Java2sAutoComboBox;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.ConfirmFacturar;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
