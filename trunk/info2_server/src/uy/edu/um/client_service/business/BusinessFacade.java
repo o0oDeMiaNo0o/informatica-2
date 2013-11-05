@@ -14,8 +14,6 @@ import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.order.managers.OrderMgr;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.business.people.clients.managers.ClientMgr;
-import uy.edu.um.client_service.business.people.waiters.interfaces.WaiterMgt;
-import uy.edu.um.client_service.business.people.waiters.managers.WaiterMgr;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.client_service.business.table.managers.TableMgr;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
@@ -27,7 +25,6 @@ import uy.edu.um.client_service.service.categoriesRemote.manager.CategoryRemoteM
 import uy.edu.um.client_service.service.derliveryRemote.manager.DeliveryRemoteMgr;
 import uy.edu.um.client_service.service.orderRemote.manager.OrderRemoteMgr;
 import uy.edu.um.client_service.service.peopleRemote.client.manager.ClientRemoteMgr;
-import uy.edu.um.client_service.service.peopleRemote.waiters.manager.WaiterRemoteMgr;
 import uy.edu.um.client_service.service.tableRemote.managers.TableRemoteMgr;
 import uy.edu.um.client_service.service.userRemote.manager.UserRemoteMgr;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
@@ -37,7 +34,6 @@ import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
-import uy.edu.um.interfaces.people.waiters.WaiterRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
 
@@ -101,14 +97,6 @@ public class BusinessFacade {
 
 	public UserMgt getUserMgt(){
 		return UserMgr.getInstance();
-	}
-
-	public WaiterRemoteMgt getWaiterRemote(){
-		return WaiterRemoteMgr.getInstance();
-	}
-
-	public WaiterMgt getWaiterMgt(){
-		return WaiterMgr.getInstance();
 	}
 
 	public BillRemoteMgt getBillRemote(){
