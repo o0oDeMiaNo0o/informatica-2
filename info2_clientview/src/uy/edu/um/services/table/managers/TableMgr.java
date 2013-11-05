@@ -94,5 +94,27 @@ public class TableMgr implements TableMgt{
 
 	}
 
+	@Override
+	public void removeTable(TableVO t) {
+		try {
+
+			String sObjectService = "TableRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+
+			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
+					.lookup(sObjectService);
+
+			oTableRemoteMgt.removeTable(t);
+
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+
+		}
+
+
+	}
+
 
 }
