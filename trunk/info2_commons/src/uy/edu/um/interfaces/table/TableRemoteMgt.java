@@ -23,4 +23,6 @@ public interface TableRemoteMgt extends Remote{
 
 	public void removeTable(TableVO t) throws RemoteException;
 
+	public void setLibre(TableVO t) throws RemoteException;
+
 }
