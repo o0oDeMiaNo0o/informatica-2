@@ -60,4 +60,12 @@ public class TableRemoteMgr implements TableRemoteMgt{
 
 	}
 
+	@Override
+	public void setOcupado(TableVO t) throws RemoteException {
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		Table ocupar = tMgt.getTable(t);
+		tMgt.setOcupado(ocupar);
+
+	}
+
 }
