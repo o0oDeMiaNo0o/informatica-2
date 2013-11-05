@@ -116,5 +116,27 @@ public class UserMgr implements UserMgt{
 			throw new ErrorLoginException("Usuario y contraseña no coinciden");
 		}
 	}
+
+	@Override
+	public UserVO isUser(String nombre) {
+		UserVO toReturn = null;
+		// TODO Auto-generated method stub
+		try {
+			String sObjectService = "UserRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
+			toReturn = oUserRemoteMgt.getUser(nombre);
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+		}
+		return toReturn;
+	}
+
+	@Override
+	public boolean isAdmin(String nombre) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

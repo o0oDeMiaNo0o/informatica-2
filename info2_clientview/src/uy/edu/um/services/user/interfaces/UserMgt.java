@@ -23,4 +23,8 @@ public interface UserMgt {
 
 	public void checkUsername(String username) throws ExisteUsuarioException;
 
+	public boolean isAdmin(String nombre);
+
+	public UserVO isUser(String nombre);
+
 }
