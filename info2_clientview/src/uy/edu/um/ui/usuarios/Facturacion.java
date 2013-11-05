@@ -209,17 +209,19 @@ public class Facturacion extends BasicoUsuario {
 		return null;
 	}
 
-	private String cuentaPrecio(OrderVO toSend) {
+	private String cuentaPrecio(ArrayList<OrderVO> toSend) {
 		BigDecimal subTotal = new BigDecimal(0);
-		ArrayList<ArticleOrderVO> ao = toSend.getArticulos();
-		for (ArticleOrderVO a : ao) {
-			if (a != null) {
-				ArticleVO article = a.getArticle();
-				BigDecimal price = article.getPrecio();
-				int c = a.getCantidad();
-				BigDecimal cantidad = new BigDecimal(c);
-				BigDecimal temp = cantidad.multiply(price);
-				subTotal = subTotal.add(temp);
+		for(OrderVO o : toSend){
+			ArrayList<ArticleOrderVO> ao = o.getArticulos();
+			for (ArticleOrderVO a : ao) {
+				if (a != null) {
+					ArticleVO article = a.getArticle();
+					BigDecimal price = article.getPrecio();
+					int c = a.getCantidad();
+					BigDecimal cantidad = new BigDecimal(c);
+					BigDecimal temp = cantidad.multiply(price);
+					subTotal = subTotal.add(temp);
+				}
 			}
 		}
 		montoPagar = subTotal;
