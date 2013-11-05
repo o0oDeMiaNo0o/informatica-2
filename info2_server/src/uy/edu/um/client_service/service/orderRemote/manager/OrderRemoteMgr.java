@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
+import uy.edu.um.client_service.business.table.entities.Table;
+import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class OrderRemoteMgr implements OrderRemoteMgt{
 
@@ -64,6 +67,14 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	public void rejected(OrderVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		Table toGetOrders = tMgt.getTable(t);
+		return oMgt.getOrderTable(toGetOrders);
 	}
 
 }
