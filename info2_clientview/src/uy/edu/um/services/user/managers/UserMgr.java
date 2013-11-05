@@ -41,19 +41,14 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public UserVO createUserVO(String nombre, String password, boolean admin) {
+	public UserVO createUserVO(String nombre, String password, boolean admin) throws HasBlanksException {
 		UserVO u = null;
-		try{
-			checkUsername(nombre);
-			checkBlanks(nombre);
-			checkBlanks(password);
-			u = new UserVO(nombre,password,admin);
-			return u;
-		}catch(ExisteUsuarioException e){
-			e.printStackTrace();
-		}catch(HasBlanksException e){
-			e.printStackTrace();
+		if(Verificacion.hasSpaces(nombre)){
+			throw new HasBlanksException("el nombre de usuario contiene espacios");
+		}if(Verificacion.hasSpaces(password)){
+			throw new HasBlanksException("el password tiene espacios");
 		}
+		u = new UserVO(nombre,password,admin);
 		return u;
 	}
 
@@ -100,7 +95,6 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void checkUsername(String username) throws ExisteUsuarioException{
 		boolean toReturn = false;
-		// TODO Auto-generated method stub
 		try {
 			String sObjectService = "UserRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
@@ -112,12 +106,6 @@ public class UserMgr implements UserMgt{
 		}
 		if(toReturn == true){
 			throw new ExisteUsuarioException("Ya existe un usuario con el nombre "+username);
-		}
-	}
-
-	public static void checkBlanks(String s) throws HasBlanksException{
-		if(Verificacion.hasSpaces(s)){
-			throw new HasBlanksException("la contraseña y/o el nombre de usuario tiene espacios en blanco");
 		}
 	}
 

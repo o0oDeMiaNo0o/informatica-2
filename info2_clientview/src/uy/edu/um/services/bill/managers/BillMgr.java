@@ -9,7 +9,6 @@ import uy.edu.um.services.bill.interfaces.BillMgt;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.people.waiters.WaiterVO;
 import uy.edu.um.value_object.table.TableVO;
 
 public class BillMgr implements BillMgt{
@@ -28,30 +27,22 @@ public class BillMgr implements BillMgt{
 	@Override
 	public void addBillVO(BillVO b) {
 		try {
-
 			String sObjectService = "BillRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oBillRemoteMgt.addBill(b);
-
 			System.out.println("Factura agregada");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
 
 	}
 
 	@Override
-	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c,
-			WaiterVO w, TableVO t) {
-		BillVO toReturn = new BillVO(orders,c,w,t);
+	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t) {
+		BillVO toReturn = new BillVO(orders,c,t);
 		return toReturn;
 	}
 
