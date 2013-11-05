@@ -161,13 +161,13 @@ public class Facturacion extends BasicoUsuario {
 						.parseInt(textFieldCliente.getText()));
 				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
 				if (cliente != null) {
-					BillVO factura = nuevo.createBillVO(toSend, cliente, mesa);
+					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente, mesa);
 					nuevo.addBillVO(factura);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
 					msg.setVisible(true);
 				} else {
-					BillVO factura = nuevo.createBillVO(toSend, cliente, mesa);
+					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente, mesa);
 					nuevo.addBillVO(factura);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
