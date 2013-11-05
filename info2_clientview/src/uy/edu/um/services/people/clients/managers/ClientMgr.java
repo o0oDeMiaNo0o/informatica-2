@@ -10,6 +10,7 @@ import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 
@@ -47,7 +48,7 @@ public class ClientMgr implements ClientMgt{
 	public void addClientVO(ClientVO c) {
 		try {
 			String sObjectService = "ClientRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addClient(c);
@@ -70,7 +71,7 @@ public class ClientMgr implements ClientMgt{
 
 			String sObjectService = "ClientRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -90,7 +91,7 @@ public class ClientMgr implements ClientMgt{
 	public void editClientVO(ClientVO c) {
 		try {
 			String sObjectService = "ClientRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addClient(c);
@@ -104,7 +105,7 @@ public class ClientMgr implements ClientMgt{
 	public void removeClientVO(ClientVO c) {
 		try {
 			String sObjectService = "ClientRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oClientRemoteMgt.removeClient(c);
@@ -120,7 +121,7 @@ public class ClientMgr implements ClientMgt{
 		boolean check = false;
 		try {
 			String sObjectService = "ClientRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			check = oClientRemoteMgt.existeCliente(nombre,ci);

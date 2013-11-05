@@ -5,8 +5,8 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.interfaces.table.TableRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
-import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 
 public class TableMgr implements TableMgt{
@@ -28,7 +28,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -54,7 +54,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -77,7 +77,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -101,7 +101,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);

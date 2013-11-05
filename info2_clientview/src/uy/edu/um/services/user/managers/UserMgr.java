@@ -9,6 +9,7 @@ import uy.edu.um.exceptions.checks.ExisteUsuarioException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -29,7 +30,7 @@ public class UserMgr implements UserMgt{
 	public void addUser(UserVO u) {
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			oUserRemoteMgt.addUser(u);
 			System.out.println("usuario agregado");
@@ -62,7 +63,7 @@ public class UserMgr implements UserMgt{
 		ArrayList<UserVO> array = new ArrayList<UserVO>(10);
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			array = oUserRemoteMgt.allUsers();
@@ -79,7 +80,7 @@ public class UserMgr implements UserMgt{
 		// TODO Auto-generated method stub
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkLogin(username,psw);
 			if(toReturn == true){
@@ -97,7 +98,7 @@ public class UserMgr implements UserMgt{
 		boolean toReturn = false;
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkUsername(username);
 		} catch (Exception e) {
