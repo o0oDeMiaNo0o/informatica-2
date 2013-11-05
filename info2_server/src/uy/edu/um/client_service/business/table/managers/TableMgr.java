@@ -84,5 +84,11 @@ public class TableMgr implements TableMgt{
 
 	}
 
+	@Override
+	public void setLibre(Table t) {
+		TableDAO dao = TableDAO.getInstance();
+		dao.setLibre(t);
+	}
+
 
 }

@@ -26,4 +26,6 @@ public interface TableMgt {
 
 	public void setOcupado(Table t);
 
+	public void setLibre(Table t);
+
 }
