@@ -35,7 +35,6 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private TransparentPanel transparentPanel_1;
 	private JButton btnNewButton;
-	private ArrayList<UserVO> listaUsers = cargaUsers();
 
 	/**
 	 * Launch the application.
@@ -91,17 +90,16 @@ public class Login extends JFrame {
 					String pass = conviertePass(passwordField.getPassword());
 					String nombre = textField.getText();
 					if (nuevo.checkLogin(nombre, pass)) {
+						UserVO user = nuevo.isUser(nombre);
 						if (user.isAdmin()) {
-							user = getUserVO(textField.getText(), pass);
 							CurrentUser.setUser(user);
-							MainAdmin nuevo = new MainAdmin();
-							nuevo.setVisible(true);
+							MainAdmin nuevoVentana = new MainAdmin();
+							nuevoVentana.setVisible(true);
 							cerrar();
 						} else {
-							user = getUserVO(textField.getText(), pass);
 							CurrentUser.setUser(user);
-							MainUsuario nuevo = new MainUsuario();
-							nuevo.setVisible(true);
+							MainUsuario nuevoVentana = new MainUsuario();
+							nuevoVentana.setVisible(true);
 							cerrar();
 						}
 					}
@@ -119,32 +117,31 @@ public class Login extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 				String pass = conviertePass(passwordField.getPassword());
-				if (chequeaUser(textField.getText(), pass)) {
-					UserVO user = getUserVO(textField.getText(), pass);
+				String nombre = textField.getText();
+				if (nuevo.checkLogin(nombre, pass)) {
+					UserVO user = nuevo.isUser(nombre);
 					if (user.isAdmin()) {
-						user = getUserVO(textField.getText(), pass);
 						CurrentUser.setUser(user);
-						MainAdmin nuevo = new MainAdmin();
-						nuevo.setVisible(true);
+						MainAdmin nuevoVentana = new MainAdmin();
+						nuevoVentana.setVisible(true);
 						cerrar();
 					} else {
-						user = getUserVO(textField.getText(), pass);
 						CurrentUser.setUser(user);
-						MainUsuario nuevo = new MainUsuario();
-						nuevo.setVisible(true);
+						MainUsuario nuevoVentana = new MainUsuario();
+						nuevoVentana.setVisible(true);
 						cerrar();
 					}
 				}
 			}
-
 		});
 		transparentPanel_1
 				.add(btnNewButton, "cell 0 0,alignx right,aligny top");
 	}
 
 	// Metodos Auxiliares
-	
+
 	// Convierte password a String
 	private String conviertePass(char[] password) {
 		String psw = "";
@@ -172,11 +169,11 @@ public class Login extends JFrame {
 	}
 
 
-
+*/
 	private void cerrar() {
 		this.dispose();
 	}
-
+/*
 	private UserVO getUserVO(String nombre, String psw) {
 		UserVO toReturn = null;
 		ArrayList<UserVO> allUsers = cargaUsers();
