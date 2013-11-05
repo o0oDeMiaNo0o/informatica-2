@@ -20,8 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import javazoom.jl.player.jlp;
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.musica.DirLocalMusica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -35,6 +36,9 @@ public class CocinaUsuarios extends BasicoUsuario {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
+	private jlp mReproductor = null;
+	private String dirMusica = DirLocalMusica.class
+			.getResource("Cocina.mp3").toString();
 
 	/**
 	 * Launch the application.
@@ -45,6 +49,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 				try {
 					CocinaUsuarios frame = new CocinaUsuarios();
 					frame.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,6 +61,13 @@ public class CocinaUsuarios extends BasicoUsuario {
 	 * Create the frame.
 	 */
 	public CocinaUsuarios() {
+		String[] args = new String[1];
+
+		args[0] = dirMusica;
+
+		mReproductor = jlp.createInstance(args);
+		run();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -194,5 +206,24 @@ public class CocinaUsuarios extends BasicoUsuario {
 	private ArrayList<OrderVO> cargaOrdenes() {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
+	}
+
+	// Musica dj
+	public void run() {
+
+		try {
+
+			while (true) {
+
+				mReproductor.play();
+
+				Thread.sleep(1000); // esperar un segundo y volver a reproducir
+
+			}
+
+		} catch (Exception e) {
+			// TODO: Add catch code
+			e.printStackTrace();
+		}
 	}
 }
