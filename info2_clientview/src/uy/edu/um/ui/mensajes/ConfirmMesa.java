@@ -75,10 +75,7 @@ public class ConfirmMesa extends JFrame {
 					nueva.setVisible(true);
 					cerrar();
 				} else {
-					OrderMgt ordenes = ServiceFacade.getInstance()
-							.getOrderMgt();
-					ArrayList<OrderVO> arrayOrdenes = ordenes.allOrders();
-					if (arrayOrdenes.get(0).getArticulos() != null) {
+					if (toSend.getArticulos() != null) {
 						OrderMgt nuevo = ServiceFacade.getInstance()
 								.getOrderMgt();
 						nuevo.addOrder(toSend);
