@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.26-bin.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/info2_commons"/>
+	<classpathentry kind="lib" path="commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="commons-pool-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

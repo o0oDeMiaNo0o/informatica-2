@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.persistance.DAO.order;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +11,7 @@ import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.users.entities.User;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.client_service.persistance.DAO.articleOrderDAO.ArticleOrderDAO;
 import uy.edu.um.client_service.persistance.DAO.mesas.TableDAO;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
@@ -18,7 +19,7 @@ import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
 public class OrderDAO {
 	
 	private static OrderDAO instance = null;
-	private JDBC database = JDBC.getInstance();
+	private Connection con = null;
 	
 	public static OrderDAO getInstance(){
 		if (instance == null){
@@ -33,8 +34,9 @@ public class OrderDAO {
 	
 	public void addOrder(Order orden){
 		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList <ArticleOrder> articles = orden.getArticles();
-			Statement oStatement = database.getConnection().createStatement();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO pedido (Mesa_idMesa,Users_Username,Especificaciones) VALUES ("+orden.getTable().getNumero()+",'"+orden.getUser().getUsername()+"','"+orden.getSpec()+"');");
 		
 
@@ -48,13 +50,23 @@ public class OrderDAO {
 			}
 			
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("Orden agregada correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 
@@ -63,18 +75,27 @@ public class OrderDAO {
 	public void cambioEstadoOrder(Order o){
 		try {
 			String estado=defEstado(o.getEstado());
-			
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE Pedido SET `Estado` = '"+estado+"' WHERE Pedido.idpedido="+o.getId()+";");
 			oStatement.close();
-			database.closeConnection();
 			// Consola
 			System.out.println("El pedido "+o.getId()+" esta "+estado+".");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			database.closeConnection();
-			
+			e.printStackTrace();			
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		
 		
@@ -89,7 +110,8 @@ public class OrderDAO {
 		UserDAO uDAO = UserDAO.getInstance();
 		
 		try {
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido");
 
 			while (oResultSet.next()) {
@@ -110,10 +132,8 @@ public class OrderDAO {
 
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 		}
 			 catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
 		}
 		return toReturn;

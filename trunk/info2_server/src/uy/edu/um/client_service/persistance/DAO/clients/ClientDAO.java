@@ -1,18 +1,18 @@
 package uy.edu.um.client_service.persistance.DAO.clients;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.people.clients.entities.Client;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 
 public class ClientDAO {
 
-	private JDBC database = JDBC.getInstance();
-
+	private Connection connection = null;
 	private static ClientDAO instance = null;
 
 	private ClientDAO(){};
@@ -26,67 +26,41 @@ public class ClientDAO {
 
 	public void addClient(Client cliente){
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			connection = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = connection.createStatement();
 			oStatement.execute("INSERT INTO CLIENTES (CI, NOMBRE, APELLIDO, MAIL, DIRECCION, TELEFONO, DESCUENTO) " +
 					"VALUES ("+cliente.getCi()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"','"+cliente.getMail()+"','"+cliente.getDireccion()+"',"+cliente.getTel()+",'"+cliente.getDescuento()+"');");
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (connection != null) {
+
+				try {
+
+					connection.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 	}
 
 
-
-//	public void getClients() {
-//
-//		try {
-//
-//			Statement oStatement = database.getConnection().createStatement();
-//
-//
-//			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM CLIENTES");
-//
-//			while (oResultSet.next()) {
-//
-//				int nId = oResultSet.getInt(1);
-//				String sName = oResultSet.getString(2);
-//				String sApellido = oResultSet.getString(3);
-//				String sMail = oResultSet.getString(4);
-//				String sDir = oResultSet.getString(5);
-//				int ntel = oResultSet.getInt(6);
-//
-//				System.out.println("Cient. Ci: " + nId +" Nombre: "+sName+ " " + sApellido + ". Mail: " + sMail+" Direccion: "+sDir+". Telefono:"+ntel);
-//
-//			}
-//
-//			oResultSet.close();
-//			oStatement.close();
-//			database.closeConnection();
-//
-//
-//		}
-//			 catch (SQLException e) {
-//			database.closeConnection();
-//			throw new RuntimeException(e);
-//
-//		}
-//
-
-
-//}
 
 	public ArrayList<Client> getClients() {
 
 		try {
 
 			ArrayList<Client> toReturn = new ArrayList<Client>();
-
-			Statement oStatement = database.getConnection().createStatement();
+			
+			connection = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = connection.createStatement();
 
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Clientes");
@@ -108,14 +82,22 @@ public class ClientDAO {
 
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 			return toReturn;
 		}
 			 catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (connection != null) {
 
+				try {
 
+					connection.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 	}
@@ -123,7 +105,8 @@ public class ClientDAO {
 	public boolean existeCliente(String nombre, int ci){
 		boolean check = false;
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			connection = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = connection.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `clientes` WHERE  " +
 					"Nombre = '"+nombre+"';");
 			while(oResultSet.next()){
@@ -133,15 +116,25 @@ public class ClientDAO {
 				}
 			}
 			oStatement.close();
-			database.closeConnection();
-			//Verificacion por consola
-			//System.out.println("Cliente agregado correctamente");
+			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (connection != null) {
+
+				try {
+
+					connection.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return check;
+		
 	}
 
 }

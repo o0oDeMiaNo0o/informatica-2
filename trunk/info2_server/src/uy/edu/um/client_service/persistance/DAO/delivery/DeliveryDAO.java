@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.persistance.DAO.delivery;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,9 +9,8 @@ import java.util.Date;
 
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.delivery.entities.Delivery;
-import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.users.entities.User;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.client_service.persistance.DAO.articleOrderDAO.ArticleOrderDAO;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
 
@@ -18,7 +18,7 @@ public class DeliveryDAO {
 	
 	private static DeliveryDAO instance = null;
 
-	JDBC database = JDBC.getInstance();
+	private Connection con = null;
 
 
 	//obtener instancia
@@ -38,7 +38,8 @@ public class DeliveryDAO {
 			}
 			
 			ArrayList <ArticleOrder> articles = d.getArticles();
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO delivery (Users_Username,Especificaciones,EnCocina) VALUES ('"+d.getUser().getUsername()+"','"+d.getSpecs()+"',"+enCocina+");");
 		
 
@@ -52,13 +53,23 @@ public class DeliveryDAO {
 			}
 			
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("Delivery agregada correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 
@@ -70,7 +81,8 @@ public class DeliveryDAO {
 		UserDAO uDAO = UserDAO.getInstance();
 		
 		try {
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Delivery");
 
 			while (oResultSet.next()) {
@@ -99,11 +111,21 @@ public class DeliveryDAO {
 
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 		}
 			 catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return toReturn;
 	}
@@ -112,16 +134,27 @@ public class DeliveryDAO {
 		try {
 			String estado=defEstado(o.getEstado());
 			
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE Delivery SET `Estado` = '"+estado+"' WHERE Delivery.idDelivery="+o.getId()+";");
 			oStatement.close();
-			database.closeConnection();
 			// Consola
 			System.out.println("El delivery "+o.getId()+" esta "+estado+".");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+			try {
+
+				con.close();
+
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			}
 		}
 		
 		
