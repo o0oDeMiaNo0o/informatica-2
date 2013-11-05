@@ -1,6 +1,7 @@
 package uy.edu.um.client_service.persistance.DAO.articles;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,13 +9,13 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.categories.entities.Category;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 
 public class ArticlesDAO {
 
 	private static ArticlesDAO instance = null;
 
-	JDBC database = JDBC.getInstance();
+	private Connection con = null;
 
 	//constructor
 	public ArticlesDAO() {
@@ -31,17 +32,28 @@ public class ArticlesDAO {
 
 	public void addArticle(Article articulo){
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement =con.createStatement();
 			oStatement.execute("INSERT INTO ARTICLES ( NAME, PRICE, Categorias_idCategorias) " +
 					"VALUES ('"+articulo.getNombre()+"',"+articulo.getPrecio()+","+articulo.getCategory().getId()+");");
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("articulo agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 
@@ -49,18 +61,26 @@ public class ArticlesDAO {
 
 	public void deleteArticle(Article articulo){
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+articulo.getId()+";");
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("articulo eliminado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
 		}
+		finally{
+			if (con != null) {
 
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
+		}
 
 	}
 
@@ -69,8 +89,8 @@ public class ArticlesDAO {
 		try {
 
 			ArrayList<Article> toReturn = new ArrayList<Article>(10);
-
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES WHERE `Estado` = 'Activo'");
@@ -88,14 +108,22 @@ public class ArticlesDAO {
 
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 			return toReturn;
 		}
 			 catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
 
+				try {
 
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 	}
@@ -103,17 +131,28 @@ public class ArticlesDAO {
 
 	public void editArticle(Article a){
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
 			oStatement.close();
-			database.closeConnection();
 			addArticle(a);
 			System.out.println("Articulo editado correctamente");
 
 		}
 		catch(SQLException e){
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 	}
@@ -122,7 +161,8 @@ public class ArticlesDAO {
 		Category c=null;
 
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
 
 			while (oResultSet1.next()){
@@ -136,9 +176,20 @@ public class ArticlesDAO {
 
 		}
 		catch(SQLException e){
-			database.closeConnection();
 			throw new RuntimeException(e);
 
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return c;
 
@@ -147,7 +198,8 @@ public class ArticlesDAO {
 	public Article searchArticle(int id){
 		Article result = null;
 		try {
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
 
 			while(oResultSet.next()){
@@ -164,8 +216,19 @@ public class ArticlesDAO {
 
 
 		} catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return result;
 	}
@@ -174,7 +237,8 @@ public class ArticlesDAO {
 	public boolean existeArticle(String nombre){
 		boolean result = false;
 		try {
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where Name = '"+nombre+"' "+
 					"and Estado = 'Activo';");
 
@@ -184,8 +248,19 @@ public class ArticlesDAO {
 			oResultSet.close();
 			oStatement.close();
 		} catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return result;
 	}

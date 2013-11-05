@@ -1,19 +1,18 @@
 package uy.edu.um.client_service.persistance.DAO.users;
 
-import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.users.entities.User;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 
 public class UserDAO {
 
 	private static UserDAO instance = null;
-	private JDBC database = JDBC.getInstance();
+	private Connection con = null;
 
 	private UserDAO(){}
 
@@ -32,24 +31,36 @@ public class UserDAO {
 			if (usuario.isAdmin()){
 				adm = 1;
 			}
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO USERS (USERNAME, PASSWORD, ADMIN) " +
 					"VALUES ('"+usuario.getUsername()+"','"+usuario.getPassword()+"','"+adm+"');");
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 	}
 
 	public User searchUser(String Username){
 		User u = null;
 		try {
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where `Users`.`Username` = '"+Username+"';");
 
 			while(oResultSet.next()){
@@ -67,8 +78,19 @@ public class UserDAO {
 			oStatement.close();
 		}
 		catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return u;
 	}
@@ -79,7 +101,8 @@ public class UserDAO {
 		ArrayList<Boolean> checked = new ArrayList<Boolean>();
 
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where (`Users`.`Username` = '"+u.getUsername()+"') AND (`Vigente`='Activo');");
 
 			while(oResultSet.next()){
@@ -99,22 +122,33 @@ public class UserDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 
 		}
 		catch(SQLException e){
-			database.closeConnection();
 			throw new RuntimeException(e);
-
 		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
+		}
+		
 		return checked;
 	}
 
 	public ArrayList<User> allUsers() {
 
 		try {
+			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList<User> toReturn = new ArrayList<User>();
-			Statement oStatement = database.getConnection().createStatement();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Users WHERE `Vigente` = 'Activo'");
 
 			while (oResultSet.next()) {
@@ -133,14 +167,22 @@ public class UserDAO {
 
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 			return toReturn;
 		}
 		catch (SQLException e) {
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
 
+				try {
 
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 	}
@@ -148,7 +190,8 @@ public class UserDAO {
 	public boolean checkUsername(String username){
 		boolean check = false;
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT Username FROM `Users` where (`Users`.`Username` = '"+username+"') AND (`Vigente`='Activo');");
 
 			while(oResultSet.next()){
@@ -156,13 +199,22 @@ public class UserDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 
 		}
 		catch(SQLException e){
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
 
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return check;
 	}
@@ -170,7 +222,8 @@ public class UserDAO {
 	public boolean checklogin(String username, String psw){
 		boolean check = false;
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT Username, Password FROM `Users` where (`Users`.`Username` = '"+username+"') AND (`Vigente`='Activo');");
 
 			while(oResultSet.next()){
@@ -181,13 +234,22 @@ public class UserDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
-			database.closeConnection();
 
 		}
 		catch(SQLException e){
-			database.closeConnection();
 			throw new RuntimeException(e);
+		}
+		finally{
+			if (con != null) {
 
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 		return check;
 	}

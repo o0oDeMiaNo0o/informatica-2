@@ -1,21 +1,19 @@
 package uy.edu.um.client_service.persistance.DAO.mesas;
 
-import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import uy.edu.um.client_service.business.article.entities.Article;
-import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.table.entities.Table;
-import uy.edu.um.client_service.persistance.JDBC;
+import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 
 
 public class TableDAO {
 	
 	private static TableDAO instance = null;
-	JDBC database = JDBC.getInstance();
+	private Connection con = null;
 	
 	public static TableDAO getInstance(){
 		if (instance == null){
@@ -26,16 +24,27 @@ public class TableDAO {
 	
 	public void addTable(){
 		try{
-			Statement oStatement = database.getConnection().createStatement();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO Mesa (Estado) VALUES (DEFAULT);");
 			oStatement.close();
-			database.closeConnection();
 			//Verificacion por consola
 			System.out.println("Mesa agregada correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 
 
@@ -44,32 +53,54 @@ public class TableDAO {
 	public void setOcupada(Table mesa){
 		
 		try{
-		Statement oStatement = database.getConnection().createStatement();
+		con = DatabaseConnectionMgr.getInstance().getConnection();
+		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado = 'Ocupado' WHERE Mesa.idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
-		database.closeConnection();
 		System.out.println("Mesa "+mesa.getNumero()+", esta ocupada");
 		
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 	}
 	
 public void setLibre(Table mesa){
 		
 		try{
-		Statement oStatement = database.getConnection().createStatement();
+		con = DatabaseConnectionMgr.getInstance().getConnection();
+		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado='Libre' WHERE idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
-		database.closeConnection();
 		System.out.println("Mesa "+mesa.getNumero()+", esta libre");
 		
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 	}
 
@@ -78,7 +109,8 @@ public ArrayList<Table> EstadosMesas(){
 	ArrayList<Table> mesas = new ArrayList<Table>();
 	
 	try{
-		Statement oStatement = database.getConnection().createStatement();
+		con = DatabaseConnectionMgr.getInstance().getConnection();
+		Statement oStatement = con.createStatement();
 		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa");		
 		while (oResultSet.next()) {
 			boolean oc=false;
@@ -94,12 +126,22 @@ public ArrayList<Table> EstadosMesas(){
 		
 		
 		oStatement.close();
-		database.closeConnection();
 		
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			database.closeConnection();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
 		}
 	
 	return mesas;
@@ -110,7 +152,8 @@ public ArrayList<Table> EstadosMesas(){
 public Table searchTable(int id){
 	Table result = null;
 	try {
-		Statement oStatement = database.getConnection().createStatement();
+		con = DatabaseConnectionMgr.getInstance().getConnection();
+		Statement oStatement = con.createStatement();
 		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Mesa` where `Mesa`.`idMesa` = "+id+";");
 
 		while(oResultSet.next()){
@@ -128,8 +171,19 @@ public Table searchTable(int id){
 		oStatement.close();
 	}
 	catch (SQLException e) {
-		database.closeConnection();
 		throw new RuntimeException(e);
+	}
+	finally{
+		if (con != null) {
+
+			try {
+
+				con.close();
+
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+	}
 	}
 	return result;
 }
