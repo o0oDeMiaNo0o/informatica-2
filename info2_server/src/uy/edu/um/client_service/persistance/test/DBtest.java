@@ -1,6 +1,9 @@
 package uy.edu.um.client_service.persistance.test;
 
-import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import java.util.ArrayList;
+
+import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
+import uy.edu.um.client_service.persistance.DAO.articleOrderDAO.ArticleOrderDAO;
 
 
 
@@ -11,14 +14,11 @@ public class DBtest {
 
 	public static void main(String[] args) {
 	
-		ArticlesDAO a = ArticlesDAO.getInstance();
-		boolean e = a.existeArticle("MILANESA CON PROVOLONEwww");
-		if(e){
-			System.out.println("esta");
-		}
-		else{
-			System.out.println("no esta");
-
+		ArticleOrderDAO a = ArticleOrderDAO.getInstance();
+		ArrayList<ArticleOrder> array=a.getArticleOrder(10);
+		
+		for(int i = 0; i<array.size();i++){
+			System.out.println("Articulo: "+array.get(i).getArticle().getNombre()+".");
 		}
 	
 	
