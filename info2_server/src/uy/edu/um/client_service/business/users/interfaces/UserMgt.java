@@ -25,4 +25,6 @@ public interface UserMgt {
 
 	public String hashPassword(String password);
 
+	public UserVO getUser(String nombre);
+
 }

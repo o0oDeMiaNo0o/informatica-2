@@ -100,4 +100,11 @@ public class UserMgr implements UserMgt{
 		}
 		return hashword;
 	}
+
+	@Override
+	public UserVO getUser(String nombre) {
+		UserDAO dao = UserDAO.getInstance();
+		User obtenido = dao.searchUser(nombre);
+		return this.getUserVO(obtenido);
+	}
 }

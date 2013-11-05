@@ -116,19 +116,19 @@ public class OrderMgr implements OrderMgt{
 
 	@Override
 	public void isPreparing(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+		OrderDAO dao = OrderDAO.getInstance();
 
 	}
 
 	@Override
 	public void isReady(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+		OrderDAO dao = OrderDAO.getInstance();
 
 	}
 
 	@Override
 	public void rejected(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+		OrderDAO dao = OrderDAO.getInstance();
 
 	}
 
