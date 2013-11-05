@@ -87,9 +87,10 @@ public class Login extends JFrame {
 			@Override
 			public void keyPressed(final KeyEvent arg0) {
 				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 					String pass = conviertePass(passwordField.getPassword());
-					if (chequeaUser(textField.getText(), pass)) {
-						UserVO user = getUserVO(textField.getText(), pass);
+					String nombre = textField.getText();
+					if (nuevo.checkLogin(nombre, pass)) {
 						if (user.isAdmin()) {
 							user = getUserVO(textField.getText(), pass);
 							CurrentUser.setUser(user);
@@ -143,8 +144,17 @@ public class Login extends JFrame {
 	}
 
 	// Metodos Auxiliares
+	
+	// Convierte password a String
+	private String conviertePass(char[] password) {
+		String psw = "";
+		for (int i = 0; i < password.length; i++) {
+			psw = psw + Character.toString(password[i]);
+		}
+		return psw;
+	}
 
-	// Carga Users
+/*	// Carga Users
 	private ArrayList<UserVO> cargaUsers() {
 		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 		return nuevo.allUsers();
@@ -161,14 +171,7 @@ public class Login extends JFrame {
 		return false;
 	}
 
-	// Convierte password a String
-	private String conviertePass(char[] password) {
-		String psw = "";
-		for (int i = 0; i < password.length; i++) {
-			psw = psw + Character.toString(password[i]);
-		}
-		return psw;
-	}
+
 
 	private void cerrar() {
 		this.dispose();
@@ -185,6 +188,6 @@ public class Login extends JFrame {
 			}
 		}
 		return toReturn;
-	}
+	}*/
 
 }

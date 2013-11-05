@@ -92,7 +92,8 @@ public class Mesas extends BasicoUsuario {
 							"Agregado A Delivery Correctamente", devuelve());
 					msg.setVisible(true);
 				} else {
-					ConfirmMesa nuevo = new ConfirmMesa(null, esp, devuelve());
+					TableVO table
+					ConfirmMesa nuevo = new ConfirmMesa(null, null, esp, devuelve());
 					nuevo.setVisible(true);
 				}
 			}
@@ -156,7 +157,7 @@ public class Mesas extends BasicoUsuario {
 
 							OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 									CurrentUser.getUser());
-							ConfirmMesa conf = new ConfirmMesa(mesa,
+							ConfirmMesa conf = new ConfirmMesa(mesa, toSend,
 									"Confirma Seleccion De : Mesa " + nom2
 											+ " ?", devuelve());
 							conf.setVisible(true);
