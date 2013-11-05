@@ -28,4 +28,5 @@ public interface OrderMgt {
 	public void delivery(OrderVO o);
 
 	public ArrayList<OrderVO> getOrderTable(TableVO t);
+
 }

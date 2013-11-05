@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteCategoryException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
-import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -43,7 +43,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -66,7 +66,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -91,7 +91,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);

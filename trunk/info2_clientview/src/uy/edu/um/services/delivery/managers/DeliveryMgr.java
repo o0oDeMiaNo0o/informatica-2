@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.delivery.interfaces.DeliveryMgt;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.delivery.DeliveryVO;
@@ -28,7 +29,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void addDelivery(DeliveryVO d) {
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.addDelivery(d);
@@ -44,7 +45,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 			String sObjectService = "DeliveryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -66,7 +67,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 			String sObjectService = "DeliveryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -87,7 +88,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void isDone(DeliveryVO d) {
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.listo(d);
@@ -102,7 +103,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void isPreparing(DeliveryVO d) {
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.enPreparacion(d);
