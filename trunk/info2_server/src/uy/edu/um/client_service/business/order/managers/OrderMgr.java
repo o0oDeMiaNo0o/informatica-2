@@ -132,4 +132,19 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public ArrayList<OrderVO> getOrderTable(Table t) {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		OrderDAO dao = OrderDAO.getInstance();
+		ArrayList<Order> orders = dao.getTableOrders(t);
+		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>(2);
+		for(Order o : orders){
+			if(o!=null){
+				OrderVO oAdd = oMgt.getOrderVO(o);
+				toReturn.add(oAdd);
+			}
+		}
+		return toReturn;
+	}
+
 }

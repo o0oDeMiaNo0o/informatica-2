@@ -11,6 +11,7 @@ public class Test1 {
 		OrderMgt omgt = BusinessFacade.getInstance().getOrderMgt();
 		ArrayList<OrderVO> orders = new ArrayList<OrderVO>(10);
 		orders = omgt.allOrders();
+		System.out.println(orders.get(0).getEspecificaciones());
 		int b = 45;
 	}
 }

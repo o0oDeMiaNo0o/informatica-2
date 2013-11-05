@@ -82,7 +82,6 @@ public class TableMgr implements TableMgt{
 	public void removeTable(Table t) {
 		TableDAO dao = TableDAO.getInstance();
 
-
 	}
 
 
