@@ -134,52 +134,54 @@ public class Mesas extends BasicoUsuario {
 			URL dir;
 			while (n < mesas.size()) {
 				String nombre = String.valueOf(mesas.get(n).getNumero());
+				if (mesas.get(n).getNumero() != 999) {
+					if (mesas.get(n).isOcupado()) {
+						dir = ocupado;
+					} else {
+						dir = libre;
+					}
+					if (mesas.get(n).getNumero() == 0) {
+						dir = mostrador;
+						nombre = "MOSTRADOR";
+					}
+					final String nom2 = nombre;
+					ImagePanel imagePanel = new ImagePanel(dir);
+					panel.add(imagePanel, "cell " + i + " " + j);
+					imagePanel
+							.setLayout(new MigLayout("", "[150px]", "[100px]"));
+					final TableVO mesa = mesas.get(n);
+					imagePanel.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							if (mesa.isOcupado()) {
+								MesaPedido nuevo = new MesaPedido(mesa);
+								nuevo.setVisible(true);
+							} else {
 
-				if (mesas.get(n).isOcupado()) {
-					dir = ocupado;
-				} else {
-					dir = libre;
-				}
-				if (mesas.get(n).getNumero() == 0) {
-					dir = mostrador;
-					nombre = "MOSTRADOR";
-				}
-				final String nom2 = nombre;
-				ImagePanel imagePanel = new ImagePanel(dir);
-				panel.add(imagePanel, "cell " + i + " " + j);
-				imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
-				final TableVO mesa = mesas.get(n);
-				imagePanel.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						if (mesa.isOcupado()) {
-							MesaPedido nuevo = new MesaPedido(mesa);
-							nuevo.setVisible(true);
-						} else {
+								OrderVO toSend = enviarPedido(pedidoAux, mesa,
+										esp, CurrentUser.getUser());
+								ConfirmMesa conf = new ConfirmMesa(mesa,
+										toSend, "Confirma Seleccion De : Mesa "
+												+ nom2 + " ?", devuelve());
+								conf.setVisible(true);
+							}
 
-							OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
-									CurrentUser.getUser());
-							ConfirmMesa conf = new ConfirmMesa(mesa, toSend,
-									"Confirma Seleccion De : Mesa " + nom2
-											+ " ?", devuelve());
-							conf.setVisible(true);
 						}
 
+					});
+					JLabel lblNewLabel = new JLabel(nombre);
+					lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN,
+							16));
+					imagePanel.add(lblNewLabel,
+							"cell 0 0,alignx center,aligny center");
+					i = i + 2;
+					if (i == 13) {
+						i = 1;
+						j = j + 2;
 					}
+					n++;
 
-				});
-
-				JLabel lblNewLabel = new JLabel(nombre);
-				lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-				imagePanel.add(lblNewLabel,
-						"cell 0 0,alignx center,aligny center");
-				i = i + 2;
-				if (i == 13) {
-					i = 1;
-					j = j + 2;
 				}
-				n++;
-
 			}
 		}
 	}

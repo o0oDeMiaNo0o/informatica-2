@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -17,11 +19,10 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.ConfirmFacturar;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MesaPedido extends BasicoUsuario {
 	private JTable tablePedidoMesa;
@@ -61,10 +62,7 @@ public class MesaPedido extends BasicoUsuario {
 		tablePedidoMesa.setEnabled(false);
 		tablePedidoMesa.setRowSelectionAllowed(false);
 
-		Object[][] aux = armarTabla(cargaOrdenes(mesa));
-
-		tablePedidoMesa.setModel(new DefaultTableModel(aux, new String[] {
-				"Articulo", "Cantidad" }));
+		armarTabla(cargaOrdenes(mesa));
 
 		transparentPanel.add(tablePedidoMesa, "cell 1 1,grow");
 
@@ -76,8 +74,9 @@ public class MesaPedido extends BasicoUsuario {
 		btnFacturar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(null, null);
+				ConfirmFacturar nuevo = new ConfirmFacturar(mesa, devuelve());
 				nuevo.setVisible(true);
+
 			}
 		});
 		ZonaBotones.add(btnFacturar, "cell 1 0");
@@ -109,7 +108,7 @@ public class MesaPedido extends BasicoUsuario {
 
 	// Metodos Auxiliares
 
-	public Object[][] armarTabla(ArrayList<ArticleOrderVO> pedidoArticle) {
+	public void armarTabla(ArrayList<ArticleOrderVO> pedidoArticle) {
 		Object[][] aux = null;
 		if ((pedidoArticle.size() != 0)) {
 			aux = new Object[pedidoArticle.size() + 1][2];
@@ -126,25 +125,30 @@ public class MesaPedido extends BasicoUsuario {
 			aux[0][0] = "Articulo";
 			aux[0][1] = "Cantidad";
 		}
-		return aux;
+		tablePedidoMesa.setModel(new DefaultTableModel(aux, new String[] {
+				"Articulo", "Cantidad" }));
 
 	}
 
 	// Cargo los metodos
 	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) {
-		ArrayList<ArticleOrderVO> aux = new ArrayList<ArticleOrderVO>();
+		ArrayList<OrderVO> aux = new ArrayList<OrderVO>();
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-		ArrayList<OrderVO> ordenes = nuevo.allOrders();
-		for (int i = 0; i < ordenes.size(); i++) {
-			if ((ordenes.get(i).getTable() == mesa)
-					&& (ordenes.get(i).getEstado() == 0)) {
-				aux = ordenes.get(i).getArticulos();
+		aux = nuevo.getOrderTable(mesa);
+		ArrayList<ArticleOrderVO> orden = new ArrayList<ArticleOrderVO>();
+		for (int i = 0; i < aux.size(); i++) {
+			for (int j = 0; j < aux.get(i).getArticulos().size(); j++) {
+				orden.add(aux.get(i).getArticulos().get(j));
 			}
 		}
-		return aux;
+		return orden;
 	}
 
 	public void cerrar() {
 		this.dispose();
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 }
