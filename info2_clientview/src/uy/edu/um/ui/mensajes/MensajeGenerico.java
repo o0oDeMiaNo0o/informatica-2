@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,10 +25,12 @@ public class MensajeGenerico extends JDialog {
 		this.mensaje = a;
 	}
 
-	public MensajeGenerico(String error, final JPanel contentPane) {
+	public MensajeGenerico(String error, final JFrame jFrame) {
 		setResizable(false);
 		setBounds(100, 100, 326, 107);
-		this.setLocationRelativeTo(contentPane);
+		if (jFrame != null) {
+			this.setLocationRelativeTo(jFrame);
+		}
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 326, 82);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

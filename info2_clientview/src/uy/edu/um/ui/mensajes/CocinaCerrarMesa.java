@@ -13,9 +13,9 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.ui.usuarios.Facturacion;
-import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 
-public class ConfirmCerrarMesa extends JFrame {
+public class CocinaCerrarMesa extends JFrame {
 
 	private JPanel contentPane;
 
@@ -33,7 +33,7 @@ public class ConfirmCerrarMesa extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmCerrarMesa(final OrderVO toSend) {
+	public CocinaCerrarMesa(final TableVO mesa) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -59,8 +59,8 @@ public class ConfirmCerrarMesa extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(toSend);
-				
+				Facturacion nuevo = new Facturacion(mesa, null);
+
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

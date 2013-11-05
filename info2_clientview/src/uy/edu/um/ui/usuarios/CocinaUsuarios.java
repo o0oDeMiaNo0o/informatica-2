@@ -26,7 +26,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.mensajes.ConfirmCerrarMesa;
+import uy.edu.um.ui.mensajes.CocinaCerrarMesa;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
@@ -89,8 +89,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
-		
-		Musica nuevo = new Musica();
+
 		
 	}
 
@@ -108,7 +107,8 @@ public class CocinaUsuarios extends BasicoUsuario {
 				panel.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						ConfirmCerrarMesa nueva = new ConfirmCerrarMesa(orden);
+						CocinaCerrarMesa nueva = new CocinaCerrarMesa(orden.getTable());
+						nueva.setVisible(true);
 					}
 				});
 

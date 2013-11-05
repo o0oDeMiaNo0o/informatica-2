@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.ExisteArticleException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -125,9 +126,15 @@ public class EditRemoveA extends JFrame {
 														.getText()));
 										CategoryVO cat = buscaEnLista(comboBox
 												.getSelectedItem().toString());
-										ArticleVO toSend = a.createArticleVOid(
-												articulo.getId(), nombre,
-												precio, cat);
+										ArticleVO toSend = null;
+										try {
+											toSend = a.createArticleVOid(
+													articulo.getId(), nombre,
+													precio, cat);
+										} catch (ExisteArticleException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
 
 										a.editArticle(toSend);
 
@@ -137,26 +144,26 @@ public class EditRemoveA extends JFrame {
 
 										MensajeGenerico mensaje = new MensajeGenerico(
 												"Producto Editado Correctamente",
-												contentPane);
+												devuelve());
 										mensaje.setVisible(true);
 										bandera = true;
 									} else {
 										MensajeGenerico mensaje = new MensajeGenerico(
 												"Producto Eliminado Correctamente",
-												contentPane);
+												devuelve());
 										mensaje.setVisible(true);
 										bandera = true;
 									}
 								}
 							} else {
 								MensajeGenerico mensaje = new MensajeGenerico(
-										"Precio No Numerico", contentPane);
+										"Precio No Numerico", devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
-									"Ingrese Nombre", contentPane);
+									"Ingrese Nombre", devuelve());
 							mensaje.setVisible(true);
 							bandera = true;
 						}
@@ -165,7 +172,7 @@ public class EditRemoveA extends JFrame {
 				} else {
 					a.removeArticle(articulo);
 					MensajeGenerico mensaje = new MensajeGenerico(
-							"Producto Editado Correctamente", contentPane);
+							"Producto Editado Correctamente", devuelve());
 					mensaje.setVisible(true);
 					cerrar();
 				}
@@ -220,5 +227,9 @@ public class EditRemoveA extends JFrame {
 	private ArrayList<CategoryVO> cargoCategorias() {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
+	}
+	
+	public JFrame devuelve(){
+		return this;
 	}
 }

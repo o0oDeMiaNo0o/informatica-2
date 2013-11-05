@@ -21,6 +21,7 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.creacion.NewTable;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
@@ -30,8 +31,7 @@ public class NewTable extends BasicoAdmin {
 
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
-	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
-	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
+	public URL dirNew = DirLocal.class.getResource("Nuevo.png");
 	public ArrayList<TableVO> mesas = cargoMesas();
 
 	public static void main(String[] args) {
@@ -84,7 +84,7 @@ public class NewTable extends BasicoAdmin {
 	}
 
 	// Metodos auxiliares
-	private void cargaBotones(TransparentPanel panel) {
+	private void cargaBotones(final TransparentPanel panel) {
 
 		if (mesas.isEmpty()) {
 			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
@@ -102,30 +102,11 @@ public class NewTable extends BasicoAdmin {
 				} else {
 					dir = libre;
 				}
-				if (mesas.get(n).getNumero() == 0) {
-					dir = mostrador;
-					nombre = "MOSTRADOR";
-				}
+
 				final String nom2 = nombre;
 				ImagePanel imagePanel = new ImagePanel(dir);
 				panel.add(imagePanel, "cell " + i + " " + j);
 				imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
-				final TableVO mesa = mesas.get(n);
-				imagePanel.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						if (mesa.isOcupado()) {
-							MensajeGenerico nuevo = new MensajeGenerico(
-									"No Es Posible Eliminar Una Mesa Ocupada",
-									contentPane);
-							nuevo.setVisible(true);
-						} else {
-							
-						}
-
-					}
-
-				});
 
 				JLabel lblNewLabel = new JLabel(nombre);
 				lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
@@ -139,6 +120,22 @@ public class NewTable extends BasicoAdmin {
 				n++;
 
 			}
+
+			// Nueva Mesa
+			ImagePanel imagePanel = new ImagePanel(dirNew);
+			panel.add(imagePanel, "cell " + i + " " + j);
+			imagePanel.setLayout(new MigLayout("", "[150px]", "[100px]"));
+			imagePanel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
+					nuevo.addTable();
+					NewTable newT = new NewTable();
+					newT.setVisible(true);
+					devuelve().dispose();
+				}
+
+			});
 		}
 	}
 

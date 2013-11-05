@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.ExisteCategoryException;
+import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -95,16 +97,25 @@ public class NewCategory extends BasicoAdmin {
 					// Agrego la categoria
 					CategoryMgt cat = ServiceFacade.getInstance()
 							.getCategoryMgt();
-					CategoryVO nuevaCatVO = cat
-							.createCategoryVO(textFieldNombre.getText());
+					CategoryVO nuevaCatVO = null;
+					try {
+						nuevaCatVO = cat
+								.createCategoryVO(textFieldNombre.getText());
+					} catch (ExisteCategoryException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (HasBlanksException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					cat.sendCategoryVO(nuevaCatVO);
 					textFieldNombre.setText("");
 					MensajeGenerico test = new MensajeGenerico(
-							"Categoria Agregada Correctamente", contentPane);
+							"Categoria Agregada Correctamente", devuelve());
 					test.setVisible(true);
 				} else {
 					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
-							contentPane);
+							devuelve());
 					test.setVisible(true);
 				}
 			}
@@ -121,6 +132,10 @@ public class NewCategory extends BasicoAdmin {
 
 		});
 		transparentPanelBotones.add(buttonCancelar, "cell 1 0");
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 
 	private void cerrar() {

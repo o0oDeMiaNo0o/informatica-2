@@ -76,7 +76,7 @@ public class MesaPedido extends BasicoUsuario {
 		btnFacturar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(null);
+				Facturacion nuevo = new Facturacion(null,null);
 				nuevo.setVisible(true);
 			}
 		});

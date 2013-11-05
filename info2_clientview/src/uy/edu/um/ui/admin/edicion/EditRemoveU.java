@@ -101,17 +101,16 @@ public class EditRemoveU extends JFrame {
 							// Hacer ma–ana
 
 							MensajeGenerico mensaje = new MensajeGenerico(
-									"Usuario Editado Correctamente",
-									contentPane);
+									"Usuario Editado Correctamente", devuelve());
 							mensaje.setVisible(true);
 							bandera = true;
 						} else {
-							
-							//Hacer Ma–ana
-							
+
+							// Hacer Ma–ana
+
 							MensajeGenerico mensaje = new MensajeGenerico(
 									"Usuario Eliminado Correctamente",
-									contentPane);
+									devuelve());
 							mensaje.setVisible(true);
 							bandera = true;
 						}
@@ -169,5 +168,9 @@ public class EditRemoveU extends JFrame {
 	private ArrayList<CategoryVO> cargoCategorias() {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 }

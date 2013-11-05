@@ -156,7 +156,7 @@ public class BasicoUsuario extends JFrame {
 		return this;
 	}
 
-	private void cerrar() {
+	public void cerrar() {
 		this.dispose();
 	}
 

@@ -51,14 +51,16 @@ public class CategoryList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
+				"[grow][grow][grow]"));
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_2, "cell 2 1,grow");
-		transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]", "[grow][][][grow]"));
-		
-				JLabel lblIdCategoria = new JLabel("Id Categoria: ");
-				transparentPanel_2.add(lblIdCategoria, "flowx,cell 1 1,alignx center");
+		transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]",
+				"[grow][][][grow]"));
+
+		JLabel lblIdCategoria = new JLabel("Id Categoria: ");
+		transparentPanel_2.add(lblIdCategoria, "flowx,cell 1 1,alignx center");
 
 		textFieldID = new JTextField();
 		textFieldID.setColumns(10);
@@ -82,11 +84,12 @@ public class CategoryList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaCategoria(textFieldID.getText())) {
-					CategoryMgt nuevo = ServiceFacade.getInstance().getCategoryMgt();
-					//nuevo.
+					CategoryMgt nuevo = ServiceFacade.getInstance()
+							.getCategoryMgt();
+					// nuevo.
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
-							"Categoria No Existe", contentPane);
+							"Categoria No Existe", devuelve());
 					nuevo.setVisible(true);
 				}
 			}
@@ -101,8 +104,8 @@ public class CategoryList extends BasicoAdmin {
 
 	// Busca categoria elegida
 	private boolean buscaCategoria(String text) {
-		for(int i = 0;i<categorias.size();i++){
-			if(categorias.get(i).getId() == Integer.parseInt(text)){
+		for (int i = 0; i < categorias.size(); i++) {
+			if (categorias.get(i).getId() == Integer.parseInt(text)) {
 				return true;
 			}
 		}
@@ -145,6 +148,10 @@ public class CategoryList extends BasicoAdmin {
 		}
 		return null;
 
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 
 }

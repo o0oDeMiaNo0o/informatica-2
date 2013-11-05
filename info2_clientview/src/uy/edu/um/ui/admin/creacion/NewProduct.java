@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.ExisteArticleException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -135,26 +136,32 @@ public class NewProduct extends BasicoAdmin {
 
 								ArticleMgt test = ServiceFacade.getInstance()
 										.getArticleMgt();
-								ArticleVO toSend = a.createArticleVO(nombre,
-										precio, cat);
+								ArticleVO toSend = null;
+								try {
+									toSend = a.createArticleVO(nombre,
+											precio, cat);
+								} catch (ExisteArticleException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								test.sendArticle(toSend);
 
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Producto Agregado Correctamente",
-										contentPane);
+										devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
 								resetearPosicion();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
-									"Precio No Numerico", contentPane);
+									"Precio No Numerico", devuelve());
 							mensaje.setVisible(true);
 							bandera = true;
 						}
 					} else {
 						MensajeGenerico mensaje = new MensajeGenerico(
-								"Ingrese Nombre", contentPane);
+								"Ingrese Nombre", devuelve());
 						mensaje.setVisible(true);
 						bandera = true;
 					}
@@ -206,5 +213,9 @@ public class NewProduct extends BasicoAdmin {
 		textFieldNombre.setText("");
 		textFieldPrecio.setText("");
 		comboBoxCat.setSelectedIndex(0);
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 }

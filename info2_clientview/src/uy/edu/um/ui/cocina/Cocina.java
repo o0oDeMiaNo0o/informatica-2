@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.musica.Musica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -168,8 +169,11 @@ public class Cocina extends JFrame {
 					"cell 1 0,alignx center,aligny center");
 		}
 
+		Musica nuevo = new Musica();
+
 	}
 
+	// Metodos Auxiliares
 	public Object[][] armarTabla(ArrayList<ArticleOrderVO> pedidoArticle) {
 		Object[][] aux = null;
 		if ((pedidoArticle.size() != 0)) {

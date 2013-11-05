@@ -233,7 +233,7 @@ public class CajaPrincipal extends BasicoUsuario {
 				public void mouseClicked(MouseEvent arg0) {
 					OrderVO toSend = enviarPedido(pedidoAux, mesa, espTotal,
 							user);
-					ConfirmFacturar nuevo = new ConfirmFacturar(toSend,
+					ConfirmFacturar nuevo = new ConfirmFacturar(toSend.getTable(),
 							devuelve());
 					nuevo.setVisible(true);
 				}
@@ -248,7 +248,7 @@ public class CajaPrincipal extends BasicoUsuario {
 				public void mouseClicked(MouseEvent arg0) {
 					if (pedidoAux.size() == 0) {
 						MensajeGenerico mensaje = new MensajeGenerico(
-								"Pedido Vacio", contentPane);
+								"Pedido Vacio", devuelve());
 						mensaje.setVisible(true);
 					} else {
 						Mesas nueva = new Mesas(pedidoAux, espTotal);
@@ -541,7 +541,7 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Cerrar Ventana
-	private void cerrar() {
+	public void cerrar() {
 		this.dispose();
 
 	}

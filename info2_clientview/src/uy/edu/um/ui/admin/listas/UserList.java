@@ -89,7 +89,7 @@ public class UserList extends BasicoAdmin {
 						nuevo.setVisible(true);
 					} else {
 						MensajeGenerico nuevo = new MensajeGenerico(
-								"Producto No Existe", contentPane);
+								"Producto No Existe", devuelve());
 						nuevo.setVisible(true);
 					}
 				}
@@ -110,7 +110,7 @@ public class UserList extends BasicoAdmin {
 						nuevo.setVisible(true);
 					} else {
 						MensajeGenerico nuevo = new MensajeGenerico(
-								"Producto No Existe", contentPane);
+								"Producto No Existe", devuelve());
 						nuevo.setVisible(true);
 					}
 				}
@@ -185,6 +185,10 @@ public class UserList extends BasicoAdmin {
 	public ArrayList<UserVO> cargoListado() {
 		UserMgt usr = ServiceFacade.getInstance().getUserMgt();
 		return usr.allUsers();
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 
 }
