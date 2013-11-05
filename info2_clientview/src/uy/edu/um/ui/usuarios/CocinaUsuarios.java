@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -19,20 +20,21 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import javazoom.jl.decoder.JavaLayerException;
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.musica.Musica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.mensajes.CocinaCerrarMesa;
+import uy.edu.um.ui.cocina.OpcionesCocina;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class CocinaUsuarios extends BasicoUsuario {
 
 	private JPanel contentPane;
+	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
 
@@ -45,7 +47,6 @@ public class CocinaUsuarios extends BasicoUsuario {
 				try {
 					CocinaUsuarios frame = new CocinaUsuarios();
 					frame.setVisible(true);
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,12 +56,8 @@ public class CocinaUsuarios extends BasicoUsuario {
 
 	/**
 	 * Create the frame.
-	 * 
-	 * @throws JavaLayerException
-	 * @throws InterruptedException
 	 */
-	public CocinaUsuarios(){
-
+	public CocinaUsuarios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -89,8 +86,6 @@ public class CocinaUsuarios extends BasicoUsuario {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
-
-		
 	}
 
 	private void armarPedido(JPanel transparentPanel) {
@@ -98,19 +93,12 @@ public class CocinaUsuarios extends BasicoUsuario {
 			int i = 1, j = 1;
 			for (int n = 0; n < arrayOrdenes.size(); n++) {
 
-				final OrderVO orden = arrayOrdenes.get(i);
+				final OrderVO orden = arrayOrdenes.get(n);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
 				panel.setBorder(new LineBorder(Color.ORANGE, 3));
 				transparentPanel.add(panel, "cell " + i + " " + j + ",grow");
 				panel.setLayout(new BorderLayout(0, 0));
-				panel.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						CocinaCerrarMesa nueva = new CocinaCerrarMesa(orden.getTable());
-						nueva.setVisible(true);
-					}
-				});
 
 				// Constante
 				TransparentPanel transparentPanel_2 = new TransparentPanel();
@@ -177,6 +165,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 
 	}
 
+	// Metodos Auxiliares
 	public Object[][] armarTabla(ArrayList<ArticleOrderVO> pedidoArticle) {
 		Object[][] aux = null;
 		if ((pedidoArticle.size() != 0)) {
@@ -203,5 +192,4 @@ public class CocinaUsuarios extends BasicoUsuario {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}
-
 }
