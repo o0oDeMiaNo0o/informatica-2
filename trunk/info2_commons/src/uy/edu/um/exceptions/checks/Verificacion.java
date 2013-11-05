@@ -1,4 +1,4 @@
-package uy.edu.um.exceptions;
+package uy.edu.um.exceptions.checks;
 
 public class Verificacion {
 

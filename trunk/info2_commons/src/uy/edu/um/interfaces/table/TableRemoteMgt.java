@@ -19,4 +19,6 @@ public interface TableRemoteMgt extends Remote{
 
 	public void openTable(TableVO t) throws RemoteException;
 
+	public void setOcupado(TableVO t) throws RemoteException;
+
 }
