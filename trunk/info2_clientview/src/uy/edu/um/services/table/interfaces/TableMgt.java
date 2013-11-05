@@ -15,4 +15,6 @@ public interface TableMgt {
 
 	public void removeTable(TableVO t);
 
+	public void setLibre(TableVO t);
+
 }
