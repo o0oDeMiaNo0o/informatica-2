@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.people.waiters.WaiterVO;
 import uy.edu.um.value_object.table.TableVO;
 
 public interface BillMgt {
 
-	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, WaiterVO w, TableVO t);
+	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t);
 
 	public void addBillVO(BillVO b);
 
