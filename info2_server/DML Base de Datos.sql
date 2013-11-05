@@ -223,18 +223,79 @@ INSERT INTO `info2`.`Mesa`
 VALUES
 (0);
 
+-- Mesa Delivery
+
+INSERT INTO `info2`.`Mesa`
+(`idMesa`)
+VALUES
+(999);
+
 
 
 -- Usuarios
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("MatiasG","aaa",1);
+("MatiasG","47bce5c74f589f4867dbd57e9ca9f808",1);
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("FacundoL","uss",1);
+("FacundoL","b4adcb50f1ee7b54194f82d866331b31",1);
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("Bernardo","bern",0);
+("Bernardo","bac82a9993c15f257413a6c3def4bc4a",0);
+
+
+-- Clientes
+
+INSERT INTO `Info2`.`Clientes`
+(`Ci`,
+`Nombre`,
+`Apellido`,
+`Mail`,
+`Direccion`,
+`Telefono`,
+`Descuento`)
+VALUES
+(4377032,
+'Matias',
+'Garcia',
+'migarcia@correo.um.edu.uy',
+'Mantua 6920',
+26015066,
+600);
+
+INSERT INTO `Info2`.`Clientes`
+(`Ci`,
+`Nombre`,
+`Apellido`,
+`Mail`,
+`Direccion`,
+`Telefono`,
+`Descuento`)
+VALUES
+(4518723,
+'Bernardo',
+'Forrisi',
+'bforrisi@correo.um.edu.uy',
+'Salto',
+2456783,
+500);
+
+INSERT INTO `Info2`.`Clientes`
+(`Ci`,
+`Nombre`,
+`Apellido`,
+`Mail`,
+`Direccion`,
+`Telefono`,
+`Descuento`)
+VALUES
+(4667043,
+'Facundo',
+'Listos',
+'fliston@correo.um.edu.uy',
+'Alberdi y Dublin',
+26042345,
+100);
