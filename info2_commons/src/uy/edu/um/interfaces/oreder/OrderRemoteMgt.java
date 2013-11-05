@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public interface OrderRemoteMgt extends Remote{
 
@@ -22,6 +23,8 @@ public interface OrderRemoteMgt extends Remote{
 	public void rejected(OrderVO o) throws RemoteException;
 
 	public void delivery(OrderVO o) throws RemoteException;
+
+	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException;
 
 }
 
