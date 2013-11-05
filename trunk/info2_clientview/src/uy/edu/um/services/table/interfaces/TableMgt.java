@@ -11,4 +11,6 @@ public interface TableMgt {
 	public ArrayList<TableVO> allTables();
 
 	public void setOcupado(TableVO t);
+
+	public void removeTable(TableVO t);
 }

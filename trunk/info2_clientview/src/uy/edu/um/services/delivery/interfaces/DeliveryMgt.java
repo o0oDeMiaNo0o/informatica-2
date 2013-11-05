@@ -4,7 +4,7 @@ import uy.edu.um.value_object.delivery.DeliveryVO;
 
 public interface DeliveryMgt {
 
-	public void addOrder(DeliveryVO d);
+	public void addDelivery(DeliveryVO d);
 
 	public void isPreparing(DeliveryVO d);
 

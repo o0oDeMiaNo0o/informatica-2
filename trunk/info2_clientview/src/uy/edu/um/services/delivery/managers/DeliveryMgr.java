@@ -21,7 +21,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	}
 
 	@Override
-	public void addOrder(DeliveryVO d) {
+	public void addDelivery(DeliveryVO d) {
 		try {
 
 			String sObjectService = "DeliveryRemoteMgr";
@@ -31,7 +31,7 @@ public class DeliveryMgr implements DeliveryMgt{
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 
-			oDeliveryRemoteMgt.addOrder(d);
+			oDeliveryRemoteMgt.addDelivery(d);
 
 			//System.out.println("articulo agregado");
 
