@@ -78,5 +78,12 @@ public class TableMgr implements TableMgt{
 		dao.setOcupada(t);
 	}
 
+	@Override
+	public void removeTable(Table t) {
+		TableDAO dao = TableDAO.getInstance();
+
+
+	}
+
 
 }

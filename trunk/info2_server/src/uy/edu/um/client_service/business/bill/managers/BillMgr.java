@@ -32,7 +32,7 @@ public class BillMgr implements BillMgt{
 
 	@Override
 	public void addBill(Bill b) {
-		// TODO Auto-generated method stub
+		//
 
 	}
 
