@@ -49,7 +49,7 @@ public class DeliveryDAO {
 				while(oResultSet1.next()){
 					nId = oResultSet1.getInt(1);
 				}
-				oStatement.execute("INSERT INTO `Pedido/Articulos` (pedido_idpedido, Articles_ID,Cantidad) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+");");
+				oStatement.execute("INSERT INTO `Delivery/Articulos` (Delivery_idDelivery, Articles_ID,Cantidad) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+");");
 			}
 			
 			oStatement.close();
@@ -169,6 +169,8 @@ public class DeliveryDAO {
 			break;
 		case 2: estado="Rechazado";
 			break;
+		case 3: estado="Terminado";
+			break;
 		
 		default:
 			estado=null;
@@ -187,6 +189,9 @@ public class DeliveryDAO {
 		}
 		else if(e.equals("Rechazado")){
 			estado = 2;
+		}
+		else if(e.equals("Terminado")){
+			estado = 3;
 		}
 		return estado;
 	}
