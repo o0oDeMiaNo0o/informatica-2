@@ -140,6 +140,43 @@ public class OrderDAO {
 		return toReturn;
 	}
 	
+	public ArrayList<Order> getTableOrders(Table t) {
+		ArrayList<Order> toReturn = new ArrayList<Order>();
+		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
+		TableDAO tDAO = TableDAO.getInstance();
+		UserDAO uDAO = UserDAO.getInstance();
+		
+		try {
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Mesa_idMesa="+t.getNumero()+") AND ((Estado = 'Entregado') OR (Estado = 'En Preparacion))");
+
+			while (oResultSet.next()) {
+				int nid = oResultSet.getInt(1);
+				Date date = oResultSet.getTimestamp(2);
+				int nIdmesa = oResultSet.getInt(3);
+				String sEstado = oResultSet.getString(4);
+				String sUsername = oResultSet.getString(6);
+				String specs = oResultSet.getString(7);
+				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid);
+				Table ta = tDAO.searchTable(nIdmesa);
+				User u = uDAO.searchUser(sUsername);
+				
+				int estado=defEstado(sEstado);
+				
+				Order a = new Order(nid,articles,ta,u,estado,date,specs);
+				toReturn.add(a);
+			}
+
+			oResultSet.close();
+			oStatement.close();
+		}
+			 catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return toReturn;
+	}
+	
 	public int defEstado(String e){
 		int estado = 0;
 		if(e.equals("En Preparacion")){
@@ -150,6 +187,9 @@ public class OrderDAO {
 		}
 		else if(e.equals("Rechazado")){
 			estado = 2;
+		}
+		else if(e.equals("Cerrado")){
+			estado = 3;
 		}
 		return estado;
 	}
@@ -163,6 +203,8 @@ public class OrderDAO {
 			break;
 		case 2: estado="Rechazado";
 			break;
+		case 3: estado="Cerrado";
+		break;
 		
 		default:
 			estado=null;
