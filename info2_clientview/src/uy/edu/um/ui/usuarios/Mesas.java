@@ -87,7 +87,7 @@ public class Mesas extends BasicoUsuario {
 							CurrentUser.getUser(), esp, 0, false);
 					DeliveryMgt nuevo = ServiceFacade.getInstance()
 							.getDeliveryMgt();
-					nuevo.addOrder(delivery);
+					//nuevo.addOrder(delivery);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Agregado A Delivery Correctamente", devuelve());
 					msg.setVisible(true);
@@ -151,7 +151,7 @@ public class Mesas extends BasicoUsuario {
 					public void mouseClicked(MouseEvent e) {
 						OrderVO toSend = enviarPedido(pedidoAux, mesa, esp,
 								CurrentUser.getUser());
-						ConfirmMesa conf = new ConfirmMesa(toSend,
+						ConfirmMesa conf = new ConfirmMesa(toSend.getTable(),
 								"Confirma Seleccion De : Mesa " + nom2 + " ?",
 								devuelve());
 						conf.setVisible(true);
