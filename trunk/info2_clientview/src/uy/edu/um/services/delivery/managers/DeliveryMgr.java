@@ -2,10 +2,14 @@ package uy.edu.um.services.delivery.managers;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.services.delivery.interfaces.DeliveryMgt;
+import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.delivery.DeliveryVO;
+import uy.edu.um.value_object.user.UserVO;
 
 public class DeliveryMgr implements DeliveryMgt{
 
@@ -23,24 +27,15 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void addDelivery(DeliveryVO d) {
 		try {
-
 			String sObjectService = "DeliveryRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oDeliveryRemoteMgt.addDelivery(d);
-
-			//System.out.println("articulo agregado");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
-
 	}
 
 	@Override
@@ -91,18 +86,11 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void isDone(DeliveryVO d) {
 		try {
-
 			String sObjectService = "DeliveryRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oDeliveryRemoteMgt.listo(d);
-
-			//System.out.println("articulo agregado");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
@@ -113,24 +101,22 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void isPreparing(DeliveryVO d) {
 		try {
-
 			String sObjectService = "DeliveryRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oDeliveryRemoteMgt.enPreparacion(d);
-
-			//System.out.println("articulo agregado");
-
 		} catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
-
 		}
 
+	}
+
+	@Override
+	public DeliveryVO createDeliveryVO(ArrayList<ArticleOrderVO> articles,
+			Date time, UserVO user, String specs, int estado, boolean enCocina) {
+		return new DeliveryVO(articles,time,user,specs,estado,enCocina);
 	}
 
 }
