@@ -8,8 +8,10 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class test2 {
 	public static void main(String[] args){
-		ArrayList<UserVO> allUsers = new ArrayList<UserVO>(10);
 		UserMgt umgt = BusinessFacade.getInstance().getUserMgt();
-		allUsers = umgt.allUsers();
+		String nombre = "Bernardo";
+		String pass = "uss";
+		String crypted = umgt.hashPassword(pass);
+		System.out.println(crypted);
 	}
 }
