@@ -19,6 +19,12 @@ public class BillVO implements Serializable{
 	private BigDecimal montoTotal;
 
 
+	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,BigDecimal montoTotal){
+		this.orders = orders;
+		this.client = client;
+		this.montoTotal = montoTotal;
+	}
+
 	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t){
 		this.orders = orders;
 		this.client = client;
@@ -30,6 +36,13 @@ public class BillVO implements Serializable{
 		this.orders = orders;
 		this.client = client;
 		this.montoTotal = this.getTotal();
+	}
+
+	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t, BigDecimal montoTotal){
+		this.id = id;
+		this.orders = orders;
+		this.client = client;
+		this.montoTotal = montoTotal;
 	}
 
 	public ArrayList<OrderVO> getOrders() {
@@ -74,6 +87,14 @@ public class BillVO implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public BigDecimal getMontoTotal() {
+		return montoTotal;
+	}
+
+	public void setMontoTotal(BigDecimal montoTotal) {
+		this.montoTotal = montoTotal;
 	}
 
 

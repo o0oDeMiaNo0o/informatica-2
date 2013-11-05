@@ -21,4 +21,6 @@ public interface TableRemoteMgt extends Remote{
 
 	public void setOcupado(TableVO t) throws RemoteException;
 
+	public void remoteTable(TableVO t) throws RemoteException;
+
 }
