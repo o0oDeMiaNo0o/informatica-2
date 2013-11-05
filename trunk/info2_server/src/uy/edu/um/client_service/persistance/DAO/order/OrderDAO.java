@@ -112,7 +112,7 @@ public class OrderDAO {
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Estado = 'En Preparacion'); ");
 
 			while (oResultSet.next()) {
 				int nid = oResultSet.getInt(1);
@@ -149,7 +149,7 @@ public class OrderDAO {
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Mesa_idMesa="+t.getNumero()+") AND ((Estado = 'Entregado') OR (Estado = 'En Preparacion))");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Mesa_idMesa="+t.getNumero()+") AND ((Estado = 'Entregado') OR (Estado = 'En Preparacion'))");
 
 			while (oResultSet.next()) {
 				int nid = oResultSet.getInt(1);
