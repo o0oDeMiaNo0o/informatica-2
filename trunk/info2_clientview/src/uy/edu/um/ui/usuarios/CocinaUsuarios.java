@@ -33,7 +33,6 @@ import uy.edu.um.value_object.oreder.OrderVO;
 public class CocinaUsuarios extends BasicoUsuario {
 
 	private JPanel contentPane;
-	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
 
@@ -153,7 +152,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 						.add(textArea, "cell 1 2,growx,aligny center");
 
 				j++;
-				if (j > 5) {
+				if (j > 3) {
 					j = 1;
 					i++;
 				}

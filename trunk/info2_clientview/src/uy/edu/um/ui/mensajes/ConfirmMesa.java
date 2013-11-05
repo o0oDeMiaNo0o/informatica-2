@@ -14,12 +14,12 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
-import uy.edu.um.ui.CurrentUser;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.usuarios.CajaPrincipal;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.user.UserVO;
 
-public class Confirm extends JFrame {
+public class ConfirmMesa extends JFrame {
 
 	private JPanel contentPane;
 	UserVO user;
@@ -38,7 +38,7 @@ public class Confirm extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public Confirm(final OrderVO toSend, String text, final JFrame mesas) {
+	public ConfirmMesa(final OrderVO toSend, String text, final JFrame mesas) {
 
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,19 +66,30 @@ public class Confirm extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (toSend.getArticulos() != null) {
-					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-					nuevo.addOrder(toSend);
-					toSend.getTable().setOcupado(true);
-					ConfirmFacturar nueva = new ConfirmFacturar(toSend, mesas);
-					nueva.setVisible(true);
-					cerrar();
+				if (toSend.getTable().isOcupado()) {
+
 				} else {
-					CajaPrincipal nuevo = new CajaPrincipal(null, toSend
-							.getTable());
-					nuevo.setVisible(true);
-					mesas.dispose();
-					cerrar();
+					if (toSend.getArticulos() != null) {
+						OrderMgt nuevo = ServiceFacade.getInstance()
+								.getOrderMgt();
+						nuevo.addOrder(toSend);
+						TableMgt nuevoMesas = ServiceFacade.getInstance()
+								.getTableMgt();
+						nuevoMesas.setOcupado(toSend.getTable());
+						ConfirmFacturar nueva = new ConfirmFacturar(toSend,
+								mesas);
+						nueva.setVisible(true);
+						cerrar();
+					} else {
+						CajaPrincipal nuevo = new CajaPrincipal(null, toSend
+								.getTable());
+						TableMgt nuevoMesas = ServiceFacade.getInstance()
+								.getTableMgt();
+						nuevoMesas.setOcupado(toSend.getTable());
+						nuevo.setVisible(true);
+						mesas.dispose();
+						cerrar();
+					}
 				}
 			}
 		});

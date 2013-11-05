@@ -40,6 +40,9 @@ import uy.edu.um.value_object.user.UserVO;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.util.List;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -69,6 +72,7 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	private String[] textos;
 	private JTable tablePrePedido;
+	TextFieldAutocompletar textFieldEliminar;
 
 	/**
 	 * Launch the application.
@@ -126,8 +130,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanelTabla = new TransparentPanel();
 		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
-		transparentPanelTabla.setLayout(new MigLayout("",
-				"[1px][grow][grow][grow]", "[1px][grow]"));
+		transparentPanelTabla.setLayout(new MigLayout("", "[1px][][grow][]",
+				"[1px][grow]"));
 
 		tablePrePedido = new JTable();
 		tablePrePedido.setBorder(new LineBorder(Color.ORANGE, 2, true));
@@ -139,18 +143,20 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
-		transparentPanel.setLayout(new MigLayout("", "[][grow][]",
-				"[grow][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[]", "[][grow][][grow]"));
+
+		Component horizontalStrut = Box.createHorizontalStrut(300);
+		transparentPanel.add(horizontalStrut, "cell 0 0");
 
 		JLabel lblBusquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
 		lblBusquedaRpida.setForeground(Color.WHITE);
 		transparentPanel.add(lblBusquedaRpida,
-				"cell 1 0,alignx center,aligny bottom");
+				"cell 0 1,alignx center,aligny bottom");
 
 		final TextFieldAutocompletar textoAutocompletado = new TextFieldAutocompletar(
 				devuelveProductos());
 		textoAutocompletado.setText("");
-		transparentPanel.add(textoAutocompletado, "cell 1 1,growx");
+		transparentPanel.add(textoAutocompletado, "cell 0 2,growx");
 
 		JButton btnAgregarAPedido = new JButton("Agregar A Pedido");
 		btnAgregarAPedido.addMouseListener(new MouseAdapter() {
@@ -166,8 +172,35 @@ public class CajaPrincipal extends BasicoUsuario {
 			}
 		});
 		transparentPanel.add(btnAgregarAPedido,
-				"cell 2 1,alignx center,aligny center");
+				"cell 0 3,alignx center,aligny top");
 		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
+
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanel_1, "cell 3 1,grow");
+		transparentPanel_1.setLayout(new MigLayout("", "[grow]",
+				"[grow][][][][grow]"));
+
+		Component horizontalStrut_1 = Box.createHorizontalStrut(300);
+		transparentPanel_1.add(horizontalStrut_1, "cell 0 0");
+
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setForeground(Color.WHITE);
+		transparentPanel_1.add(lblNombre, "cell 0 1,alignx center");
+
+		textFieldEliminar = new TextFieldAutocompletar(devuelvePedido());
+		textFieldEliminar.setEditable(false);
+		textFieldEliminar.setText("");
+		transparentPanel_1.add(textFieldEliminar, "cell 0 2,growx");
+
+		JButton btnNewButton_1 = new JButton("Eliminar De Lista");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				magic(textFieldEliminar.getText());
+			}
+
+		});
+		transparentPanel_1.add(btnNewButton_1, "cell 0 3,alignx center");
 
 		JButton button_2 = new JButton("Agregar a Pedido");
 		button_2.addMouseListener(new MouseAdapter() {
@@ -235,7 +268,9 @@ public class CajaPrincipal extends BasicoUsuario {
 			public void mouseClicked(MouseEvent arg0) {
 				vaciarPedido();
 				armarPedido();
+				// cargarAutoEliminar();
 			}
+
 		});
 		transparentPanelBotonera.add(btnVaciar,
 				"cell 1 0,alignx center,aligny center");
@@ -253,6 +288,41 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Metodos Auxiliares
+
+	// hago amgia
+	private void magic(String text) {
+		boolean bandera = false;
+		for (int i = 0; i < pedidoArticle.size(); i++) {
+			if ((bandera == false)
+					&& (pedidoArticle.get(i).getNombre().equals(text))) {
+				pedidoArticle.remove(i);
+				bandera = true;
+			}
+		}
+		for (int i = 0; i < pedidoAux.size(); i++) {
+			if (pedidoAux.get(i).getArticle().getNombre().equals(text)) {
+				pedidoAux.remove(i);
+			}
+
+		}
+		armarPedido();
+		textFieldEliminar.setDataList(devuelvePedido());
+	}
+
+	// Para el textfield automatico
+	private void cargarAutoEliminar() {
+		textFieldEliminar.setDataList(devuelvePedido());
+		textFieldEliminar.setEditable(true);
+	}
+
+	// Devuelve nombres articulos de pedido
+	public ArrayList<String> devuelvePedido() {
+		ArrayList<String> aux = new ArrayList<String>();
+		for (int i = 0; i < pedidoAux.size(); i++) {
+			aux.add(pedidoAux.get(i).getArticle().getNombre());
+		}
+		return aux;
+	}
 
 	// Devuelve articulos para el jText autocompletado
 	private ArrayList<String> devuelveProductos() {
@@ -359,6 +429,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		for (int i = 0; i < combos.size(); i++) {
 			cuentaMenus(combos.get(i), spinners.get(i), esp.get(i));
 		}
+		cargarAutoEliminar();
 
 	}
 
