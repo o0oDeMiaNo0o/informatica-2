@@ -2,9 +2,11 @@ package uy.edu.um.client_service.service.derliveryRemote.manager;
 
 import java.rmi.RemoteException;
 
+import uy.edu.um.client_service.business.BusinessFacade;
+import uy.edu.um.client_service.business.delivery.entities.Delivery;
+import uy.edu.um.client_service.business.delivery.interfaces.DeliveryMgt;
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.value_object.delivery.DeliveryVO;
-import uy.edu.um.value_object.oreder.OrderVO;
 
 public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 
@@ -20,9 +22,10 @@ public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 	}
 
 	@Override
-	public void addOrder(DeliveryVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void addDelivery(DeliveryVO o) throws RemoteException {
+		DeliveryMgt dMgt = BusinessFacade.getInstance().getDeliveryMgt();
+		Delivery toAdd = dMgt.getDelivery(o);
+		dMgt.addDelivery(toAdd);
 	}
 
 	@Override

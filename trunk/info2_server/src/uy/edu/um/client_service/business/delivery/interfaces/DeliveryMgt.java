@@ -9,14 +9,14 @@ public interface DeliveryMgt {
 
 	public DeliveryVO getDeliveryVO(Delivery d);
 
-	public void addDelivery(DeliveryVO d);
+	public void addDelivery(Delivery d);
 
-	public void enPreparacion(DeliveryVO d);
+	public void enPreparacion(Delivery d);
 
-	public void enViaje(DeliveryVO d);
+	public void enViaje(Delivery d);
 
-	public void rechazado(DeliveryVO d);
+	public void rechazado(Delivery d);
 
-	public void facturado(DeliveryVO d);
+	public void facturado(Delivery d);
 
 }
