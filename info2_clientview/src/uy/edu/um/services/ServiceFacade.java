@@ -77,7 +77,7 @@ public class ServiceFacade {
 	public String getHost() {
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream("config.properties"));
+			prop.load(new FileInputStream("properties"));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
