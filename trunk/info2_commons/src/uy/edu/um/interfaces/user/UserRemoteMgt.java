@@ -21,4 +21,6 @@ public interface UserRemoteMgt extends Remote{
 
 	public boolean checkUsername(String username) throws RemoteException;
 
+	public UserVO getUser(String nombre) throws RemoteException;
+
 }
