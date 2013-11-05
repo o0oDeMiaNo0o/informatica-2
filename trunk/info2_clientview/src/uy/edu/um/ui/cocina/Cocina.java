@@ -33,7 +33,7 @@ import uy.edu.um.value_object.oreder.OrderVO;
 public class Cocina extends JFrame {
 
 	private JPanel contentPane;
-	public URL DirFondo = DirLocal.class.getResource("Fondo2.jpg");
+	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
 

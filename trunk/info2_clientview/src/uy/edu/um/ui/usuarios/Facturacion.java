@@ -169,13 +169,16 @@ public class Facturacion extends BasicoUsuario {
 							"Factura Correcta", devuelve());
 					msg.setVisible(true);
 					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
-					// tables.
+					tables.setLibre(mesa);
 				} else {
 					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
 							mesa);
 					nuevo.addBillVO(factura);
+					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
+					tables.setLibre(mesa);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
+					msg.setVisible(true);
 				}
 
 			}
