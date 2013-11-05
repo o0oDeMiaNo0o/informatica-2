@@ -153,7 +153,7 @@ public class Cocina extends JFrame {
 						.add(textArea, "cell 1 2,growx,aligny center");
 
 				j++;
-				if (j > 5) {
+				if (j > 3) {
 					j = 1;
 					i++;
 				}

@@ -12,10 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.ui.usuarios.Facturacion;
-import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.value_object.table.TableVO;
 
-public class ConfirmCerrarMesa extends JFrame {
+public class ConfirmRemoveTable extends JFrame {
 
 	private JPanel contentPane;
 
@@ -33,7 +34,7 @@ public class ConfirmCerrarMesa extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmCerrarMesa(final OrderVO toSend) {
+	public ConfirmRemoveTable(TableVO mesa) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -59,8 +60,8 @@ public class ConfirmCerrarMesa extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(toSend);
-				
+				TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
+				//nuevo.
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
