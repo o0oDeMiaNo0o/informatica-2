@@ -70,7 +70,13 @@ public class TableMgr implements TableMgt{
 		int numero = t.getNumero();
 		boolean estado = t.isOcuapdo();
 		return new TableVO(numero,estado);
-
 	}
+
+	@Override
+	public void setOcupado(Table t) {
+		TableDAO dao = TableDAO.getInstance();
+		dao.setOcupada(t);
+	}
+
 
 }
