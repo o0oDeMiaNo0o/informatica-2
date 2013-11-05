@@ -23,6 +23,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.bill.interfaces.BillMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -161,13 +162,17 @@ public class Facturacion extends BasicoUsuario {
 						.parseInt(textFieldCliente.getText()));
 				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
 				if (cliente != null) {
-					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente, mesa);
+					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
+							mesa);
 					nuevo.addBillVO(factura);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
 					msg.setVisible(true);
+					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
+					// tables.
 				} else {
-					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente, mesa);
+					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
+							mesa);
 					nuevo.addBillVO(factura);
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
@@ -211,7 +216,7 @@ public class Facturacion extends BasicoUsuario {
 
 	private String cuentaPrecio(ArrayList<OrderVO> toSend) {
 		BigDecimal subTotal = new BigDecimal(0);
-		for(OrderVO o : toSend){
+		for (OrderVO o : toSend) {
 			ArrayList<ArticleOrderVO> ao = o.getArticulos();
 			for (ArticleOrderVO a : ao) {
 				if (a != null) {
