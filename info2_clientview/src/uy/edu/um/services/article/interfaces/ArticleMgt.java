@@ -28,4 +28,6 @@ public interface ArticleMgt {
 
 	public boolean existeArticle(String nombre);
 
+
+
 }
