@@ -1,6 +1,5 @@
 package uy.edu.um.musica;
 
-
 public class Musica {
 
 	private PlayerThread elReproductor = null;
@@ -16,6 +15,10 @@ public class Musica {
 	}
 
 	private void jbInit() throws Exception {
+		String sSistemaOperativo = System.getProperty("os.name");
+		if (!sSistemaOperativo.equals("Mac OS X")) {
+			file.substring(1);
+		}
 
 		elReproductor = new PlayerThread(file);
 
