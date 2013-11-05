@@ -6,9 +6,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteArticleException;
-import uy.edu.um.exceptions.checks.HasNumberException;
-import uy.edu.um.exceptions.checks.NotNumberException;
-import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.value_object.article.ArticleVO;
@@ -32,14 +29,12 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category){
-		ArticleVO  aReturn = null;
-		try {
-			checkArticle(nombre);
-			aReturn = new ArticleVO(nombre, precio,category);
-		}catch(ExisteArticleException e){
-			e.printStackTrace();
+	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category)
+				throws ExisteArticleException{
+		if(existeArticle(nombre)){
+			throw new ExisteArticleException("El articlo "+nombre+" ya existe");
 		}
+		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
 
@@ -111,30 +106,22 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArticleVO createArticleVOid(int id, String nombre,
-			BigDecimal precio, CategoryVO category) {
-		ArticleVO aReturn = null;
-		try {
-			checkArticle(nombre);
-			aReturn = new ArticleVO(nombre, precio,category);
-		} catch (ExisteArticleException e) {
-			e.printStackTrace();
+			BigDecimal precio, CategoryVO category) throws ExisteArticleException {
+		if(existeArticle(nombre)){
+			throw new ExisteArticleException("El article "+nombre+" ya existe");
 		}
+		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
 		return aReturn;
 	}
 
 	@Override
 	public void removeArticle(ArticleVO a) {
 		try {
-
 			String sObjectService = "ArticleRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(1099);
-
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
-
 			 oArticleRemoteMgt.editArtile(a);
-
 		}catch (Exception e) {
 			System.err.println("error:");
 			e.printStackTrace();
@@ -157,11 +144,5 @@ public class ArticleMgr implements ArticleMgt {
 			e.printStackTrace();
 		}
 		return check;
-	}
-
-	private void checkArticle(String nombre) throws ExisteArticleException{
-		if(existeArticle(nombre)){
-			throw new ExisteArticleException("El nombre "+nombre+" ya existe en Articulos");
-		}
 	}
 }
