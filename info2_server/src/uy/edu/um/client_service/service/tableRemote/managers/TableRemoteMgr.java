@@ -75,4 +75,13 @@ public class TableRemoteMgr implements TableRemoteMgt{
 		tMgt.removeTable(toRemove);
 	}
 
+	@Override
+	public void setLibre(TableVO t) throws RemoteException {
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		Table aLiberar = tMgt.getTable(t);
+		tMgt.setLibre(aLiberar);
+
+	}
+
+
 }
