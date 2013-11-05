@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -20,9 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import javazoom.jl.player.jlp;
+import javazoom.jl.decoder.JavaLayerException;
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.musica.DirLocalMusica;
+import uy.edu.um.musica.Musica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -36,9 +35,6 @@ public class CocinaUsuarios extends BasicoUsuario {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes = cargaOrdenes();
-	private jlp mReproductor = null;
-	private String dirMusica = DirLocalMusica.class
-			.getResource("Cocina.mp3").toString();
 
 	/**
 	 * Launch the application.
@@ -59,15 +55,12 @@ public class CocinaUsuarios extends BasicoUsuario {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws JavaLayerException
+	 * @throws InterruptedException
 	 */
-	public CocinaUsuarios() {
-		String[] args = new String[1];
+	public CocinaUsuarios(){
 
-		args[0] = dirMusica;
-
-		mReproductor = jlp.createInstance(args);
-		run();
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -96,6 +89,9 @@ public class CocinaUsuarios extends BasicoUsuario {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
+		
+		Musica nuevo = new Musica();
+		
 	}
 
 	private void armarPedido(JPanel transparentPanel) {
@@ -208,22 +204,4 @@ public class CocinaUsuarios extends BasicoUsuario {
 		return nuevo.allOrders();
 	}
 
-	// Musica dj
-	public void run() {
-
-		try {
-
-			while (true) {
-
-				mReproductor.play();
-
-				Thread.sleep(1000); // esperar un segundo y volver a reproducir
-
-			}
-
-		} catch (Exception e) {
-			// TODO: Add catch code
-			e.printStackTrace();
-		}
-	}
 }
