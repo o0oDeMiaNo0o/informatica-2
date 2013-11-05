@@ -4,12 +4,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.ExisteCategoryException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
-import uy.edu.um.exceptions.checks.NotNumberException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
-import uy.edu.um.services.categories.exceptions.ExisteCategoryException;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -26,18 +25,15 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	public CategoryVO createCategoryVO(String nombre) {
+	public CategoryVO createCategoryVO(String nombre) throws ExisteCategoryException, HasBlanksException{
 		CategoryVO toReturn = null;
-		try {
-			checkCatgory(nombre);
-			toReturn = new CategoryVO(nombre);
-		} catch (HasNumberException e) {
-			e.printStackTrace();
-		} catch (ExisteCategoryException e){
-			e.printStackTrace();
-		} catch (HasBlanksException e) {
-			e.printStackTrace();
+		if(existCategory(nombre)){
+			throw new ExisteCategoryException("La categoria "+nombre+" ya existe");
 		}
+		if(Verificacion.hasSpaces(nombre)){
+			throw new HasBlanksException("El nombre de la categoria contiene espacios");
+		}
+		toReturn = new CategoryVO(nombre);
 		return toReturn;
 	}
 
@@ -109,19 +105,7 @@ public class CategoryMgr implements CategoryMgt{
 		return  checker;
 	}
 
-	//metodos auxiliares
-
-	private void checkCatgory(String nombre) throws ExisteCategoryException, HasNumberException, HasBlanksException{
-		if(existCategory(nombre) == true){
-			throw new ExisteCategoryException("Ya existe la categoria "+nombre);
-		}
-		if(Verificacion.hasNumbers(nombre)){
-			throw new HasNumberException("El campo nombre tiene numeros y no debe");
-		}
-		if(Verificacion.hasSpaces(nombre)){
-			throw new HasBlanksException("El campo nombre tiene espacios y no de debe");
-		}
-	}
-
-
 }
+
+
+

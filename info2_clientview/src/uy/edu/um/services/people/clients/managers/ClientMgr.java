@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
-import uy.edu.um.exceptions.checks.NotNumberException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
@@ -29,19 +28,18 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
-			int tel, String direccion, String mail, BigDecimal descuento) {
-		ClientVO toReturn = null;
-		try{
-			existeCliente(nombre, ci);
-			checkUser(nombre, apellido);
-			toReturn = new ClientVO(nombre,apellido,ci,tel,direccion,mail,descuento);
-		}catch(ExisteClientException e){
-			e.printStackTrace();
-		}catch(HasNumberException e){
-			e.printStackTrace();
-		}catch(HasBlanksException e){
-			e.printStackTrace();
+			int tel, String direccion, String mail, BigDecimal descuento)
+					throws ExisteClientException, HasBlanksException, HasNumberException {
+		if(existeCliente(nombre,ci) == true){
+			throw new ExisteClientException("El cliente "+nombre+" "+apellido+" ya existe");
 		}
+		if(Verificacion.hasNumbers(nombre)){
+			throw new HasNumberException("El nombre contiene numeros");
+		}
+		if(Verificacion.hasNumbers(apellido)){
+			throw new HasBlanksException("El apellido contiene numeros");
+		}
+		ClientVO toReturn = new ClientVO(nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
 
@@ -118,7 +116,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public boolean existeCliente(String nombre, int ci) throws ExisteClientException {
+	public boolean existeCliente(String nombre, int ci){
 		boolean check = false;
 		try {
 			String sObjectService = "ClientRemoteMgr";
@@ -132,19 +130,6 @@ public class ClientMgr implements ClientMgt{
 			e.printStackTrace();
 		}
 		return check;
-	}
-
-	//METODOS DE LA CLASE
-	private static void checkUser(String nombre, String apellido) throws HasBlanksException, HasNumberException{
-		if(Verificacion.hasNumbers(nombre)){
-			throw new HasNumberException("El campo nombre tiene numeros");
-		}
-		if(Verificacion.hasNumbers(apellido)){
-			throw new HasNumberException("El campo apellido tiene numeros");
-		}
-		if(Verificacion.hasSpaces(apellido)){
-			throw new HasBlanksException("El campo apellido tiene espacios");
-		}
 	}
 
 

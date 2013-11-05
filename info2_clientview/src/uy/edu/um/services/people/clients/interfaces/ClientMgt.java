@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteClientException;
+import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public interface ClientMgt {
 
 	public ClientVO createClientVO(String nombre, String apellido,int ci, int tel, String direccion, String mail
-			, BigDecimal descuento);
+			, BigDecimal descuento) throws ExisteClientException, HasBlanksException, HasNumberException;
 
 	//public void addClient(String nombre, String apellido,int ci, int tel, String direccion, String mail);
 
@@ -23,7 +25,7 @@ public interface ClientMgt {
 
 	public ArrayList<ClientVO> allClients();
 
-	public boolean existeCliente(String nombre, int ci) throws ExisteClientException;
+	public boolean existeCliente(String nombre, int ci);
 
 
 }
