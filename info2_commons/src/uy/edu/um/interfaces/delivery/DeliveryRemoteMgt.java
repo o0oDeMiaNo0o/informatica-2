@@ -7,7 +7,7 @@ import uy.edu.um.value_object.delivery.DeliveryVO;
 
 public interface DeliveryRemoteMgt extends Remote{
 
-	public void addOrder(DeliveryVO o) throws RemoteException;
+	public void addDelivery(DeliveryVO o) throws RemoteException;
 
 	public void enPreparacion(DeliveryVO o) throws RemoteException;
 
