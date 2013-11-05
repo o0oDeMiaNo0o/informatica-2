@@ -3,10 +3,11 @@ package uy.edu.um.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,10 +23,9 @@ import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.ui.usuarios.MainUsuario;
 import uy.edu.um.value_object.user.UserVO;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -133,6 +133,12 @@ public class Login extends JFrame {
 						nuevoVentana.setVisible(true);
 						cerrar();
 					}
+				} else {
+					MensajeGenerico msg = new MensajeGenerico(
+							"Usuario y/o Contrase–a Incorrectos", devuelve());
+					msg.setVisible(true);
+					passwordField.setText("");
+					textField.setText("");
 				}
 			}
 		});
@@ -153,5 +159,9 @@ public class Login extends JFrame {
 
 	private void cerrar() {
 		this.dispose();
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 }
