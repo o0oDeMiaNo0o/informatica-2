@@ -12,8 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.usuarios.Facturacion;
-import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class ConfirmFacturar extends JFrame {
 	private JPanel contentPane;
@@ -28,10 +30,10 @@ public class ConfirmFacturar extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmFacturar(final OrderVO toSend, final JFrame mesas) {
+	public ConfirmFacturar(final TableVO mesa, final JFrame frame) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(mesas);
+		this.setLocationRelativeTo(frame);
 		setBounds(100, 100, 460, 254);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -55,10 +57,9 @@ public class ConfirmFacturar extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion factura = new Facturacion(toSend);
+				Facturacion factura = new Facturacion(mesa, null);
 				factura.setVisible(true);
-				toSend.getTable().setOcupado(false);
-				mesas.dispose();
+				frame.dispose();
 				cerrar();
 			}
 		});
@@ -68,7 +69,6 @@ public class ConfirmFacturar extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				toSend.getTable().setOcupado(true);
 				cerrar();
 			}
 		});

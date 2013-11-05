@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
@@ -90,11 +91,11 @@ public class NewUser extends BasicoAdmin {
 			public void mouseClicked(MouseEvent arg0) {
 				if (textField_1.getText().equals("")) {
 					MensajeGenerico nuevo = new MensajeGenerico("Nombre Vacio",
-							contentPane);
+							devuelve());
 					nuevo.setVisible(true);
 				} else if (textField_2.getText().equals("")) {
 					MensajeGenerico nuevo = new MensajeGenerico(
-							"Contrase–a Vacia", contentPane);
+							"Contrase–a Vacia", devuelve());
 					nuevo.setVisible(true);
 				} else {
 					boolean admin = false;
@@ -102,8 +103,14 @@ public class NewUser extends BasicoAdmin {
 						admin = true;
 					}
 					UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-					UserVO nuevoUser = nuevo.createUserVO(textField_1.getText(), textField_2.getText(),
-							admin);
+					UserVO nuevoUser = null;
+					try {
+						nuevoUser = nuevo.createUserVO(textField_1.getText(), textField_2.getText(),
+								admin);
+					} catch (HasBlanksException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					nuevo.addUser(nuevoUser);
 				}
 			}
@@ -129,11 +136,11 @@ public class NewUser extends BasicoAdmin {
 
 					} else {
 						MensajeGenerico test = new MensajeGenerico(
-								"Contrase–a Vacia", contentPane);
+								"Contrase–a Vacia", devuelve());
 					}
 				} else {
 					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
-							contentPane);
+							devuelve());
 				}
 			}
 		});
@@ -174,6 +181,9 @@ public class NewUser extends BasicoAdmin {
 	private void cerrar() {
 		this.dispose();
 
+	}
+	public JFrame devuelve(){
+		return this;
 	}
 
 }

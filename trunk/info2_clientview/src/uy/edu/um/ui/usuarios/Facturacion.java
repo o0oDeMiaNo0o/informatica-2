@@ -6,20 +6,22 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.bill.interfaces.BillMgt;
+import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
@@ -27,11 +29,10 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
+import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import uy.edu.um.value_object.table.TableVO;
 
 public class Facturacion extends BasicoUsuario {
 	private JTextField textFieldCliente;
@@ -41,13 +42,14 @@ public class Facturacion extends BasicoUsuario {
 	private ArrayList<ClientVO> clientes = cargaClientes();
 	private boolean tieneDescuento = false;
 	private BigDecimal descuento = new BigDecimal(0);
-	private BigDecimal montoPagar, pagaCon, vuelto;
+	private BigDecimal montoPagar;
+	private ArrayList<OrderVO> ordenesMesa = new ArrayList<OrderVO>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Facturacion frame = new Facturacion(null);
+					Facturacion frame = new Facturacion(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,14 +58,18 @@ public class Facturacion extends BasicoUsuario {
 		});
 	}
 
-	public Facturacion(OrderVO toSend) {
+	public Facturacion(final TableVO mesa, ClientVO cliente) {
+
+		ordenesMesa = cargoOrdenesMesa(mesa);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]", "[grow][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]",
+				"[grow][][][grow]"));
 
 		ImagePanel imagePanel = new ImagePanel(logo);
 		transparentPanel
@@ -87,7 +93,8 @@ public class Facturacion extends BasicoUsuario {
 		btnVerLista.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				ClientListU nuevo = new ClientListU(mesa);
+				nuevo.setVisible(true);
 			}
 		});
 		transparentPanel
@@ -129,7 +136,7 @@ public class Facturacion extends BasicoUsuario {
 		lblSubtotal.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblSubtotal, "cell 1 1");
 
-		JLabel labelSub = new JLabel(cuentaPrecio(toSend));
+		JLabel labelSub = new JLabel(cuentaPrecio(ordenesMesa));
 		labelSub.setForeground(Color.WHITE);
 		transparentPanel_1.add(labelSub, "cell 2 1,alignx left,aligny center");
 
@@ -147,6 +154,27 @@ public class Facturacion extends BasicoUsuario {
 		transparentPanel_1.add(lblTotal, "cell 1 3");
 
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ClientVO cliente = buscaCliente(Integer
+						.parseInt(textFieldCliente.getText()));
+				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
+				if (cliente != null) {
+					BillVO factura = nuevo.createBillVO(toSend, cliente, mesa);
+					nuevo.addBillVO(factura);
+					MensajeGenerico msg = new MensajeGenerico(
+							"Factura Correcta", devuelve());
+					msg.setVisible(true);
+				} else {
+					BillVO factura = nuevo.createBillVO(toSend, cliente, mesa);
+					nuevo.addBillVO(factura);
+					MensajeGenerico msg = new MensajeGenerico(
+							"Factura Correcta", devuelve());
+				}
+
+			}
+		});
 		transparentPanel_1.add(btnAceptar, "flowx,cell 2 5,alignx right");
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -165,6 +193,11 @@ public class Facturacion extends BasicoUsuario {
 		textFieldVuelto.setEditable(false);
 		transparentPanel.add(textFieldVuelto, "cell 2 2,growx");
 		textFieldVuelto.setColumns(10);
+	}
+
+	private ArrayList<OrderVO> cargoOrdenesMesa(TableVO mesa) {
+		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
+		return nuevo.allOrders();
 	}
 
 	private String calculaTotal() {
@@ -226,15 +259,24 @@ public class Facturacion extends BasicoUsuario {
 
 	}
 
-	public void buscaCliente(int ci) {
+	public ClientVO buscaCliente(int ci) {
+		ClientVO cliente = null;
 		for (int i = 0; i < clientes.size(); i++) {
 			if (clientes.get(i).getCi() == ci) {
+				cliente = clientes.get(i);
 				if (clientes.get(i).getDescuento().equals(0)) {
 					tieneDescuento = true;
 					descuento = clientes.get(i).getDescuento();
 				}
 			}
 		}
+		return cliente;
+	}
+
+	// Cargo ordenes de esa mesa
+
+	public JFrame devuelve() {
+		return this;
 	}
 
 }

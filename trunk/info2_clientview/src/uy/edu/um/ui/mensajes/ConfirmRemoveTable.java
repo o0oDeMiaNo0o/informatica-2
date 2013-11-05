@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.ui.admin.listas.TableList;
 import uy.edu.um.value_object.table.TableVO;
 
 public class ConfirmRemoveTable extends JFrame {
@@ -22,7 +23,7 @@ public class ConfirmRemoveTable extends JFrame {
 
 	// Metodo cerrar Ventana
 	public void cerrar() {
-		this.setVisible(false);
+		this.dispose();
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class ConfirmRemoveTable extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmRemoveTable(TableVO mesa) {
+	public ConfirmRemoveTable(final TableVO mesa, final JFrame panel) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 460, 254);
@@ -47,7 +48,8 @@ public class ConfirmRemoveTable extends JFrame {
 		ZonaPassword.setLayout(new MigLayout("", "[428px]",
 				"[grow][16px][grow]"));
 
-		JLabel lblContrasea = new JLabel("Confirma Cerrar Mesa?");
+		JLabel lblContrasea = new JLabel("Confirma Eliminar Mesa: "
+				+ mesa.getNumero() + "?");
 		lblContrasea.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblContrasea.setForeground(Color.BLACK);
 		ZonaPassword.add(lblContrasea, "cell 0 1,alignx center,aligny top");
@@ -61,7 +63,11 @@ public class ConfirmRemoveTable extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
-				//nuevo.
+				nuevo.removeTable(mesa);
+				TableList aux = new TableList();
+				aux.setVisible(true);
+				panel.dispose();
+
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

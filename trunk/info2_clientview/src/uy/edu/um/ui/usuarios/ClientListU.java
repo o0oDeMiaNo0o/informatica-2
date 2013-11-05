@@ -1,4 +1,4 @@
-package uy.edu.um.ui.admin.listas;
+package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -16,15 +16,14 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
-import uy.edu.um.ui.admin.BasicoAdmin;
-import uy.edu.um.ui.admin.edicion.EditRemoveC;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.user.UserVO;
+import uy.edu.um.value_object.table.TableVO;
 
-public class ClientList extends BasicoAdmin {
+public class ClientListU extends BasicoUsuario {
 
 	private JTable table;
 	private JTextField textFieldID;
@@ -37,7 +36,7 @@ public class ClientList extends BasicoAdmin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ClientList frame = new ClientList();
+					ClientListU frame = new ClientListU(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +48,7 @@ public class ClientList extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public ClientList() {
+	public ClientListU(final TableVO mesa) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -99,33 +98,15 @@ public class ClientList extends BasicoAdmin {
 		table.setSurrendersFocusOnKeystroke(true);
 		transparentPanel.add(table, "cell 1 0,grow");
 
-		JButton btnEliminarCategoria = new JButton("Eliminar Cliente");
-		btnEliminarCategoria.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				ClientVO cliente = buscaEnLista(textFieldID.getText());
-				if (cliente != null) {
-					EditRemoveC nuevo = new EditRemoveC(cliente, contentPane,
-							false, "Desea Eliminar Este Usuario");
-					nuevo.setVisible(true);
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							"Cliente No Existe", devuelve());
-					nuevo.setVisible(true);
-				}
-			}
-
-		});
-
-		JButton btnEditarCliente = new JButton("Editar Cliente");
-		btnEditarCliente.addMouseListener(new MouseAdapter() {
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				ClientVO cliente = buscaEnLista(textFieldID.getText());
 				if (cliente != null) {
-					EditRemoveC nuevo = new EditRemoveC(cliente, contentPane,
-							true, "");
+					Facturacion nuevo = new Facturacion(mesa, cliente);
 					nuevo.setVisible(true);
+					cerrar();
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Cliente No Existe", devuelve());
@@ -133,10 +114,7 @@ public class ClientList extends BasicoAdmin {
 				}
 			}
 		});
-
-		transparentPanel_2.add(btnEditarCliente, "flowx,cell 1 2");
-		transparentPanel_2.add(btnEliminarCategoria,
-				"cell 1 2,alignx center,aligny top");
+		transparentPanel_2.add(btnAceptar, "cell 1 2,alignx center");
 		cargaATabla();
 	}
 

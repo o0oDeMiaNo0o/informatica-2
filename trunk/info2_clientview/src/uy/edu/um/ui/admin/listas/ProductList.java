@@ -162,7 +162,7 @@ public class ProductList extends BasicoAdmin {
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
-							"Producto No Existe", contentPane);
+							"Producto No Existe", devuelve());
 					nuevo.setVisible(true);
 				}
 			}
@@ -183,7 +183,7 @@ public class ProductList extends BasicoAdmin {
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
-							"Producto No Existe", contentPane);
+							"Producto No Existe", devuelve());
 					nuevo.setVisible(true);
 				}
 			}

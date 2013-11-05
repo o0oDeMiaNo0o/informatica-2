@@ -16,7 +16,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.usuarios.CajaPrincipal;
-import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
 
 public class ConfirmMesa extends JFrame {
@@ -38,11 +38,11 @@ public class ConfirmMesa extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public ConfirmMesa(final OrderVO toSend, String text, final JFrame mesas) {
+	public ConfirmMesa(final TableVO mesa, String text, final JFrame frame) {
 
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(mesas);
+		this.setLocationRelativeTo(frame);
 		setBounds(100, 100, 460, 254);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -66,9 +66,12 @@ public class ConfirmMesa extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (toSend.getTable().isOcupado()) {
-
+				if (mesa.isOcupado()) {
+					ConfirmFacturar nuevo = new ConfirmFacturar(mesa, null);
+					nuevo.setVisible(true);
+					cerrar();
 				} else {
+					/*
 					if (toSend.getArticulos() != null) {
 						OrderMgt nuevo = ServiceFacade.getInstance()
 								.getOrderMgt();
@@ -77,7 +80,7 @@ public class ConfirmMesa extends JFrame {
 								.getTableMgt();
 						nuevoMesas.setOcupado(toSend.getTable());
 						ConfirmFacturar nueva = new ConfirmFacturar(toSend,
-								mesas);
+								frame);
 						nueva.setVisible(true);
 						cerrar();
 					} else {
@@ -87,11 +90,11 @@ public class ConfirmMesa extends JFrame {
 								.getTableMgt();
 						nuevoMesas.setOcupado(toSend.getTable());
 						nuevo.setVisible(true);
-						mesas.dispose();
+						frame.dispose();
 						cerrar();
+						*/
 					}
 				}
-			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
 

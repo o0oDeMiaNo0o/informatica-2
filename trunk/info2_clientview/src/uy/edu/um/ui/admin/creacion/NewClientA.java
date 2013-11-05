@@ -8,12 +8,16 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.ExisteClientException;
+import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
@@ -142,50 +146,65 @@ public class NewClientA extends BasicoAdmin {
 														.getValue().toString()));
 										ClientMgt client = ServiceFacade
 												.getInstance().getClientMgt();
-										ClientVO cliente = client.createClientVO(
-												textFieldNom.getText(),
-												textFieldAp.getText(), Integer
-														.parseInt(textFieldCi
-																.getText()),
-												Integer.parseInt(textFieldTel
-														.getText()),
-												textFieldDir.getText(),
-												textFieldEmail.getText(),
-												descuento);
+										ClientVO cliente = null;
+										try {
+											cliente = client.createClientVO(
+													textFieldNom.getText(),
+													textFieldAp.getText(), Integer
+															.parseInt(textFieldCi
+																	.getText()),
+													Integer.parseInt(textFieldTel
+															.getText()),
+													textFieldDir.getText(),
+													textFieldEmail.getText(),
+													descuento);
+										} catch (NumberFormatException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										} catch (ExisteClientException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										} catch (HasBlanksException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										} catch (HasNumberException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
 										client.addClientVO(cliente);
 										MensajeGenerico new10 = new MensajeGenerico(
-												"Cliente Agregado", contentPane);
+												"Cliente Agregado", devuelve());
 										new10.setVisible(true);
 									} else {
 										MensajeGenerico new6 = new MensajeGenerico(
-												"Direccion Vacia", contentPane);
+												"Direccion Vacia", devuelve());
 										new6.setVisible(true);
 									}
 								} else {
 									MensajeGenerico new5 = new MensajeGenerico(
 											"Telefono Vacio o No Numerico",
-											contentPane);
+											devuelve());
 									new5.setVisible(true);
 								}
 							} else {
 								MensajeGenerico new4 = new MensajeGenerico(
-										"Apellido Vacio", contentPane);
+										"Apellido Vacio", devuelve());
 								new4.setVisible(true);
 							}
 						} else {
 							MensajeGenerico new3 = new MensajeGenerico(
-									"Email Vacio", contentPane);
+									"Email Vacio", devuelve());
 							new3.setVisible(true);
 						}
 
 					} else {
 						MensajeGenerico new2 = new MensajeGenerico(
-								"Ci Vacio o No Numerico", contentPane);
+								"Ci Vacio o No Numerico", devuelve());
 						new2.setVisible(true);
 					}
 				} else {
 					MensajeGenerico new1 = new MensajeGenerico("Nombre Vacio",
-							contentPane);
+							devuelve());
 					new1.setVisible(true);
 				}
 
@@ -201,6 +220,10 @@ public class NewClientA extends BasicoAdmin {
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel.add(btnCancelar,
 				"cell 4 13,alignx right,aligny center");
+	}
+
+	public JFrame devuelve() {
+		return this;
 	}
 
 }
