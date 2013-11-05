@@ -151,40 +151,7 @@ public class Login extends JFrame {
 		return psw;
 	}
 
-/*	// Carga Users
-	private ArrayList<UserVO> cargaUsers() {
-		UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-		return nuevo.allUsers();
-	}
-
-	// Chequea User
-	private boolean chequeaUser(String usr, String psw) {
-		for (int i = 0; i < listaUsers.size(); i++) {
-			if ((listaUsers.get(i).getUser().equals(usr))
-					&& (listaUsers.get(i).getPassword().equals(psw))) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-*/
 	private void cerrar() {
 		this.dispose();
 	}
-/*
-	private UserVO getUserVO(String nombre, String psw) {
-		UserVO toReturn = null;
-		ArrayList<UserVO> allUsers = cargaUsers();
-		for (UserVO u : allUsers) {
-			if (u != null) {
-				if (u.getUser().equals(nombre) && u.getPassword().equals(psw)) {
-					toReturn = u;
-				}
-			}
-		}
-		return toReturn;
-	}*/
-
 }

@@ -76,7 +76,7 @@ public class MesaPedido extends BasicoUsuario {
 		btnFacturar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(null,null);
+				Facturacion nuevo = new Facturacion(null, null);
 				nuevo.setVisible(true);
 			}
 		});
@@ -137,7 +137,7 @@ public class MesaPedido extends BasicoUsuario {
 		ArrayList<OrderVO> ordenes = nuevo.allOrders();
 		for (int i = 0; i < ordenes.size(); i++) {
 			if ((ordenes.get(i).getTable() == mesa)
-					&& (ordenes.get(i).getEstado() == 1)) {
+					&& (ordenes.get(i).getEstado() == 0)) {
 				aux = ordenes.get(i).getArticulos();
 			}
 		}
