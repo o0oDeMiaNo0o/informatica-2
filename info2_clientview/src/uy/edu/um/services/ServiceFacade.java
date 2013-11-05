@@ -1,5 +1,9 @@
 package uy.edu.um.services;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.article.managers.ArticleMgr;
 import uy.edu.um.services.articleOrder.interfaces.ArticleOrderMgt;
@@ -68,5 +72,15 @@ public class ServiceFacade {
 
 	public DeliveryMgt getDeliveryMgt(){
 		return DeliveryMgr.getInstance();
+	}
+
+	public String getHost() {
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("config.properties"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return prop.getProperty("host");
 	}
 }

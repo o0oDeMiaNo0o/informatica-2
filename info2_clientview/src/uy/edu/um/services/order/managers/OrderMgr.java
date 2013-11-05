@@ -119,4 +119,20 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public ArrayList<OrderVO> getOrderTable(TableVO t) {
+		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
+		try {
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			array = oOrderRemoteMgt.allOrdersTable(t);
+			System.out.println("ordenes recibidas correctamente");
+		} catch (Exception e) {
+			System.err.println("error:");
+			e.printStackTrace();
+		}
+		return array;
+	}
+
 }

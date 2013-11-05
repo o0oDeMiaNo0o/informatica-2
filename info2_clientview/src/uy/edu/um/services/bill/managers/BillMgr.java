@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
+import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.bill.interfaces.BillMgt;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
@@ -27,8 +28,9 @@ public class BillMgr implements BillMgt{
 	@Override
 	public void addBillVO(BillVO b) {
 		try {
+			String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "BillRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(1099);
+			Registry oRegitry = LocateRegistry.getRegistry(host, 1099);
 			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oBillRemoteMgt.addBill(b);
