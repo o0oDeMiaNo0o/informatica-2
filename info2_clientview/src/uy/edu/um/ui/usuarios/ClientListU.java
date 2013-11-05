@@ -154,7 +154,11 @@ public class ClientListU extends BasicoUsuario {
 				aux[i + 1][3] = clientes.get(i).getDireccion();
 				aux[i + 1][4] = clientes.get(i).getTel();
 				aux[i + 1][5] = clientes.get(i).getEmail();
-				aux[i + 1][6] = clientes.get(i).getDescuento().toString();
+				if (clientes.get(i).getDescuento().toString() != null) {
+					aux[i + 1][6] = clientes.get(i).getDescuento().toString();
+				} else {
+					aux[i + 1][6] = 0;
+				}
 			}
 
 		} else {

@@ -125,7 +125,7 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
-		transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][]",
+		transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][][]",
 				"[]"));
 
 		TransparentPanel transparentPanelTabla = new TransparentPanel();
@@ -233,13 +233,29 @@ public class CajaPrincipal extends BasicoUsuario {
 				public void mouseClicked(MouseEvent arg0) {
 					OrderVO toSend = enviarPedido(pedidoAux, mesa, espTotal,
 							user);
-					ConfirmFacturar nuevo = new ConfirmFacturar(toSend.getTable(),
-							devuelve());
+					ConfirmFacturar nuevo = new ConfirmFacturar(toSend
+							.getTable(), devuelve());
 					nuevo.setVisible(true);
 				}
 			});
 			transparentPanelBotonera.add(btnFacturar,
 					"cell 2 0,alignx center,aligny center");
+
+			JButton btnAgregar = new JButton("Agregar");
+			btnAgregar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					enviarPedido(pedidoAux, mesa, espTotal, user);
+					MainUsuario mainUsr = new MainUsuario();
+					mainUsr.setVisible(true);
+					MensajeGenerico nuevo = new MensajeGenerico(
+							"Pedido Agregado A Mesa " + mesa.getNumero(),
+							devuelve());
+					nuevo.setVisible(true);
+					cerrar();
+				}
+			});
+			transparentPanelBotonera.add(btnAgregar, "cell 2 0");
 		} else {
 
 			JButton btnNewButton = new JButton("Agregar a Mesa");
@@ -268,7 +284,7 @@ public class CajaPrincipal extends BasicoUsuario {
 			public void mouseClicked(MouseEvent arg0) {
 				vaciarPedido();
 				armarPedido();
-				// cargarAutoEliminar();
+				cargarAutoEliminar();
 			}
 
 		});
@@ -282,8 +298,9 @@ public class CajaPrincipal extends BasicoUsuario {
 				cerrar();
 			}
 		});
+
 		transparentPanelBotonera.add(btnCancelar,
-				"cell 3 0,alignx center,aligny center");
+				"cell 4 0,alignx center,aligny center");
 
 	}
 
@@ -550,9 +567,9 @@ public class CajaPrincipal extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user) {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
-		// compilo debe haber algo mal
 		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
 				CurrentUser.getUser(), esp, 0);
+		nueva.addOrder(toSend);
 		return toSend;
 
 	}
