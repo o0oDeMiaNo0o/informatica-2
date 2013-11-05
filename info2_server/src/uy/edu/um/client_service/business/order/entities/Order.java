@@ -42,13 +42,14 @@ public class Order {
 		this.time=d;
 	}
 	
-	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, Date d){
+	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, Date d, String specs){
 		this.id=id;
 		this.articles = articles;
 		this.table = table;
 		this.user = user;
 		this.estado=e;
 		this.time=d;
+		this.spec=specs;
 	}
 	
 	
