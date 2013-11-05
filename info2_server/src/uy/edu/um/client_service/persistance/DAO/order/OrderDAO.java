@@ -120,13 +120,14 @@ public class OrderDAO {
 				int nIdmesa = oResultSet.getInt(3);
 				String sEstado = oResultSet.getString(4);
 				String sUsername = oResultSet.getString(6);
+				String specs = oResultSet.getString(7);
 				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid);
 				Table t = tDAO.searchTable(nIdmesa);
 				User u = uDAO.searchUser(sUsername);
 				
 				int estado=defEstado(sEstado);
 				
-				Order a = new Order(nid,articles,t,u,estado,date);
+				Order a = new Order(nid,articles,t,u,estado,date,specs);
 				toReturn.add(a);
 			}
 
@@ -149,9 +150,6 @@ public class OrderDAO {
 		}
 		else if(e.equals("Rechazado")){
 			estado = 2;
-		}
-		else if(e.equals("Delivery")){
-			estado = 3;
 		}
 		return estado;
 	}
