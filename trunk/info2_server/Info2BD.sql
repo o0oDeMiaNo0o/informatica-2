@@ -64,19 +64,28 @@ CREATE TABLE `Facturas` (
   CONSTRAINT `fk_Facturas_Pagos1` FOREIGN KEY (`Pagos_idPagos`) REFERENCES `pagos` (`idPagos`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `Delivery/Articulos` (
+  `Delivery_idDelivery` int(11) NOT NULL,
+  `Articles_ID` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  PRIMARY KEY (`Delivery_idDelivery`,`Articles_ID`),
+  KEY `fk_Delivery/Producto_Delivery_idx` (`Delivery_idDelivery`),
+  KEY `fk_Delivey/Producto_Articles1_idx` (`Articles_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 CREATE TABLE `Linea de Factura` (
-  `Nro de Linea` int(11) NOT NULL,
   `Facturas_idFacturas` int(11) NOT NULL,
   `Articles_ID` int(11) NOT NULL,
   `Cantidad` int(4) NOT NULL,
   `Precio Unitario` decimal(5,2) NOT NULL,
   `Precio Total` decimal(6,2) NOT NULL,
-  PRIMARY KEY (`Nro de Linea`,`Facturas_idFacturas`),
+  PRIMARY KEY (`Facturas_idFacturas`,`Articles_ID`),
   KEY `fk_Linea de Factura_Articles1_idx` (`Articles_ID`),
   KEY `fk_Linea de Factura_Facturas1_idx` (`Facturas_idFacturas`),
   CONSTRAINT `fk_Linea de Factura_Articles1` FOREIGN KEY (`Articles_ID`) REFERENCES `articles` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Linea de Factura_Facturas1` FOREIGN KEY (`Facturas_idFacturas`) REFERENCES `facturas` (`idFacturas`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Mesa` (
   `idMesa` int(11) NOT NULL AUTO_INCREMENT,
