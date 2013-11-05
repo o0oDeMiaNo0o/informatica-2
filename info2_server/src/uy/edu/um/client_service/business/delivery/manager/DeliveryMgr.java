@@ -9,6 +9,7 @@ import uy.edu.um.client_service.business.delivery.entities.Delivery;
 import uy.edu.um.client_service.business.delivery.interfaces.DeliveryMgt;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
+import uy.edu.um.client_service.persistance.DAO.delivery.DeliveryDAO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -27,25 +28,31 @@ public class DeliveryMgr implements DeliveryMgt{
 	}
 
 	@Override
-	public void addDelivery(DeliveryVO d) {
+	public void addDelivery(Delivery d) {
+		DeliveryDAO dao = DeliveryDAO.getInstance();
+		dao.addDelivery(d);
+	}
+
+	@Override
+	public void enPreparacion(Delivery d) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void enPreparacion(DeliveryVO d) {
+	public void enViaje(Delivery d) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void enViaje(DeliveryVO d) {
+	public void facturado(Delivery d) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void facturado(DeliveryVO d) {
+	public void rechazado(Delivery d) {
 		// TODO Auto-generated method stub
 
 	}
@@ -91,10 +98,6 @@ public class DeliveryMgr implements DeliveryMgt{
 		return new DeliveryVO(articlesAdd,d.getTime(),uAdd,d.getSpecs(),d.getEstado(),d.isEnCocina());
 	}
 
-	@Override
-	public void rechazado(DeliveryVO d) {
-		// TODO Auto-generated method stub
 
-	}
 
 }
