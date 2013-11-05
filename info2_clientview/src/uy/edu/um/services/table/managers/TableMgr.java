@@ -81,9 +81,9 @@ public class TableMgr implements TableMgt{
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
 
-			oTableRemoteMgt.addTable();
+			oTableRemoteMgt.setOcupado(t);
 
-			System.out.println("mesa agregado");
+			System.out.println("mesa "+t.getNumero()+" cambio de estado a ocupada");
 
 		} catch (Exception e) {
 			System.err.println("error:");
