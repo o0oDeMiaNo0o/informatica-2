@@ -9,4 +9,6 @@ public interface BillMgt {
 
 	public void addBill(Bill b);
 
+	public BillVO getBillVO(Bill b);
+
 }

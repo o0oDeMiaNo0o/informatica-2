@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.business.bill.managers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
@@ -9,12 +10,12 @@ import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
-import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
-import uy.edu.um.client_service.business.people.waiters.interfaces.WaiterMgt;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
+import uy.edu.um.value_object.people.client.ClientVO;
+import uy.edu.um.value_object.table.TableVO;
 
 public class BillMgr implements BillMgt{
 
@@ -39,7 +40,6 @@ public class BillMgr implements BillMgt{
 	public Bill getBill(BillVO b) {
 		//managers
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
-		WaiterMgt wMgt = BusinessFacade.getInstance().getWaiterMgt();
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 
@@ -52,10 +52,31 @@ public class BillMgr implements BillMgt{
 			}
 		}
 		Table tAdd = tMgt.getTable(b.getTable());
-		Waiter wAdd = wMgt.getWaiter(b.getWaiter());
 		Client cAdd = cMgt.getClient(b.getClient());
 
-		Bill toReturn = new Bill(orders,cAdd,tAdd,wAdd);
+		Bill toReturn = new Bill(orders,cAdd,tAdd);
+		return toReturn;
+	}
+
+	@Override
+	public BillVO getBillVO(Bill b) {
+		//Managers
+		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
+		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+
+		ArrayList<Order> orders = b.getOrders();
+		ArrayList<OrderVO> oAdd = new ArrayList<OrderVO>(10);
+		for(Order o : orders){
+			if(o!=null){
+				OrderVO oVO = oMgt.getOrderVO(o);
+				oAdd.add(oVO);
+			}
+		}
+		TableVO tAdd = tMgt.getTableVO(b.getTable());
+		ClientVO cAdd = cMgt.getClientVO(b.getClient());
+		BigDecimal montoTotal = b.getMontoTotal();
+		BillVO toReturn = new BillVO(oAdd,cAdd,tAdd,montoTotal);
 		return toReturn;
 	}
 

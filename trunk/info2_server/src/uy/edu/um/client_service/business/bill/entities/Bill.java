@@ -7,36 +7,39 @@ import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
-import uy.edu.um.client_service.business.people.waiters.entities.Waiter;
 import uy.edu.um.client_service.business.table.entities.Table;
 
 public class Bill {
 
 	private ArrayList<Order> orders = new ArrayList<Order>(10);
-	private Waiter waiter;
 	private Client client;
 	private Table table;
 	private int id;
+	private BigDecimal montoTotal;
 
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
 
-	public Bill(int id, ArrayList<Order> orders,Client client, Table table, Waiter waiter){
+	public Bill(int id, ArrayList<Order> orders,Client client, Table table){
 		this.id = id;
 		this.orders = orders;
 		this.client = client;
-		this.waiter = waiter;
 		this.table = table;
 	}
 
-	public Bill(ArrayList<Order> orders,Client client, Table table, Waiter waiter){
+	public Bill(ArrayList<Order> orders,Client client, Table table){
 		this.orders = orders;
 		this.client = client;
 		this.table = table;
-		this.waiter = waiter;
 	}
 
+	public Bill(ArrayList<Order> orders,Client client, Table table, BigDecimal montoTotal){
+		this.orders = orders;
+		this.client = client;
+		this.table = table;
+		this.montoTotal = montoTotal;
+	}
 	private BigDecimal costoTotal(){
 		BigDecimal total = new BigDecimal(0);
 		for(Order o: orders){
@@ -52,14 +55,6 @@ public class Bill {
 			}
 		}
 		return total;
-	}
-
-	public Waiter getWaiter() {
-		return waiter;
-	}
-
-	public void setWaiter(Waiter waiter) {
-		this.waiter = waiter;
 	}
 
 	public Client getClient() {
@@ -88,5 +83,13 @@ public class Bill {
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+	}
+
+	public BigDecimal getMontoTotal() {
+		return montoTotal;
+	}
+
+	public void setMontoTotal(BigDecimal montoTotal) {
+		this.montoTotal = montoTotal;
 	}
 }
