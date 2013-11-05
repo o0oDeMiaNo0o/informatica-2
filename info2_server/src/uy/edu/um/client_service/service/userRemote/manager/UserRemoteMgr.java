@@ -65,4 +65,10 @@ public class UserRemoteMgr implements UserRemoteMgt{
 
 	}
 
+	@Override
+	public UserVO getUser(String nombre) throws RemoteException {
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		return uMgt.getUser(nombre);
+	}
+
 }
