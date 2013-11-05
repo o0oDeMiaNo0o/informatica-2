@@ -71,7 +71,6 @@ public class ConfirmMesa extends JFrame {
 					nuevo.setVisible(true);
 					cerrar();
 				} else {
-					/*
 					if (toSend.getArticulos() != null) {
 						OrderMgt nuevo = ServiceFacade.getInstance()
 								.getOrderMgt();
@@ -92,9 +91,9 @@ public class ConfirmMesa extends JFrame {
 						nuevo.setVisible(true);
 						frame.dispose();
 						cerrar();
-						*/
 					}
 				}
+			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
 
