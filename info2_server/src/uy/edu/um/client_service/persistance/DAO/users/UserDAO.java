@@ -55,8 +55,10 @@ public class UserDAO {
 		}
 		}
 	}
+	
+	
 
-	public User searchUser(String Username){
+	public User isUser(String Username){
 		User u = null;
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
