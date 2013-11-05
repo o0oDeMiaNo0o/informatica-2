@@ -22,6 +22,8 @@ public interface TableMgt {
 
 	public TableVO getTableVO(Table t);
 
+	public void removeTable(Table t);
+
 	public void setOcupado(Table t);
 
 }
