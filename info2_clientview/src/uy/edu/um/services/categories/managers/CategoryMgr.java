@@ -53,7 +53,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			System.out.println("Categoria agregada correctamente");
 		}catch(Exception e){
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 
@@ -79,7 +79,7 @@ public class CategoryMgr implements CategoryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
 		}
@@ -103,7 +103,7 @@ public class CategoryMgr implements CategoryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 		return  checker;

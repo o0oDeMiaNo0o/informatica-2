@@ -56,7 +56,7 @@ public class ClientMgr implements ClientMgt{
 			System.out.println("Cliente agregado");
 			} catch (Exception e) {
 				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 			}
 	}
@@ -82,7 +82,7 @@ public class ClientMgr implements ClientMgt{
 
 			} catch (Exception e) {
 				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 			}
 
@@ -100,7 +100,7 @@ public class ClientMgr implements ClientMgt{
 			oArticleRemoteMgt.addClient(c);
 			} catch (Exception e) {
 				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 			}
 	}
@@ -116,7 +116,7 @@ public class ClientMgr implements ClientMgt{
 			//System.out.println("Cliente agregado");
 			} catch (Exception e) {
 				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 							"y abrirlo nuevamente");
 			}
 	}
@@ -133,7 +133,7 @@ public class ClientMgr implements ClientMgt{
 			//System.out.println("Cliente agregado");
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		return check;

@@ -37,7 +37,7 @@ public class UserMgr implements UserMgt{
 			System.out.println("usuario agregado");
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 
@@ -71,7 +71,7 @@ public class UserMgr implements UserMgt{
 			array = oUserRemoteMgt.allUsers();
 			} catch (Exception e) {
 				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 							"y abrirlo nuevamente");
 			}
 		return array;
@@ -91,7 +91,7 @@ public class UserMgr implements UserMgt{
 			}
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		return toReturn;
@@ -107,7 +107,7 @@ public class UserMgr implements UserMgt{
 			toReturn = oUserRemoteMgt.checkUsername(username);
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		if(toReturn == true){
@@ -133,7 +133,7 @@ public class UserMgr implements UserMgt{
 			toReturn = oUserRemoteMgt.getUser(nombre);
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		return toReturn;

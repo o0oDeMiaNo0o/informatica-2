@@ -38,7 +38,7 @@ public class OrderMgr implements OrderMgt{
 		} catch (Exception e) {
 			System.err.println("error:");
 //			--e.printStackTrace();
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 
@@ -71,7 +71,7 @@ public class OrderMgr implements OrderMgt{
 			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		return array;
@@ -113,7 +113,7 @@ public class OrderMgr implements OrderMgt{
 			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
 		return array;

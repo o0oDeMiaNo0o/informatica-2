@@ -36,7 +36,7 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.addDelivery(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 	}
@@ -58,7 +58,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
 		}
@@ -81,7 +81,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
 		}
@@ -98,7 +98,7 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.listo(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
 		}
@@ -114,7 +114,7 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.enPreparacion(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 
