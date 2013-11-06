@@ -51,7 +51,7 @@ public class ArticleMgr implements ArticleMgt {
 			System.out.println("articulo agregado");
 		} catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 	}
@@ -72,7 +72,7 @@ public class ArticleMgr implements ArticleMgt {
 			array = oArticleRemoteMgt.getArticlesVO();
 		}catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 		return array;
@@ -88,7 +88,7 @@ public class ArticleMgr implements ArticleMgt {
 			 oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 	}
@@ -103,7 +103,7 @@ public class ArticleMgr implements ArticleMgt {
 			oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
 		}
@@ -131,7 +131,7 @@ public class ArticleMgr implements ArticleMgt {
 			 oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 	}
@@ -149,7 +149,7 @@ public class ArticleMgr implements ArticleMgt {
 			check = oArticleRemoteMgt.existeArticle(nombre);
 		}catch (Exception e) {
 			System.err.println("error:");
-			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
 		return check;
