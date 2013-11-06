@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteCategoryException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -25,7 +26,7 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	public CategoryVO createCategoryVO(String nombre) throws ExisteCategoryException, HasBlanksException{
+	public CategoryVO createCategoryVO(String nombre) throws ExisteCategoryException, HasBlanksException, NoServerConnectionException{
 		CategoryVO toReturn = null;
 		if(existCategory(nombre)){
 			throw new ExisteCategoryException("La categoria "+nombre+" ya existe");
@@ -38,7 +39,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public void sendCategoryVO(CategoryVO c) {
+	public void sendCategoryVO(CategoryVO c) throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "CategoryRemoteMgr";
@@ -52,13 +53,14 @@ public class CategoryMgr implements CategoryMgt{
 
 			System.out.println("Categoria agregada correctamente");
 		}catch(Exception e){
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 
 	}
 
 	@Override
-	public ArrayList<CategoryVO> allCategories() {
+	public ArrayList<CategoryVO> allCategories() throws NoServerConnectionException{
 
 		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
 
@@ -77,7 +79,8 @@ public class CategoryMgr implements CategoryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 		return array;
@@ -85,7 +88,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public boolean existCategory(String nombre){
+	public boolean existCategory(String nombre) throws NoServerConnectionException{
 		boolean checker = false;
 		try {
 
@@ -100,7 +103,8 @@ public class CategoryMgr implements CategoryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 		return  checker;
 	}
