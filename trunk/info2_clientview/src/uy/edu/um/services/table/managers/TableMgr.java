@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
@@ -23,7 +24,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void addTable() {
+	public void addTable() throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -39,40 +40,33 @@ public class TableMgr implements TableMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 
 	}
 
 	@Override
-	public ArrayList<TableVO> allTables() {
-
+	public ArrayList<TableVO> allTables() throws NoServerConnectionException{
 		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
-
 		try {
-
 			String sObjectService = "TableRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
-
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			toReturn = oTableRemoteMgt.allTables();
-
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
-
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
-
 		return toReturn;
 
 	}
 
 	@Override
-	public void setOcupado(TableVO t) {
+	public void setOcupado(TableVO t) throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -88,7 +82,8 @@ public class TableMgr implements TableMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 
@@ -96,7 +91,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void removeTable(TableVO t) {
+	public void removeTable(TableVO t) throws NoServerConnectionException {
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -110,7 +105,8 @@ public class TableMgr implements TableMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 
@@ -118,7 +114,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void setLibre(TableVO t) {
+	public void setLibre(TableVO t) throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -132,7 +128,8 @@ public class TableMgr implements TableMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 

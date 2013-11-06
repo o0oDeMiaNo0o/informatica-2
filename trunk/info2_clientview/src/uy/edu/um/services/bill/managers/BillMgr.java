@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.bill.interfaces.BillMgt;
@@ -26,7 +27,7 @@ public class BillMgr implements BillMgt{
 	}
 
 	@Override
-	public void addBillVO(BillVO b) {
+	public void addBillVO(BillVO b) throws NoServerConnectionException {
 		try {
 			String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "BillRemoteMgr";
@@ -37,7 +38,8 @@ public class BillMgr implements BillMgt{
 			System.out.println("Factura agregada");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+				"y abrirlo nuevamente");
 		}
 
 	}

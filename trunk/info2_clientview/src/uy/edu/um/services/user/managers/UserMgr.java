@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.ErrorLoginException;
 import uy.edu.um.exceptions.checks.ExisteUsuarioException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -27,7 +28,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void addUser(UserVO u) {
+	public void addUser(UserVO u) throws NoServerConnectionException {
 		try {
 			String sObjectService = "UserRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -36,7 +37,8 @@ public class UserMgr implements UserMgt{
 			System.out.println("usuario agregado");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 
 	}
@@ -59,7 +61,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public ArrayList<UserVO> allUsers() {
+	public ArrayList<UserVO> allUsers() throws NoServerConnectionException{
 		ArrayList<UserVO> array = new ArrayList<UserVO>(10);
 		try {
 			String sObjectService = "UserRemoteMgr";
@@ -69,13 +71,14 @@ public class UserMgr implements UserMgt{
 			array = oUserRemoteMgt.allUsers();
 			} catch (Exception e) {
 				System.err.println("error:");
-				e.printStackTrace();
+				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+							"y abrirlo nuevamente");
 			}
 		return array;
 	}
 
 	@Override
-	public boolean checkLogin(String username, String psw) {
+	public boolean checkLogin(String username, String psw)throws NoServerConnectionException {
 		boolean toReturn = false;
 		// TODO Auto-generated method stub
 		try {
@@ -88,13 +91,14 @@ public class UserMgr implements UserMgt{
 			}
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
 		return toReturn;
 	}
 
 	@Override
-	public void checkUsername(String username) throws ExisteUsuarioException{
+	public void checkUsername(String username) throws ExisteUsuarioException, NoServerConnectionException{
 		boolean toReturn = false;
 		try {
 			String sObjectService = "UserRemoteMgr";
@@ -103,7 +107,8 @@ public class UserMgr implements UserMgt{
 			toReturn = oUserRemoteMgt.checkUsername(username);
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
 		if(toReturn == true){
 			throw new ExisteUsuarioException("Ya existe un usuario con el nombre "+username);
@@ -111,14 +116,14 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void login(String username, String psw) throws ErrorLoginException {
+	public void login(String username, String psw) throws ErrorLoginException, NoServerConnectionException {
 		if(checkLogin(username,psw) == false){
 			throw new ErrorLoginException("Usuario y contraseña no coinciden");
 		}
 	}
 
 	@Override
-	public UserVO isUser(String nombre) {
+	public UserVO isUser(String nombre) throws NoServerConnectionException {
 		UserVO toReturn = null;
 		// TODO Auto-generated method stub
 		try {
@@ -128,13 +133,14 @@ public class UserMgr implements UserMgt{
 			toReturn = oUserRemoteMgt.getUser(nombre);
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
 		return toReturn;
 	}
 
 	@Override
-	public boolean isAdmin(String nombre) {
+	public boolean isAdmin(String nombre) throws NoServerConnectionException {
 		// TODO Auto-generated method stub
 		return false;
 	}

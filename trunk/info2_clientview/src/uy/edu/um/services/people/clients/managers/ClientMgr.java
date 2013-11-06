@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -30,7 +31,7 @@ public class ClientMgr implements ClientMgt{
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
 			int tel, String direccion, String mail, BigDecimal descuento)
-					throws ExisteClientException, HasBlanksException, HasNumberException {
+					throws ExisteClientException, HasBlanksException, HasNumberException, NoServerConnectionException {
 		if(existeCliente(nombre,ci) == true){
 			throw new ExisteClientException("El cliente "+nombre+" "+apellido+" ya existe");
 		}
@@ -45,7 +46,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void addClientVO(ClientVO c) {
+	public void addClientVO(ClientVO c) throws NoServerConnectionException{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -55,7 +56,8 @@ public class ClientMgr implements ClientMgt{
 			System.out.println("Cliente agregado");
 			} catch (Exception e) {
 				System.err.println("error:");
-				e.printStackTrace();
+				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 			}
 	}
 
@@ -65,7 +67,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public ArrayList<ClientVO> allClients() {
+	public ArrayList<ClientVO> allClients() throws NoServerConnectionException{
 		ArrayList<ClientVO> array = new ArrayList<ClientVO>(10);
 		try {
 
@@ -80,7 +82,8 @@ public class ClientMgr implements ClientMgt{
 
 			} catch (Exception e) {
 				System.err.println("error:");
-				e.printStackTrace();
+				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 			}
 
 		return array;
@@ -88,7 +91,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void editClientVO(ClientVO c) {
+	public void editClientVO(ClientVO c) throws NoServerConnectionException {
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -97,12 +100,13 @@ public class ClientMgr implements ClientMgt{
 			oArticleRemoteMgt.addClient(c);
 			} catch (Exception e) {
 				System.err.println("error:");
-				e.printStackTrace();
+				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 			}
 	}
 
 	@Override
-	public void removeClientVO(ClientVO c) {
+	public void removeClientVO(ClientVO c) throws NoServerConnectionException{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -112,12 +116,13 @@ public class ClientMgr implements ClientMgt{
 			//System.out.println("Cliente agregado");
 			} catch (Exception e) {
 				System.err.println("error:");
-				e.printStackTrace();
+				throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+							"y abrirlo nuevamente");
 			}
 	}
 
 	@Override
-	public boolean existeCliente(String nombre, int ci){
+	public boolean existeCliente(String nombre, int ci) throws NoServerConnectionException{
 		boolean check = false;
 		try {
 			String sObjectService = "ClientRemoteMgr";
@@ -128,7 +133,8 @@ public class ClientMgr implements ClientMgt{
 			//System.out.println("Cliente agregado");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
 		return check;
 	}

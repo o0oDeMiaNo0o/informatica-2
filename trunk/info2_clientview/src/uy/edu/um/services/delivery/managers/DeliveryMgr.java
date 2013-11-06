@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Date;
 
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.delivery.interfaces.DeliveryMgt;
@@ -26,7 +27,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	}
 
 	@Override
-	public void addDelivery(DeliveryVO d) {
+	public void addDelivery(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -35,12 +36,13 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.addDelivery(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 	}
 
 	@Override
-	public void enViaje(DeliveryVO d) {
+	public void enViaje(DeliveryVO d) throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "DeliveryRemoteMgr";
@@ -56,13 +58,14 @@ public class DeliveryMgr implements DeliveryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 	}
 
 	@Override
-	public void facturado(DeliveryVO d) {
+	public void facturado(DeliveryVO d) throws NoServerConnectionException{
 		try {
 
 			String sObjectService = "DeliveryRemoteMgr";
@@ -78,14 +81,15 @@ public class DeliveryMgr implements DeliveryMgt{
 
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 	}
 
 
 	@Override
-	public void isDone(DeliveryVO d) {
+	public void isDone(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -94,13 +98,14 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.listo(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 
 		}
 	}
 
 	@Override
-	public void isPreparing(DeliveryVO d) {
+	public void isPreparing(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
@@ -109,7 +114,8 @@ public class DeliveryMgr implements DeliveryMgt{
 			oDeliveryRemoteMgt.enPreparacion(d);
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 
 	}

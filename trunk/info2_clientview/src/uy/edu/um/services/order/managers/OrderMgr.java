@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
@@ -27,22 +28,18 @@ public class OrderMgr implements OrderMgt{
 
 
 	@Override
-	public void addOrder(OrderVO o) {
+	public void addOrder(OrderVO o) throws NoServerConnectionException {
 		try {
-
 			String sObjectService = "OrderRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
-
 			OrderRemoteMgt oArticleRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
-
 			oArticleRemoteMgt.addOrder(o);
-
 			System.out.println("orden agregada");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
-
+//			--e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+					"y abrirlo nuevamente");
 		}
 
 
@@ -58,70 +55,55 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void removeOrder(OrderVO o) {
+	public void removeOrder(OrderVO o) throws NoServerConnectionException  {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public ArrayList<OrderVO> allOrders() {
-
+	public ArrayList<OrderVO> allOrders()  throws NoServerConnectionException {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
-
 		try {
-
 			String sObjectService = "OrderRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
-
 			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
-
 			array = oOrderRemoteMgt.allOrders();
-
 			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
-
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
-
 		return array;
 
 
 	}
 
 	@Override
-	public void setDone(OrderVO o) {
+	public void setDone(OrderVO o)  throws NoServerConnectionException {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void isDone(OrderVO o) throws NoServerConnectionException  {
+		// TODO Auto-generated method stub
+
+	}
+	@Override
+	public void isWaiting(OrderVO o) throws NoServerConnectionException  {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delivery(OrderVO o) {
+	public void rejected(OrderVO o) throws NoServerConnectionException  {
 		// TODO Auto-generated method stub
 
 	}
-
 	@Override
-	public void isDone(OrderVO o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void isWaiting(OrderVO o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void rejected(OrderVO o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ArrayList<OrderVO> getOrderTable(TableVO t) {
+	public ArrayList<OrderVO> getOrderTable(TableVO t)  throws NoServerConnectionException {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
 			String sObjectService = "OrderRemoteMgr";
@@ -131,7 +113,8 @@ public class OrderMgr implements OrderMgt{
 			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			System.err.println("error:");
-			e.printStackTrace();
+			throw new  NoServerConnectionException("No hay conexion con el servidor"+"\n"+"Cerrar el programa" +
+						"y abrirlo nuevamente");
 		}
 		return array;
 	}
