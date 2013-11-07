@@ -17,7 +17,7 @@ public class ClientVO implements Serializable {
 		this.tel = tel;
 		this.direccion = direccion;
 		this.email = email;
-		this.descuento = descuento;
+		this.descuento = (descuento);
 	}
 
 	public ClientVO(int id,int ci, String nombre, String apellido, int tel, String direccion, String email,
@@ -29,6 +29,7 @@ public class ClientVO implements Serializable {
 		this.tel = tel;
 		this.direccion = direccion;
 		this.email = email;
+		this.descuento = descuento;
 	}
 
 
