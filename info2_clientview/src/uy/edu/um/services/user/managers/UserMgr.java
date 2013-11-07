@@ -90,7 +90,7 @@ public class UserMgr implements UserMgt{
 				System.out.println("Login aceptado");
 			}
 		} catch (Exception e) {
-			System.err.println("error:");
+			System.err.println("error");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
