@@ -18,6 +18,7 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
@@ -140,41 +141,47 @@ public class NewClienteU extends BasicoUsuario {
 							if (!textFieldAp.getText().isEmpty()) {
 								if (Helpers.isNumeric(textFieldTel.getText())) {
 									if (!textFieldDir.getText().isEmpty()) {
-										BigDecimal descuento = new BigDecimal(
-												Integer.parseInt(spinner
-														.getValue().toString()));
-										ClientMgt client = ServiceFacade
-												.getInstance().getClientMgt();
-										ClientVO cliente = null;
-										try {
-											cliente = client.createClientVO(
-													textFieldNom.getText(),
-													textFieldAp.getText(), Integer
-															.parseInt(textFieldCi
-																	.getText()),
-													Integer.parseInt(textFieldTel
-															.getText()),
-													textFieldDir.getText(),
-													textFieldEmail.getText(),
-													descuento);
-										} catch (NumberFormatException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										} catch (ExisteClientException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										} catch (HasBlanksException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										} catch (HasNumberException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
+										try{
+											BigDecimal descuento = new BigDecimal(
+													Integer.parseInt(spinner
+															.getValue().toString()));
+											ClientMgt client = ServiceFacade
+											.getInstance().getClientMgt();
+											ClientVO cliente = null;
+											try {
+												cliente = client.createClientVO(
+														textFieldNom.getText(),
+														textFieldAp.getText(), Integer
+														.parseInt(textFieldCi
+																.getText()),
+																Integer.parseInt(textFieldTel
+																		.getText()),
+																		textFieldDir.getText(),
+																		textFieldEmail.getText(),
+																		descuento);
+											} catch (NumberFormatException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											} catch (ExisteClientException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											} catch (HasBlanksException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											} catch (HasNumberException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											client.addClientVO(cliente);
+											MensajeGenerico new10 = new MensajeGenerico(
+													"Cliente Agregado", devuelve());
+											new10.setVisible(true);
+										}catch(NoServerConnectionException e1){
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+											nuevo.setVisible(true);
 										}
-										client.addClientVO(cliente);
-										MensajeGenerico new10 = new MensajeGenerico(
-												"Cliente Agregado", devuelve());
-										new10.setVisible(true);
-									} else {
+									}
+									else {
 										MensajeGenerico new6 = new MensajeGenerico(
 												"Direccion Vacia", devuelve());
 										new6.setVisible(true);

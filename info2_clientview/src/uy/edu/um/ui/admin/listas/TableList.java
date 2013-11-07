@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
@@ -33,7 +34,7 @@ public class TableList extends BasicoAdmin {
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
 	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
-	public ArrayList<TableVO> mesas = cargoMesas();
+	public ArrayList<TableVO> mesas;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -49,8 +50,8 @@ public class TableList extends BasicoAdmin {
 	}
 
 	public TableList() {
-
-		cargoMesas();
+		try{
+		mesas = cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -82,7 +83,12 @@ public class TableList extends BasicoAdmin {
 				"cell 0 0,alignx right,aligny center");
 		;
 
+	}catch(NoServerConnectionException e){
+		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+		nuevo.setVisible(true);
 	}
+	}
+
 
 	// Metodos auxiliares
 	private void cargaBotones(TransparentPanel panel) {
@@ -124,7 +130,7 @@ public class TableList extends BasicoAdmin {
 							ConfirmRemoveTable nuevo = new ConfirmRemoveTable(
 									mesa, devuelve());
 							nuevo.setVisible(true);
-							
+
 						}
 
 					}
@@ -150,7 +156,7 @@ public class TableList extends BasicoAdmin {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() {
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException {
 
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();

@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteArticleException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -33,7 +34,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class NewProduct extends BasicoAdmin {
 
-	ArrayList<CategoryVO> categorias = cargaCategorias();
+	ArrayList<CategoryVO> categorias;
 	String[] textos;
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
@@ -69,6 +70,8 @@ public class NewProduct extends BasicoAdmin {
 	 * Create the frame.
 	 */
 	public NewProduct() {
+		try{
+		categorias = cargaCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -128,30 +131,35 @@ public class NewProduct extends BasicoAdmin {
 					if (!nombre.equals("")) {
 						if (Helpers.isNumeric(precioAux)) {
 							if (!comboBoxCat.getSelectedItem().equals(
-									"---- Desplegar Lista ----")) {
-								BigDecimal precio = new BigDecimal(Integer
-										.parseInt(textFieldPrecio.getText()));
-								CategoryVO cat = buscaEnLista(comboBoxCat
-										.getSelectedItem().toString());
+							"---- Desplegar Lista ----")) {
+								try{
+									BigDecimal precio = new BigDecimal(Integer
+											.parseInt(textFieldPrecio.getText()));
+									CategoryVO cat = buscaEnLista(comboBoxCat
+											.getSelectedItem().toString());
 
-								ArticleMgt test = ServiceFacade.getInstance()
-										.getArticleMgt();
-								ArticleVO toSend = null;
-								try {
-									toSend = a.createArticleVO(nombre,
-											precio, cat);
-								} catch (ExisteArticleException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									ArticleMgt test = ServiceFacade.getInstance()
+									.getArticleMgt();
+									ArticleVO toSend = null;
+									try {
+										toSend = a.createArticleVO(nombre,
+												precio, cat);
+									} catch (ExisteArticleException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									test.sendArticle(toSend);
+
+									MensajeGenerico mensaje = new MensajeGenerico(
+											"Producto Agregado Correctamente",
+											devuelve());
+									mensaje.setVisible(true);
+									bandera = true;
+									resetearPosicion();
+								}catch(NoServerConnectionException e){
+									MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
+									nFrame.setVisible(true);
 								}
-								test.sendArticle(toSend);
-
-								MensajeGenerico mensaje = new MensajeGenerico(
-										"Producto Agregado Correctamente",
-										devuelve());
-								mensaje.setVisible(true);
-								bandera = true;
-								resetearPosicion();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
@@ -176,10 +184,14 @@ public class NewProduct extends BasicoAdmin {
 		btnCancelar = new JButton("Cancelar");
 		transparentPanelBotones.add(btnCancelar,
 				"cell 0 0,alignx right,aligny center");
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
+			nFrame.setVisible(true);
+		}
 	}
 
 	// Metodos Auxiliares
-	public ArrayList<CategoryVO> cargaCategorias() {
+	public ArrayList<CategoryVO> cargaCategorias() throws NoServerConnectionException {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}

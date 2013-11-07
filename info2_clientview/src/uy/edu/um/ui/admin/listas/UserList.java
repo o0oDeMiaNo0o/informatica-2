@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.user.interfaces.UserMgt;
@@ -26,7 +27,7 @@ import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
 
 public class UserList extends BasicoAdmin {
-	private ArrayList<UserVO> listaUser = cargoListado();
+	private ArrayList<UserVO> listaUser;
 	private String[] textos;
 	private JTable table;
 	private JTextField textFieldNombre;
@@ -50,92 +51,97 @@ public class UserList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param user
 	 */
 	public UserList(UserVO user, boolean editable) {
+		try{
+			listaUser = cargoListado();
+			this.user = user; // Usuario Actual
 
-		this.user = user; // Usuario Actual
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 450, 300);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+			TransparentPanel transparentPanel = new TransparentPanel();
+			getContentPane().add(transparentPanel, BorderLayout.CENTER);
+			transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
-		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
+			if (editable == true) {
+				TransparentPanel transparentPanel_2 = new TransparentPanel();
+				transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
+				transparentPanel_2.setLayout(new MigLayout("", "[]",
+				"[grow][][grow]"));
 
-		if (editable == true) {
-			TransparentPanel transparentPanel_2 = new TransparentPanel();
-			transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
-			transparentPanel_2.setLayout(new MigLayout("", "[]",
-					"[grow][][grow]"));
+				JLabel lblIdUsuario = new JLabel("Usuario: ");
+				transparentPanel_2
+				.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
 
-			JLabel lblIdUsuario = new JLabel("Usuario: ");
-			transparentPanel_2
-					.add(lblIdUsuario, "flowx,cell 0 1,alignx center");
+				textFieldNombre = new JTextField();
+				textFieldNombre.setColumns(10);
+				transparentPanel_2.add(textFieldNombre, "cell 0 1,alignx center");
 
-			textFieldNombre = new JTextField();
-			textFieldNombre.setColumns(10);
-			transparentPanel_2.add(textFieldNombre, "cell 0 1,alignx center");
-
-			JButton btnEditarUsuario = new JButton("Editar Usuario");
-			btnEditarUsuario.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					if (buscaUsuario(textFieldNombre.getText())) {
-						EditRemoveU nuevo = new EditRemoveU(
-								devuelveUser(textFieldNombre.getText()),
-								contentPane, true, "");
-						nuevo.setVisible(true);
-					} else {
-						MensajeGenerico nuevo = new MensajeGenerico(
-								"Producto No Existe", devuelve());
-						nuevo.setVisible(true);
+				JButton btnEditarUsuario = new JButton("Editar Usuario");
+				btnEditarUsuario.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						if (buscaUsuario(textFieldNombre.getText())) {
+							EditRemoveU nuevo = new EditRemoveU(
+									devuelveUser(textFieldNombre.getText()),
+									contentPane, true, "");
+							nuevo.setVisible(true);
+						} else {
+							MensajeGenerico nuevo = new MensajeGenerico(
+									"Producto No Existe", devuelve());
+							nuevo.setVisible(true);
+						}
 					}
-				}
 
-			});
-			transparentPanel_2.add(btnEditarUsuario,
-					"flowx,cell 0 2,alignx center,aligny top");
+				});
+				transparentPanel_2.add(btnEditarUsuario,
+				"flowx,cell 0 2,alignx center,aligny top");
 
-			JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
-			btnEliminarUsuario.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					if (buscaUsuario(textFieldNombre.getText())) {
-						EditRemoveU nuevo = new EditRemoveU(
-								devuelveUser(textFieldNombre.getText()),
-								contentPane, false,
-								"Desea Eliminar Este Usuario?");
-						nuevo.setVisible(true);
-					} else {
-						MensajeGenerico nuevo = new MensajeGenerico(
-								"Producto No Existe", devuelve());
-						nuevo.setVisible(true);
+				JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
+				btnEliminarUsuario.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						if (buscaUsuario(textFieldNombre.getText())) {
+							EditRemoveU nuevo = new EditRemoveU(
+									devuelveUser(textFieldNombre.getText()),
+									contentPane, false,
+							"Desea Eliminar Este Usuario?");
+							nuevo.setVisible(true);
+						} else {
+							MensajeGenerico nuevo = new MensajeGenerico(
+									"Producto No Existe", devuelve());
+							nuevo.setVisible(true);
+						}
 					}
-				}
-			});
-			transparentPanel_2.add(btnEliminarUsuario,
-					"cell 0 2,alignx center,aligny top");
+				});
+				transparentPanel_2.add(btnEliminarUsuario,
+				"cell 0 2,alignx center,aligny top");
+			}
+
+			table = new JTable();
+			if (editable == true) {
+				table.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						int i = table.getSelectedRow();
+						if (i > 0) {
+							textFieldNombre.setText(""
+									+ listaUser.get(i - 1).getUser());
+						}
+					}
+				});
+				table.setSurrendersFocusOnKeystroke(true);
+			}
+			transparentPanel.add(table, "cell 1 0,grow");
+
+			cargaATabla();
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
 		}
-
-		table = new JTable();
-		if (editable == true) {
-			table.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					int i = table.getSelectedRow();
-					if (i > 0) {
-						textFieldNombre.setText(""
-								+ listaUser.get(i - 1).getUser());
-					}
-				}
-			});
-			table.setSurrendersFocusOnKeystroke(true);
-		}
-		transparentPanel.add(table, "cell 1 0,grow");
-
-		cargaATabla();
 	}
 
 	// Metodos Auxiliares
@@ -182,7 +188,7 @@ public class UserList extends BasicoAdmin {
 				"Contrase–a", "Es Administrador" }));
 	}
 
-	public ArrayList<UserVO> cargoListado() {
+	public ArrayList<UserVO> cargoListado() throws NoServerConnectionException {
 		UserMgt usr = ServiceFacade.getInstance().getUserMgt();
 		return usr.allUsers();
 	}

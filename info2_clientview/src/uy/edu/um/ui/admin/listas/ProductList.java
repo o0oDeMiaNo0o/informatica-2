@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -40,8 +41,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 public class ProductList extends BasicoAdmin {
-	private ArrayList<CategoryVO> categorias = cargoCategorias();
-	private ArrayList<ArticleVO> listaArticulos = cargoListado();
+	private ArrayList<CategoryVO> categorias;
+	private ArrayList<ArticleVO> listaArticulos;
 	private ArrayList<ArticleVO> listaTabla = new ArrayList<ArticleVO>();
 	private String[] textos;
 	private JTable table;
@@ -65,10 +66,13 @@ public class ProductList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param user
 	 */
 	public ProductList() {
+		try{
+		categorias = cargoCategorias();
+		listaArticulos = cargoListado();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -125,7 +129,7 @@ public class ProductList extends BasicoAdmin {
 		});
 		textFieldAutocompletar.setText("");
 		transparentPanel_1.add(textFieldAutocompletar,
-				"cell 1 4 2 1,growx,aligny top");
+		"cell 1 4 2 1,growx,aligny top");
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
@@ -169,7 +173,7 @@ public class ProductList extends BasicoAdmin {
 
 		});
 		transparentPanel_2.add(button,
-				"flowx,cell 0 2,alignx center,aligny top");
+		"flowx,cell 0 2,alignx center,aligny top");
 
 		JButton button_1 = new JButton("Eliminar Producto");
 		button_1.addMouseListener(new MouseAdapter() {
@@ -179,7 +183,7 @@ public class ProductList extends BasicoAdmin {
 					EditRemoveA nuevo = new EditRemoveA(
 							devuelveArticulo(Integer.parseInt(textFieldID
 									.getText())), devuelve(), false,
-							"Desea Eliminar El Siguiente Articulo?");
+					"Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
@@ -190,6 +194,10 @@ public class ProductList extends BasicoAdmin {
 		});
 		transparentPanel_2.add(button_1, "cell 0 2,alignx center,aligny top");
 		cargaATabla();
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
+		}
 	}
 
 	// Metodos Auxiliares
@@ -229,7 +237,7 @@ public class ProductList extends BasicoAdmin {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
@@ -281,7 +289,7 @@ public class ProductList extends BasicoAdmin {
 		}
 	}
 
-	public ArrayList<ArticleVO> cargoListado() {
+	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
 		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
 		sol = test.allArticles();

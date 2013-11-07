@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
@@ -38,7 +39,7 @@ public class ConfirmMesa extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public ConfirmMesa(final TableVO mesa, final OrderVO toSend, String text,
@@ -76,6 +77,7 @@ public class ConfirmMesa extends JFrame {
 					cerrar();
 				} else {
 					if (toSend.getArticulos() != null) {
+						try{
 						OrderMgt nuevo = ServiceFacade.getInstance()
 								.getOrderMgt();
 						nuevo.addOrder(toSend);
@@ -85,7 +87,12 @@ public class ConfirmMesa extends JFrame {
 						ConfirmFacturar nueva = new ConfirmFacturar(mesa, frame);
 						nueva.setVisible(true);
 						cerrar();
+						}catch(NoServerConnectionException e1){
+							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+							nuevo.setVisible(true);
+						}
 					} else {
+						try{
 						CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
 						TableMgt nuevoMesas = ServiceFacade.getInstance()
 								.getTableMgt();
@@ -93,6 +100,10 @@ public class ConfirmMesa extends JFrame {
 						nuevo.setVisible(true);
 						frame.dispose();
 						cerrar();
+						}catch(NoServerConnectionException e1){
+							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+							nuevo.setVisible(true);
+						}
 					}
 				}
 			}
@@ -107,6 +118,10 @@ public class ConfirmMesa extends JFrame {
 			}
 		});
 		ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
+	}
+
+	public JFrame devuelve(){
+		return this;
 	}
 
 }

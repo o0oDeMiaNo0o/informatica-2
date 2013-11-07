@@ -16,10 +16,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.ConfirmFacturar;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
@@ -47,63 +49,68 @@ public class MesaPedido extends BasicoUsuario {
 	 * Create the frame.
 	 */
 	public MesaPedido(final TableVO mesa) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		try{
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 450, 300);
 
-		TransparentPanel transparentPanel = new TransparentPanel();
-		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
-				"[grow][grow][grow]"));
+			TransparentPanel transparentPanel = new TransparentPanel();
+			getContentPane().add(transparentPanel, BorderLayout.CENTER);
+			transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
+			"[grow][grow][grow]"));
 
-		tablePedidoMesa = new JTable();
-		tablePedidoMesa.setBorder(new LineBorder(Color.ORANGE, 2, true));
-		tablePedidoMesa.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		tablePedidoMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tablePedidoMesa.setEnabled(false);
-		tablePedidoMesa.setRowSelectionAllowed(false);
+			tablePedidoMesa = new JTable();
+			tablePedidoMesa.setBorder(new LineBorder(Color.ORANGE, 2, true));
+			tablePedidoMesa.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+			tablePedidoMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tablePedidoMesa.setEnabled(false);
+			tablePedidoMesa.setRowSelectionAllowed(false);
 
-		armarTabla(cargaOrdenes(mesa));
+			armarTabla(cargaOrdenes(mesa));
 
-		transparentPanel.add(tablePedidoMesa, "cell 1 1,grow");
+			transparentPanel.add(tablePedidoMesa, "cell 1 1,grow");
 
-		TransparentPanel ZonaBotones = new TransparentPanel();
-		getContentPane().add(ZonaBotones, BorderLayout.SOUTH);
-		ZonaBotones.setLayout(new MigLayout("", "[grow][][][]", "[]"));
+			TransparentPanel ZonaBotones = new TransparentPanel();
+			getContentPane().add(ZonaBotones, BorderLayout.SOUTH);
+			ZonaBotones.setLayout(new MigLayout("", "[grow][][][]", "[]"));
 
-		JButton btnFacturar = new JButton("Facturar");
-		btnFacturar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				ConfirmFacturar nuevo = new ConfirmFacturar(mesa, devuelve());
-				nuevo.setVisible(true);
+			JButton btnFacturar = new JButton("Facturar");
+			btnFacturar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					ConfirmFacturar nuevo = new ConfirmFacturar(mesa, devuelve());
+					nuevo.setVisible(true);
 
-			}
-		});
-		ZonaBotones.add(btnFacturar, "cell 1 0");
+				}
+			});
+			ZonaBotones.add(btnFacturar, "cell 1 0");
 
-		JButton btnCaja = new JButton("Agregar Articulos A Mesa");
-		btnCaja.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
-				nuevo.setVisible(true);
-				cerrar();
-			}
-		});
-		ZonaBotones.add(btnCaja, "cell 2 0");
+			JButton btnCaja = new JButton("Agregar Articulos A Mesa");
+			btnCaja.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
+					nuevo.setVisible(true);
+					cerrar();
+				}
+			});
+			ZonaBotones.add(btnCaja, "cell 2 0");
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				Mesas nuevo = new Mesas(null, null);
-				nuevo.setVisible(true);
-				cerrar();
+			JButton btnCancelar = new JButton("Cancelar");
+			btnCancelar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					Mesas nuevo = new Mesas(null, null);
+					nuevo.setVisible(true);
+					cerrar();
 
-			}
-		});
-		ZonaBotones.add(btnCancelar, "cell 3 0");
+				}
+			});
+			ZonaBotones.add(btnCancelar, "cell 3 0");
 
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
+		}
 	}
 
 	// Metodos Auxiliares
@@ -131,7 +138,7 @@ public class MesaPedido extends BasicoUsuario {
 	}
 
 	// Cargo los metodos
-	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) {
+	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) throws NoServerConnectionException {
 		ArrayList<OrderVO> aux = new ArrayList<OrderVO>();
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		aux = nuevo.getOrderTable(mesa);

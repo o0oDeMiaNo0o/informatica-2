@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteArticleException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -31,7 +32,7 @@ public class EditRemoveA extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNombre;
 	private JTextField textFieldPrecio;
-	private ArrayList<CategoryVO> categorias = cargoCategorias();
+	private ArrayList<CategoryVO> categorias;
 	String[] textos;
 
 	/**
@@ -40,12 +41,13 @@ public class EditRemoveA extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public EditRemoveA(final ArticleVO articulo, final JFrame cPanel,
 			final boolean editable, String mensaje) {
-
+		try{
+		categorias = cargoCategorias();
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 561, 300);
@@ -118,35 +120,39 @@ public class EditRemoveA extends JFrame {
 						if (!nombre.equals("")) {
 							if (Helpers.isNumeric(precioAux)) {
 								if (!comboBox.getSelectedItem().equals(
-										"---- Desplegar Lista ----")) {
+								"---- Desplegar Lista ----")) {
 									if (editable == true) {
+										try{
+											BigDecimal precio = new BigDecimal(
+													Integer.parseInt(textFieldPrecio
+															.getText()));
+											CategoryVO cat = buscaEnLista(comboBox
+													.getSelectedItem().toString());
+											ArticleVO toSend = null;
+											try {
+												toSend = a.createArticleVOid(
+														articulo.getId(), nombre,
+														precio, cat);
+											} catch (ExisteArticleException e1) {
+												MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+												nuevo.setVisible(true);
+											}
 
-										BigDecimal precio = new BigDecimal(
-												Integer.parseInt(textFieldPrecio
-														.getText()));
-										CategoryVO cat = buscaEnLista(comboBox
-												.getSelectedItem().toString());
-										ArticleVO toSend = null;
-										try {
-											toSend = a.createArticleVOid(
-													articulo.getId(), nombre,
-													precio, cat);
-										} catch (ExisteArticleException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
+											a.editArticle(toSend);
+
+											ProductList nuevo = new ProductList();
+											nuevo.setVisible(true);
+											cPanel.dispose();
+
+											MensajeGenerico mensaje = new MensajeGenerico(
+													"Producto Editado Correctamente",
+													devuelve());
+											mensaje.setVisible(true);
+											bandera = true;
+										}catch(NoServerConnectionException e2){
+											MensajeGenerico nuevo = new MensajeGenerico(e2.getMessage(),devuelve());
+											nuevo.setVisible(true);
 										}
-
-										a.editArticle(toSend);
-
-										ProductList nuevo = new ProductList();
-										nuevo.setVisible(true);
-										cPanel.dispose();
-
-										MensajeGenerico mensaje = new MensajeGenerico(
-												"Producto Editado Correctamente",
-												devuelve());
-										mensaje.setVisible(true);
-										bandera = true;
 									} else {
 										MensajeGenerico mensaje = new MensajeGenerico(
 												"Producto Eliminado Correctamente",
@@ -170,11 +176,16 @@ public class EditRemoveA extends JFrame {
 					}
 					cerrar();
 				} else {
-					a.removeArticle(articulo);
-					MensajeGenerico mensaje = new MensajeGenerico(
-							"Producto Editado Correctamente", devuelve());
-					mensaje.setVisible(true);
-					cerrar();
+					try{
+						a.removeArticle(articulo);
+						MensajeGenerico mensaje = new MensajeGenerico(
+								"Producto Editado Correctamente", devuelve());
+						mensaje.setVisible(true);
+						cerrar();
+					}catch(NoServerConnectionException e3){
+						MensajeGenerico nuevo = new MensajeGenerico(e3.getMessage(),devuelve());
+						nuevo.setVisible(true);
+					}
 				}
 			}
 
@@ -189,6 +200,10 @@ public class EditRemoveA extends JFrame {
 			}
 		});
 		ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
+		}
 	}
 
 	// Metodo cerrar Ventana
@@ -224,11 +239,11 @@ public class EditRemoveA extends JFrame {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
-	
+
 	public JFrame devuelve(){
 		return this;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.admin.listas.TableList;
@@ -32,7 +33,7 @@ public class ConfirmRemoveTable extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public ConfirmRemoveTable(final TableVO mesa, final JFrame panel) {
@@ -62,12 +63,16 @@ public class ConfirmRemoveTable extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try{
 				TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
 				nuevo.removeTable(mesa);
 				TableList aux = new TableList();
 				aux.setVisible(true);
 				panel.dispose();
-
+				}catch(NoServerConnectionException e1){
+					MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+					nuevo.setVisible(true);
+				}
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
@@ -80,6 +85,10 @@ public class ConfirmRemoveTable extends JFrame {
 			}
 		});
 		ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
+	}
+
+	public JFrame devuelve(){
+		return this;
 	}
 
 }

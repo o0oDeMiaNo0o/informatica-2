@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.bill.interfaces.BillMgt;
@@ -40,7 +41,7 @@ public class Facturacion extends BasicoUsuario {
 	private JTextField textFieldPagaCon;
 	private JTextField textFieldVuelto;
 	private URL logo = DirLocal.class.getResource("Bernie's.png");
-	private ArrayList<ClientVO> clientes = cargaClientes();
+	private ArrayList<ClientVO> clientes;
 	private boolean tieneDescuento = false;
 	private BigDecimal descuento = new BigDecimal(0);
 	private BigDecimal montoPagar;
@@ -60,7 +61,8 @@ public class Facturacion extends BasicoUsuario {
 	}
 
 	public Facturacion(final TableVO mesa, ClientVO cliente) {
-
+		try{
+		clientes = cargaClientes();
 		ordenesMesa = cargoOrdenesMesa(mesa);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -162,6 +164,7 @@ public class Facturacion extends BasicoUsuario {
 						.parseInt(textFieldCliente.getText()));
 				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
 				if (cliente != null) {
+					try{
 					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
 							mesa);
 					nuevo.addBillVO(factura);
@@ -170,7 +173,12 @@ public class Facturacion extends BasicoUsuario {
 					msg.setVisible(true);
 					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
 					tables.setLibre(mesa);
+					}catch(NoServerConnectionException e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
+					}
 				} else {
+					try{
 					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
 							mesa);
 					nuevo.addBillVO(factura);
@@ -179,6 +187,10 @@ public class Facturacion extends BasicoUsuario {
 					MensajeGenerico msg = new MensajeGenerico(
 							"Factura Correcta", devuelve());
 					msg.setVisible(true);
+					}catch(NoServerConnectionException e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
+					}
 				}
 
 			}
@@ -201,9 +213,13 @@ public class Facturacion extends BasicoUsuario {
 		textFieldVuelto.setEditable(false);
 		transparentPanel.add(textFieldVuelto, "cell 2 2,growx");
 		textFieldVuelto.setColumns(10);
+	}catch(NoServerConnectionException e){
+		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+		nuevo.setVisible(true);
+	}
 	}
 
-	private ArrayList<OrderVO> cargoOrdenesMesa(TableVO mesa) {
+	private ArrayList<OrderVO> cargoOrdenesMesa(TableVO mesa) throws NoServerConnectionException {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}
@@ -263,7 +279,7 @@ public class Facturacion extends BasicoUsuario {
 		return total.toString();
 	}
 
-	public ArrayList<ClientVO> cargaClientes() {
+	public ArrayList<ClientVO> cargaClientes() throws NoServerConnectionException {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		return nuevo.allClients();
 

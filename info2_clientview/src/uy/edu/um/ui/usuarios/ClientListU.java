@@ -14,12 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
-import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
 import uy.edu.um.value_object.table.TableVO;
 
@@ -27,7 +27,7 @@ public class ClientListU extends BasicoUsuario {
 
 	private JTable table;
 	private JTextField textFieldID;
-	private ArrayList<ClientVO> clientes = cargoClientes();
+	private ArrayList<ClientVO> clientes;
 
 	/**
 	 * Launch the application.
@@ -49,73 +49,79 @@ public class ClientListU extends BasicoUsuario {
 	 * Create the frame.
 	 */
 	public ClientListU(final TableVO mesa) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		try{
+			clientes = cargoClientes();
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 450, 300);
 
-		TransparentPanel transparentPanel = new TransparentPanel();
-		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel
-				.setLayout(new MigLayout("", "[grow][grow][]", "[grow]"));
+			TransparentPanel transparentPanel = new TransparentPanel();
+			getContentPane().add(transparentPanel, BorderLayout.CENTER);
+			transparentPanel
+			.setLayout(new MigLayout("", "[grow][grow][]", "[grow]"));
 
-		TransparentPanel transparentPanel_1 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
-		transparentPanel_1.setLayout(new MigLayout("", "[][grow][]",
-				"[grow][][][grow]"));
+			TransparentPanel transparentPanel_1 = new TransparentPanel();
+			transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
+			transparentPanel_1.setLayout(new MigLayout("", "[][grow][]",
+			"[grow][][][grow]"));
 
-		JLabel lblBsquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
-		transparentPanel_1.add(lblBsquedaRpida, "cell 1 1,alignx center");
+			JLabel lblBsquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
+			transparentPanel_1.add(lblBsquedaRpida, "cell 1 1,alignx center");
 
-		TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
-				devuelveNombres());
-		textFieldAutocompletar.setText("");
-		transparentPanel_1.add(textFieldAutocompletar, "flowx,cell 1 2,growx");
+			TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
+					devuelveNombres());
+			textFieldAutocompletar.setText("");
+			transparentPanel_1.add(textFieldAutocompletar, "flowx,cell 1 2,growx");
 
-		JButton btnBuscar = new JButton("Buscar");
-		transparentPanel_1.add(btnBuscar, "cell 2 2");
+			JButton btnBuscar = new JButton("Buscar");
+			transparentPanel_1.add(btnBuscar, "cell 2 2");
 
-		TransparentPanel transparentPanel_2 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
-		transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]",
-				"[grow][][][grow]"));
+			TransparentPanel transparentPanel_2 = new TransparentPanel();
+			transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
+			transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]",
+			"[grow][][][grow]"));
 
-		JLabel lblICliente = new JLabel("Id Cliente: ");
-		transparentPanel_2.add(lblICliente, "flowx,cell 1 1,alignx center");
+			JLabel lblICliente = new JLabel("Id Cliente: ");
+			transparentPanel_2.add(lblICliente, "flowx,cell 1 1,alignx center");
 
-		textFieldID = new JTextField();
-		textFieldID.setColumns(10);
-		transparentPanel_2.add(textFieldID, "cell 1 1,alignx center");
+			textFieldID = new JTextField();
+			textFieldID.setColumns(10);
+			transparentPanel_2.add(textFieldID, "cell 1 1,alignx center");
 
-		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				int i = table.getSelectedRow();
-				if (i > 0) {
-					textFieldID.setText("" + clientes.get(i - 1).getCi());
+			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int i = table.getSelectedRow();
+					if (i > 0) {
+						textFieldID.setText("" + clientes.get(i - 1).getCi());
+					}
 				}
-			}
-		});
-		table.setSurrendersFocusOnKeystroke(true);
-		transparentPanel.add(table, "cell 1 0,grow");
+			});
+			table.setSurrendersFocusOnKeystroke(true);
+			transparentPanel.add(table, "cell 1 0,grow");
 
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				ClientVO cliente = buscaEnLista(textFieldID.getText());
-				if (cliente != null) {
-					Facturacion nuevo = new Facturacion(mesa, cliente);
-					nuevo.setVisible(true);
-					cerrar();
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							"Cliente No Existe", devuelve());
-					nuevo.setVisible(true);
+			JButton btnAceptar = new JButton("Aceptar");
+			btnAceptar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					ClientVO cliente = buscaEnLista(textFieldID.getText());
+					if (cliente != null) {
+						Facturacion nuevo = new Facturacion(mesa, cliente);
+						nuevo.setVisible(true);
+						cerrar();
+					} else {
+						MensajeGenerico nuevo = new MensajeGenerico(
+								"Cliente No Existe", devuelve());
+						nuevo.setVisible(true);
+					}
 				}
-			}
-		});
-		transparentPanel_2.add(btnAceptar, "cell 1 2,alignx center");
-		cargaATabla();
+			});
+			transparentPanel_2.add(btnAceptar, "cell 1 2,alignx center");
+			cargaATabla();
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
+		}
 	}
 
 	// Metodos Auxiliares
@@ -130,7 +136,7 @@ public class ClientListU extends BasicoUsuario {
 	}
 
 	// Cargo clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() {
+	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		return nuevo.allClients();
 	}
