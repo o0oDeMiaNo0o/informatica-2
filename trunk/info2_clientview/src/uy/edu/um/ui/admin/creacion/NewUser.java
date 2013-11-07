@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
@@ -98,6 +99,7 @@ public class NewUser extends BasicoAdmin {
 							"Contrase–a Vacia", devuelve());
 					nuevo.setVisible(true);
 				} else {
+					try{
 					boolean admin = false;
 					if (rdbtnNewRadioButton.isSelected()) {
 						admin = true;
@@ -112,6 +114,10 @@ public class NewUser extends BasicoAdmin {
 						e.printStackTrace();
 					}
 					nuevo.addUser(nuevoUser);
+					}catch(NoServerConnectionException e){
+						MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+						nuevo.setVisible(true);
+					}
 				}
 			}
 		});

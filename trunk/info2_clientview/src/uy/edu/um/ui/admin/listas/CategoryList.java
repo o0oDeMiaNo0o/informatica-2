@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
@@ -115,7 +116,14 @@ public class CategoryList extends BasicoAdmin {
 	// Cargo categorias a arraylist
 	private ArrayList<CategoryVO> cargoCategorias() {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
-		return cat.allCategories();
+		ArrayList<CategoryVO> categories = new ArrayList<CategoryVO>(2);
+		try {
+			categories = cat.allCategories();
+		} catch (NoServerConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categories;
 	}
 
 	// Cargo a Tabla Categorias

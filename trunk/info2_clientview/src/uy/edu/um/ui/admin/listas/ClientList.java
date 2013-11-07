@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
@@ -154,7 +155,14 @@ public class ClientList extends BasicoAdmin {
 	// Cargo clientes a arraylist
 	private ArrayList<ClientVO> cargoClientes() {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
-		return nuevo.allClients();
+		ArrayList<ClientVO> clients = new ArrayList<ClientVO>(2);
+		try {
+			clients = nuevo.allClients();
+		} catch (NoServerConnectionException e) {
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),this);
+			nuevoFrame.setVisible(true);
+		}
+		return clients;
 	}
 
 	// Cargo a Tabla Clientes

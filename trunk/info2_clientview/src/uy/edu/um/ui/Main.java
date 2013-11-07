@@ -6,7 +6,5 @@ public class Main {
 		Login nuevo = new Login();
 		nuevo.setVisible(true);
 		CurrentUser user = new CurrentUser(null);
-
 	}
-
 }

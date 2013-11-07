@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
@@ -32,7 +33,7 @@ public class NewTable extends BasicoAdmin {
 	public URL libre = DirLocal.class.getResource("Libre.jpg");
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public URL dirNew = DirLocal.class.getResource("Nuevo.png");
-	public ArrayList<TableVO> mesas = cargoMesas();
+	public ArrayList<TableVO> mesas;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,7 +49,7 @@ public class NewTable extends BasicoAdmin {
 	}
 
 	public NewTable() {
-
+		try{
 		cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -81,6 +82,10 @@ public class NewTable extends BasicoAdmin {
 				"cell 0 0,alignx right,aligny center");
 		;
 
+	}catch(NoServerConnectionException e){
+		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+		nuevo.setVisible(true);
+	}
 	}
 
 	// Metodos auxiliares
@@ -128,11 +133,16 @@ public class NewTable extends BasicoAdmin {
 			imagePanel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					try{
 					TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
 					nuevo.addTable();
 					NewTable newT = new NewTable();
 					newT.setVisible(true);
 					devuelve().dispose();
+					}catch(NoServerConnectionException e1){
+						MensajeGenerico nFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nFrame.setVisible(true);
+					}
 				}
 
 			});
@@ -143,8 +153,7 @@ public class NewTable extends BasicoAdmin {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() {
-
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
 

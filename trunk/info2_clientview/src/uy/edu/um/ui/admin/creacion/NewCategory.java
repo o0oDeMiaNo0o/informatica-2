@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteCategoryException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -95,24 +96,30 @@ public class NewCategory extends BasicoAdmin {
 			public void mouseClicked(MouseEvent arg0) {
 				if (!textFieldNombre.getText().isEmpty()) {
 					// Agrego la categoria
-					CategoryMgt cat = ServiceFacade.getInstance()
-							.getCategoryMgt();
-					CategoryVO nuevaCatVO = null;
-					try {
-						nuevaCatVO = cat
-								.createCategoryVO(textFieldNombre.getText());
-					} catch (ExisteCategoryException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (HasBlanksException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					try{
+						CategoryMgt cat = ServiceFacade.getInstance()
+						.getCategoryMgt();
+						CategoryVO nuevaCatVO = null;
+						try {
+							nuevaCatVO = cat
+							.createCategoryVO(textFieldNombre.getText());
+						} catch (ExisteCategoryException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (HasBlanksException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						cat.sendCategoryVO(nuevaCatVO);
+						textFieldNombre.setText("");
+						MensajeGenerico test = new MensajeGenerico(
+								"Categoria Agregada Correctamente", devuelve());
+						test.setVisible(true);
+					}catch(NoServerConnectionException e){
+						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
+								devuelve());
+						test.setVisible(true);
 					}
-					cat.sendCategoryVO(nuevaCatVO);
-					textFieldNombre.setText("");
-					MensajeGenerico test = new MensajeGenerico(
-							"Categoria Agregada Correctamente", devuelve());
-					test.setVisible(true);
 				} else {
 					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
 							devuelve());

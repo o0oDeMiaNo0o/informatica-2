@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
@@ -89,19 +90,24 @@ public class Login extends JFrame {
 					UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
 					String pass = conviertePass(passwordField.getPassword());
 					String nombre = textField.getText();
-					if (nuevo.checkLogin(nombre, pass)) {
-						UserVO user = nuevo.isUser(nombre);
-						if (user.isAdmin()) {
-							CurrentUser.setUser(user);
-							MainAdmin nuevoVentana = new MainAdmin();
-							nuevoVentana.setVisible(true);
-							cerrar();
-						} else {
-							CurrentUser.setUser(user);
-							MainUsuario nuevoVentana = new MainUsuario();
-							nuevoVentana.setVisible(true);
-							cerrar();
+					try {
+						if (nuevo.checkLogin(nombre, pass)) {
+							UserVO user = nuevo.isUser(nombre);
+							if (user.isAdmin()) {
+								CurrentUser.setUser(user);
+								MainAdmin nuevoVentana = new MainAdmin();
+								nuevoVentana.setVisible(true);
+								cerrar();
+							} else {
+								CurrentUser.setUser(user);
+								MainUsuario nuevoVentana = new MainUsuario();
+								nuevoVentana.setVisible(true);
+								cerrar();
+							}
 						}
+					} catch (NoServerConnectionException e) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
 					}
 				}
 			}
@@ -117,28 +123,33 @@ public class Login extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-				String pass = conviertePass(passwordField.getPassword());
-				String nombre = textField.getText();
-				if (nuevo.checkLogin(nombre, pass)) {
-					UserVO user = nuevo.isUser(nombre);
-					if (user.isAdmin()) {
-						CurrentUser.setUser(user);
-						MainAdmin nuevoVentana = new MainAdmin();
-						nuevoVentana.setVisible(true);
-						cerrar();
+				try {
+					UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
+					String pass = conviertePass(passwordField.getPassword());
+					String nombre = textField.getText();
+					if (nuevo.checkLogin(nombre, pass)) {
+						UserVO user = nuevo.isUser(nombre);
+						if (user.isAdmin()) {
+							CurrentUser.setUser(user);
+							MainAdmin nuevoVentana = new MainAdmin();
+							nuevoVentana.setVisible(true);
+							cerrar();
+						} else {
+							CurrentUser.setUser(user);
+							MainUsuario nuevoVentana = new MainUsuario();
+							nuevoVentana.setVisible(true);
+							cerrar();
+						}
 					} else {
-						CurrentUser.setUser(user);
-						MainUsuario nuevoVentana = new MainUsuario();
-						nuevoVentana.setVisible(true);
-						cerrar();
+						MensajeGenerico msg = new MensajeGenerico(
+								"Usuario y/o Contrase–a Incorrectos", devuelve());
+						msg.setVisible(true);
+						passwordField.setText("");
+						textField.setText("");
 					}
-				} else {
-					MensajeGenerico msg = new MensajeGenerico(
-							"Usuario y/o Contrase–a Incorrectos", devuelve());
-					msg.setVisible(true);
-					passwordField.setText("");
-					textField.setText("");
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+					nuevo.setVisible(true);
 				}
 			}
 		});
