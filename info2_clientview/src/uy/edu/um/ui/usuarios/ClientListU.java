@@ -143,6 +143,7 @@ public class ClientListU extends BasicoUsuario {
 
 	// Cargo a Tabla Clientes
 	public void cargaATabla() {
+
 		Object[][] aux = null;
 		if ((clientes.size() != 0)) {
 			aux = new Object[clientes.size() + 1][7];

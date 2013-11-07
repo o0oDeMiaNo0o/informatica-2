@@ -50,47 +50,46 @@ public class NewTable extends BasicoAdmin {
 
 	public NewTable() {
 		try{
-		cargoMesas();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout(0, 0));
+			mesas = cargoMesas();
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 450, 300);
+			getContentPane().setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
-		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
-				"[][][][][][][][grow]"));
+			TransparentPanel transparentPanel = new TransparentPanel();
+			getContentPane().add(transparentPanel);
+			transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
+			"[][][][][][][][grow]"));
 
-		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
-		transparentPanel.add(rigidArea, "cell 0 0");
+			Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
+			transparentPanel.add(rigidArea, "cell 0 0");
 
-		TransparentPanel transparentPanel_1 = new TransparentPanel();
-		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
+			TransparentPanel transparentPanel_1 = new TransparentPanel();
+			getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
 
-		JLabel lblMesas = new JLabel("MESAS");
-		lblMesas.setForeground(Color.WHITE);
-		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		transparentPanel_1.add(lblMesas);
-		cargaBotones(transparentPanel);
+			JLabel lblMesas = new JLabel("MESAS");
+			lblMesas.setForeground(Color.WHITE);
+			lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			transparentPanel_1.add(lblMesas);
+			cargaBotones(transparentPanel);
 
-		TransparentPanel transparentPanel_2 = new TransparentPanel();
-		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
-		transparentPanel_2
-				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
+			TransparentPanel transparentPanel_2 = new TransparentPanel();
+			getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
+			transparentPanel_2
+			.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
 
-		JButton btnNewButton = new JButton("Cancelar");
-		transparentPanel_2.add(btnNewButton,
-				"cell 0 0,alignx right,aligny center");
-		;
+			JButton btnNewButton = new JButton("Cancelar");
+			transparentPanel_2.add(btnNewButton,
+			"cell 0 0,alignx right,aligny center");
+			;
 
-	}catch(NoServerConnectionException e){
-		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-		nuevo.setVisible(true);
-	}
+		}catch(NoServerConnectionException e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevo.setVisible(true);
+		}
 	}
 
 	// Metodos auxiliares
 	private void cargaBotones(final TransparentPanel panel) {
-
 		if (mesas.isEmpty()) {
 			JLabel lbltemp = new JLabel("NO HAY MESAS AGREGADAS");
 			lbltemp.setForeground(Color.WHITE);
