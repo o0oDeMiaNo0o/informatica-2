@@ -44,7 +44,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -68,7 +68,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -94,7 +94,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			String sObjectService = "CategoryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);

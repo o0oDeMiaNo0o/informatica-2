@@ -83,4 +83,14 @@ public class ServiceFacade {
 		}
 		return prop.getProperty("host");
 	}
+
+	public int getPort() {
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("properties"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return Integer.parseInt(prop.getProperty("port"));
+	}
 }

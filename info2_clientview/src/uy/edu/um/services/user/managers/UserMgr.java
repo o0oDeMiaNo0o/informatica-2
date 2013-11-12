@@ -31,7 +31,7 @@ public class UserMgr implements UserMgt{
 	public void addUser(UserVO u) throws NoServerConnectionException {
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			oUserRemoteMgt.addUser(u);
 			System.out.println("usuario agregado");
@@ -65,7 +65,7 @@ public class UserMgr implements UserMgt{
 		ArrayList<UserVO> array = new ArrayList<UserVO>(10);
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			array = oUserRemoteMgt.allUsers();
@@ -83,7 +83,7 @@ public class UserMgr implements UserMgt{
 		// TODO Auto-generated method stub
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkLogin(username,psw);
 			if(toReturn == true){
@@ -102,7 +102,7 @@ public class UserMgr implements UserMgt{
 		boolean toReturn = false;
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkUsername(username);
 		} catch (Exception e) {
@@ -128,7 +128,7 @@ public class UserMgr implements UserMgt{
 		// TODO Auto-generated method stub
 		try {
 			String sObjectService = "UserRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.getUser(nombre);
 		} catch (Exception e) {

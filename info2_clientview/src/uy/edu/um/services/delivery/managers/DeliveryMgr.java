@@ -30,7 +30,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void addDelivery(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.addDelivery(d);
@@ -47,7 +47,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 			String sObjectService = "DeliveryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -70,7 +70,7 @@ public class DeliveryMgr implements DeliveryMgt{
 
 			String sObjectService = "DeliveryRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -92,7 +92,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void isDone(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.listo(d);
@@ -108,7 +108,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	public void isPreparing(DeliveryVO d) throws NoServerConnectionException{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.enPreparacion(d);

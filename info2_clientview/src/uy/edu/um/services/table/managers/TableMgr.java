@@ -29,7 +29,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -52,7 +52,7 @@ public class TableMgr implements TableMgt{
 		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
 		try {
 			String sObjectService = "TableRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			toReturn = oTableRemoteMgt.allTables();
@@ -71,7 +71,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -96,7 +96,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
@@ -119,7 +119,7 @@ public class TableMgr implements TableMgt{
 
 			String sObjectService = "TableRemoteMgr";
 
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 
 			TableRemoteMgt oTableRemoteMgt = (TableRemoteMgt) oRegitry
 					.lookup(sObjectService);
