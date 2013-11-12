@@ -31,7 +31,7 @@ public class OrderMgr implements OrderMgt{
 	public void addOrder(OrderVO o) throws NoServerConnectionException {
 		try {
 			String sObjectService = "OrderRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oArticleRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			oArticleRemoteMgt.addOrder(o);
 			System.out.println("orden agregada");
@@ -65,7 +65,7 @@ public class OrderMgr implements OrderMgt{
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
 			String sObjectService = "OrderRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			array = oOrderRemoteMgt.allOrders();
 			System.out.println("ordenes recibidas correctamente");
@@ -107,7 +107,7 @@ public class OrderMgr implements OrderMgt{
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
 			String sObjectService = "OrderRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			array = oOrderRemoteMgt.allOrdersTable(t);
 			System.out.println("ordenes recibidas correctamente");

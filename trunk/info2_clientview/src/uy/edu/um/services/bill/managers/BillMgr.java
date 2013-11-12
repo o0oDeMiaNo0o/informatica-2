@@ -31,7 +31,7 @@ public class BillMgr implements BillMgt{
 		try {
 			String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "BillRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(host, 1099);
+			Registry oRegitry = LocateRegistry.getRegistry(host, ServiceFacade.getInstance().getPort());
 			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oBillRemoteMgt.addBill(b);

@@ -44,7 +44,7 @@ public class ArticleMgr implements ArticleMgt {
 	public void sendArticle(ArticleVO a) throws NoServerConnectionException {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addArticle(a);
@@ -66,7 +66,7 @@ public class ArticleMgr implements ArticleMgt {
 		ArrayList<ArticleVO> array = new ArrayList<ArticleVO>(10);
 		try {
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			array = oArticleRemoteMgt.getArticlesVO();
@@ -82,7 +82,7 @@ public class ArticleMgr implements ArticleMgt {
 	public void editArticle(ArticleVO a) throws NoServerConnectionException {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			 oArticleRemoteMgt.editArtile(a);
@@ -97,7 +97,7 @@ public class ArticleMgr implements ArticleMgt {
 	public void descontinuarArticulo(ArticleVO a) throws NoServerConnectionException {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.editArtile(a);
@@ -125,7 +125,7 @@ public class ArticleMgr implements ArticleMgt {
 		try {
 			//String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			 oArticleRemoteMgt.editArtile(a);
@@ -143,7 +143,7 @@ public class ArticleMgr implements ArticleMgt {
 		boolean check = false;
 		try {
 			String sObjectService = "ArticleRemoteMgr";
-			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),1099);
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			ArticleRemoteMgt oArticleRemoteMgt = (ArticleRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			check = oArticleRemoteMgt.existeArticle(nombre);

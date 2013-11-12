@@ -15,8 +15,9 @@ public class test2 {
 		ArrayList<OrderVO> allOrders1 = new ArrayList<OrderVO>(10);
 		ArrayList<OrderVO> allOrders2 = new ArrayList<OrderVO>(10);
 		OrderMgt oMgt = ServiceFacade.getInstance().getOrderMgt();
-		allOrders1 = oMgt.allOrders();
+		TableMgt tMgt = ServiceFacade.getInstance().getTableMgt();
+		allTables = tMgt.allTables();
+		allOrders1 = oMgt.getOrderTable(allTables.get(1));
 		int v = 34;
-		System.out.println(allOrders1.get(1).getEspecificaciones());
 	}
 }
