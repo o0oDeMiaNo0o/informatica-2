@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.value_object.article.ArticleVO;
 
@@ -49,7 +50,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	}
 
 	@Override
-	public ArrayList<ArticleVO> getArticlesVO() throws RemoteException {
+	public ArrayList<ArticleVO> getArticlesVO() throws RemoteException, NoDatabaseConnection {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		return aMgt.allArticles();
 	}
@@ -69,7 +70,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	}
 
 	@Override
-	public boolean existeArticle(String nombre) throws RemoteException {
+	public boolean existeArticle(String nombre) throws RemoteException, NoDatabaseConnection {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		return aMgt.existeArticle(nombre);
 	}

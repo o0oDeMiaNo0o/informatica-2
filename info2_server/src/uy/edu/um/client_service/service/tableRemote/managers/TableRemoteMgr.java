@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
@@ -37,7 +38,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 
 
 	@Override
-	public ArrayList<TableVO> allTables() throws RemoteException {
+	public ArrayList<TableVO> allTables() throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		ArrayList<TableVO> array = new ArrayList<TableVO>(10);
 		array = tMgt.allTables();

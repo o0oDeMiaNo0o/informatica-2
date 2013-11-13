@@ -6,11 +6,12 @@ import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 
 public class test2 {
-	public static void main(String[] args){
+	public static void main(String[] args) throws NoDatabaseConnection{
 		//managers
 		ArrayList<TableVO> allTables = new ArrayList<TableVO>(5);
 		ArrayList<OrderVO> allOrders1 = new ArrayList<OrderVO>(10);

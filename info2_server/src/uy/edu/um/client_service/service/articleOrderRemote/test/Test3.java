@@ -7,11 +7,12 @@ import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class Test3 {
-	public static void main(String[] args){
+	public static void main(String[] args) throws NoDatabaseConnection{
 		ArrayList<CategoryVO> categories = new ArrayList<CategoryVO>(10);
 		CategoryMgt cmgt = BusinessFacade.getInstance().getCategoryMgt();
 		categories = cmgt.allCategories();
