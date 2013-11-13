@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
@@ -31,7 +32,7 @@ public class ClientMgr implements ClientMgt{
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
 			int tel, String direccion, String mail, BigDecimal descuento)
-					throws ExisteClientException, HasBlanksException, HasNumberException, NoServerConnectionException {
+					throws ExisteClientException, HasBlanksException, HasNumberException, NoServerConnectionException, NoDatabaseConnection {
 		if(existeCliente(nombre,ci) == true){
 			throw new ExisteClientException("El cliente "+nombre+" "+apellido+" ya existe");
 		}
@@ -46,7 +47,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void addClientVO(ClientVO c) throws NoServerConnectionException{
+	public void addClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection, NoDatabaseConnection{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -67,7 +68,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public ArrayList<ClientVO> allClients() throws NoServerConnectionException{
+	public ArrayList<ClientVO> allClients() throws NoServerConnectionException, NoDatabaseConnection{
 		ArrayList<ClientVO> array = new ArrayList<ClientVO>(10);
 		try {
 
@@ -91,7 +92,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void editClientVO(ClientVO c) throws NoServerConnectionException {
+	public void editClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -106,7 +107,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void removeClientVO(ClientVO c) throws NoServerConnectionException{
+	public void removeClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -122,7 +123,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public boolean existeCliente(String nombre, int ci) throws NoServerConnectionException{
+	public boolean existeCliente(String nombre, int ci) throws NoServerConnectionException, NoDatabaseConnection{
 		boolean check = false;
 		try {
 			String sObjectService = "ClientRemoteMgr";
