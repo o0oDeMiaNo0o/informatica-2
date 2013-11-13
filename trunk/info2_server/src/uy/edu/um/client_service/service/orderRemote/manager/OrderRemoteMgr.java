@@ -8,6 +8,7 @@ import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.order.interfaces.OrderMgt;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
@@ -40,7 +41,7 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	}
 
 	@Override
-	public ArrayList<OrderVO> allOrders() throws RemoteException {
+	public ArrayList<OrderVO> allOrders() throws RemoteException, NoDatabaseConnection {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		return oMgt.allOrders();
 	}
@@ -70,7 +71,7 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	}
 
 	@Override
-	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException {
+	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException, NoDatabaseConnection {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table toGetOrders = tMgt.getTable(t);

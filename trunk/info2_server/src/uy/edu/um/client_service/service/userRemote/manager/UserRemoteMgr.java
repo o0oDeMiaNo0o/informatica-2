@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -66,7 +67,7 @@ public class UserRemoteMgr implements UserRemoteMgt{
 	}
 
 	@Override
-	public UserVO getUser(String nombre) throws RemoteException {
+	public UserVO getUser(String nombre) throws RemoteException, NoDatabaseConnection {
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		return uMgt.getUser(nombre);
 	}
