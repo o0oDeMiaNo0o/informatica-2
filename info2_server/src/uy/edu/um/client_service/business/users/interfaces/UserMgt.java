@@ -3,6 +3,7 @@ package uy.edu.um.client_service.business.users.interfaces;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.users.entities.User;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.user.UserVO;
 
 public interface UserMgt {
@@ -25,6 +26,6 @@ public interface UserMgt {
 
 	public String hashPassword(String password);
 
-	public UserVO getUser(String nombre);
+	public UserVO getUser(String nombre) throws NoDatabaseConnection;
 
 }

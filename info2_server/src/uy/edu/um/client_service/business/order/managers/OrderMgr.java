@@ -14,6 +14,7 @@ import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
 import uy.edu.um.client_service.persistance.DAO.order.OrderDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
@@ -71,7 +72,7 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public ArrayList<OrderVO> allOrders() {
+	public ArrayList<OrderVO> allOrders() throws NoDatabaseConnection {
 		OrderDAO dao = OrderDAO.getInstance();
 		ArrayList<Order> orders = dao.getOrders();
 		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>(10);
@@ -133,7 +134,7 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public ArrayList<OrderVO> getOrderTable(Table t) {
+	public ArrayList<OrderVO> getOrderTable(Table t) throws NoDatabaseConnection {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		OrderDAO dao = OrderDAO.getInstance();
 		ArrayList<Order> orders = dao.getTableOrders(t);

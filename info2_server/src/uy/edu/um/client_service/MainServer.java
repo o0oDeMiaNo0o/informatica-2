@@ -27,7 +27,7 @@ public class MainServer {
 		// Inicializar RMI
 
 		try {
-			Registry oRegistry = LocateRegistry.createRegistry(1099);
+			Registry oRegistry = LocateRegistry.createRegistry(BusinessFacade.getInstance().getPort());
 
 			// Componente de ordenes
 

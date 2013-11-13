@@ -1,5 +1,9 @@
 package uy.edu.um.client_service.business;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.article.managers.ArticleMgr;
 import uy.edu.um.client_service.business.articleOrder.interfaces.ArticleOrderMgt;
@@ -130,6 +134,14 @@ public class BusinessFacade {
 	public DeliveryMgt getDeliveryMgt(){
 		return DeliveryMgr.getInstance();
 	}
-
+	public int getPort() {
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("datasource.properties"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return Integer.parseInt(prop.getProperty("port"));
+	}
 
 }
