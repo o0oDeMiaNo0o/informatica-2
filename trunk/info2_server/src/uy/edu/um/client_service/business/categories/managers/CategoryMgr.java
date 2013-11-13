@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.persistance.DAO.category.CategoryDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryMgr implements CategoryMgt{
@@ -23,7 +24,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public void addCategory(Category c) {
+	public void addCategory(Category c) throws NoDatabaseConnection {
 		CategoryDAO dao = CategoryDAO.getInstance();
 		dao.addCategory(c);
 	}
@@ -37,7 +38,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public ArrayList<CategoryVO> allCategories() {
+	public ArrayList<CategoryVO> allCategories() throws NoDatabaseConnection {
 		CategoryDAO dao = CategoryDAO.getInstance();
 		ArrayList<Category> categories =  dao.getCategory();
 		ArrayList<CategoryVO> toReturn = new ArrayList<CategoryVO>(10);
@@ -58,7 +59,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public boolean existCategory(String nombre) {
+	public boolean existCategory(String nombre) throws NoDatabaseConnection {
 		CategoryDAO dao = CategoryDAO.getInstance();
 		return dao.existeCategory(nombre);
 	}

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.table.entities.Table;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public interface OrderMgt {
@@ -16,7 +17,7 @@ public interface OrderMgt {
 
 	public Order getOrder(OrderVO o);
 
-	public ArrayList<OrderVO> allOrders();
+	public ArrayList<OrderVO> allOrders() throws NoDatabaseConnection;
 
 	public OrderVO getOrderVO(Order o);
 
@@ -26,7 +27,7 @@ public interface OrderMgt {
 
 	public void rejected(OrderVO o) throws RemoteException;
 
-	public ArrayList<OrderVO> getOrderTable(Table t);
+	public ArrayList<OrderVO> getOrderTable(Table t) throws NoDatabaseConnection;
 
 
 }

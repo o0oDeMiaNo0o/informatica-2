@@ -9,6 +9,7 @@ import uy.edu.um.client_service.business.article.interfaces.ArticleMgt;
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.business.categories.interfaces.CategoryMgt;
 import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 
@@ -61,7 +62,7 @@ public class ArticleMgr implements ArticleMgt{
 	}
 
 	@Override
-	public void getArticles() {
+	public void getArticles() throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		dao.getArticles();
 	}
@@ -74,7 +75,7 @@ public class ArticleMgr implements ArticleMgt{
 	}
 
 	@Override
-	public ArrayList<ArticleVO> allArticles() {
+	public ArrayList<ArticleVO> allArticles() throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		ArrayList<Article> articles =  dao.getArticles();
 		ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>(10);
@@ -104,7 +105,7 @@ public class ArticleMgr implements ArticleMgt{
 	}
 
 	@Override
-	public boolean existeArticle(String nombre) {
+	public boolean existeArticle(String nombre) throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		return dao.existeArticle(nombre);
 	}

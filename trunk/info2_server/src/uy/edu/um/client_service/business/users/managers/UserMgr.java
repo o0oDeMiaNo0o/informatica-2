@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.business.users.interfaces.UserMgt;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.user.UserVO;
 
 public class UserMgr implements UserMgt{
@@ -102,7 +103,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public UserVO getUser(String nombre) {
+	public UserVO getUser(String nombre) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		User obtenido = dao.searchUser(nombre);
 		return this.getUserVO(obtenido);

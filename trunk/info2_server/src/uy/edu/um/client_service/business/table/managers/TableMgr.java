@@ -6,6 +6,7 @@ import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
 import uy.edu.um.client_service.persistance.DAO.mesas.TableDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.table.TableVO;
 
 public class TableMgr implements TableMgt{
@@ -52,7 +53,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public ArrayList<TableVO> allTables() {
+	public ArrayList<TableVO> allTables() throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		ArrayList<Table> tables = dao.EstadosMesas();
 		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
