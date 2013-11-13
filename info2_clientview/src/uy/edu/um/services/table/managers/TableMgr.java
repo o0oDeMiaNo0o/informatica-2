@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -24,7 +25,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void addTable() throws NoServerConnectionException{
+	public void addTable() throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -48,7 +49,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public ArrayList<TableVO> allTables() throws NoServerConnectionException{
+	public ArrayList<TableVO> allTables() throws NoServerConnectionException, NoDatabaseConnection, NoDatabaseConnection{
 		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
 		try {
 			String sObjectService = "TableRemoteMgr";
@@ -66,7 +67,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void setOcupado(TableVO t) throws NoServerConnectionException{
+	public void setOcupado(TableVO t) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -91,7 +92,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void removeTable(TableVO t) throws NoServerConnectionException {
+	public void removeTable(TableVO t) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 
 			String sObjectService = "TableRemoteMgr";
@@ -114,7 +115,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void setLibre(TableVO t) throws NoServerConnectionException{
+	public void setLibre(TableVO t) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 
 			String sObjectService = "TableRemoteMgr";

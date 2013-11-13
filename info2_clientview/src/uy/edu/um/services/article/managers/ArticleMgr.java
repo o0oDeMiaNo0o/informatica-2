@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteArticleException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -32,7 +33,7 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArticleVO createArticleVO(String nombre, BigDecimal precio, CategoryVO category)
-				throws ExisteArticleException, NoServerConnectionException{
+				throws ExisteArticleException, NoServerConnectionException, NoDatabaseConnection{
 		if(existeArticle(nombre)){
 			throw new ExisteArticleException("El articlo "+nombre+" ya existe");
 		}
@@ -41,7 +42,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void sendArticle(ArticleVO a) throws NoServerConnectionException {
+	public void sendArticle(ArticleVO a) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -62,7 +63,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public ArrayList<ArticleVO> allArticles() throws NoServerConnectionException {
+	public ArrayList<ArticleVO> allArticles() throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<ArticleVO> array = new ArrayList<ArticleVO>(10);
 		try {
 			String sObjectService = "ArticleRemoteMgr";
@@ -79,7 +80,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void editArticle(ArticleVO a) throws NoServerConnectionException {
+	public void editArticle(ArticleVO a) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -94,7 +95,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void descontinuarArticulo(ArticleVO a) throws NoServerConnectionException {
+	public void descontinuarArticulo(ArticleVO a) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "ArticleRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -112,7 +113,7 @@ public class ArticleMgr implements ArticleMgt {
 
 	@Override
 	public ArticleVO createArticleVOid(int id, String nombre,
-			BigDecimal precio, CategoryVO category) throws ExisteArticleException, NoServerConnectionException {
+			BigDecimal precio, CategoryVO category) throws ExisteArticleException, NoServerConnectionException, NoDatabaseConnection {
 		if(existeArticle(nombre)){
 			throw new ExisteArticleException("El article "+nombre+" ya existe");
 		}
@@ -121,7 +122,7 @@ public class ArticleMgr implements ArticleMgt {
 	}
 
 	@Override
-	public void removeArticle(ArticleVO a) throws NoServerConnectionException {
+	public void removeArticle(ArticleVO a) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			//String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "ArticleRemoteMgr";
@@ -139,7 +140,7 @@ public class ArticleMgr implements ArticleMgt {
 	//Metodos auxiliares
 
 	@Override
-	public boolean existeArticle(String nombre) throws NoServerConnectionException {
+	public boolean existeArticle(String nombre) throws NoServerConnectionException, NoDatabaseConnection {
 		boolean check = false;
 		try {
 			String sObjectService = "ArticleRemoteMgr";

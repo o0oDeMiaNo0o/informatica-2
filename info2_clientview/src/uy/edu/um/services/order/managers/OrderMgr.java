@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -28,7 +29,7 @@ public class OrderMgr implements OrderMgt{
 
 
 	@Override
-	public void addOrder(OrderVO o) throws NoServerConnectionException {
+	public void addOrder(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -55,13 +56,13 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void removeOrder(OrderVO o) throws NoServerConnectionException  {
+	public void removeOrder(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public ArrayList<OrderVO> allOrders()  throws NoServerConnectionException {
+	public ArrayList<OrderVO> allOrders()  throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
 			String sObjectService = "OrderRemoteMgr";
@@ -80,30 +81,30 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void setDone(OrderVO o)  throws NoServerConnectionException {
+	public void setDone(OrderVO o)  throws NoServerConnectionException, NoDatabaseConnection {
 		// TODO Auto-generated method stub
 
 	}
 
 
 	@Override
-	public void isDone(OrderVO o) throws NoServerConnectionException  {
+	public void isDone(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
 		// TODO Auto-generated method stub
 
 	}
 	@Override
-	public void isWaiting(OrderVO o) throws NoServerConnectionException  {
+	public void isWaiting(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void rejected(OrderVO o) throws NoServerConnectionException  {
+	public void rejected(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
 		// TODO Auto-generated method stub
 
 	}
 	@Override
-	public ArrayList<OrderVO> getOrderTable(TableVO t)  throws NoServerConnectionException {
+	public ArrayList<OrderVO> getOrderTable(TableVO t)  throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
 			String sObjectService = "OrderRemoteMgr";

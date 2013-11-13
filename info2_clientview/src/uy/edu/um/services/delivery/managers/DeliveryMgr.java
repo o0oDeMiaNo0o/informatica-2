@@ -5,6 +5,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Date;
 
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
@@ -27,7 +28,7 @@ public class DeliveryMgr implements DeliveryMgt{
 	}
 
 	@Override
-	public void addDelivery(DeliveryVO d) throws NoServerConnectionException{
+	public void addDelivery(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());

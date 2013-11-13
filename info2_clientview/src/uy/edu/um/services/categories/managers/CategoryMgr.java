@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ExisteCategoryException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
@@ -26,7 +27,7 @@ public class CategoryMgr implements CategoryMgt{
 		return instance;
 	}
 
-	public CategoryVO createCategoryVO(String nombre) throws ExisteCategoryException, HasBlanksException, NoServerConnectionException{
+	public CategoryVO createCategoryVO(String nombre) throws ExisteCategoryException, HasBlanksException, NoServerConnectionException, NoDatabaseConnection{
 		CategoryVO toReturn = null;
 		if(existCategory(nombre)){
 			throw new ExisteCategoryException("La categoria "+nombre+" ya existe");
@@ -39,7 +40,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public void sendCategoryVO(CategoryVO c) throws NoServerConnectionException{
+	public void sendCategoryVO(CategoryVO c) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 
 			String sObjectService = "CategoryRemoteMgr";
@@ -60,7 +61,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public ArrayList<CategoryVO> allCategories() throws NoServerConnectionException{
+	public ArrayList<CategoryVO> allCategories() throws NoServerConnectionException, NoDatabaseConnection{
 
 		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
 
@@ -88,7 +89,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public boolean existCategory(String nombre) throws NoServerConnectionException{
+	public boolean existCategory(String nombre) throws NoServerConnectionException, NoDatabaseConnection{
 		boolean checker = false;
 		try {
 
