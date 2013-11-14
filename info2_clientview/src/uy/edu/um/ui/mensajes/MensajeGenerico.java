@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.Login;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.BoxLayout;
 
 public class MensajeGenerico extends JDialog {
 
@@ -39,18 +40,17 @@ public class MensajeGenerico extends JDialog {
 		if (jFrame != null) {
 			this.setLocationRelativeTo(jFrame);
 		}
-		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, 400, 82);
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
-		contentPanel.setLayout(new MigLayout("", "[271px]", "[19px][29px]"));
+		contentPanel.setLayout(new MigLayout("", "[271px,grow]", "[grow][19px][29px,grow]"));
 		{
 			JLabel lblUsuarioYoContrasea = new JLabel(error);
 			lblUsuarioYoContrasea.setBackground(new Color(248, 248, 255));
 			lblUsuarioYoContrasea.setFont(new Font("Lucida Grande", Font.PLAIN,
 					15));
 			contentPanel.add(lblUsuarioYoContrasea,
-					"cell 0 0,alignx center,aligny center");
+					"cell 0 1,alignx center,aligny center");
 		}
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -58,7 +58,7 @@ public class MensajeGenerico extends JDialog {
 				cerrar();
 			}
 		});
-		contentPanel.add(btnAceptar, "cell 0 1,alignx center,aligny top");
+		contentPanel.add(btnAceptar, "cell 0 2,alignx center,aligny bottom");
 	}
 
 	private void cerrar() {
