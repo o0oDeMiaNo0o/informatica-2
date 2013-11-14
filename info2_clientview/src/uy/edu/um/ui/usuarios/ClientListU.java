@@ -50,20 +50,20 @@ public class ClientListU extends BasicoUsuario {
 	 * Create the frame.
 	 */
 	public ClientListU(final TableVO mesa) {
-		try{
+		try {
 			clientes = cargoClientes();
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
 
 			TransparentPanel transparentPanel = new TransparentPanel();
 			getContentPane().add(transparentPanel, BorderLayout.CENTER);
-			transparentPanel
-			.setLayout(new MigLayout("", "[grow][grow][]", "[grow]"));
+			transparentPanel.setLayout(new MigLayout("", "[grow][grow][]",
+					"[grow]"));
 
 			TransparentPanel transparentPanel_1 = new TransparentPanel();
 			transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
 			transparentPanel_1.setLayout(new MigLayout("", "[][grow][]",
-			"[grow][][][grow]"));
+					"[grow][][][grow]"));
 
 			JLabel lblBsquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
 			transparentPanel_1.add(lblBsquedaRpida, "cell 1 1,alignx center");
@@ -71,7 +71,8 @@ public class ClientListU extends BasicoUsuario {
 			TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
 					devuelveNombres());
 			textFieldAutocompletar.setText("");
-			transparentPanel_1.add(textFieldAutocompletar, "flowx,cell 1 2,growx");
+			transparentPanel_1.add(textFieldAutocompletar,
+					"flowx,cell 1 2,growx");
 
 			JButton btnBuscar = new JButton("Buscar");
 			transparentPanel_1.add(btnBuscar, "cell 2 2");
@@ -79,7 +80,7 @@ public class ClientListU extends BasicoUsuario {
 			TransparentPanel transparentPanel_2 = new TransparentPanel();
 			transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
 			transparentPanel_2.setLayout(new MigLayout("", "[grow][][grow]",
-			"[grow][][][grow]"));
+					"[grow][][][grow]"));
 
 			JLabel lblICliente = new JLabel("Id Cliente: ");
 			transparentPanel_2.add(lblICliente, "flowx,cell 1 1,alignx center");
@@ -108,15 +109,17 @@ public class ClientListU extends BasicoUsuario {
 					ClientVO cliente = buscaEnLista(textFieldID.getText());
 					if (cliente != null) {
 						Facturacion nuevo1 = null;
-						try{
+						try {
 							nuevo1 = new Facturacion(mesa, cliente);
 							nuevo1.setVisible(true);
 							cerrar();
-						}catch(NoServerConnectionException ex){
-							MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ClientListU.this);
+						} catch (NoServerConnectionException ex) {
+							MensajeGenerico newFrame = new MensajeGenerico(ex
+									.getMessage(), ClientListU.this);
 							newFrame.setVisible(true);
-						} catch(NoDatabaseConnection ex){
-							MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ClientListU.this);
+						} catch (NoDatabaseConnection ex) {
+							MensajeGenerico newFrame = new MensajeGenerico(ex
+									.getMessage(), ClientListU.this);
 							newFrame.setVisible(true);
 						}
 					} else {
@@ -126,13 +129,35 @@ public class ClientListU extends BasicoUsuario {
 					}
 				}
 			});
-			transparentPanel_2.add(btnAceptar, "cell 1 2,alignx center");
+			transparentPanel_2.add(btnAceptar, "flowx,cell 1 2,alignx center");
+
+			JButton btnCancelar = new JButton("Cancelar");
+			btnCancelar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					Facturacion nuevo = null;
+					try {
+						nuevo = new Facturacion(mesa, null);
+					} catch (NoServerConnectionException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (NoDatabaseConnection e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					nuevo.setVisible(true);
+					cerrar();
+				}
+			});
+			transparentPanel_2.add(btnCancelar, "cell 1 2");
 			cargaATabla();
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),ClientListU.this);
+		} catch (NoServerConnectionException e) {
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),
+					ClientListU.this);
 			nuevo.setVisible(true);
-		}catch(NoDatabaseConnection e){
-			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),ClientListU.this);
+		} catch (NoDatabaseConnection e) {
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),
+					ClientListU.this);
 			nuevoFrame.setVisible(true);
 		}
 	}
@@ -149,7 +174,8 @@ public class ClientListU extends BasicoUsuario {
 	}
 
 	// Cargo clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<ClientVO> cargoClientes()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		return nuevo.allClients();
 	}
