@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.musica.Musica;
@@ -58,8 +59,7 @@ public class Cocina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Cocina() {
-		try{
+	public Cocina() throws NoDatabaseConnection, NoServerConnectionException {
 		arrayOrdenes = cargaOrdenes();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -76,7 +76,7 @@ public class Cocina extends JFrame {
 		TransparentPanel transparentPanel = new TransparentPanel();
 		imagePanel.add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
-				"[][263.00][][][][][][grow]"));
+		"[][263.00][][][][][][grow]"));
 
 		// Creo los elementos
 		armarPedido(transparentPanel);
@@ -89,10 +89,7 @@ public class Cocina extends JFrame {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
-	}catch(NoServerConnectionException e){
-		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-		nuevo.setVisible(true);
-	}
+
 	}
 
 	private void armarPedido(JPanel transparentPanel) {
@@ -204,7 +201,7 @@ public class Cocina extends JFrame {
 	}
 
 	// Carga Ordenes
-	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException {
+	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}

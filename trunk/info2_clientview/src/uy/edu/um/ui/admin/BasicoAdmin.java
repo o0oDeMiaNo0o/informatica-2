@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.admin.creacion.NewCategory;
 import uy.edu.um.ui.admin.creacion.NewClientA;
@@ -29,6 +31,7 @@ import uy.edu.um.ui.admin.listas.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.ConfirmSesion;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.user.UserVO;
 
 public class BasicoAdmin extends JFrame {
@@ -57,6 +60,7 @@ public class BasicoAdmin extends JFrame {
 	 * Create the frame.
 	 */
 	public BasicoAdmin() {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -88,8 +92,18 @@ public class BasicoAdmin extends JFrame {
 		mntmNArticle.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewProduct nuevo = new NewProduct();
-				nuevo.setVisible(true);
+				NewProduct nuevo;
+				try {
+					nuevo = new NewProduct();
+					nuevo.setVisible(true);
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				}
+
 			}
 		});
 
@@ -99,9 +113,17 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarArticulo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
+				try{
 				ProductList nuevo = new ProductList();
 				nuevo.setVisible(true);
 				cerrar();
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				}
 			}
 		});
 		menuArticle.add(mntmEditarArticulo);
@@ -132,9 +154,17 @@ public class BasicoAdmin extends JFrame {
 		mntmNuevaMesa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				try{
 				NewTable nueva = new NewTable();
 				nueva.setVisible(true);
 				cerrar();
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				} catch (NoDatabaseConnection e1) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				}
 			}
 		});
 		menuMesas.add(mntmNuevaMesa);
@@ -198,8 +228,17 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
+				try{
 				ClientList nuevo = new ClientList();
 				nuevo.setVisible(true);
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					nuevo1.setVisible(true);
+				}
+
 			}
 		});
 		mnClientes.add(mntmEditarCliente);

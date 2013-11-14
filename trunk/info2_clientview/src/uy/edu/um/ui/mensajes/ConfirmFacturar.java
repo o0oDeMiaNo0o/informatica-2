@@ -12,8 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
+import uy.edu.um.ui.usuarios.ClientListU;
 import uy.edu.um.ui.usuarios.Facturacion;
 import uy.edu.um.value_object.table.TableVO;
 
@@ -27,7 +30,7 @@ public class ConfirmFacturar extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public ConfirmFacturar(final TableVO mesa, final JFrame frame) {
@@ -57,10 +60,19 @@ public class ConfirmFacturar extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion factura = new Facturacion(mesa, null);
-				factura.setVisible(true);
-				frame.dispose();
-				cerrar();
+				Facturacion factura = null;
+				try{
+					factura = new Facturacion(mesa, null);
+					factura.setVisible(true);
+					frame.dispose();
+					cerrar();
+				}catch(NoServerConnectionException ex){
+					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ConfirmFacturar.this);
+					newFrame.setVisible(true);
+				}catch(NoDatabaseConnection ex){
+					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ConfirmFacturar.this);
+					newFrame.setVisible(true);
+				}
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

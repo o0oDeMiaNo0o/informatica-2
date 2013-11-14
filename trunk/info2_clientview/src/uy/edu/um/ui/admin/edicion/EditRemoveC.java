@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -156,6 +157,9 @@ public class EditRemoveC extends JFrame {
 		}catch(NoServerConnectionException e){
 			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
 			nuevo.setVisible(true);
+		}catch(NoDatabaseConnection e){
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevoFrame.setVisible(true);
 		}
 	}
 
@@ -175,7 +179,7 @@ public class EditRemoveC extends JFrame {
 	}
 
 	// Cargo Clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException {
+	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException, NoDatabaseConnection {
 		ClientMgt cli = ServiceFacade.getInstance().getClientMgt();
 		return cli.allClients();
 	}

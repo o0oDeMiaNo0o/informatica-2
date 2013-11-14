@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -93,9 +94,11 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	/**
 	 * Create the frame.
+	 * @throws NoServerConnectionException
+	 * @throws NoDatabaseConnection
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) {
-		try{
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) throws NoServerConnectionException, NoDatabaseConnection  {
+		//try{
 			listaArticulos = cargoListado();
 			categoria = cargoCategorias();
 			spinners = new ArrayList<JSpinner>(categoria.size());
@@ -236,15 +239,19 @@ public class CajaPrincipal extends BasicoUsuario {
 				btnFacturar.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
+						ConfirmFacturar nuevo = null;
 						try{
 							OrderVO toSend = enviarPedido(pedidoAux, mesa, espTotal,
 									user);
-							ConfirmFacturar nuevo = new ConfirmFacturar(toSend
+							nuevo = new ConfirmFacturar(toSend
 									.getTable(), devuelve());
 							nuevo.setVisible(true);
 						}catch(NoServerConnectionException e){
-							MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-							nuevo.setVisible(true);
+							MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
+							nuevo1.setVisible(true);
+						}catch(NoDatabaseConnection e){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
+							nuevoFrame.setVisible(true);
 						}
 					}
 				});
@@ -255,9 +262,10 @@ public class CajaPrincipal extends BasicoUsuario {
 				btnAgregar.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
+						MainUsuario mainUsr = null;
 						try{
 							enviarPedido(pedidoAux, mesa, espTotal, user);
-							MainUsuario mainUsr = new MainUsuario();
+							mainUsr = new MainUsuario();
 							mainUsr.setVisible(true);
 							MensajeGenerico nuevo = new MensajeGenerico(
 									"Pedido Agregado A Mesa " + mesa.getNumero(),
@@ -265,8 +273,11 @@ public class CajaPrincipal extends BasicoUsuario {
 							nuevo.setVisible(true);
 							cerrar();
 						}catch(NoServerConnectionException e){
-							MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+							MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
 							nuevo.setVisible(true);
+						}catch(NoDatabaseConnection e){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
+							nuevoFrame.setVisible(true);
 						}
 					}
 				});
@@ -282,9 +293,18 @@ public class CajaPrincipal extends BasicoUsuario {
 									"Pedido Vacio", devuelve());
 							mensaje.setVisible(true);
 						} else {
-							Mesas nueva = new Mesas(pedidoAux, espTotal);
+							Mesas nueva = null;
+							try{
+							nueva = new Mesas(pedidoAux, espTotal);
 							nueva.setVisible(true);
 							cerrar();
+							}catch(NoDatabaseConnection e){
+								MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
+								nuevoFrame.setVisible(true);
+							}catch(NoServerConnectionException e){
+								MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
+								nuevoFrame.setVisible(true);
+							}
 						}
 					}
 
@@ -317,10 +337,10 @@ public class CajaPrincipal extends BasicoUsuario {
 			transparentPanelBotonera.add(btnCancelar,
 			"cell 4 0,alignx center,aligny center");
 
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-			nuevo.setVisible(true);
-		}
+		//}catch(NoServerConnectionException e){
+		//	MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),null);
+		//	nuevo.setVisible(true);
+		//}
 	}
 
 	// Metodos Auxiliares
@@ -381,13 +401,13 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Carga Articulos a arraylist
-	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException {
+	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException, NoDatabaseConnection {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
 		return test.allArticles();
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
@@ -584,7 +604,7 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	// Creo y envio OrderVO
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
-			TableVO mesa, String esp, UserVO user) throws NoServerConnectionException {
+			TableVO mesa, String esp, UserVO user) throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
 		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
 				CurrentUser.getUser(), esp, 0);

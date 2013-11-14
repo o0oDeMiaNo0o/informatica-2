@@ -14,9 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.exceptions.checks.ExisteCategoryException;
-import uy.edu.um.exceptions.checks.HasBlanksException;
-import uy.edu.um.exceptions.checks.NoServerConnectionException;
+
+import uy.edu.um.exceptions.checks.*;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -100,16 +99,7 @@ public class NewCategory extends BasicoAdmin {
 						CategoryMgt cat = ServiceFacade.getInstance()
 						.getCategoryMgt();
 						CategoryVO nuevaCatVO = null;
-						try {
-							nuevaCatVO = cat
-							.createCategoryVO(textFieldNombre.getText());
-						} catch (ExisteCategoryException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (HasBlanksException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						nuevaCatVO = cat.createCategoryVO(textFieldNombre.getText());
 						cat.sendCategoryVO(nuevaCatVO);
 						textFieldNombre.setText("");
 						MensajeGenerico test = new MensajeGenerico(
@@ -117,10 +107,22 @@ public class NewCategory extends BasicoAdmin {
 						test.setVisible(true);
 					}catch(NoServerConnectionException e){
 						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
-								devuelve());
+								NewCategory.this);
+						test.setVisible(true);
+					}catch (ExisteCategoryException e) {
+						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
+								NewCategory.this);
+						test.setVisible(true);
+					} catch (HasBlanksException e) {
+						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
+								NewCategory.this);
+						test.setVisible(true);
+					} catch( NoDatabaseConnection e){
+						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
+								NewCategory.this);
 						test.setVisible(true);
 					}
-				} else {
+				}else {
 					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
 							devuelve());
 					test.setVisible(true);
@@ -140,7 +142,6 @@ public class NewCategory extends BasicoAdmin {
 		});
 		transparentPanelBotones.add(buttonCancelar, "cell 1 0");
 	}
-
 	public JFrame devuelve() {
 		return this;
 	}

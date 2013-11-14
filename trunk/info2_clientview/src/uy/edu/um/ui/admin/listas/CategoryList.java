@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
@@ -23,7 +24,7 @@ import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public class CategoryList extends BasicoAdmin {
-	private ArrayList<CategoryVO> categorias = cargoCategorias();
+	private ArrayList<CategoryVO> categorias;
 	private JTable table;
 	private JTextField textFieldID;
 
@@ -45,8 +46,11 @@ public class CategoryList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
+	 * @throws NoServerConnectionException
+	 * @throws NoDatabaseConnection
 	 */
-	public CategoryList() {
+	public CategoryList() throws NoDatabaseConnection, NoServerConnectionException {
+		categorias = cargoCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -114,15 +118,10 @@ public class CategoryList extends BasicoAdmin {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoDatabaseConnection, NoServerConnectionException {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		ArrayList<CategoryVO> categories = new ArrayList<CategoryVO>(2);
-		try {
-			categories = cat.allCategories();
-		} catch (NoServerConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		categories = cat.allCategories();
 		return categories;
 	}
 

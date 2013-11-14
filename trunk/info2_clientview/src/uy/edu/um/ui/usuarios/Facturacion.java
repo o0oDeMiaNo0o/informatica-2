@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
@@ -60,168 +61,181 @@ public class Facturacion extends BasicoUsuario {
 		});
 	}
 
-	public Facturacion(final TableVO mesa, ClientVO cliente) {
-		try{
-		clientes = cargaClientes();
-		ordenesMesa = cargoOrdenesMesa(mesa);
+	public Facturacion(final TableVO mesa, ClientVO cliente) throws NoServerConnectionException, NoDatabaseConnection{
+		//try{
+			clientes = cargaClientes();
+			ordenesMesa = cargoOrdenesMesa(mesa);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout(0, 0));
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(100, 100, 450, 300);
+			getContentPane().setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
-		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]",
-				"[grow][][][grow]"));
+			TransparentPanel transparentPanel = new TransparentPanel();
+			getContentPane().add(transparentPanel, BorderLayout.CENTER);
+			transparentPanel.setLayout(new MigLayout("", "[grow][][grow][grow]",
+			"[grow][][][grow]"));
 
-		ImagePanel imagePanel = new ImagePanel(logo);
-		transparentPanel
-				.add(imagePanel, "cell 2 0,alignx center,aligny center");
+			ImagePanel imagePanel = new ImagePanel(logo);
+			transparentPanel
+			.add(imagePanel, "cell 2 0,alignx center,aligny center");
 
-		JLabel lblCliente = new JLabel("Cliente");
-		lblCliente.setForeground(Color.WHITE);
-		transparentPanel.add(lblCliente, "cell 1 1,alignx left");
+			JLabel lblCliente = new JLabel("Cliente");
+			lblCliente.setForeground(Color.WHITE);
+			transparentPanel.add(lblCliente, "cell 1 1,alignx left");
 
-		textFieldCliente = new JTextField();
-		textFieldCliente.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
+			textFieldCliente = new JTextField();
+			textFieldCliente.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent arg0) {
 
-			}
-		});
-		transparentPanel.add(textFieldCliente, "flowx,cell 2 1,growx");
-		textFieldCliente.setColumns(10);
+				}
+			});
+			transparentPanel.add(textFieldCliente, "flowx,cell 2 1,growx");
+			textFieldCliente.setColumns(10);
 
-		JButton btnVerLista = new JButton("Ver Lista");
-		btnVerLista.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				ClientListU nuevo = new ClientListU(mesa);
-				nuevo.setVisible(true);
-			}
-		});
-		transparentPanel
-				.add(btnVerLista, "cell 2 1,alignx right,aligny center");
-
-		JLabel lblPagaCon = new JLabel("Paga Con");
-		lblPagaCon.setForeground(Color.WHITE);
-		transparentPanel.add(lblPagaCon, "cell 1 2,alignx left");
-
-		textFieldPagaCon = new JTextField();
-		textFieldPagaCon.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				if (textFieldPagaCon.getText().isEmpty()) {
-
-				} else if (Helpers.isNumeric(textFieldPagaCon.getText())) {
-					textFieldVuelto.setText(calcularVuelto(
-							textFieldPagaCon.getText(), montoPagar.toString()));
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							textFieldPagaCon.getText() + " no es un numero",
-							null);
+			JButton btnVerLista = new JButton("Ver Lista");
+			btnVerLista.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					ClientListU nuevo = new ClientListU(mesa);
 					nuevo.setVisible(true);
-					textFieldPagaCon.setText("");
+				}
+			});
+			transparentPanel
+			.add(btnVerLista, "cell 2 1,alignx right,aligny center");
+
+			JLabel lblPagaCon = new JLabel("Paga Con");
+			lblPagaCon.setForeground(Color.WHITE);
+			transparentPanel.add(lblPagaCon, "cell 1 2,alignx left");
+
+			textFieldPagaCon = new JTextField();
+			textFieldPagaCon.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					if (textFieldPagaCon.getText().isEmpty()) {
+
+					} else if (Helpers.isNumeric(textFieldPagaCon.getText())) {
+						textFieldVuelto.setText(calcularVuelto(
+								textFieldPagaCon.getText(), montoPagar.toString()));
+					} else {
+						MensajeGenerico nuevo = new MensajeGenerico(
+								textFieldPagaCon.getText() + " no es un numero",
+								null);
+						nuevo.setVisible(true);
+						textFieldPagaCon.setText("");
+					}
+
 				}
 
-			}
+			});
+			transparentPanel.add(textFieldPagaCon, "flowx,cell 2 2,growx");
+			textFieldPagaCon.setColumns(10);
 
-		});
-		transparentPanel.add(textFieldPagaCon, "flowx,cell 2 2,growx");
-		textFieldPagaCon.setColumns(10);
+			TransparentPanel transparentPanel_1 = new TransparentPanel();
+			transparentPanel.add(transparentPanel_1, "cell 2 3,grow");
+			transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]",
+			"[grow][][][][grow][]"));
 
-		TransparentPanel transparentPanel_1 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_1, "cell 2 3,grow");
-		transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]",
-				"[grow][][][][grow][]"));
+			JLabel lblSubtotal = new JLabel("Subtotal");
+			lblSubtotal.setForeground(Color.WHITE);
+			transparentPanel_1.add(lblSubtotal, "cell 1 1");
 
-		JLabel lblSubtotal = new JLabel("Subtotal");
-		lblSubtotal.setForeground(Color.WHITE);
-		transparentPanel_1.add(lblSubtotal, "cell 1 1");
+			JLabel labelSub = new JLabel(cuentaPrecio(ordenesMesa));
+			labelSub.setForeground(Color.WHITE);
+			transparentPanel_1.add(labelSub, "cell 2 1,alignx left,aligny center");
 
-		JLabel labelSub = new JLabel(cuentaPrecio(ordenesMesa));
-		labelSub.setForeground(Color.WHITE);
-		transparentPanel_1.add(labelSub, "cell 2 1,alignx left,aligny center");
+			JLabel lblDescuento = new JLabel("Descuento");
+			lblDescuento.setForeground(Color.WHITE);
+			transparentPanel_1.add(lblDescuento, "cell 1 2");
 
-		JLabel lblDescuento = new JLabel("Descuento");
-		lblDescuento.setForeground(Color.WHITE);
-		transparentPanel_1.add(lblDescuento, "cell 1 2");
+			JLabel labelDescuento = new JLabel(descuento.toString());
+			labelDescuento.setForeground(Color.WHITE);
+			transparentPanel_1.add(labelDescuento, "flowx,cell 2 2");
 
-		JLabel labelDescuento = new JLabel(descuento.toString());
-		labelDescuento.setForeground(Color.WHITE);
-		transparentPanel_1.add(labelDescuento, "flowx,cell 2 2");
+			JLabel lblTotal = new JLabel("TOTAL");
+			lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+			lblTotal.setForeground(Color.WHITE);
+			transparentPanel_1.add(lblTotal, "cell 1 3");
 
-		JLabel lblTotal = new JLabel("TOTAL");
-		lblTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-		lblTotal.setForeground(Color.WHITE);
-		transparentPanel_1.add(lblTotal, "cell 1 3");
+			JButton btnAceptar = new JButton("Aceptar");
+			btnAceptar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					ClientVO cliente = buscaCliente(Integer
+							.parseInt(textFieldCliente.getText()));
+					BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
+					if (cliente != null) {
 
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				ClientVO cliente = buscaCliente(Integer
-						.parseInt(textFieldCliente.getText()));
-				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
-				if (cliente != null) {
-					try{
-					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
-							mesa);
-					nuevo.addBillVO(factura);
-					MensajeGenerico msg = new MensajeGenerico(
-							"Factura Correcta", devuelve());
-					msg.setVisible(true);
-					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
-					tables.setLibre(mesa);
-					}catch(NoServerConnectionException e1){
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
-						nuevoFrame.setVisible(true);
+						try{
+							BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
+									mesa);
+							nuevo.addBillVO(factura);
+							MensajeGenerico msg = new MensajeGenerico(
+									"Factura Correcta", devuelve());
+							msg.setVisible(true);
+							TableMgt tables = ServiceFacade.getInstance().getTableMgt();
+							tables.setLibre(mesa);
+						}catch(NoServerConnectionException e1){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),Facturacion.this);
+							nuevoFrame.setVisible(true);
+						}catch(NoDatabaseConnection e1){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),Facturacion.this);
+							nuevoFrame.setVisible(true);
+						}
+					} else {
+						try{
+							BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
+									mesa);
+							nuevo.addBillVO(factura);
+							BillMgt bMgt = ServiceFacade.getInstance().getBillMgt();
+							TableMgt tables = ServiceFacade.getInstance().getTableMgt();
+							tables.setLibre(mesa);
+							bMgt.addBillVO(factura);
+							MensajeGenerico msg = new MensajeGenerico(
+									"Factura Correcta", devuelve());
+							msg.setVisible(true);
+						}catch(NoServerConnectionException e1){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),Facturacion.this);
+							nuevoFrame.setVisible(true);
+						}catch(NoDatabaseConnection e2){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e2.getMessage(),Facturacion.this);
+							nuevoFrame.setVisible(true);
+						}
 					}
-				} else {
-					try{
-					BillVO factura = nuevo.createBillVO(ordenesMesa, cliente,
-							mesa);
-					nuevo.addBillVO(factura);
-					TableMgt tables = ServiceFacade.getInstance().getTableMgt();
-					tables.setLibre(mesa);
-					MensajeGenerico msg = new MensajeGenerico(
-							"Factura Correcta", devuelve());
-					msg.setVisible(true);
-					}catch(NoServerConnectionException e1){
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
-						nuevoFrame.setVisible(true);
-					}
+
 				}
+			});
+			transparentPanel_1.add(btnAceptar, "flowx,cell 2 5,alignx right");
 
-			}
-		});
-		transparentPanel_1.add(btnAceptar, "flowx,cell 2 5,alignx right");
+			JButton btnCancelar = new JButton("Cancelar");
+			transparentPanel_1.add(btnCancelar, "cell 2 5,alignx right");
 
-		JButton btnCancelar = new JButton("Cancelar");
-		transparentPanel_1.add(btnCancelar, "cell 2 5,alignx right");
+			JLabel labelTotal = new JLabel(calculaTotal());
+			labelTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
+			labelTotal.setForeground(Color.ORANGE);
+			transparentPanel_1.add(labelTotal, "cell 2 3");
 
-		JLabel labelTotal = new JLabel(calculaTotal());
-		labelTotal.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
-		labelTotal.setForeground(Color.ORANGE);
-		transparentPanel_1.add(labelTotal, "cell 2 3");
+			JLabel lblVuelto = new JLabel("Vuelto");
+			lblVuelto.setForeground(Color.WHITE);
+			transparentPanel.add(lblVuelto, "cell 2 2,alignx left");
 
-		JLabel lblVuelto = new JLabel("Vuelto");
-		lblVuelto.setForeground(Color.WHITE);
-		transparentPanel.add(lblVuelto, "cell 2 2,alignx left");
+			textFieldVuelto = new JTextField();
+			textFieldVuelto.setEditable(false);
+			transparentPanel.add(textFieldVuelto, "cell 2 2,growx");
+			textFieldVuelto.setColumns(10);
+//		}catch(NoServerConnectionException e){
+//			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),Facturacion.this);
+//			nuevo.setVisible(true);
+//		}catch(NoDatabaseConnection e){
+//			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),Facturacion.this);
+//			nuevoFrame.setVisible(true);
+//		}
 
-		textFieldVuelto = new JTextField();
-		textFieldVuelto.setEditable(false);
-		transparentPanel.add(textFieldVuelto, "cell 2 2,growx");
-		textFieldVuelto.setColumns(10);
-	}catch(NoServerConnectionException e){
-		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-		nuevo.setVisible(true);
 	}
-	}
 
-	private ArrayList<OrderVO> cargoOrdenesMesa(TableVO mesa) throws NoServerConnectionException {
+	private ArrayList<OrderVO> cargoOrdenesMesa(TableVO mesa) throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-		return nuevo.allOrders();
+		return nuevo.getOrderTable(mesa);
 	}
 
 	private String calculaTotal() {
@@ -279,7 +293,7 @@ public class Facturacion extends BasicoUsuario {
 		return total.toString();
 	}
 
-	public ArrayList<ClientVO> cargaClientes() throws NoServerConnectionException {
+	public ArrayList<ClientVO> cargaClientes() throws NoServerConnectionException, NoDatabaseConnection {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		return nuevo.allClients();
 

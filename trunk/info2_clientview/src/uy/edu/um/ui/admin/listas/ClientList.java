@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
@@ -29,7 +30,7 @@ public class ClientList extends BasicoAdmin {
 
 	private JTable table;
 	private JTextField textFieldID;
-	private ArrayList<ClientVO> clientes = cargoClientes();
+	private ArrayList<ClientVO> clientes;
 
 	/**
 	 * Launch the application.
@@ -50,7 +51,8 @@ public class ClientList extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public ClientList() {
+	public ClientList() throws NoServerConnectionException, NoDatabaseConnection{
+		clientes = cargoClientes();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
@@ -153,15 +155,10 @@ public class ClientList extends BasicoAdmin {
 	}
 
 	// Cargo clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() {
+	private ArrayList<ClientVO> cargoClientes() throws NoDatabaseConnection, NoServerConnectionException {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		ArrayList<ClientVO> clients = new ArrayList<ClientVO>(2);
-		try {
-			clients = nuevo.allClients();
-		} catch (NoServerConnectionException e) {
-			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),this);
-			nuevoFrame.setVisible(true);
-		}
+		clients = nuevo.allClients();
 		return clients;
 	}
 

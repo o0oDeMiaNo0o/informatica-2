@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -136,6 +137,9 @@ public class EditRemoveU extends JFrame {
 		}catch(NoServerConnectionException e){
 			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
 			nuevo.setVisible(true);
+		}catch(NoDatabaseConnection e){
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+			nuevoFrame.setVisible(true);
 		}
 
 	}
@@ -173,7 +177,7 @@ public class EditRemoveU extends JFrame {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}

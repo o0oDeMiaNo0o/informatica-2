@@ -18,6 +18,7 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
@@ -142,46 +143,46 @@ public class NewClientA extends BasicoAdmin {
 							if (!textFieldAp.getText().isEmpty()) {
 								if (Helpers.isNumeric(textFieldTel.getText())) {
 									if (!textFieldDir.getText().isEmpty()) {
-										try{
-											BigDecimal descuento = new BigDecimal(
-													Integer.parseInt(spinner
-															.getValue().toString()));
-											ClientMgt client = ServiceFacade
-											.getInstance().getClientMgt();
-											ClientVO cliente = null;
-											try {
-												cliente = client.createClientVO(
-														textFieldNom.getText(),
-														textFieldAp.getText(), Integer
-														.parseInt(textFieldCi
-																.getText()),
-																Integer.parseInt(textFieldTel
-																		.getText()),
-																		textFieldDir.getText(),
-																		textFieldEmail.getText(),
-																		descuento);
-											} catch (NumberFormatException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											} catch (ExisteClientException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											} catch (HasBlanksException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											} catch (HasNumberException e1) {
-												// TODO Auto-generated catch block
-												e1.printStackTrace();
-											}
+										BigDecimal descuento = new BigDecimal(
+												Integer.parseInt(spinner
+														.getValue().toString()));
+										ClientMgt client = ServiceFacade
+										.getInstance().getClientMgt();
+										ClientVO cliente = null;
+										try {
+											cliente = client.createClientVO(
+													textFieldNom.getText(),
+													textFieldAp.getText(), Integer
+													.parseInt(textFieldCi
+															.getText()),
+															Integer.parseInt(textFieldTel
+																	.getText()),
+																	textFieldDir.getText(),
+																	textFieldEmail.getText(),
+																	descuento);
 											client.addClientVO(cliente);
-											MensajeGenerico new10 = new MensajeGenerico(
-													"Cliente Agregado", devuelve());
-											new10.setVisible(true);
-										}catch(NoServerConnectionException nse){
-											MensajeGenerico test = new MensajeGenerico(nse.getMessage(),
-													devuelve());
-											test.setVisible(true);
+										} catch (NumberFormatException e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
+										} catch (ExisteClientException e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
+										} catch (HasBlanksException e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
+										} catch (HasNumberException e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
+										}catch(NoServerConnectionException e1){
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
+										}catch(NoDatabaseConnection e1){
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											nuevo.setVisible(true);
 										}
+										MensajeGenerico new10 = new MensajeGenerico(
+												"Cliente Agregado", devuelve());
+										new10.setVisible(true);
 									} else {
 										MensajeGenerico new6 = new MensajeGenerico(
 												"Direccion Vacia", devuelve());

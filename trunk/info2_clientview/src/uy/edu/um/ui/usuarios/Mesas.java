@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
@@ -55,8 +56,8 @@ public class Mesas extends BasicoUsuario {
 		});
 	}
 
-	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp) {
-		try {
+	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp) throws NoDatabaseConnection, NoServerConnectionException {
+//		try {
 			mesas = cargoMesas();
 
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,13 +92,13 @@ public class Mesas extends BasicoUsuario {
 						.getDeliveryMgt();
 						// nuevo.addOrder(delivery);
 						MensajeGenerico msg = new MensajeGenerico(
-								"Agregado A Delivery Correctamente", devuelve());
+								"Agregado A Delivery Correctamente",Mesas.this);
 						msg.setVisible(true);
 					} else {
 						TableVO tableDelivery = new TableVO();
 						tableDelivery.setNumero(999);
 						ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
-								esp, devuelve());
+								esp, Mesas.this);
 						nuevo.setVisible(true);
 					}
 				}
@@ -119,10 +120,10 @@ public class Mesas extends BasicoUsuario {
 			transparentPanel_2.add(btnNewButton,
 			"cell 0 0,alignx right,aligny center");
 			;
-		} catch (NoServerConnectionException e1) {
-			MensajeGenerico newFrame = new MensajeGenerico(e1.getMessage(),devuelve());
-			newFrame.setVisible(true);
-		}
+//		} catch (NoServerConnectionException e1) {
+//			MensajeGenerico newFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+//			newFrame.setVisible(true);
+//		}
 	}
 
 	// Metodos auxiliares
@@ -158,11 +159,11 @@ public class Mesas extends BasicoUsuario {
 					imagePanel.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
+							try{
 							if (mesa.isOcupado()) {
 								MesaPedido nuevo = new MesaPedido(mesa);
 								nuevo.setVisible(true);
 							} else {
-
 								OrderVO toSend = enviarPedido(pedidoAux, mesa,
 										esp, CurrentUser.getUser());
 								ConfirmMesa conf = new ConfirmMesa(mesa,
@@ -170,7 +171,10 @@ public class Mesas extends BasicoUsuario {
 												+ nom2 + " ?", devuelve());
 								conf.setVisible(true);
 							}
-
+							}catch(NoDatabaseConnection e1){
+								MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),Mesas.this);
+								nuevo.setVisible(true);
+							}
 						}
 
 					});
@@ -209,7 +213,7 @@ public class Mesas extends BasicoUsuario {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException{
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException, NoDatabaseConnection{
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
 
