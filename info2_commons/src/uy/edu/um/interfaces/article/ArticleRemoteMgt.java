@@ -9,15 +9,15 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public interface ArticleRemoteMgt extends Remote{
 
-	public void addArticle(ArticleVO a) throws RemoteException;
+	public void addArticle(ArticleVO a) throws RemoteException, NoDatabaseConnection;
 
 	public ArticleVO searchArticle(int numProducto) throws RemoteException;
 
-	public void removeArticle(ArticleVO a) throws RemoteException;
+	public void removeArticle(ArticleVO a) throws RemoteException, NoDatabaseConnection;
 
 	public ArrayList<ArticleVO> getArticlesVO() throws RemoteException, NoDatabaseConnection;
 
-	public void editArtile(ArticleVO a) throws RemoteException;
+	public void editArtile(ArticleVO a) throws RemoteException, NoDatabaseConnection;
 
 	public void descontinuarArticle(ArticleVO a) throws RemoteException;
 
