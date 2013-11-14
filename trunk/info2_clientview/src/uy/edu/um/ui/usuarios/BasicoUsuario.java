@@ -70,9 +70,9 @@ public class BasicoUsuario extends JFrame {
 			public void mousePressed(MouseEvent arg0) {
 				Mesas nuevo = null;
 				try{
-				nuevo = new Mesas(null, null);
-				nuevo.setVisible(true);
-				cerrar();
+					nuevo = new Mesas(null, null);
+					nuevo.setVisible(true);
+					cerrar();
 				}catch(NoDatabaseConnection e){
 					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
