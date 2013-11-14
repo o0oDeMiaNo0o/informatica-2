@@ -20,13 +20,15 @@ public interface OrderMgt {
 
 	public ArrayList<OrderVO> allOrders() throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void setDone(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
+	public void entregado(OrderVO o,int id) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void rejected(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
+	public void rechazado(OrderVO o,int id) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void isWaiting(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
+	public void enPreparacion(OrderVO o,int id) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void isDone(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
+	public void terminada(OrderVO o,int id) throws NoServerConnectionException, NoDatabaseConnection;
+
+	public void delivery(OrderVO o,int id) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public ArrayList<OrderVO> getOrderTable(TableVO t) throws NoServerConnectionException, NoDatabaseConnection;
 
