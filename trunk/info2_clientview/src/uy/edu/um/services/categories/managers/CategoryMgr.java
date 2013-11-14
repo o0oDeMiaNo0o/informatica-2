@@ -51,8 +51,6 @@ public class CategoryMgr implements CategoryMgt{
 					.lookup(sObjectService);
 
 			oCategoryRemoteMgt.addCategory(c);
-
-			System.out.println("Categoria agregada correctamente");
 		}catch(Exception e){
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
@@ -76,10 +74,7 @@ public class CategoryMgr implements CategoryMgt{
 
 			array = oCategoryRemoteMgt.allCategories();
 
-			System.out.println("nada colapso");
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -100,10 +95,8 @@ public class CategoryMgr implements CategoryMgt{
 			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			checker = oCategoryRemoteMgt.existsCategory(nombre);
-			System.out.println("nada colapso");
 
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}

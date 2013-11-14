@@ -18,7 +18,7 @@ public class test2 {
 		OrderMgt oMgt = ServiceFacade.getInstance().getOrderMgt();
 //		TableMgt tMgt = ServiceFacade.getInstance().getTableMgt();
 		allOrders1 = oMgt.allOrders();
-		OrderVO toChange = allOrders1.get(1);
+		OrderVO toChange = allOrders1.get(0);
 		oMgt.rechazado(toChange);
 		int v = 34;
 	}

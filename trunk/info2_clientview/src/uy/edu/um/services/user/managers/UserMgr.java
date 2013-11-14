@@ -35,9 +35,7 @@ public class UserMgr implements UserMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			oUserRemoteMgt.addUser(u);
-			System.out.println("usuario agregado");
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -71,7 +69,6 @@ public class UserMgr implements UserMgt{
 					.lookup(sObjectService);
 			array = oUserRemoteMgt.allUsers();
 			} catch (Exception e) {
-				System.err.println("error:");
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 							"y abrirlo nuevamente");
 			}
@@ -91,7 +88,6 @@ public class UserMgr implements UserMgt{
 				System.out.println("Login aceptado");
 			}
 		} catch (Exception e) {
-			System.err.println("error");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
@@ -107,7 +103,6 @@ public class UserMgr implements UserMgt{
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkUsername(username);
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
@@ -133,7 +128,6 @@ public class UserMgr implements UserMgt{
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.getUser(nombre);
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
