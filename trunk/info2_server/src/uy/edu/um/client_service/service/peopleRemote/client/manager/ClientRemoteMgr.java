@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.value_object.people.client.ClientVO;
 
@@ -24,7 +25,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 
 	@Override
-	public void addClient(ClientVO c) throws RemoteException {
+	public void addClient(ClientVO c) throws RemoteException, NoDatabaseConnection {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		Client toAdd = cMgt.getClient(c);
 		cMgt.addClient(toAdd);
@@ -54,13 +55,13 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 	}
 
 	@Override
-	public ArrayList<ClientVO> allClients() throws RemoteException {
+	public ArrayList<ClientVO> allClients() throws RemoteException, NoDatabaseConnection {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		return cMgt.allClients();
 	}
 
 	@Override
-	public boolean existeCliente(String nombre, int ci) throws RemoteException {
+	public boolean existeCliente(String nombre, int ci) throws RemoteException, NoDatabaseConnection {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		return cMgt.existeClient(nombre, ci);
 	}

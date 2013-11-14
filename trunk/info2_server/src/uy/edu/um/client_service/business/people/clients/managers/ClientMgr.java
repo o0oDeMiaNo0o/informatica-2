@@ -7,6 +7,7 @@ import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.persistance.DAO.clients.ClientDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public class ClientMgr implements ClientMgt{
@@ -25,7 +26,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void addClient(Client c) {
+	public void addClient(Client c) throws NoDatabaseConnection {
 		ClientDAO dao = ClientDAO.getInstance();
 		dao.addClient(c);
 	}
@@ -63,13 +64,13 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void getClients() {
+	public void getClients() throws NoDatabaseConnection {
 		ClientDAO dao = ClientDAO.getInstance();
 		dao.getClients();
 	}
 
 	@Override
-	public ArrayList<ClientVO> allClients() {
+	public ArrayList<ClientVO> allClients() throws NoDatabaseConnection {
 		//manager
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 
@@ -99,7 +100,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public boolean existeClient(String nombre, int ci) {
+	public boolean existeClient(String nombre, int ci) throws NoDatabaseConnection {
 		ClientDAO dao = ClientDAO.getInstance();
 		return dao.existeCliente(nombre,ci);
 	}
