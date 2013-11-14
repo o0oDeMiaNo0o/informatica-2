@@ -1,10 +1,12 @@
 package uy.edu.um.services.user.interfaces;
 
+import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ErrorLoginException;
 import uy.edu.um.exceptions.checks.ExisteUsuarioException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -27,5 +29,9 @@ public interface UserMgt {
 	public boolean isAdmin(String nombre) throws NoServerConnectionException;
 
 	public UserVO isUser(String nombre) throws NoServerConnectionException;
+
+	public void editUser(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
+
+	public void removeUser(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
 
 }
