@@ -8,20 +8,21 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 
 public class TableDAO {
-	
+
 	private static TableDAO instance = null;
 	private Connection con = null;
-	
+
 	public static TableDAO getInstance(){
 		if (instance == null){
 			instance = new TableDAO();
 		}
 		return instance;
 	}
-	
+
 	public void addTable(){
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -49,16 +50,16 @@ public class TableDAO {
 
 
 	}
-	
+
 	public void setOcupada(Table mesa){
-		
+
 		try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado = 'Ocupado' WHERE Mesa.idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
 		System.out.println("Mesa "+mesa.getNumero()+", esta ocupada");
-		
+
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -76,16 +77,16 @@ public class TableDAO {
 		}
 		}
 	}
-	
-public void setLibre(Table mesa){
-		
+
+	public void setLibre(Table mesa){
+
 		try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado='Libre' WHERE idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
 		System.out.println("Mesa "+mesa.getNumero()+", esta libre");
-		
+
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -104,14 +105,14 @@ public void setLibre(Table mesa){
 		}
 	}
 
-public ArrayList<Table> EstadosMesas(){
-	
+	public ArrayList<Table> EstadosMesas() throws NoDatabaseConnection{
+
 	ArrayList<Table> mesas = new ArrayList<Table>();
-	
+
 	try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
-		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa");		
+		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa");
 		while (oResultSet.next()) {
 			boolean oc=false;
 			int nid = oResultSet.getInt(1);
@@ -119,72 +120,53 @@ public ArrayList<Table> EstadosMesas(){
 			if(sOcupa.equals("Ocupado")){
 				oc=true;
 			}
-			
 			Table t = new Table(nid,oc);
 			mesas.add(t);
 		}
-		
-		
+		oResultSet.close();
 		oStatement.close();
-		
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
-
 				try {
-
 					con.close();
-
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
+			}
 		}
-		}
-	
+
 	return mesas;
-	
-	
+
+
 }
 
-public Table searchTable(int id){
+	public Table searchTable(int id, Connection oConnection) throws NoDatabaseConnection{
 	Table result = null;
 	try {
-		con = DatabaseConnectionMgr.getInstance().getConnection();
-		Statement oStatement = con.createStatement();
+		Statement oStatement = oConnection.createStatement();
 		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Mesa` where `Mesa`.`idMesa` = "+id+";");
-
 		while(oResultSet.next()){
 			boolean oc=false;
 			int nId = oResultSet.getInt(1);
 			String sEstado = oResultSet.getString(2);
-			
+
 			if(sEstado.equals("Ocupado")){
 				oc=true;
 			}
-			
+
 			result = new Table(nId,oc);
 		}
 		oResultSet.close();
 		oStatement.close();
 	}
 	catch (SQLException e) {
-		throw new RuntimeException(e);
+		throw new NoDatabaseConnection("No hay conexion con la base de datos");
 	}
-	finally{
-		if (con != null) {
 
-			try {
-
-				con.close();
-
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-	}
-	}
 	return result;
 }
 

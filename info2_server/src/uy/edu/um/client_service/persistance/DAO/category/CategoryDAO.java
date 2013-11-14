@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 
 public class CategoryDAO {
@@ -24,7 +25,7 @@ public class CategoryDAO {
 		return instance;
 	}
 
-	public void addCategory(Category c){
+	public void addCategory(Category c) throws NoDatabaseConnection {
 		try{
 			 Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
 
@@ -46,22 +47,20 @@ public class CategoryDAO {
 					connection.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
-		}
+			}
 		}
 
 
 	}
 
-	public ArrayList<Category> getCategory() {
+	public ArrayList<Category> getCategory() throws NoDatabaseConnection {
 
 		try {
-
 			ArrayList<Category> toReturn = new ArrayList<Category>();
-
-			 Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
-			 Statement oStatement = connection.createStatement();
+			Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = connection.createStatement();
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias");
 
@@ -78,26 +77,23 @@ public class CategoryDAO {
 			oStatement.close();
 			return toReturn;
 		}
-			 catch (SQLException e) {
-			throw new RuntimeException(e);
+		catch (SQLException e) {
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
-
 				try {
-
 					connection.close();
-
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
-			
-		}
+
+			}
 		}
 
 	}
 
-	public boolean existeCategory(String nombre){
+	public boolean existeCategory(String nombre) throws NoDatabaseConnection {
 		boolean check = false;
 		try{
 			 Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
@@ -112,7 +108,7 @@ public class CategoryDAO {
 			return check;
 		}
 		catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
@@ -124,7 +120,7 @@ public class CategoryDAO {
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
-			
+
 		}
 		}
 	}
