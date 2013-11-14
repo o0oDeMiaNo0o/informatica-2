@@ -37,7 +37,7 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void addOrder(Order o) {
+	public void addOrder(Order o) throws NoDatabaseConnection {
 		OrderDAO dao = OrderDAO.getInstance();
 		dao.addOrder(o);
 	}
@@ -61,7 +61,10 @@ public class OrderMgr implements OrderMgt{
 		Table tAdd = tMgt.getTable(o.getTable());
 		User uAdd = uMgt.getUser(o.getUser());
 		String spec = o.getEspecificaciones();
-		Order toReturn = new Order(articleReturn,tAdd,uAdd,spec);
+		int estado = o.getEstado();
+		int id = o.getId();
+		//public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, String specs){
+		Order toReturn = new Order(id,articleReturn,tAdd,uAdd,spec,estado);
 		return toReturn;
 	}
 
@@ -107,31 +110,13 @@ public class OrderMgr implements OrderMgt{
 		}
 
 		int estado = o.getEstado();
-
-		OrderVO toReturn = new OrderVO(aoVO,tAdd,uAdd,o.getSpec(),estado);
+		int id = o.getId();
+		OrderVO toReturn = new OrderVO(id,aoVO,tAdd,uAdd,o.getSpec(),estado);
 
 		return toReturn;
 
 	}
 
-
-	@Override
-	public void isPreparing(OrderVO o) throws RemoteException {
-		OrderDAO dao = OrderDAO.getInstance();
-
-	}
-
-	@Override
-	public void isReady(OrderVO o) throws RemoteException {
-		OrderDAO dao = OrderDAO.getInstance();
-
-	}
-
-	@Override
-	public void rejected(OrderVO o) throws RemoteException {
-		OrderDAO dao = OrderDAO.getInstance();
-
-	}
 
 	@Override
 	public ArrayList<OrderVO> getOrderTable(Table t) throws NoDatabaseConnection {
@@ -147,5 +132,39 @@ public class OrderMgr implements OrderMgt{
 		}
 		return toReturn;
 	}
+
+	@Override
+	public void delivery(Order o) throws NoDatabaseConnection {
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.cambioEstadoOrder(o);
+	}
+
+	@Override
+	public void enPreparacion(Order o) throws NoDatabaseConnection {
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.cambioEstadoOrder(o);
+
+	}
+
+	@Override
+	public void entregado(Order o) throws NoDatabaseConnection {
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.cambioEstadoOrder(o);
+
+	}
+
+	@Override
+	public void rechazado(Order o) throws NoDatabaseConnection {
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.cambioEstadoOrder(o);
+	}
+
+	@Override
+	public void terminada(Order o) throws NoDatabaseConnection {
+		OrderDAO dao = OrderDAO.getInstance();
+		dao.cambioEstadoOrder(o);
+
+	}
+
 
 }
