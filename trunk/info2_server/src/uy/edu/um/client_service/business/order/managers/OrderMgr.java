@@ -133,11 +133,6 @@ public class OrderMgr implements OrderMgt{
 		return toReturn;
 	}
 
-	@Override
-	public void delivery(Order o) throws NoDatabaseConnection {
-		OrderDAO dao = OrderDAO.getInstance();
-		dao.cambioEstadoOrder(o);
-	}
 
 	@Override
 	public void enPreparacion(Order o) throws NoDatabaseConnection {
