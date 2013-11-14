@@ -199,11 +199,18 @@ VALUES
 
 -- Mesas
 
--- Mesa1
-INSERT INTO `Info2`.`Mesa`
-(`Estado`)
+-- Mesa Mostrador
+INSERT INTO `info2`.`Mesa`
+(`idMesa`)
 VALUES
-(DEFAULT);
+(0);
+
+-- Mesa Delivery
+
+INSERT INTO `info2`.`Mesa`
+(`idMesa`)
+VALUES
+(1);
 
 -- Mesa2
 INSERT INTO `Info2`.`Mesa`
@@ -217,18 +224,12 @@ INSERT INTO `Info2`.`Mesa`
 VALUES
 (DEFAULT);
 
--- Mesa Mostrador
-INSERT INTO `info2`.`Mesa`
-(`idMesa`)
+-- Mesa4
+INSERT INTO `Info2`.`Mesa`
+(`Estado`)
 VALUES
-(0);
+(DEFAULT);
 
--- Mesa Delivery
-
-INSERT INTO `info2`.`Mesa`
-(`idMesa`)
-VALUES
-(999);
 
 
 
@@ -264,7 +265,7 @@ VALUES
 'migarcia@correo.um.edu.uy',
 'Mantua 6920',
 26015066,
-600);
+60);
 
 INSERT INTO `Info2`.`Clientes`
 (`Ci`,
@@ -281,7 +282,7 @@ VALUES
 'bforrisi@correo.um.edu.uy',
 'Salto',
 2456783,
-500);
+40);
 
 INSERT INTO `Info2`.`Clientes`
 (`Ci`,
@@ -298,4 +299,4 @@ VALUES
 'fliston@correo.um.edu.uy',
 'Alberdi y Dublin',
 26042345,
-100);
+1);
