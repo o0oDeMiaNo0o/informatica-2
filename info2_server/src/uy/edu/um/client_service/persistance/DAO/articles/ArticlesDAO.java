@@ -16,8 +16,6 @@ public class ArticlesDAO {
 
 	private static ArticlesDAO instance = null;
 
-	private Connection con = null;
-
 	//constructor
 	public ArticlesDAO() {
 
@@ -31,46 +29,46 @@ public class ArticlesDAO {
 		return instance;
 	}
 
-	public void addArticle(Article articulo){
+	
+	public void addArticle(Article articulo) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
+			addArticle(articulo,con);
+		}
+		catch(NoDatabaseConnection e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");	
+		} catch (SQLException e) {
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");	
+		}
+		
+	}
+	
+	public void addArticle(Article articulo, Connection con) throws NoDatabaseConnection{
+		try{
 			Statement oStatement =con.createStatement();
 			oStatement.execute("INSERT INTO ARTICLES ( NAME, PRICE, Categorias_idCategorias) " +
 					"VALUES ('"+articulo.getNombre()+"',"+articulo.getPrecio()+","+articulo.getCategory().getId()+");");
 			oStatement.close();
 			//Verificacion por consola
-			System.out.println("articulo agregado correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
-		finally{
-			if (con != null) {
-
-				try {
-
-					con.close();
-
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-		}
-		}
-
 
 	}
 
-	public void deleteArticle(Article articulo){
+	public void deleteArticle(Article articulo) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+articulo.getId()+";");
 			oStatement.close();
 			//Verificacion por consola
-			System.out.println("articulo eliminado correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -86,7 +84,7 @@ public class ArticlesDAO {
 	}
 
 	public ArrayList<Article> getArticles() throws NoDatabaseConnection {
-
+		Connection con = null;
 		try {
 
 			ArrayList<Article> toReturn = new ArrayList<Article>(10);
@@ -98,7 +96,7 @@ public class ArticlesDAO {
 				String sName = oResultSet.getString(2);
 				BigDecimal nPrice = oResultSet.getBigDecimal(3);
 				int id = oResultSet.getInt(4);
-				Category c = getCategory(id);
+				Category c = getCategory(id,con);
 				Article a = new Article(nid,sName,nPrice,c);
 				toReturn.add(a);
 			}
@@ -122,50 +120,24 @@ public class ArticlesDAO {
 	}
 
 
-	public void editArticle(Article a){
+	public void editArticle(Article a) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
-			Statement oStatement = con.createStatement();
-			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
-			oStatement.close();
-			addArticle(a);
-			System.out.println("Articulo editado correctamente");
-
-		}
-		catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		finally{
-			if (con != null) {
-
-				try {
-
-					con.close();
-
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-		}
-		}
-
-	}
-
-	public Category getCategory(int catId) throws NoDatabaseConnection{
-		Category c=null;
-
-		try{
-			con = DatabaseConnectionMgr.getInstance().getConnection();
-			Statement oStatement = con.createStatement();
-			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
-			while (oResultSet1.next()){
-				String sName = oResultSet1.getString(1);
-				c = new Category(sName,catId);
+			if(existeArticle(a.getNombre())){
+				Statement oStatement = con.createStatement();
+				oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
+				oStatement.close();
+				addArticle(a);
 			}
-			oResultSet1.close();
-			oStatement.close();
+			else{
+				// que tire algo
+			}
 
 		}
 		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		} catch (NoDatabaseConnection e) {
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 
 		}
@@ -181,6 +153,54 @@ public class ArticlesDAO {
 				}
 		}
 		}
+
+	}
+	
+	public Category getCategory(int catId) throws NoDatabaseConnection{
+		Category c =null;
+		Connection con=null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			c = getCategory(catId,con);
+		}
+		catch(NoDatabaseConnection n){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		} catch (SQLException e) {
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
+		}
+		
+		return c;
+	}
+
+	public Category getCategory(int catId, Connection con) throws NoDatabaseConnection{
+		Category c=null;
+		try{
+			Statement oStatement = con.createStatement();
+			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
+			while (oResultSet1.next()){
+				String sName = oResultSet1.getString(1);
+				c = new Category(sName,catId);
+			}
+			oResultSet1.close();
+			oStatement.close();
+
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+
+		}
 		return c;
 
 	}
@@ -188,7 +208,6 @@ public class ArticlesDAO {
 	public Article searchArticle(int id, Connection oConnection) throws NoDatabaseConnection{
 		Article result = null;
 		try {
-
 			Statement oStatement = oConnection.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
 
@@ -196,7 +215,7 @@ public class ArticlesDAO {
 				String sName = oResultSet.getString(2);
 				BigDecimal nPrice = oResultSet.getBigDecimal(3);
 				int catID = oResultSet.getInt(4);
-				Category c = getCategory(catID);
+				Category c = getCategory(catID,oConnection);
 
 				result = new Article(id,sName,nPrice,c);
 
@@ -212,20 +231,17 @@ public class ArticlesDAO {
 		return result;
 	}
 
-
+	
 	public boolean existeArticle(String nombre) throws NoDatabaseConnection{
-		boolean result = false;
-		try {
+		Connection con = null;
+		boolean b = false;
+		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
-			Statement oStatement = con.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where Name = '"+nombre+"' "+
-					"and Estado = 'Activo';");
-
-			while(oResultSet.next()){
-				result = true;
-			}
-			oResultSet.close();
-			oStatement.close();
+			b = existeArticle(nombre,con);
+			
+		}
+		catch(NoDatabaseConnection n){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		} catch (SQLException e) {
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
@@ -237,9 +253,27 @@ public class ArticlesDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
+		}
+		}
+		return b;
+	}
+
+	public boolean existeArticle(String nombre, Connection con) throws NoDatabaseConnection{
+		boolean result = false;
+		try {
+			Statement oStatement = con.createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where Name = '"+nombre+"' "+
+					"and Estado = 'Activo';");
+
+			while(oResultSet.next()){
+				result = true;
 			}
+			oResultSet.close();
+			oStatement.close();
+		} catch (SQLException e) {
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		return result;
 	}
