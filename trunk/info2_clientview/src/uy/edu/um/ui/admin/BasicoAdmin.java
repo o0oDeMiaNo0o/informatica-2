@@ -115,10 +115,11 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarArticulo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				try {
-					ProductList nuevo = new ProductList();
-					nuevo.setVisible(true);
-					cerrar();
+				ProductList nuevo = null;
+				try{
+				nuevo = new ProductList();
+				nuevo.setVisible(true);
+				cerrar();
 				} catch (NoServerConnectionException e) {
 					MensajeGenerico nuevo1 = new MensajeGenerico(
 							e.getMessage(), BasicoAdmin.this);
