@@ -11,19 +11,21 @@ import uy.edu.um.value_object.table.TableVO;
 
 public interface OrderRemoteMgt extends Remote{
 
-	public void addOrder(OrderVO order) throws RemoteException;
+	public void addOrder(OrderVO order) throws RemoteException, NoDatabaseConnection;
 
 	public void getOrdersClient(ClientVO c) throws RemoteException;
 
 	public ArrayList<OrderVO> allOrders() throws RemoteException, NoDatabaseConnection;
 
-	public void isReady(OrderVO o) throws RemoteException;
+	public void entregado(OrderVO o) throws RemoteException, NoDatabaseConnection;
 
-	public void isPreparing(OrderVO o) throws RemoteException;
+	public void enPreparacion(OrderVO o) throws RemoteException, NoDatabaseConnection;
 
-	public void rejected(OrderVO o) throws RemoteException;
+	public void rechazado(OrderVO o) throws RemoteException, NoDatabaseConnection;
 
-	public void delivery(OrderVO o) throws RemoteException;
+	public void delivery(OrderVO o) throws RemoteException, NoDatabaseConnection;
+
+	public void terminada(OrderVO o) throws RemoteException, NoDatabaseConnection;
 
 	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException, NoDatabaseConnection;
 
