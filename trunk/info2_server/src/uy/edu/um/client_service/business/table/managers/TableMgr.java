@@ -28,14 +28,14 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void addTable() {
+	public void addTable() throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		dao.addTable();
 
 	}
 
 	@Override
-	public void closeTable(Table t) {
+	public void closeTable(Table t) throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		dao.setOcupada(t);
 
@@ -47,7 +47,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void openTable(Table t) {
+	public void openTable(Table t) throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		dao.setLibre(t);
 	}
@@ -74,7 +74,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void setOcupado(Table t) {
+	public void setOcupado(Table t) throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		dao.setOcupada(t);
 	}
@@ -86,7 +86,7 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void setLibre(Table t) {
+	public void setLibre(Table t) throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		dao.setLibre(t);
 	}

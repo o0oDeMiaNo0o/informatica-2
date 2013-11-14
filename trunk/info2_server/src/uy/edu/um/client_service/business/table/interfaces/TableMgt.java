@@ -11,13 +11,13 @@ public interface TableMgt {
 
 	public ArrayList<TableVO> allTables() throws NoDatabaseConnection;
 
-	public void addTable();
+	public void addTable() throws NoDatabaseConnection;
 
-	public void closeTable(Table t);
+	public void closeTable(Table t) throws NoDatabaseConnection;
 
 	public void addOrderToTable(Table t, Order o);
 
-	public void openTable(Table t);
+	public void openTable(Table t) throws NoDatabaseConnection;
 
 	public Table getTable(TableVO t);
 
@@ -25,8 +25,8 @@ public interface TableMgt {
 
 	public void removeTable(Table t);
 
-	public void setOcupado(Table t);
+	public void setOcupado(Table t) throws NoDatabaseConnection;
 
-	public void setLibre(Table t);
+	public void setLibre(Table t) throws NoDatabaseConnection;
 
 }

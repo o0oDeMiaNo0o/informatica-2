@@ -31,7 +31,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void addTable() throws RemoteException {
+	public void addTable() throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		tMgt.addTable();
 	}
@@ -46,7 +46,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void closeTable(TableVO t) throws RemoteException {
+	public void closeTable(TableVO t) throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table toClose = tMgt.getTable(t);
 		tMgt.closeTable(toClose);
@@ -54,7 +54,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void openTable(TableVO t) throws RemoteException {
+	public void openTable(TableVO t) throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table toOpen = tMgt.getTable(t);
 		tMgt.openTable(toOpen);
@@ -62,7 +62,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void setOcupado(TableVO t) throws RemoteException {
+	public void setOcupado(TableVO t) throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table ocupar = tMgt.getTable(t);
 		tMgt.setOcupado(ocupar);
@@ -77,7 +77,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void setLibre(TableVO t) throws RemoteException {
+	public void setLibre(TableVO t) throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table aLiberar = tMgt.getTable(t);
 		tMgt.setLibre(aLiberar);

@@ -8,7 +8,7 @@ import uy.edu.um.value_object.user.UserVO;
 
 public interface UserMgt {
 
-	public void addUser(User u);
+	public void addUser(User u) throws NoDatabaseConnection;
 
 	public User getUser(UserVO u);
 
@@ -16,13 +16,13 @@ public interface UserMgt {
 
 	public void removeUser(User u);
 
-	public ArrayList<UserVO> allUsers();
+	public ArrayList<UserVO> allUsers() throws NoDatabaseConnection;
 
 	public UserVO getUserVO(User u);
 
-	public boolean checkLogin(String username,String psw);
+	public boolean checkLogin(String username,String psw) throws NoDatabaseConnection;
 
-	public boolean checkUsername(String username);
+	public boolean checkUsername(String username) throws NoDatabaseConnection;
 
 	public String hashPassword(String password);
 

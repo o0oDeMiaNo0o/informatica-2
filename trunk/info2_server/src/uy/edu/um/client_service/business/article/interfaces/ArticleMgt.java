@@ -8,11 +8,11 @@ import uy.edu.um.value_object.article.ArticleVO;
 
 public interface ArticleMgt {
 
-	public void addArticle(Article a);
+	public void addArticle(Article a) throws NoDatabaseConnection;
 
-	public void editArticle(Article a);
+	public void editArticle(Article a) throws NoDatabaseConnection;
 
-	public void removeArticle(Article a);
+	public void removeArticle(Article a) throws NoDatabaseConnection;
 
 	public Article getArticle(ArticleVO a);
 

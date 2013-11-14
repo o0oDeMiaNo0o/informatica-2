@@ -161,5 +161,11 @@ public class OrderMgr implements OrderMgt{
 
 	}
 
+	@Override
+	public void delivery(Order o) throws NoDatabaseConnection {
+		// TODO Auto-generated method stub
+
+	}
+
 
 }
