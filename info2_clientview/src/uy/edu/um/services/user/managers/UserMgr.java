@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.ErrorLoginException;
 import uy.edu.um.exceptions.checks.ExisteUsuarioException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.exceptions.checks.Verificacion;
 import uy.edu.um.interfaces.user.UserRemoteMgt;
@@ -143,6 +144,20 @@ public class UserMgr implements UserMgt{
 	public boolean isAdmin(String nombre) throws NoServerConnectionException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void editUser(UserVO u) throws NoServerConnectionException,
+			NoDatabaseConnection {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void removeUser(UserVO u) throws NoServerConnectionException,
+			NoDatabaseConnection {
+		// TODO Auto-generated method stub
+
 	}
 }
 
