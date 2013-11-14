@@ -75,8 +75,6 @@ public class DeliveryMgr implements DeliveryMgt{
 		String specs = d.getSpecs();
 		int estado = d.getEstado();
 		boolean enCocina = d.isEnCocina();
-
-
 		Delivery toReturn = new Delivery(articles,uAdd,d.getTime(),specs,estado,enCocina);
 		return toReturn;
 	}
