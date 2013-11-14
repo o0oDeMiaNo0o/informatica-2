@@ -13,7 +13,6 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class UserDAO {
 
 	private static UserDAO instance = null;
-	private Connection con = null;
 
 	private UserDAO(){}
 
@@ -26,7 +25,8 @@ public class UserDAO {
 
 	//Eliminar usuario y cambiar contrase–a.
 
-	public void addUser(User usuario){
+	public void addUser(User usuario) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 			int adm = 0;
 			if (usuario.isAdmin()){
@@ -37,11 +37,9 @@ public class UserDAO {
 			oStatement.execute("INSERT INTO USERS (USERNAME, PASSWORD, ADMIN) " +
 					"VALUES ('"+usuario.getUsername()+"','"+usuario.getPassword()+"','"+adm+"');");
 			oStatement.close();
-			//Verificacion por consola
-			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -51,13 +49,14 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
 	}
 
 	public User searchUser(String Username) throws NoDatabaseConnection{
+		Connection con = null;
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			return searchUser(Username, con);
@@ -75,7 +74,7 @@ public class UserDAO {
 
 	}
 
-	public User searchUser(String Username, Connection oConnection){
+	public User searchUser(String Username, Connection oConnection) throws NoDatabaseConnection{
 		User u = null;
 		try {
 
@@ -97,15 +96,14 @@ public class UserDAO {
 			oStatement.close();
 		}
 		catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 
 		return u;
 	}
 
-	public ArrayList<Boolean> checkUser(User u){
-		// Devuelve un ArrayList de booleans. El 1er elemento es si usuario y contrase–a estan bien, el 2do
-		// indica si es administrador o no
+	public ArrayList<Boolean> checkUser(User u) throws NoDatabaseConnection{
+		Connection con = null;
 		ArrayList<Boolean> checked = new ArrayList<Boolean>();
 
 		try{
@@ -133,7 +131,7 @@ public class UserDAO {
 
 		}
 		catch(SQLException e){
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -143,7 +141,7 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -151,7 +149,8 @@ public class UserDAO {
 		return checked;
 	}
 
-	public ArrayList<User> allUsers() {
+	public ArrayList<User> allUsers() throws NoDatabaseConnection {
+		Connection con = null;
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList<User> toReturn = new ArrayList<User>();
@@ -177,7 +176,7 @@ public class UserDAO {
 			return toReturn;
 		}
 		catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -187,17 +186,18 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
 
 	}
 
-	public boolean checkUsername(String username){
+	public boolean checkUsername(String username) throws NoDatabaseConnection{
 		boolean check = false;
+		Connection con = null;
 		try{
-			Connection con = DatabaseConnectionMgr.getInstance().getConnection();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT Username FROM `Users` where (`Users`.`Username` = '"+username+"') AND (`Vigente`='Activo');");
 			while(oResultSet.next()){
@@ -207,25 +207,26 @@ public class UserDAO {
 			oStatement.close();
 		}
 		catch(SQLException e){
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
+			
 			if (con != null) {
 
 				try {
-
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
 		return check;
 	}
 
-	public boolean checklogin(String username, String psw){
+	public boolean checklogin(String username, String psw) throws NoDatabaseConnection{
 		boolean check = false;
+		Connection con=null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
@@ -242,14 +243,14 @@ public class UserDAO {
 			return check;
 		}
 		catch(SQLException e){
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 			}
 		}

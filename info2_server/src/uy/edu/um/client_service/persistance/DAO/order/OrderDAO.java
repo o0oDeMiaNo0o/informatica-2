@@ -20,8 +20,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class OrderDAO {
 
 	private static OrderDAO instance = null;
-	private Connection con = null;
-
+	
 	public static OrderDAO getInstance(){
 		if (instance == null){
 			instance = new OrderDAO();
@@ -34,6 +33,7 @@ public class OrderDAO {
 	}
 
 	public void addOrder(Order orden) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList <ArticleOrder> articles = orden.getArticles();
@@ -63,7 +63,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -71,7 +71,8 @@ public class OrderDAO {
 
 	}
 
-	public void cambioEstadoOrder(Order o){
+	public void cambioEstadoOrder(Order o) throws NoDatabaseConnection{
+		Connection con = null;
 		try {
 			String estado=defEstado(o.getEstado());
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -82,7 +83,7 @@ public class OrderDAO {
 			System.out.println("El pedido "+o.getId()+" esta "+estado+".");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -92,7 +93,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -107,9 +108,9 @@ public class OrderDAO {
 		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
 		TableDAO tDAO = TableDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
-
+		Connection con = null;
 		try {
-			Connection con = DatabaseConnectionMgr.getInstance().getConnection();
+			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Estado = 'En Preparacion'); ");
 
@@ -125,7 +126,6 @@ public class OrderDAO {
 				User u = uDAO.searchUser(sUsername,con);
 
 				int estado=defEstado(sEstado);
-//public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, String specs,Date d){
 				Order a = new Order(nid,articles,t,u,estado,specs,date);
 				toReturn.add(a);
 			}
@@ -134,7 +134,19 @@ public class OrderDAO {
 			oStatement.close();
 		}
 			 catch (SQLException e) {
-			throw new RuntimeException(e);
+				throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
 		}
 		return toReturn;
 	}
@@ -144,6 +156,7 @@ public class OrderDAO {
 		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
 		TableDAO tDAO = TableDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
+		Connection con = null;
 
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -171,13 +184,13 @@ public class OrderDAO {
 			oStatement.close();
 		}
 			 catch (SQLException e) {
-			throw new RuntimeException(e);
+				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		} finally {
 
 			try {
 				con.close();
 			} catch (SQLException e) {
-				throw new RuntimeException(e);
+				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 			}
 
 		}

@@ -13,7 +13,6 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class ClientDAO {
 
-	private Connection connection = null;
 	private static ClientDAO instance = null;
 
 	private ClientDAO(){};
@@ -26,14 +25,13 @@ public class ClientDAO {
 	}
 
 	public void addClient(Client cliente) throws NoDatabaseConnection{
+		Connection connection = null;
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 			oStatement.execute("INSERT INTO CLIENTES (CI, NOMBRE, APELLIDO, MAIL, DIRECCION, TELEFONO, DESCUENTO) " +
 					"VALUES ("+cliente.getCi()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"','"+cliente.getMail()+"','"+cliente.getDireccion()+"',"+cliente.getTel()+",'"+cliente.getDescuento()+"');");
 			oStatement.close();
-			//Verificacion por consola
-			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
@@ -46,7 +44,7 @@ public class ClientDAO {
 					connection.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -55,6 +53,7 @@ public class ClientDAO {
 
 
 	public ArrayList<Client> getClients() throws NoDatabaseConnection{
+		Connection connection = null;
 		try {
 			ArrayList<Client> toReturn = new ArrayList<Client>();
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
@@ -84,7 +83,7 @@ public class ClientDAO {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -93,6 +92,7 @@ public class ClientDAO {
 
 	public boolean existeCliente(String nombre, int ci) throws NoDatabaseConnection{
 		boolean check = false;
+		Connection connection = null;
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
@@ -105,8 +105,7 @@ public class ClientDAO {
 				}
 			}
 			oStatement.close();
-			System.out.println("Cliente agregado correctamente");
-		}
+			}
 		catch(SQLException e){
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
@@ -115,7 +114,7 @@ public class ClientDAO {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 			}
 		}

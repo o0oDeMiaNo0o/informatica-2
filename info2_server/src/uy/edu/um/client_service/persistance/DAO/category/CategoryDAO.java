@@ -14,7 +14,6 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class CategoryDAO {
 
 	private static CategoryDAO instance = null;
-	Connection connection = null;
 
 	private CategoryDAO(){};
 
@@ -26,9 +25,9 @@ public class CategoryDAO {
 	}
 
 	public void addCategory(Category c) throws NoDatabaseConnection {
+		Connection connection=null;
 		try{
-			 Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
-
+			connection= DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 			oStatement.execute("INSERT INTO CATEGORIAS (Nombre) " +
 					"VALUES ('"+c.getNombre()+"');");
@@ -37,7 +36,7 @@ public class CategoryDAO {
 			System.out.println("Categoria agregada correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
@@ -56,10 +55,10 @@ public class CategoryDAO {
 	}
 
 	public ArrayList<Category> getCategory() throws NoDatabaseConnection {
-
+		Connection connection=null;
 		try {
 			ArrayList<Category> toReturn = new ArrayList<Category>();
-			Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
+			connection= DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias");
@@ -77,6 +76,7 @@ public class CategoryDAO {
 			oStatement.close();
 			return toReturn;
 		}
+		
 		catch (SQLException e) {
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
@@ -95,8 +95,9 @@ public class CategoryDAO {
 
 	public boolean existeCategory(String nombre) throws NoDatabaseConnection {
 		boolean check = false;
+		Connection connection = null;
 		try{
-			 Connection connection= DatabaseConnectionMgr.getInstance().getConnection();
+			connection= DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias WHERE Nombre = '"+nombre+"';");
 
@@ -118,7 +119,7 @@ public class CategoryDAO {
 					connection.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 
 		}

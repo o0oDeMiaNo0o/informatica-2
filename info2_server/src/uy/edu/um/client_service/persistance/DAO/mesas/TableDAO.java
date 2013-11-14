@@ -14,8 +14,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class TableDAO {
 
 	private static TableDAO instance = null;
-	private Connection con = null;
-
+	
 	public static TableDAO getInstance(){
 		if (instance == null){
 			instance = new TableDAO();
@@ -23,14 +22,15 @@ public class TableDAO {
 		return instance;
 	}
 
-	public void addTable(){
+	public void addTable() throws NoDatabaseConnection{
+		Connection con =null;
+
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO Mesa (Estado) VALUES (DEFAULT);");
 			oStatement.close();
 			//Verificacion por consola
-			System.out.println("Mesa agregada correctamente");
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -51,8 +51,8 @@ public class TableDAO {
 
 	}
 
-	public void setOcupada(Table mesa){
-
+	public void setOcupada(Table mesa) throws NoDatabaseConnection{
+		Connection con = null;
 		try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
@@ -72,14 +72,14 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
 	}
 
-	public void setLibre(Table mesa){
-
+	public void setLibre(Table mesa) throws NoDatabaseConnection{
+		Connection con=null;
 		try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
@@ -99,7 +99,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -108,7 +108,7 @@ public class TableDAO {
 	public ArrayList<Table> EstadosMesas() throws NoDatabaseConnection{
 
 	ArrayList<Table> mesas = new ArrayList<Table>();
-
+	Connection con = null;
 	try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
