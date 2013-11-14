@@ -24,9 +24,9 @@ import uy.edu.um.ui.admin.creacion.NewClientA;
 import uy.edu.um.ui.admin.creacion.NewProduct;
 import uy.edu.um.ui.admin.creacion.NewTable;
 import uy.edu.um.ui.admin.creacion.NewUser;
-import uy.edu.um.ui.admin.edicion.EditRemoveC;
 import uy.edu.um.ui.admin.listas.ClientList;
 import uy.edu.um.ui.admin.listas.ProductList;
+import uy.edu.um.ui.admin.listas.TableList;
 import uy.edu.um.ui.admin.listas.UserList;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -97,10 +97,12 @@ public class BasicoAdmin extends JFrame {
 					nuevo = new NewProduct();
 					nuevo.setVisible(true);
 				} catch (NoServerConnectionException e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				}
 
@@ -113,15 +115,17 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarArticulo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				try{
-				ProductList nuevo = new ProductList();
-				nuevo.setVisible(true);
-				cerrar();
+				try {
+					ProductList nuevo = new ProductList();
+					nuevo.setVisible(true);
+					cerrar();
 				} catch (NoServerConnectionException e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				}
 			}
@@ -154,15 +158,17 @@ public class BasicoAdmin extends JFrame {
 		mntmNuevaMesa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				try{
-				NewTable nueva = new NewTable();
-				nueva.setVisible(true);
-				cerrar();
+				try {
+					NewTable nueva = new NewTable();
+					nueva.setVisible(true);
+					cerrar();
 				} catch (NoServerConnectionException e1) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e1) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				}
 			}
@@ -170,6 +176,23 @@ public class BasicoAdmin extends JFrame {
 		menuMesas.add(mntmNuevaMesa);
 
 		JMenuItem mntmEnviarMensaje = new JMenuItem("Eliminar Mesa");
+		mntmEnviarMensaje.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				TableList nuevo = null;
+				try {
+					nuevo = new TableList();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		menuMesas.add(mntmEnviarMensaje);
 
 		JMenu Usuarios = new JMenu("Usuarios");
@@ -228,14 +251,16 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				try{
-				ClientList nuevo = new ClientList();
-				nuevo.setVisible(true);
+				try {
+					ClientList nuevo = new ClientList();
+					nuevo.setVisible(true);
 				} catch (NoServerConnectionException e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e) {
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoAdmin.this);
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				}
 
