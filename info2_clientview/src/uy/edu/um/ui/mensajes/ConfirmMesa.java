@@ -75,6 +75,7 @@ public class ConfirmMesa extends JFrame {
 					try{
 					MesaPedido nueva = new MesaPedido(mesa);
 					nueva.setVisible(true);
+					frame.dispose();
 					cerrar();
 					}catch(NoDatabaseConnection e1){
 						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
