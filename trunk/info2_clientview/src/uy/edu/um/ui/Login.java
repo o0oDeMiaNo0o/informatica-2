@@ -40,11 +40,26 @@ public class Login extends JFrame {
 	private TransparentPanel transparentPanel_1;
 	private JButton btnNewButton;
 	private Logger logger;
-	
-	Image icon = Toolkit.getDefaultToolkit().getImage(
-			DirLocal.class.getResource("Logo.png"));
 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login frame = new Login();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
+	/**
+	 * Create the frame.
+	 */
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
