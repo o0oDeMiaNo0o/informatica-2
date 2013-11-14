@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import uy.edu.um.ui.CurrentUser;
+import uy.edu.um.ui.Login;
 import net.miginfocom.swing.MigLayout;
 
 public class MensajeGenerico extends JDialog {
@@ -23,6 +25,11 @@ public class MensajeGenerico extends JDialog {
 
 	public void setError(String a) {
 		this.mensaje = a;
+	}
+
+	public static void main(String[] args) {
+		MensajeGenerico nuevo = new MensajeGenerico("", null);
+		nuevo.setVisible(true);
 	}
 
 	public MensajeGenerico(String error, final JFrame jFrame) {
