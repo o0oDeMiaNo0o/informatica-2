@@ -19,9 +19,6 @@ public class DeliveryDAO {
 
 	private static DeliveryDAO instance = null;
 
-	private Connection con = null;
-
-
 	//obtener instancia
 	public static DeliveryDAO getInstance(){
 		if (instance == null){
@@ -30,10 +27,10 @@ public class DeliveryDAO {
 		return instance;
 	}
 
-	public void addDelivery(Delivery d){
+	public void addDelivery(Delivery d){ 
+		Connection con = null;
 		try{
 			int enCocina=0;
-
 			if(d.isEnCocina()){
 				enCocina=1;
 			}
@@ -80,6 +77,7 @@ public class DeliveryDAO {
 		ArrayList<Delivery> toReturn = new ArrayList<Delivery>();
 		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
+		Connection con = null;
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
@@ -124,6 +122,7 @@ public class DeliveryDAO {
 	}
 
 	public void cambioEstadoDelivery(Delivery o) throws NoDatabaseConnection{
+		Connection con = null;
 		try {
 			String estado=defEstado(o.getEstado());
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -156,11 +155,11 @@ public class DeliveryDAO {
 		switch(e){
 		case 0: estado="En Preparacion";
 			break;
-		case 1: estado="Entregado";
+		case 1: estado="En Viaje";
 			break;
 		case 2: estado="Rechazado";
 			break;
-		case 3: estado="Terminado";
+		case 3: estado="Facturado";
 			break;
 
 		default:
@@ -175,13 +174,13 @@ public class DeliveryDAO {
 		if(e.equals("En Preparacion")){
 			estado = 0;
 		}
-		else if(e.equals("Entregado")){
+		else if(e.equals("En Viaje")){
 			estado = 1;
 		}
 		else if(e.equals("Rechazado")){
 			estado = 2;
 		}
-		else if(e.equals("Terminado")){
+		else if(e.equals("Facturando")){
 			estado = 3;
 		}
 		return estado;
