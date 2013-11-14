@@ -4,12 +4,13 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 
 public interface TableRemoteMgt extends Remote{
 
-	public ArrayList<TableVO> allTables() throws RemoteException;
+	public ArrayList<TableVO> allTables() throws RemoteException, NoDatabaseConnection;
 
 	public void addTable() throws RemoteException;
 
