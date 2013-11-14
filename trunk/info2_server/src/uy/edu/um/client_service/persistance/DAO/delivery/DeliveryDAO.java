@@ -94,7 +94,7 @@ public class DeliveryDAO {
 					cocina=true;
 				}
 				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid,con);
-				User u = uDAO.searchUser(sUsername);
+				User u = uDAO.searchUser(sUsername,con);
 				int estado=defEstado(sEstado);
 				Delivery d = new Delivery(nid,articles,u,date,specs,estado,cocina);
 				toReturn.add(d);
@@ -114,7 +114,7 @@ public class DeliveryDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}

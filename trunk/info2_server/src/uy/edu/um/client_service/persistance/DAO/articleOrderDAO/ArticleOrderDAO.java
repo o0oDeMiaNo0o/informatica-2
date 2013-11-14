@@ -8,14 +8,13 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
-import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.client_service.persistance.DAO.articles.ArticlesDAO;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class ArticleOrderDAO {
 
 	private static ArticleOrderDAO instance = null;
-	//private Connection con = null;
+	
 	public static ArticleOrderDAO getInstance(){
 		if (instance == null){
 			instance = new ArticleOrderDAO();
@@ -47,7 +46,7 @@ public class ArticleOrderDAO {
 			oStatement.close();
 		}
 		catch(SQLException e){
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 
 		}
 		return array;
