@@ -48,7 +48,7 @@ CREATE TABLE `Delivery` (
 
 
 CREATE TABLE `Facturas` (
-  `idFacturas` int(11) NOT NULL,
+  `idFacturas` int(11) NOT NULL AUTO_INCREMENT,
   `Fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Importe Total` decimal(5,2) NOT NULL,
   `Mesa_idMesa` int(11) DEFAULT NULL,
@@ -59,10 +59,11 @@ CREATE TABLE `Facturas` (
   KEY `fk_Facturas_Mesa1_idx` (`Mesa_idMesa`),
   KEY `fk_Facturas_Pagos1_idx` (`Pagos_idPagos`),
   KEY `fk_Facturas_Clientes1_idx` (`Clientes_id`,`Clientes_Ci`),
-  CONSTRAINT `fk_Facturas_Pagos1` FOREIGN KEY (`Pagos_idPagos`) REFERENCES `pagos` (`idPagos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Facturas_Clientes1` FOREIGN KEY (`Clientes_id`, `Clientes_Ci`) REFERENCES `clientes` (`id`, `Ci`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Facturas_Mesa1` FOREIGN KEY (`Mesa_idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_Facturas_Mesa1` FOREIGN KEY (`Mesa_idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Facturas_Pagos1` FOREIGN KEY (`Pagos_idPagos`) REFERENCES `pagos` (`idPagos`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Delivery/Articulos` (
   `Delivery_idDelivery` int(11) NOT NULL,
