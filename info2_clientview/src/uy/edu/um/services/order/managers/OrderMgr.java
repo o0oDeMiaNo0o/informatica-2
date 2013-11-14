@@ -97,9 +97,10 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void enPreparacion(OrderVO o, int id)
+	public void enPreparacion(OrderVO o)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		try {
+			int id=0;
 			o.setEstado(id);
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -113,9 +114,10 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void entregado(OrderVO o, int id)
+	public void entregado(OrderVO o)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		try {
+			int id = 1;
 			o.setEstado(id);
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -128,9 +130,10 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void rechazado(OrderVO o, int id)
+	public void rechazado(OrderVO o)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		try {
+			int id = 2;
 			o.setEstado(id);
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -143,9 +146,10 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void terminada(OrderVO o, int id)
+	public void terminada(OrderVO o)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		try {
+			int id = 3;
 			o.setEstado(id);
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
@@ -158,9 +162,10 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void delivery(OrderVO o, int id) throws NoServerConnectionException,
+	public void delivery(OrderVO o) throws NoServerConnectionException,
 			NoDatabaseConnection {
 		try {
+			int id = 4;
 			o.setEstado(id);
 			String sObjectService = "OrderRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
