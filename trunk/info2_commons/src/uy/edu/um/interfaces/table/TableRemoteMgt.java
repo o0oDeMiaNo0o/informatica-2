@@ -12,18 +12,18 @@ public interface TableRemoteMgt extends Remote{
 
 	public ArrayList<TableVO> allTables() throws RemoteException, NoDatabaseConnection;
 
-	public void addTable() throws RemoteException;
+	public void addTable() throws RemoteException, NoDatabaseConnection;
 
-	public void closeTable(TableVO t) throws RemoteException;
+	public void closeTable(TableVO t) throws RemoteException, NoDatabaseConnection;
 
 	public void addOrderToTable(TableVO t, OrderVO o) throws RemoteException;
 
-	public void openTable(TableVO t) throws RemoteException;
+	public void openTable(TableVO t) throws RemoteException, NoDatabaseConnection;
 
-	public void setOcupado(TableVO t) throws RemoteException;
+	public void setOcupado(TableVO t) throws RemoteException, NoDatabaseConnection;
 
 	public void removeTable(TableVO t) throws RemoteException;
 
-	public void setLibre(TableVO t) throws RemoteException;
+	public void setLibre(TableVO t) throws RemoteException, NoDatabaseConnection;
 
 }

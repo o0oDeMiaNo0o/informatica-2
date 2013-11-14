@@ -3,6 +3,7 @@ package uy.edu.um.value_object.bill;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
@@ -17,12 +18,26 @@ public class BillVO implements Serializable{
 	private TableVO table;
 	private int id;
 	private BigDecimal montoTotal;
+	private Date date;
 
+	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,BigDecimal montoTotal,Date date){
+		this.orders = orders;
+		this.client = client;
+		this.montoTotal = montoTotal;
+		this.date = date;
+	}
 
 	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,BigDecimal montoTotal){
 		this.orders = orders;
 		this.client = client;
 		this.montoTotal = montoTotal;
+	}
+
+	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
+		this.orders = orders;
+		this.client = client;
+		this.montoTotal = this.getTotal();
+		this.date = date;
 	}
 
 	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t){
@@ -31,18 +46,20 @@ public class BillVO implements Serializable{
 		this.montoTotal = this.getTotal();
 	}
 
-	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t){
+	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
 		this.id = id;
 		this.orders = orders;
 		this.client = client;
 		this.montoTotal = this.getTotal();
+		this.date = date;
 	}
 
-	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t, BigDecimal montoTotal){
+	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t, BigDecimal montoTotal,Date date){
 		this.id = id;
 		this.orders = orders;
 		this.client = client;
 		this.montoTotal = montoTotal;
+		this.date = date;
 	}
 
 	public ArrayList<OrderVO> getOrders() {
@@ -97,6 +114,11 @@ public class BillVO implements Serializable{
 		this.montoTotal = montoTotal;
 	}
 
+	public Date getDate() {
+		return date;
+	}
 
-
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }
