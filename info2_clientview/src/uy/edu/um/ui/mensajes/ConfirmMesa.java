@@ -39,7 +39,7 @@ public class ConfirmMesa extends JFrame {
 
 	/**
 	 * Create the frame.
-	 *
+	 * 
 	 * @param toSend
 	 */
 	public ConfirmMesa(final TableVO mesa, final OrderVO toSend, String text,
@@ -72,48 +72,56 @@ public class ConfirmMesa extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (mesa.isOcupado()) {
-					try{
-					MesaPedido nueva = new MesaPedido(mesa);
-					nueva.setVisible(true);
-					frame.dispose();
-					cerrar();
-					}catch(NoDatabaseConnection e1){
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+					try {
+						
+						MesaPedido nueva = new MesaPedido(mesa);
+						nueva.setVisible(true);
+						frame.setVisible(false);
+						frame.dispose();
+						cerrar();
+					} catch (NoDatabaseConnection e1) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+								.getMessage(), devuelve());
 						nuevoFrame.setVisible(true);
 					}
 				} else {
 					if (toSend.getArticulos() != null) {
-						try{
-						OrderMgt nuevo = ServiceFacade.getInstance()
-								.getOrderMgt();
-						nuevo.addOrder(toSend);
-						TableMgt nuevoMesas = ServiceFacade.getInstance()
-								.getTableMgt();
-						nuevoMesas.setOcupado(toSend.getTable());
-						ConfirmFacturar nueva = new ConfirmFacturar(mesa, frame);
-						nueva.setVisible(true);
-						cerrar();
-						}catch(NoServerConnectionException e1){
-							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+						try {
+							OrderMgt nuevo = ServiceFacade.getInstance()
+									.getOrderMgt();
+							nuevo.addOrder(toSend);
+							TableMgt nuevoMesas = ServiceFacade.getInstance()
+									.getTableMgt();
+							nuevoMesas.setOcupado(toSend.getTable());
+							ConfirmFacturar nueva = new ConfirmFacturar(mesa,
+									frame);
+							nueva.setVisible(true);
+							cerrar();
+						} catch (NoServerConnectionException e1) {
+							MensajeGenerico nuevo = new MensajeGenerico(e1
+									.getMessage(), devuelve());
 							nuevo.setVisible(true);
-						}catch(NoDatabaseConnection e1){
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						} catch (NoDatabaseConnection e1) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+									.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						}
 					} else {
-						try{
-						CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
-						TableMgt nuevoMesas = ServiceFacade.getInstance()
-								.getTableMgt();
-						nuevoMesas.setOcupado(mesa);
-						nuevo.setVisible(true);
-						frame.dispose();
-						cerrar();
-						}catch(NoServerConnectionException e1){
-							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+						try {
+							CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
+							TableMgt nuevoMesas = ServiceFacade.getInstance()
+									.getTableMgt();
+							nuevoMesas.setOcupado(mesa);
 							nuevo.setVisible(true);
-						}catch(NoDatabaseConnection e1){
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+							frame.dispose();
+							cerrar();
+						} catch (NoServerConnectionException e1) {
+							MensajeGenerico nuevo = new MensajeGenerico(e1
+									.getMessage(), devuelve());
+							nuevo.setVisible(true);
+						} catch (NoDatabaseConnection e1) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+									.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						}
 					}
@@ -132,7 +140,7 @@ public class ConfirmMesa extends JFrame {
 		ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
 	}
 
-	public JFrame devuelve(){
+	public JFrame devuelve() {
 		return this;
 	}
 
