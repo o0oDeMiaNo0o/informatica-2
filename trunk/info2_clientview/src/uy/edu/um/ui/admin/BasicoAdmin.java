@@ -269,6 +269,22 @@ public class BasicoAdmin extends JFrame {
 		mnClientes.add(mntmEditarCliente);
 
 		JMenuItem mntmListadoClientes = new JMenuItem("Ver Lista Clientes");
+		mntmListadoClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ClientList nuevo = null;
+				try {
+					nuevo = new ClientList();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				nuevo.setVisible(true);
+			}
+		});
 		mnClientes.add(mntmListadoClientes);
 
 		JMenu menuUsuario = new JMenu("Sesi\u00F3n");
