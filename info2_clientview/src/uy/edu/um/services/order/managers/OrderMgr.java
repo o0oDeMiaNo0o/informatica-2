@@ -81,29 +81,6 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void setDone(OrderVO o)  throws NoServerConnectionException, NoDatabaseConnection {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void isDone(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void isWaiting(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void rejected(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
 	public ArrayList<OrderVO> getOrderTable(TableVO t)  throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {
@@ -113,11 +90,87 @@ public class OrderMgr implements OrderMgt{
 			array = oOrderRemoteMgt.allOrdersTable(t);
 			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-						"y abrirlo nuevamente");
+			"y abrirlo nuevamente");
 		}
 		return array;
+	}
+
+	@Override
+	public void enPreparacion(OrderVO o, int id)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		try {
+			o.setEstado(id);
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			oOrderRemoteMgt.enPreparacion(o);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
+
+	}
+
+	@Override
+	public void entregado(OrderVO o, int id)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		try {
+			o.setEstado(id);
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			oOrderRemoteMgt.entregado(o);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
+	}
+
+	@Override
+	public void rechazado(OrderVO o, int id)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		try {
+			o.setEstado(id);
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			oOrderRemoteMgt.rechazado(o);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
+	}
+
+	@Override
+	public void terminada(OrderVO o, int id)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		try {
+			o.setEstado(id);
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			oOrderRemoteMgt.terminada(o);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
+	}
+
+	@Override
+	public void delivery(OrderVO o, int id) throws NoServerConnectionException,
+			NoDatabaseConnection {
+		try {
+			o.setEstado(id);
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			oOrderRemoteMgt.delivery(o);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
+
 	}
 
 }
