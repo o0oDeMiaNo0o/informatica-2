@@ -52,23 +52,6 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 
 	}
 
-	@Override
-	public void isPreparing(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void isReady(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void rejected(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException, NoDatabaseConnection {
@@ -76,6 +59,30 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table toGetOrders = tMgt.getTable(t);
 		return oMgt.getOrderTable(toGetOrders);
+	}
+
+	@Override
+	public void enPreparacion(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void entregado(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rechazado(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void terminada(OrderVO o) throws RemoteException {
+		// TODO Auto-generated method stub
+
 	}
 
 }
