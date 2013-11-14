@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class ClientDAO {
 
@@ -24,7 +25,7 @@ public class ClientDAO {
 		return instance;
 	}
 
-	public void addClient(Client cliente){
+	public void addClient(Client cliente) throws NoDatabaseConnection{
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
@@ -35,7 +36,7 @@ public class ClientDAO {
 			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
@@ -53,20 +54,13 @@ public class ClientDAO {
 
 
 
-	public ArrayList<Client> getClients() {
-
+	public ArrayList<Client> getClients() throws NoDatabaseConnection{
 		try {
-
 			ArrayList<Client> toReturn = new ArrayList<Client>();
-			
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
-
-
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Clientes");
-
 			while (oResultSet.next()) {
-
 				int nCli = oResultSet.getInt(1);
 				int Ci = oResultSet.getInt(2);
 				String sName = oResultSet.getString(3);
@@ -75,25 +69,20 @@ public class ClientDAO {
 				String sDir = oResultSet.getString(6);
 				int tel = oResultSet.getInt(7);
 				BigDecimal desc = oResultSet.getBigDecimal(8);
-
 				Client c = new Client(nCli,sName,sApellido,Ci,tel,sDir,sMail,desc);
 				toReturn.add(c);
 			}
-
 			oResultSet.close();
 			oStatement.close();
 			return toReturn;
 		}
 			 catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
-
 				try {
-
 					connection.close();
-
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
@@ -102,7 +91,7 @@ public class ClientDAO {
 
 	}
 
-	public boolean existeCliente(String nombre, int ci){
+	public boolean existeCliente(String nombre, int ci) throws NoDatabaseConnection{
 		boolean check = false;
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
@@ -119,22 +108,19 @@ public class ClientDAO {
 			System.out.println("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (connection != null) {
-
 				try {
-
 					connection.close();
-
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
-		}
+			}
 		}
 		return check;
-		
+
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class ArticlesDAO {
 
@@ -84,19 +85,15 @@ public class ArticlesDAO {
 
 	}
 
-	public ArrayList<Article> getArticles() {
+	public ArrayList<Article> getArticles() throws NoDatabaseConnection {
 
 		try {
 
 			ArrayList<Article> toReturn = new ArrayList<Article>(10);
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
-
-
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM ARTICLES WHERE `Estado` = 'Activo'");
-
 			while (oResultSet.next()) {
-
 				int nid = oResultSet.getInt(1);
 				String sName = oResultSet.getString(2);
 				BigDecimal nPrice = oResultSet.getBigDecimal(3);
@@ -105,25 +102,21 @@ public class ArticlesDAO {
 				Article a = new Article(nid,sName,nPrice,c);
 				toReturn.add(a);
 			}
-
 			oResultSet.close();
 			oStatement.close();
 			return toReturn;
 		}
-			 catch (SQLException e) {
-			throw new RuntimeException(e);
+		catch (SQLException e) {
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
-
 				try {
-
 					con.close();
-
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
-		}
+			}
 		}
 
 	}
@@ -157,26 +150,23 @@ public class ArticlesDAO {
 
 	}
 
-	public Category getCategory(int catId){
+	public Category getCategory(int catId) throws NoDatabaseConnection{
 		Category c=null;
 
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
-
 			while (oResultSet1.next()){
 				String sName = oResultSet1.getString(1);
 				c = new Category(sName,catId);
-
 			}
-
 			oResultSet1.close();
 			oStatement.close();
 
 		}
 		catch(SQLException e){
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 
 		}
 		finally{
@@ -187,7 +177,7 @@ public class ArticlesDAO {
 					con.close();
 
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
 		}
@@ -195,11 +185,11 @@ public class ArticlesDAO {
 
 	}
 
-	public Article searchArticle(int id){
+	public Article searchArticle(int id, Connection oConnection) throws NoDatabaseConnection{
 		Article result = null;
 		try {
-			con = DatabaseConnectionMgr.getInstance().getConnection();
-			Statement oStatement = con.createStatement();
+
+			Statement oStatement = oConnection.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where `Articles`.`ID` = "+id+";");
 
 			while(oResultSet.next()){
@@ -218,23 +208,12 @@ public class ArticlesDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		finally{
-			if (con != null) {
 
-				try {
-
-					con.close();
-
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-		}
-		}
 		return result;
 	}
 
 
-	public boolean existeArticle(String nombre){
+	public boolean existeArticle(String nombre) throws NoDatabaseConnection{
 		boolean result = false;
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -248,7 +227,7 @@ public class ArticlesDAO {
 			oResultSet.close();
 			oStatement.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -260,7 +239,7 @@ public class ArticlesDAO {
 				} catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
-		}
+			}
 		}
 		return result;
 	}

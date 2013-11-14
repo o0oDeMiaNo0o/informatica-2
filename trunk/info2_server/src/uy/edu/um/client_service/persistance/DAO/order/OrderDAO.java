@@ -15,31 +15,30 @@ import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.client_service.persistance.DAO.articleOrderDAO.ArticleOrderDAO;
 import uy.edu.um.client_service.persistance.DAO.mesas.TableDAO;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class OrderDAO {
-	
+
 	private static OrderDAO instance = null;
 	private Connection con = null;
-	
+
 	public static OrderDAO getInstance(){
 		if (instance == null){
 			instance = new OrderDAO();
 		}
 		return instance;
 	}
-	
+
 	public OrderDAO(){
-		
+
 	}
-	
-	public void addOrder(Order orden){
+
+	public void addOrder(Order orden) throws NoDatabaseConnection{
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList <ArticleOrder> articles = orden.getArticles();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO pedido (Mesa_idMesa,Users_Username,Especificaciones) VALUES ("+orden.getTable().getNumero()+",'"+orden.getUser().getUsername()+"','"+orden.getSpec()+"');");
-		
-
 			for(int i =0;i<articles.size();i++){
 				ResultSet oResultSet1 = oStatement.executeQuery("SELECT ID FROM ARTICLES WHERE ARTICLES.NAME='"+articles.get(i).getArticle().getNombre()+"';");
 				int nId= 0;
@@ -48,12 +47,41 @@ public class OrderDAO {
 				}
 				oStatement.execute("INSERT INTO `Pedido/Articulos` (pedido_idpedido, Articles_ID,Cantidad) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+");");
 			}
-			
+
 			oStatement.close();
 			//Verificacion por consola
-			System.out.println("Orden agregada correctamente");
+			//System.out.println("Orden agregada correctamente");
 		}
 		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
+		}
+
+
+	}
+
+	public void cambioEstadoOrder(Order o){
+		try {
+			String estado=defEstado(o.getEstado());
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			oStatement.execute("UPDATE Pedido SET `Estado` = '"+estado+"' WHERE Pedido.idpedido="+o.getId()+";");
+			oStatement.close();
+			// Consola
+			System.out.println("El pedido "+o.getId()+" esta "+estado+".");
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		finally{
@@ -71,46 +99,17 @@ public class OrderDAO {
 
 
 	}
-	
-	public void cambioEstadoOrder(Order o){
-		try {
-			String estado=defEstado(o.getEstado());
-			con = DatabaseConnectionMgr.getInstance().getConnection();
-			Statement oStatement = con.createStatement();
-			oStatement.execute("UPDATE Pedido SET `Estado` = '"+estado+"' WHERE Pedido.idpedido="+o.getId()+";");
-			oStatement.close();
-			// Consola
-			System.out.println("El pedido "+o.getId()+" esta "+estado+".");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();			
-		}
-		finally{
-			if (con != null) {
 
-				try {
-
-					con.close();
-
-				} catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-		}
-		}
-		
-		
-	}
-	
 	// Esto hay que ver, porque para mostrar las ordenes a la cocina solo me importarian las "En preparacion" o algo de eso
-	
-	public ArrayList<Order> getOrders() {
+
+	public ArrayList<Order> getOrders() throws NoDatabaseConnection {
 		ArrayList<Order> toReturn = new ArrayList<Order>();
 		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
 		TableDAO tDAO = TableDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
-		
+
 		try {
-			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Connection con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Estado = 'En Preparacion'); ");
 
@@ -121,13 +120,13 @@ public class OrderDAO {
 				String sEstado = oResultSet.getString(4);
 				String sUsername = oResultSet.getString(6);
 				String specs = oResultSet.getString(7);
-				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid);
-				Table t = tDAO.searchTable(nIdmesa);
-				User u = uDAO.searchUser(sUsername);
-				
+				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid, con);
+				Table t = tDAO.searchTable(nIdmesa,con);
+				User u = uDAO.searchUser(sUsername,con);
+
 				int estado=defEstado(sEstado);
-				
-				Order a = new Order(nid,articles,t,u,estado,date,specs);
+//public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, String specs,Date d){
+				Order a = new Order(nid,articles,t,u,estado,specs,date);
 				toReturn.add(a);
 			}
 
@@ -139,13 +138,13 @@ public class OrderDAO {
 		}
 		return toReturn;
 	}
-	
-	public ArrayList<Order> getTableOrders(Table t) {
+
+	public ArrayList<Order> getTableOrders(Table t) throws NoDatabaseConnection {
 		ArrayList<Order> toReturn = new ArrayList<Order>();
 		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
 		TableDAO tDAO = TableDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
-		
+
 		try {
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
@@ -158,13 +157,13 @@ public class OrderDAO {
 				String sEstado = oResultSet.getString(4);
 				String sUsername = oResultSet.getString(6);
 				String specs = oResultSet.getString(7);
-				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid);
-				Table ta = tDAO.searchTable(nIdmesa);
-				User u = uDAO.searchUser(sUsername);
-				
+				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid, con);
+				Table ta = tDAO.searchTable(nIdmesa, con);
+				User u = uDAO.searchUser(sUsername, con);
+
 				int estado=defEstado(sEstado);
-				
-				Order a = new Order(nid,articles,ta,u,estado,date,specs);
+
+				Order a = new Order(nid,articles,ta,u,estado,specs,date);
 				toReturn.add(a);
 			}
 
@@ -173,10 +172,18 @@ public class OrderDAO {
 		}
 			 catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+
+			try {
+				con.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+
 		}
 		return toReturn;
 	}
-	
+
 	public int defEstado(String e){
 		int estado = 0;
 		if(e.equals("En Preparacion")){
@@ -193,11 +200,11 @@ public class OrderDAO {
 		}
 		return estado;
 	}
-	
+
 	public String defEstado(int e){
 		String estado=null;
 		switch(e){
-		case 0: estado="En Preparacion"; 
+		case 0: estado="En Preparacion";
 			break;
 		case 1: estado="Entregado";
 			break;
@@ -205,14 +212,14 @@ public class OrderDAO {
 			break;
 		case 3: estado="Cerrado";
 		break;
-		
+
 		default:
 			estado=null;
 			break;
 		}
 		return estado;
 		}
-		
+
 	}
-	
+
 
