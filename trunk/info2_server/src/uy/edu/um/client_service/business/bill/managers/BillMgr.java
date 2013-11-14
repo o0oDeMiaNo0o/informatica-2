@@ -2,6 +2,7 @@ package uy.edu.um.client_service.business.bill.managers;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.bill.entities.Bill;
@@ -53,8 +54,8 @@ public class BillMgr implements BillMgt{
 		}
 		Table tAdd = tMgt.getTable(b.getTable());
 		Client cAdd = cMgt.getClient(b.getClient());
-
-		Bill toReturn = new Bill(orders,cAdd,tAdd);
+		Date date = b.getDate();
+		Bill toReturn = new Bill(orders,cAdd,tAdd,date);
 		return toReturn;
 	}
 
@@ -76,7 +77,8 @@ public class BillMgr implements BillMgt{
 		TableVO tAdd = tMgt.getTableVO(b.getTable());
 		ClientVO cAdd = cMgt.getClientVO(b.getClient());
 		BigDecimal montoTotal = b.getMontoTotal();
-		BillVO toReturn = new BillVO(oAdd,cAdd,tAdd,montoTotal);
+		Date date = b.getDate();
+		BillVO toReturn = new BillVO(oAdd,cAdd,tAdd,montoTotal,date);
 		return toReturn;
 	}
 
