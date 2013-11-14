@@ -10,6 +10,7 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class OrderVO implements Serializable{
 
+	private int id;
 	private ArrayList<ArticleOrderVO> articulos = new ArrayList<ArticleOrderVO>(10);
 	private TableVO table;
 	private UserVO user;
@@ -24,6 +25,16 @@ public class OrderVO implements Serializable{
 		this.especificaciones = spec;
 		this.estado = estado;
 	}
+
+	public OrderVO(int id,ArrayList<ArticleOrderVO> articulos, TableVO table, UserVO u, String spec,int estado){
+		this.articulos = articulos;
+		this.table = table;
+		this.user = u;
+		this.especificaciones = spec;
+		this.estado = estado;
+		this.id = id;
+	}
+
 
 	public ArrayList<ArticleOrderVO> getArticulos() {
 		return articulos;
@@ -70,6 +81,14 @@ public class OrderVO implements Serializable{
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
