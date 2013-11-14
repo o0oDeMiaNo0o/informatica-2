@@ -33,7 +33,7 @@ public class BillDAO {
 			ArrayList <Order> ordenes = b.getOrders();
 			ArrayList <ArticleOrder> articles = null;
 			Statement oStatement = con.createStatement();
-			oStatement.execute("INSERT INTO facturas (Importe Total,Mesa_idMesa,Clientes_id,Clientes_Ci) VALUES ("+b.getMontoTotal()+","+b.getTable().getNumero()+",'"+b.getClient().getId()+"','"+b.getClient().getCi()+"');");
+			oStatement.execute("INSERT INTO facturas (`Importe Total`,`Mesa_idMesa`,`Clientes_id`,`Clientes_Ci`) VALUES ("+b.getMontoTotal()+","+b.getTable().getNumero()+","+b.getClient().getId()+","+b.getClient().getCi()+");");
 			
 			
 			for(int j=0;j<ordenes.size();j++){
