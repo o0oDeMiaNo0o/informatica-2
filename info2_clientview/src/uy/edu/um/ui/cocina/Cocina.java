@@ -146,6 +146,13 @@ public class Cocina extends JFrame {
 				table = new JTable();
 				table.setBorder(new LineBorder(new Color(255, 200, 0)));
 				table.setBackground(Color.LIGHT_GRAY);
+				table.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						OpcionesCocina nueva = new OpcionesCocina(orden);
+						nueva.setVisible(true);
+					}
+				});
 
 				Object[][] aux = armarTabla(arrayOrdenes.get(n).getArticulos());
 				table.setModel(new DefaultTableModel(aux, new String[] {
