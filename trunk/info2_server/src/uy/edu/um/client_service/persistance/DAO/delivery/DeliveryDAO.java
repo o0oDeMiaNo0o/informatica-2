@@ -11,7 +11,7 @@ import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.delivery.entities.Delivery;
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
-import uy.edu.um.client_service.persistance.DAO.articleOrderDAO.ArticleOrderDAO;
+import uy.edu.um.client_service.persistance.DAO.deliveryOrderDAO.DeliveryOrderDAO;
 import uy.edu.um.client_service.persistance.DAO.users.UserDAO;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
@@ -75,7 +75,7 @@ public class DeliveryDAO {
 
 	public ArrayList<Delivery> getDeliverys() throws NoDatabaseConnection {
 		ArrayList<Delivery> toReturn = new ArrayList<Delivery>();
-		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
+		DeliveryOrderDAO dOdao = DeliveryOrderDAO.getInstance();
 		UserDAO uDAO = UserDAO.getInstance();
 		Connection con = null;
 		try {
@@ -93,7 +93,7 @@ public class DeliveryDAO {
 				if(enCocina==1){
 					cocina=true;
 				}
-				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid,con);
+				ArrayList<ArticleOrder> articles = dOdao.getDeliveryOrder(nid,con);
 				User u = uDAO.searchUser(sUsername,con);
 				int estado=defEstado(sEstado);
 				Delivery d = new Delivery(nid,articles,u,date,specs,estado,cocina);
