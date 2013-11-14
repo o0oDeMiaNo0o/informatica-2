@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.user.UserVO;
 
 
@@ -21,6 +22,6 @@ public interface UserRemoteMgt extends Remote{
 
 	public boolean checkUsername(String username) throws RemoteException;
 
-	public UserVO getUser(String nombre) throws RemoteException;
+	public UserVO getUser(String nombre) throws RemoteException, NoDatabaseConnection;
 
 }
