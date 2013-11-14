@@ -3,11 +3,14 @@ package uy.edu.um.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,26 +39,12 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private TransparentPanel transparentPanel_1;
 	private JButton btnNewButton;
+	private Logger logger;
+	
+	Image icon = Toolkit.getDefaultToolkit().getImage(
+			DirLocal.class.getResource("Logo.png"));
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -106,7 +95,8 @@ public class Login extends JFrame {
 							}
 						}
 					} catch (NoServerConnectionException e) {
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e
+								.getMessage(), devuelve());
 						nuevoFrame.setVisible(true);
 					}
 				}
@@ -142,13 +132,15 @@ public class Login extends JFrame {
 						}
 					} else {
 						MensajeGenerico msg = new MensajeGenerico(
-								"Usuario y/o Contrase–a Incorrectos", devuelve());
+								"Usuario y/o Contrase–a Incorrectos",
+								devuelve());
 						msg.setVisible(true);
 						passwordField.setText("");
 						textField.setText("");
 					}
 				} catch (NoServerConnectionException e1) {
-					MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+					MensajeGenerico nuevo = new MensajeGenerico(
+							e1.getMessage(), devuelve());
 					nuevo.setVisible(true);
 				}
 			}
