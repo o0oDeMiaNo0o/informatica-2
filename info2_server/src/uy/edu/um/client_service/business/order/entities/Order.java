@@ -32,7 +32,7 @@ public class Order {
 		this.user = user;
 		this.spec = spec;
 	}
-	
+
 	public Order(ArrayList<ArticleOrder> articles, Table table, User user, String spec, int estado, Date d){
 		this.articles = articles;
 		this.table = table;
@@ -41,18 +41,27 @@ public class Order {
 		this.estado=estado;
 		this.time=d;
 	}
-	
-	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, Date d, String specs){
+
+	public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, String specs,Date d){
 		this.id=id;
 		this.articles = articles;
 		this.table = table;
 		this.user = user;
 		this.estado=e;
-		this.time=d;
 		this.spec=specs;
+		this.time = d;
 	}
-	
-	
+
+	public Order(int id,ArrayList<ArticleOrder> articles,Table tAdd,User uAdd,String spec, int estado){
+		this.id = id;
+		this.articles = articles;
+		this.table = tAdd;
+		this.user = uAdd;
+		this.spec = spec;
+		this.estado = estado;
+	}
+
+
 	public Date getTime() {
 		return time;
 	}
@@ -68,7 +77,7 @@ public class Order {
 		this.spec = spec;
 		this.estado=e;
 	}
-	
+
 	public Order(ArrayList<ArticleOrder> articles, Table table, User user){
 		this.articles = articles;
 		this.table = table;
@@ -98,7 +107,7 @@ public class Order {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 
 	public int getEstado() {
 		return estado;

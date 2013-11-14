@@ -11,7 +11,7 @@ import uy.edu.um.value_object.oreder.OrderVO;
 
 public interface OrderMgt {
 
-	public void addOrder(Order o);
+	public void addOrder(Order o) throws NoDatabaseConnection;
 
 	public void getOrderClient(Client c);
 
@@ -21,13 +21,17 @@ public interface OrderMgt {
 
 	public OrderVO getOrderVO(Order o);
 
-	public void isReady(OrderVO o) throws RemoteException;
-
-	public void isPreparing(OrderVO o) throws RemoteException;
-
-	public void rejected(OrderVO o) throws RemoteException;
-
 	public ArrayList<OrderVO> getOrderTable(Table t) throws NoDatabaseConnection;
+
+	public void entregado(Order o) throws NoDatabaseConnection;
+
+	public void enPreparacion(Order o) throws NoDatabaseConnection;
+
+	public void rechazado(Order o) throws NoDatabaseConnection;
+
+	public void delivery(Order o) throws NoDatabaseConnection;
+
+	public void terminada(Order o) throws NoDatabaseConnection;
 
 
 }

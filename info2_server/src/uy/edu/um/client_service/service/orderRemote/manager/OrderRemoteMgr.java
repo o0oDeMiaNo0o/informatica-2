@@ -28,7 +28,7 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	}
 
 	@Override
-	public void addOrder(OrderVO order) throws RemoteException {
+	public void addOrder(OrderVO order) throws RemoteException, NoDatabaseConnection {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		Order toAdd = oMgt.getOrder(order);
 		oMgt.addOrder(toAdd);
@@ -47,9 +47,10 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	}
 
 	@Override
-	public void delivery(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void delivery(OrderVO o) throws RemoteException, NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order toDelivery = oMgt.getOrder(o);
+		oMgt.delivery(toDelivery);
 	}
 
 
@@ -62,26 +63,33 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 	}
 
 	@Override
-	public void enPreparacion(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void enPreparacion(OrderVO o) throws RemoteException, NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order preparacion = oMgt.getOrder(o);
+		oMgt.enPreparacion(preparacion);
+	}
+
+	@Override
+	public void entregado(OrderVO o) throws RemoteException, NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order entregado = oMgt.getOrder(o);
+		oMgt.entregado(entregado);
 
 	}
 
 	@Override
-	public void entregado(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void rechazado(OrderVO o) throws RemoteException, NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order rechazado = oMgt.getOrder(o);
+		oMgt.rechazado(rechazado);
 
 	}
 
 	@Override
-	public void rechazado(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void terminada(OrderVO o) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void terminada(OrderVO o) throws RemoteException, NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		Order terminada = oMgt.getOrder(o);
+		oMgt.enPreparacion(terminada);
 
 	}
 
