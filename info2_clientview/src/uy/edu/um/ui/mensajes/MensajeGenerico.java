@@ -1,6 +1,7 @@
 package uy.edu.um.ui.mensajes;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.ui.usuarios.MainUsuario;
 
 public class MensajeGenerico extends JDialog {
 
@@ -27,12 +27,13 @@ public class MensajeGenerico extends JDialog {
 
 	public MensajeGenerico(String error, final JFrame jFrame) {
 		setResizable(false);
-		setBounds(100, 100, 326, 107);
+		setBounds(100, 100, 400, 107);
+		setMinimumSize(new Dimension(500, 200));
 		if (jFrame != null) {
 			this.setLocationRelativeTo(jFrame);
 		}
 		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, 326, 82);
+		contentPanel.setBounds(0, 0, 400, 82);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(new MigLayout("", "[271px]", "[19px][29px]"));
