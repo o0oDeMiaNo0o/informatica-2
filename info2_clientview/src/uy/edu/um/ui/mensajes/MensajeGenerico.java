@@ -36,7 +36,7 @@ public class MensajeGenerico extends JDialog {
 	public MensajeGenerico(String error, final JFrame jFrame) {
 		setResizable(false);
 		setBounds(100, 100, 400, 107);
-		setMinimumSize(new Dimension(500, 200));
+		setMinimumSize(new Dimension(600, 150));
 		if (jFrame != null) {
 			this.setLocationRelativeTo(jFrame);
 		}
