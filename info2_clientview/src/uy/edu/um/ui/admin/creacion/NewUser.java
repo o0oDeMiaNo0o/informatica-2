@@ -99,23 +99,29 @@ public class NewUser extends BasicoAdmin {
 							"Contrase–a Vacia", devuelve());
 					nuevo.setVisible(true);
 				} else {
-					try{
-					boolean admin = false;
-					if (rdbtnNewRadioButton.isSelected()) {
-						admin = true;
-					}
-					UserMgt nuevo = ServiceFacade.getInstance().getUserMgt();
-					UserVO nuevoUser = null;
 					try {
-						nuevoUser = nuevo.createUserVO(textField_1.getText(), textField_2.getText(),
-								admin);
-					} catch (HasBlanksException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					nuevo.addUser(nuevoUser);
-					}catch(NoServerConnectionException e){
-						MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+						boolean admin = false;
+						if (rdbtnNewRadioButton.isSelected()) {
+							admin = true;
+						}
+						UserMgt nuevo = ServiceFacade.getInstance()
+								.getUserMgt();
+						UserVO nuevoUser = null;
+						try {
+							nuevoUser = nuevo.createUserVO(
+									textField_1.getText(),
+									textField_2.getText(), admin);
+						} catch (HasBlanksException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						nuevo.addUser(nuevoUser);
+						MensajeGenerico fin = new MensajeGenerico(
+								"Usuario Agregado Correctamente", devuelve());
+						fin.setVisible(true);
+					} catch (NoServerConnectionException e) {
+						MensajeGenerico nuevo = new MensajeGenerico(e
+								.getMessage(), devuelve());
 						nuevo.setVisible(true);
 					}
 				}
@@ -188,7 +194,8 @@ public class NewUser extends BasicoAdmin {
 		this.dispose();
 
 	}
-	public JFrame devuelve(){
+
+	public JFrame devuelve() {
 		return this;
 	}
 
