@@ -36,11 +36,7 @@ public class TableMgr implements TableMgt{
 					.lookup(sObjectService);
 
 			oTableRemoteMgt.addTable();
-
-			System.out.println("mesa agregado");
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -58,7 +54,6 @@ public class TableMgr implements TableMgt{
 					.lookup(sObjectService);
 			toReturn = oTableRemoteMgt.allTables();
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -78,11 +73,7 @@ public class TableMgr implements TableMgt{
 					.lookup(sObjectService);
 
 			oTableRemoteMgt.setOcupado(t);
-
-			System.out.println("mesa "+t.getNumero()+" cambio de estado a ocupada");
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -103,9 +94,7 @@ public class TableMgr implements TableMgt{
 					.lookup(sObjectService);
 
 			oTableRemoteMgt.removeTable(t);
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -128,7 +117,6 @@ public class TableMgr implements TableMgt{
 			oTableRemoteMgt.removeTable(t);
 
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 

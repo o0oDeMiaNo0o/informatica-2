@@ -54,9 +54,8 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addClient(c);
-			System.out.println("Cliente agregado");
+
 			} catch (Exception e) {
-				System.err.println("error:");
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 			}
@@ -100,7 +99,6 @@ public class ClientMgr implements ClientMgt{
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addClient(c);
 			} catch (Exception e) {
-				System.err.println("error:");
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 			}
@@ -116,7 +114,6 @@ public class ClientMgr implements ClientMgt{
 			oClientRemoteMgt.removeClient(c);
 			//System.out.println("Cliente agregado");
 			} catch (Exception e) {
-				System.err.println("error:");
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 							"y abrirlo nuevamente");
 			}
@@ -133,7 +130,6 @@ public class ClientMgr implements ClientMgt{
 			check = oClientRemoteMgt.existeCliente(nombre,ci);
 			//System.out.println("Cliente agregado");
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}

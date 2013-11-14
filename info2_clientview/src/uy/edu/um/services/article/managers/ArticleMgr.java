@@ -51,7 +51,6 @@ public class ArticleMgr implements ArticleMgt {
 			oArticleRemoteMgt.addArticle(a);
 			System.out.println("articulo agregado");
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -72,7 +71,6 @@ public class ArticleMgr implements ArticleMgt {
 			.lookup(sObjectService);
 			array = oArticleRemoteMgt.getArticlesVO();
 		}catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -88,7 +86,6 @@ public class ArticleMgr implements ArticleMgt {
 					.lookup(sObjectService);
 			 oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -103,7 +100,6 @@ public class ArticleMgr implements ArticleMgt {
 					.lookup(sObjectService);
 			oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -131,7 +127,6 @@ public class ArticleMgr implements ArticleMgt {
 			.lookup(sObjectService);
 			 oArticleRemoteMgt.editArtile(a);
 		}catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -149,7 +144,6 @@ public class ArticleMgr implements ArticleMgt {
 			.lookup(sObjectService);
 			check = oArticleRemoteMgt.existeArticle(nombre);
 		}catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}

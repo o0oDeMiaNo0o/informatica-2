@@ -45,43 +45,29 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void enViaje(DeliveryVO d) throws NoServerConnectionException{
 		try {
-
 			String sObjectService = "DeliveryRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
-
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
 
 			oDeliveryRemoteMgt.enViaje(d);
-
 			//System.out.println("articulo agregado");
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
-
 		}
 	}
 
 	@Override
 	public void facturado(DeliveryVO d) throws NoServerConnectionException{
 		try {
-
 			String sObjectService = "DeliveryRemoteMgr";
-
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
-
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
 					.lookup(sObjectService);
-
 			oDeliveryRemoteMgt.facturado(d);
-
 			//System.out.println("articulo agregado");
-
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -98,7 +84,6 @@ public class DeliveryMgr implements DeliveryMgt{
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.listo(d);
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 
@@ -114,7 +99,6 @@ public class DeliveryMgr implements DeliveryMgt{
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.enPreparacion(d);
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}

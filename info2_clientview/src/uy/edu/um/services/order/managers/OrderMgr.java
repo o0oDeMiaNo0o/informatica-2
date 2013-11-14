@@ -35,10 +35,7 @@ public class OrderMgr implements OrderMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oArticleRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			oArticleRemoteMgt.addOrder(o);
-			System.out.println("orden agregada");
 		} catch (Exception e) {
-			System.err.println("error:");
-//			--e.printStackTrace();
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -69,9 +66,7 @@ public class OrderMgr implements OrderMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			array = oOrderRemoteMgt.allOrders();
-			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
-			System.err.println("error:");
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
 		}
