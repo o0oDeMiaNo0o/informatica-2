@@ -11,10 +11,10 @@ import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.bill.entities.Bill;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
 public class BillDAO {
 
-	private Connection con = null;
 	private static BillDAO instance = null;
 	
 	public static BillDAO getInstance(){
@@ -24,7 +24,9 @@ public class BillDAO {
 		return instance;
 	}
 	
-	public void addBill(Bill b){
+	@SuppressWarnings("null")
+	public void addBill(Bill b) throws NoDatabaseConnection{
+		Connection con = null;
 		
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -60,7 +62,7 @@ public class BillDAO {
 			System.out.println("Factura agregada correctamente");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");	
 		}
 		finally{
 			if (con != null) {
