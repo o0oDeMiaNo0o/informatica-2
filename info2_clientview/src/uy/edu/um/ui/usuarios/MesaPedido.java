@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
@@ -47,12 +48,12 @@ public class MesaPedido extends BasicoUsuario {
 
 	/**
 	 * Create the frame.
+	 * @throws NoDatabaseConnection
 	 */
-	public MesaPedido(final TableVO mesa) {
+	public MesaPedido(final TableVO mesa) throws NoDatabaseConnection {
 		try{
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
-
 			TransparentPanel transparentPanel = new TransparentPanel();
 			getContentPane().add(transparentPanel, BorderLayout.CENTER);
 			transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
@@ -88,7 +89,19 @@ public class MesaPedido extends BasicoUsuario {
 			btnCaja.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
+					CajaPrincipal nuevo = null;
+					try {
+						nuevo = new CajaPrincipal(null, mesa);
+						nuevo.setVisible(true);
+						cerrar();
+					} catch (NoServerConnectionException e1) {
+						// TODO Auto-generated catch block
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+						nuevo1.setVisible(true);
+					} catch(NoDatabaseConnection e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+						nuevoFrame.setVisible(true);
+					}
 					nuevo.setVisible(true);
 					cerrar();
 				}
@@ -99,16 +112,27 @@ public class MesaPedido extends BasicoUsuario {
 			btnCancelar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					Mesas nuevo = new Mesas(null, null);
+					Mesas nuevo = null;
+					try{
+					nuevo = new Mesas(null, null);
 					nuevo.setVisible(true);
 					cerrar();
-
+					}catch(NoDatabaseConnection e1){
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+						nuevo1.setVisible(true);
+					}catch(NoServerConnectionException e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+						nuevoFrame.setVisible(true);
+					}
 				}
 			});
 			ZonaBotones.add(btnCancelar, "cell 3 0");
 
 		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),MesaPedido.this);
+			nuevo.setVisible(true);
+		}catch(NoDatabaseConnection e){
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),MesaPedido.this);
 			nuevo.setVisible(true);
 		}
 	}
@@ -138,7 +162,7 @@ public class MesaPedido extends BasicoUsuario {
 	}
 
 	// Cargo los metodos
-	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) throws NoServerConnectionException {
+	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> aux = new ArrayList<OrderVO>();
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		aux = nuevo.getOrderTable(mesa);

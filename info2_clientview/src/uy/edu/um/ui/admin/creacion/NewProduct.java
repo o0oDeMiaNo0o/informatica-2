@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteArticleException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
@@ -52,7 +53,7 @@ public class NewProduct extends BasicoAdmin {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -69,8 +70,8 @@ public class NewProduct extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public NewProduct() {
-		try{
+	public NewProduct() throws NoServerConnectionException, NoDatabaseConnection{
+		//try{
 		categorias = cargaCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -132,34 +133,36 @@ public class NewProduct extends BasicoAdmin {
 						if (Helpers.isNumeric(precioAux)) {
 							if (!comboBoxCat.getSelectedItem().equals(
 							"---- Desplegar Lista ----")) {
-								try{
-									BigDecimal precio = new BigDecimal(Integer
-											.parseInt(textFieldPrecio.getText()));
-									CategoryVO cat = buscaEnLista(comboBoxCat
-											.getSelectedItem().toString());
+								BigDecimal precio = new BigDecimal(Integer
+										.parseInt(textFieldPrecio.getText()));
+								CategoryVO cat = buscaEnLista(comboBoxCat
+										.getSelectedItem().toString());
 
-									ArticleMgt test = ServiceFacade.getInstance()
-									.getArticleMgt();
-									ArticleVO toSend = null;
-									try {
-										toSend = a.createArticleVO(nombre,
-												precio, cat);
-									} catch (ExisteArticleException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+								ArticleMgt test = ServiceFacade.getInstance()
+								.getArticleMgt();
+								ArticleVO toSend = null;
+								try {
+									toSend = a.createArticleVO(nombre,
+											precio, cat);
 									test.sendArticle(toSend);
-
-									MensajeGenerico mensaje = new MensajeGenerico(
-											"Producto Agregado Correctamente",
-											devuelve());
-									mensaje.setVisible(true);
-									bandera = true;
-									resetearPosicion();
-								}catch(NoServerConnectionException e){
-									MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
-									nFrame.setVisible(true);
+								} catch (ExisteArticleException e1) {
+									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+									nuevo.setVisible(true);
+								} catch(NoServerConnectionException e1){
+									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+									nuevo.setVisible(true);
+								} catch(NoDatabaseConnection e1){
+									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+									nuevo.setVisible(true);
 								}
+
+
+								MensajeGenerico mensaje = new MensajeGenerico(
+										"Producto Agregado Correctamente",
+										devuelve());
+								mensaje.setVisible(true);
+								bandera = true;
+								resetearPosicion();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
@@ -184,14 +187,14 @@ public class NewProduct extends BasicoAdmin {
 		btnCancelar = new JButton("Cancelar");
 		transparentPanelBotones.add(btnCancelar,
 				"cell 0 0,alignx right,aligny center");
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
-			nFrame.setVisible(true);
-		}
+		//}catch(NoServerConnectionException e){
+		//	MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
+		//	nFrame.setVisible(true);
+		//}
 	}
 
 	// Metodos Auxiliares
-	public ArrayList<CategoryVO> cargaCategorias() throws NoServerConnectionException {
+	public ArrayList<CategoryVO> cargaCategorias() throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}

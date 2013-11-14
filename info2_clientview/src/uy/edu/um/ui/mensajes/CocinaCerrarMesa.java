@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.ui.usuarios.Facturacion;
 import uy.edu.um.value_object.table.TableVO;
 
@@ -30,7 +32,7 @@ public class CocinaCerrarMesa extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @param toSend
 	 */
 	public CocinaCerrarMesa(final TableVO mesa) {
@@ -59,8 +61,16 @@ public class CocinaCerrarMesa extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Facturacion nuevo = new Facturacion(mesa, null);
-
+				Facturacion nuevo = null;
+				try{
+					nuevo = new Facturacion(mesa, null);
+				}catch(NoServerConnectionException ex){
+					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),CocinaCerrarMesa.this);
+					newFrame.setVisible(true);
+				}catch(NoDatabaseConnection ex){
+					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),CocinaCerrarMesa.this);
+					newFrame.setVisible(true);
+				}
 			}
 		});
 		ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");

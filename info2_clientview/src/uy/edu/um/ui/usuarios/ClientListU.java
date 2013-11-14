@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
@@ -106,12 +107,21 @@ public class ClientListU extends BasicoUsuario {
 				public void mousePressed(MouseEvent e) {
 					ClientVO cliente = buscaEnLista(textFieldID.getText());
 					if (cliente != null) {
-						Facturacion nuevo = new Facturacion(mesa, cliente);
-						nuevo.setVisible(true);
-						cerrar();
+						Facturacion nuevo1 = null;
+						try{
+							nuevo1 = new Facturacion(mesa, cliente);
+							nuevo1.setVisible(true);
+							cerrar();
+						}catch(NoServerConnectionException ex){
+							MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ClientListU.this);
+							newFrame.setVisible(true);
+						} catch(NoDatabaseConnection ex){
+							MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ClientListU.this);
+							newFrame.setVisible(true);
+						}
 					} else {
 						MensajeGenerico nuevo = new MensajeGenerico(
-								"Cliente No Existe", devuelve());
+								"Cliente No Existe", ClientListU.this);
 						nuevo.setVisible(true);
 					}
 				}
@@ -119,8 +129,11 @@ public class ClientListU extends BasicoUsuario {
 			transparentPanel_2.add(btnAceptar, "cell 1 2,alignx center");
 			cargaATabla();
 		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),ClientListU.this);
 			nuevo.setVisible(true);
+		}catch(NoDatabaseConnection e){
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),ClientListU.this);
+			nuevoFrame.setVisible(true);
 		}
 	}
 
@@ -136,7 +149,7 @@ public class ClientListU extends BasicoUsuario {
 	}
 
 	// Cargo clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException {
+	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException, NoDatabaseConnection {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		return nuevo.allClients();
 	}

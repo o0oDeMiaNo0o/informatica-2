@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.musica.Musica;
@@ -65,8 +66,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 =======
 >>>>>>> .r567
 	 */
-	public CocinaUsuarios() {
-		try{
+	public CocinaUsuarios() throws NoDatabaseConnection, NoServerConnectionException{
 			arrayOrdenes = cargaOrdenes();
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
@@ -97,10 +97,13 @@ public class CocinaUsuarios extends BasicoUsuario {
 			lblCocina.setForeground(Color.WHITE);
 			transparentPanel_1.add(lblCocina, "cell 1 0");
 
-		}catch(NoServerConnectionException e ){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-			nuevo.setVisible(true);
-		}
+		//catch(NoServerConnectionException e ){
+		//	MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
+		//	nuevo.setVisible(true);
+		//}catch(NoDatabaseConnection e){
+		//	MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
+		//	nuevoFrame.setVisible(true);
+		//}
 	}
 
 	private void armarPedido(JPanel transparentPanel) {
@@ -203,7 +206,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 	}
 
 	// Carga Ordenes
-	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException {
+	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}

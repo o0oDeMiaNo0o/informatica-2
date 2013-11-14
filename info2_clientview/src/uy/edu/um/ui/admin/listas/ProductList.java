@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -69,8 +70,8 @@ public class ProductList extends BasicoAdmin {
 	 *
 	 * @param user
 	 */
-	public ProductList() {
-		try{
+	public ProductList() throws NoDatabaseConnection, NoServerConnectionException{
+		//try{
 		categorias = cargoCategorias();
 		listaArticulos = cargoListado();
 
@@ -160,10 +161,18 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
+					try{
 					EditRemoveA nuevo = new EditRemoveA(
 							devuelveArticulo(Integer.parseInt(textFieldID
 									.getText())), devuelve(), true, "");
 					nuevo.setVisible(true);
+					}catch (NoServerConnectionException e){
+						MensajeGenerico newFrame = new MensajeGenerico(e.getMessage(),ProductList.this);
+						newFrame.setVisible(true);
+					}catch( NoDatabaseConnection e){
+						MensajeGenerico newFrame = new MensajeGenerico(e.getMessage(),ProductList.this);
+						newFrame.setVisible(true);
+					}
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Producto No Existe", devuelve());
@@ -180,11 +189,19 @@ public class ProductList extends BasicoAdmin {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (buscaArticulo(textFieldID.getText())) {
+					try{
 					EditRemoveA nuevo = new EditRemoveA(
 							devuelveArticulo(Integer.parseInt(textFieldID
 									.getText())), devuelve(), false,
 					"Desea Eliminar El Siguiente Articulo?");
 					nuevo.setVisible(true);
+					}catch(NoServerConnectionException e){
+						MensajeGenerico newFrame = new MensajeGenerico(e.getMessage(),ProductList.this);
+						newFrame.setVisible(true);
+					}catch(NoDatabaseConnection e){
+						MensajeGenerico newFrame = new MensajeGenerico(e.getMessage(),ProductList.this);
+						newFrame.setVisible(true);
+					}
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Producto No Existe", devuelve());
@@ -194,10 +211,10 @@ public class ProductList extends BasicoAdmin {
 		});
 		transparentPanel_2.add(button_1, "cell 0 2,alignx center,aligny top");
 		cargaATabla();
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-			nuevo.setVisible(true);
-		}
+	//	}catch(NoServerConnectionException e){
+	//		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+	//		nuevo.setVisible(true);
+	//	}
 	}
 
 	// Metodos Auxiliares
@@ -237,7 +254,7 @@ public class ProductList extends BasicoAdmin {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
@@ -289,7 +306,7 @@ public class ProductList extends BasicoAdmin {
 		}
 	}
 
-	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException {
+	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException, NoDatabaseConnection {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
 		ArrayList<ArticleVO> sol = new ArrayList<ArticleVO>(10);
 		sol = test.allArticles();

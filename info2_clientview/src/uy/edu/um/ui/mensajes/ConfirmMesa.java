@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
@@ -72,9 +72,14 @@ public class ConfirmMesa extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (mesa.isOcupado()) {
+					try{
 					MesaPedido nueva = new MesaPedido(mesa);
 					nueva.setVisible(true);
 					cerrar();
+					}catch(NoDatabaseConnection e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
+					}
 				} else {
 					if (toSend.getArticulos() != null) {
 						try{
@@ -90,6 +95,9 @@ public class ConfirmMesa extends JFrame {
 						}catch(NoServerConnectionException e1){
 							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
 							nuevo.setVisible(true);
+						}catch(NoDatabaseConnection e1){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+							nuevoFrame.setVisible(true);
 						}
 					} else {
 						try{
@@ -103,6 +111,9 @@ public class ConfirmMesa extends JFrame {
 						}catch(NoServerConnectionException e1){
 							MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
 							nuevo.setVisible(true);
+						}catch(NoDatabaseConnection e1){
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+							nuevoFrame.setVisible(true);
 						}
 					}
 				}

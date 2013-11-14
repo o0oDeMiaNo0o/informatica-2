@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
@@ -49,8 +50,7 @@ public class TableList extends BasicoAdmin {
 		});
 	}
 
-	public TableList() {
-		try{
+	public TableList() throws NoServerConnectionException, NoDatabaseConnection{
 		mesas = cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -81,12 +81,6 @@ public class TableList extends BasicoAdmin {
 		JButton btnNewButton = new JButton("Cancelar");
 		transparentPanel_2.add(btnNewButton,
 				"cell 0 0,alignx right,aligny center");
-		;
-
-	}catch(NoServerConnectionException e){
-		MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
-		nuevo.setVisible(true);
-	}
 	}
 
 
@@ -156,8 +150,7 @@ public class TableList extends BasicoAdmin {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException {
-
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException, NoDatabaseConnection {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
 

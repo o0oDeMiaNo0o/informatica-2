@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
@@ -72,6 +73,9 @@ public class ConfirmRemoveTable extends JFrame {
 				}catch(NoServerConnectionException e1){
 					MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
 					nuevo.setVisible(true);
+				}catch(NoDatabaseConnection e1){
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+					nuevoFrame.setVisible(true);
 				}
 			}
 		});

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.ExisteArticleException;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
@@ -45,7 +46,7 @@ public class EditRemoveA extends JFrame {
 	 * @param toSend
 	 */
 	public EditRemoveA(final ArticleVO articulo, final JFrame cPanel,
-			final boolean editable, String mensaje) {
+			final boolean editable, String mensaje) throws NoServerConnectionException, NoDatabaseConnection {
 		try{
 		categorias = cargoCategorias();
 		setTitle("Confirma");
@@ -129,14 +130,9 @@ public class EditRemoveA extends JFrame {
 											CategoryVO cat = buscaEnLista(comboBox
 													.getSelectedItem().toString());
 											ArticleVO toSend = null;
-											try {
-												toSend = a.createArticleVOid(
-														articulo.getId(), nombre,
-														precio, cat);
-											} catch (ExisteArticleException e1) {
-												MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
-												nuevo.setVisible(true);
-											}
+											toSend = a.createArticleVOid(
+													articulo.getId(), nombre,
+													precio, cat);
 
 											a.editArticle(toSend);
 
@@ -149,42 +145,52 @@ public class EditRemoveA extends JFrame {
 													devuelve());
 											mensaje.setVisible(true);
 											bandera = true;
-										}catch(NoServerConnectionException e2){
-											MensajeGenerico nuevo = new MensajeGenerico(e2.getMessage(),devuelve());
+										}catch(NoServerConnectionException e1){
+											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),EditRemoveA.this);
 											nuevo.setVisible(true);
+										}catch(NoDatabaseConnection e1){
+											MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+											nuevoFrame.setVisible(true);
+										}catch(ExisteArticleException e1){
+											MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+											nuevoFrame.setVisible(true);
 										}
-									} else {
+									}
+									else {
 										MensajeGenerico mensaje = new MensajeGenerico(
 												"Producto Eliminado Correctamente",
 												devuelve());
 										mensaje.setVisible(true);
 										bandera = true;
 									}
+								} else {
+									MensajeGenerico mensaje = new MensajeGenerico(
+											"Precio No Numerico", devuelve());
+									mensaje.setVisible(true);
+									bandera = true;
 								}
 							} else {
 								MensajeGenerico mensaje = new MensajeGenerico(
-										"Precio No Numerico", devuelve());
+										"Ingrese Nombre", devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
 							}
-						} else {
-							MensajeGenerico mensaje = new MensajeGenerico(
-									"Ingrese Nombre", devuelve());
-							mensaje.setVisible(true);
-							bandera = true;
 						}
+						cerrar();
 					}
-					cerrar();
 				} else {
 					try{
-						a.removeArticle(articulo);
-						MensajeGenerico mensaje = new MensajeGenerico(
-								"Producto Editado Correctamente", devuelve());
-						mensaje.setVisible(true);
-						cerrar();
-					}catch(NoServerConnectionException e3){
-						MensajeGenerico nuevo = new MensajeGenerico(e3.getMessage(),devuelve());
-						nuevo.setVisible(true);
+					a.removeArticle(articulo);
+					MensajeGenerico mensaje = new MensajeGenerico(
+							"Producto Editado Correctamente", devuelve());
+					mensaje.setVisible(true);
+					cerrar();
+					}catch(NoServerConnectionException e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
+					}catch( NoDatabaseConnection e1){
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+						nuevoFrame.setVisible(true);
 					}
 				}
 			}
@@ -239,7 +245,7 @@ public class EditRemoveA extends JFrame {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException {
+	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
