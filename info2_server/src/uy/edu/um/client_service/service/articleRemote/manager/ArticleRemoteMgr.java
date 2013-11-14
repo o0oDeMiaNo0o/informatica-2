@@ -27,7 +27,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	}
 
 	@Override
-	public void addArticle(ArticleVO a) throws RemoteException {
+	public void addArticle(ArticleVO a) throws RemoteException, NoDatabaseConnection {
 		//obtener instacia del manager con singleton
 		ArticleMgt aMgr = BusinessFacade.getInstance().getArticleMgt();
 		Article article = aMgr.getArticle(a);
@@ -42,7 +42,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	}
 
 	@Override
-	public void removeArticle(ArticleVO a) throws RemoteException {
+	public void removeArticle(ArticleVO a) throws RemoteException, NoDatabaseConnection {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		Article article = aMgt.getArticle(a);
 		aMgt.removeArticle(article);
@@ -56,7 +56,7 @@ public class ArticleRemoteMgr implements ArticleRemoteMgt{
 	}
 
 	@Override
-	public void editArtile(ArticleVO a) throws RemoteException {
+	public void editArtile(ArticleVO a) throws RemoteException, NoDatabaseConnection {
 		ArticleMgt aMgt = BusinessFacade.getInstance().getArticleMgt();
 		Article article = aMgt.getArticle(a);
 		aMgt.editArticle(article);

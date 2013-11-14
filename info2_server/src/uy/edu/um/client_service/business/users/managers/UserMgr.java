@@ -25,7 +25,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void addUser(User u) {
+	public void addUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		String crypted = this.hashPassword(u.getPassword());
 		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
@@ -54,7 +54,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public ArrayList<UserVO> allUsers() {
+	public ArrayList<UserVO> allUsers() throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		ArrayList<UserVO> toReturn = new ArrayList<UserVO>(10);
 		ArrayList<User> users = dao.allUsers();
@@ -76,14 +76,14 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public boolean checkLogin(String username, String psw) {
+	public boolean checkLogin(String username, String psw) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		String crypted = this.hashPassword(psw);
 		return dao.checklogin(username, crypted);
 	}
 
 	@Override
-	public boolean checkUsername(String username) {
+	public boolean checkUsername(String username) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		return dao.checkUsername(username);
 	}

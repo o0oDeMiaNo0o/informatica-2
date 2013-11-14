@@ -31,21 +31,21 @@ public class ArticleMgr implements ArticleMgt{
 
 
 	@Override
-	public void addArticle(Article a) {
+	public void addArticle(Article a) throws NoDatabaseConnection {
 		//obtener instancia del DAO con Singleton
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		dao.addArticle(a);
 	}
 
 	@Override
-	public void editArticle(Article a) {
+	public void editArticle(Article a) throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		dao.editArticle(a);
 
 	}
 
 	@Override
-	public void removeArticle(Article a) {
+	public void removeArticle(Article a) throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		dao.deleteArticle(a);
 	}

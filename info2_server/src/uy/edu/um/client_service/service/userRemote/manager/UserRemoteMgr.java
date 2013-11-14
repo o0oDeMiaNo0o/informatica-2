@@ -27,7 +27,7 @@ public class UserRemoteMgr implements UserRemoteMgt{
 
 
 	@Override
-	public void addUser(UserVO u) throws RemoteException {
+	public void addUser(UserVO u) throws RemoteException, NoDatabaseConnection {
 		// TODO Auto-generated method stub
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		User toAdd = uMgt.getUser(u);
@@ -48,19 +48,19 @@ public class UserRemoteMgr implements UserRemoteMgt{
 	}
 
 	@Override
-	public ArrayList<UserVO> allUsers() throws RemoteException {
+	public ArrayList<UserVO> allUsers() throws RemoteException, NoDatabaseConnection {
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		return uMgt.allUsers();
 	}
 
 	@Override
-	public boolean checkLogin(String username, String psw) throws RemoteException {
+	public boolean checkLogin(String username, String psw) throws RemoteException, NoDatabaseConnection {
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		return uMgt.checkLogin(username, psw);
 	}
 
 	@Override
-	public boolean checkUsername(String username) throws RemoteException {
+	public boolean checkUsername(String username) throws RemoteException, NoDatabaseConnection {
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		return uMgt.checkUsername(username);
 
