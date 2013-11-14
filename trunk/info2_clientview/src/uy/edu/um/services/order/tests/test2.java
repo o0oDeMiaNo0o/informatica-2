@@ -14,11 +14,12 @@ public class test2 {
 	public static void main(String[] args) throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<TableVO> allTables = new ArrayList<TableVO>(5);
 		ArrayList<OrderVO> allOrders1 = new ArrayList<OrderVO>(10);
-		ArrayList<OrderVO> allOrders2 = new ArrayList<OrderVO>(10);
+		//ArrayList<OrderVO> allOrders2 = new ArrayList<OrderVO>(10);
 		OrderMgt oMgt = ServiceFacade.getInstance().getOrderMgt();
-		TableMgt tMgt = ServiceFacade.getInstance().getTableMgt();
-		allTables = tMgt.allTables();
-		allOrders1 = oMgt.getOrderTable(allTables.get(1));
+//		TableMgt tMgt = ServiceFacade.getInstance().getTableMgt();
+		allOrders1 = oMgt.allOrders();
+		OrderVO toChange = allOrders1.get(1);
+		oMgt.rechazado(toChange);
 		int v = 34;
 	}
 }
