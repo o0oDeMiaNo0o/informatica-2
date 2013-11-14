@@ -30,8 +30,8 @@ public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 
 	@Override
 	public void enViaje(DeliveryVO o) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		DeliveryMgt dMgt = BusinessFacade.getInstance().getDeliveryMgt();
+		Delivery enViaje = dMgt.getDelivery(o);
 	}
 
 	@Override
