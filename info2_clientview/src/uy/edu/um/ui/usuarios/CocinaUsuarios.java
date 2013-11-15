@@ -90,6 +90,8 @@ public class CocinaUsuarios extends BasicoUsuario {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
+
+		// Refresh
 		this.timer = new Timer(5000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<OrderVO> arrayOrdenesAux = null;
@@ -116,6 +118,8 @@ public class CocinaUsuarios extends BasicoUsuario {
 			}
 
 		});
+
+		timer.start();
 
 		// catch(NoServerConnectionException e ){
 		// MensajeGenerico nuevo = new

@@ -91,13 +91,18 @@ public class Mesas extends BasicoUsuario {
 							CurrentUser.getUser(), esp, 0, false);
 					DeliveryMgt nuevo = ServiceFacade.getInstance()
 							.getDeliveryMgt();
+					
+					
 					// nuevo.addOrder(delivery);
+					
+					
+					
 					MensajeGenerico msg = new MensajeGenerico(
 							"Agregado A Delivery Correctamente", Mesas.this);
 					msg.setVisible(true);
 				} else {
 					TableVO tableDelivery = new TableVO();
-					tableDelivery.setNumero(999);
+					tableDelivery.setNumero(1);
 					ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
 							esp, Mesas.this);
 					nuevo.setVisible(true);
@@ -142,7 +147,7 @@ public class Mesas extends BasicoUsuario {
 			URL dir;
 			while (n < mesas.size()) {
 				String nombre = String.valueOf(mesas.get(n).getNumero());
-				if (mesas.get(n).getNumero() != 999) {
+				if (mesas.get(n).getNumero() != 1) {
 					if (mesas.get(n).isOcupado()) {
 						dir = ocupado;
 					} else {
