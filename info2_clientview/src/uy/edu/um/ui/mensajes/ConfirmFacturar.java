@@ -63,6 +63,7 @@ public class ConfirmFacturar extends JFrame {
 				Facturacion factura = null;
 				try{
 					factura = new Facturacion(mesa, null);
+					System.out.println(mesa.getNumero());
 					factura.setVisible(true);
 					frame.dispose();
 					cerrar();

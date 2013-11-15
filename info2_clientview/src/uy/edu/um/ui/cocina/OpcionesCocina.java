@@ -11,10 +11,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.oreder.OrderVO;
@@ -32,7 +37,7 @@ public class OpcionesCocina extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OpcionesCocina frame = new OpcionesCocina(null);
+					OpcionesCocina frame = new OpcionesCocina(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,9 +51,10 @@ public class OpcionesCocina extends JFrame {
 	 * 
 	 * @param orden
 	 */
-	public OpcionesCocina(final OrderVO orden) {
+	public OpcionesCocina(final OrderVO orden, final JFrame frame) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(frame);
 		setBounds(100, 100, 500, 325);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,7 +74,18 @@ public class OpcionesCocina extends JFrame {
 		lblPedidoRealizado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				orden.setEstado(1);
+				OrderMgt nueva = null;
+				try {
+					nueva = ServiceFacade.getInstance().getOrderMgt();
+					nueva.entregado(orden);
+				} catch (NoServerConnectionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoDatabaseConnection e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SwingUtilities.updateComponentTreeUI(frame);
 				cerrar();
 			}
 		});
