@@ -26,15 +26,7 @@ public class CocinaCerrarMesa extends JFrame {
 		this.setVisible(false);
 	}
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 *
-	 * @param toSend
-	 */
+	// Constructor
 	public CocinaCerrarMesa(final TableVO mesa) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,13 +54,15 @@ public class CocinaCerrarMesa extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Facturacion nuevo = null;
-				try{
+				try {
 					nuevo = new Facturacion(mesa, null);
-				}catch(NoServerConnectionException ex){
-					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),CocinaCerrarMesa.this);
+				} catch (NoServerConnectionException ex) {
+					MensajeGenerico newFrame = new MensajeGenerico(ex
+							.getMessage(), CocinaCerrarMesa.this);
 					newFrame.setVisible(true);
-				}catch(NoDatabaseConnection ex){
-					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),CocinaCerrarMesa.this);
+				} catch (NoDatabaseConnection ex) {
+					MensajeGenerico newFrame = new MensajeGenerico(ex
+							.getMessage(), CocinaCerrarMesa.this);
 					newFrame.setVisible(true);
 				}
 			}
