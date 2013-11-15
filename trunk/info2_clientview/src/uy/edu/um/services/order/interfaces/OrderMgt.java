@@ -26,7 +26,7 @@ public interface OrderMgt {
 
 	public void terminada(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void delivery(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
+	public void addDelivery(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public ArrayList<OrderVO> getOrderTable(TableVO t) throws NoServerConnectionException, NoDatabaseConnection;
 
