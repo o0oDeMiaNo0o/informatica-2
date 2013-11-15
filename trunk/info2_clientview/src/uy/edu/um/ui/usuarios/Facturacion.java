@@ -73,6 +73,7 @@ public class Facturacion extends BasicoUsuario {
 	public Facturacion(final TableVO mesa, ClientVO cliente)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		// try{
+		System.out.println(mesa.getNumero());
 		clientes = cargaClientes();
 		ordenesMesa = cargoOrdenesMesa(mesa);
 
