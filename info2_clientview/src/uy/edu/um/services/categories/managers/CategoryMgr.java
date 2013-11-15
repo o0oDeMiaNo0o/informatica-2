@@ -103,6 +103,25 @@ public class CategoryMgr implements CategoryMgt{
 		return  checker;
 	}
 
+	@Override
+	public void borrarCateogry(CategoryVO c)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		try {
+
+			String sObjectService = "CategoryRemoteMgr";
+
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+
+			CategoryRemoteMgt oCategoryRemoteMgt = (CategoryRemoteMgt) oRegitry
+					.lookup(sObjectService);
+			oCategoryRemoteMgt.eliminarCategory(c);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+					"y abrirlo nuevamente");
+		}
+
+	}
+
 }
 
 
