@@ -9,8 +9,9 @@ import uy.edu.um.value_object.categories.CategoryVO;
 
 public class test2 {
 	public static void main(String[] args) throws NoDatabaseConnection{
-		String nombre = "Pizzas";
+		ArrayList<CategoryVO> allCat = new ArrayList<CategoryVO>(2);
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
-		System.out.println(cMgt.existCategory(nombre));
+		allCat = cMgt.allCategories();
+		int v = 34;
 	}
 }

@@ -11,8 +11,9 @@ import uy.edu.um.value_object.table.TableVO;
 
 public class Test1 {
 	public static void main(String[] args) throws NoDatabaseConnection{
-		OrderMgt oMgt = BusinessFacade.get
-		ArrayList<OrderVO> allOrders1 = new ArrayList<OrderVO>(10);
-
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		ArrayList<OrderVO> allOrders = new ArrayList<OrderVO>(10);
+		allOrders = oMgt.allOrders();
+		int v = 45;
 	}
 }

@@ -1,10 +1,12 @@
 package uy.edu.um.client_service.service.derliveryRemote.manager;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.delivery.entities.Delivery;
 import uy.edu.um.client_service.business.delivery.interfaces.DeliveryMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.value_object.delivery.DeliveryVO;
 
@@ -22,7 +24,7 @@ public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 	}
 
 	@Override
-	public void addDelivery(DeliveryVO o) throws RemoteException {
+	public void addDelivery(DeliveryVO o) throws RemoteException, NoDatabaseConnection {
 		DeliveryMgt dMgt = BusinessFacade.getInstance().getDeliveryMgt();
 		Delivery toAdd = dMgt.getDelivery(o);
 		dMgt.addDelivery(toAdd);
@@ -57,6 +59,13 @@ public class DeliveryRemoteMgr implements DeliveryRemoteMgt{
 	public void listo(DeliveryVO o) throws RemoteException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<DeliveryVO> allDeliveries() throws RemoteException,
+			NoDatabaseConnection {
+		DeliveryMgt dMgt = BusinessFacade.getInstance().getDeliveryMgt();
+		return dMgt.allDeliveries();
 	}
 
 
