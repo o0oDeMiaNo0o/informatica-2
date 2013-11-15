@@ -58,8 +58,7 @@ public class TableList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
-				"[][][][][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[][][][][grow]", "[][][][][][][][grow]"));
 
 		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
 		transparentPanel.add(rigidArea, "cell 0 0");
@@ -92,7 +91,7 @@ public class TableList extends BasicoAdmin {
 			lbltemp.setForeground(Color.WHITE);
 			panel.add(lbltemp, "cell 0 0");
 		} else {
-			int n = 1;
+			int n = 2;
 			int i = 1, j = 1;
 			URL dir;
 			while (n < mesas.size()) {

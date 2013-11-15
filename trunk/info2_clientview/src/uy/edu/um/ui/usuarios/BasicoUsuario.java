@@ -20,6 +20,8 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.mensajes.ConfirmSesion;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.usuarios.adminAux.ClientListU;
+import uy.edu.um.ui.usuarios.adminAux.NewClienteU;
 
 public class BasicoUsuario extends JFrame {
 
@@ -45,7 +47,7 @@ public class BasicoUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BasicoUsuario(){
+	public BasicoUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -69,15 +71,17 @@ public class BasicoUsuario extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				Mesas nuevo = null;
-				try{
+				try {
 					nuevo = new Mesas(null, null);
 					nuevo.setVisible(true);
 					cerrar();
-				}catch(NoDatabaseConnection e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
-				}catch(NoServerConnectionException e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
 				}
 			}
@@ -94,11 +98,13 @@ public class BasicoUsuario extends JFrame {
 					nuevo.setVisible(true);
 					cerrar();
 				} catch (NoServerConnectionException e) {
-					//nuevo.dispose();
-					MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+					// nuevo.dispose();
+					MensajeGenerico nuevo1 = new MensajeGenerico(
+							e.getMessage(), BasicoUsuario.this);
 					nuevo1.setVisible(true);
-				} catch(NoDatabaseConnection e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
 				}
 
@@ -107,7 +113,24 @@ public class BasicoUsuario extends JFrame {
 
 		menuCaja.add(mntmPedidoLocal);
 
-		JMenuItem mntmDelivery = new JMenuItem("Calcelar Pedido");
+		JMenuItem mntmDelivery = new JMenuItem("Cancelar Pedido");
+		mntmDelivery.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				CocinaUsuarios nuevo = null;
+				try {
+					nuevo = new CocinaUsuarios();
+				} catch (NoDatabaseConnection e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoServerConnectionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		menuCaja.add(mntmDelivery);
 
 		JMenu menuCocina = new JMenu("Cocina");
@@ -119,15 +142,17 @@ public class BasicoUsuario extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				CocinaUsuarios nuevo = null;
-				try{
+				try {
 					nuevo = new CocinaUsuarios();
 					nuevo.setVisible(true);
 					cerrar();
-				}catch(NoServerConnectionException e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
-				}catch(NoDatabaseConnection e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoDatabaseConnection e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
 				}
 			}
@@ -146,22 +171,28 @@ public class BasicoUsuario extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				NewClienteU nuevo = null;
-				try{
+				try {
 					nuevo = new NewClienteU();
 					nuevo.setVisible(true);
 					cerrar();
-				}catch(NoServerConnectionException e){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),BasicoUsuario.this);
+				} catch (NoServerConnectionException e) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e
+							.getMessage(), BasicoUsuario.this);
 					nuevoFrame.setVisible(true);
 				}
 			}
 		});
 		mnClientes.add(mntmAgregarCliente);
 
-		JMenuItem mntmListadoClientes = new JMenuItem("Ver Lista");
-		mnClientes.add(mntmListadoClientes);
-
 		JMenuItem mntmEliminarCliente = new JMenuItem("Eliminar");
+		mntmEliminarCliente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ClientListU nuevo = new ClientListU(null);
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		mntmEliminarCliente.setBackground(Color.WHITE);
 		mnClientes.add(mntmEliminarCliente);
 

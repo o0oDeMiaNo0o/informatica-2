@@ -135,11 +135,11 @@ public class Cocina extends JFrame {
 
 	private String tiempoEspera(Date date) {
 		Calendar calendar = Calendar.getInstance();
-		//calendar.setTime(date);
+		// calendar.setTime(date);
 		int horasC = calendar.HOUR_OF_DAY;
 		int minutosC = calendar.MINUTE;
 		int segundosC = calendar.SECOND;
-		//System.out.println(String.valueOf(date.getTime()));
+		// System.out.println(String.valueOf(date.getTime()));
 
 		System.out.println(horasC);
 		return String.valueOf(horasC + ":" + minutosC + ":" + segundosC);
@@ -168,7 +168,7 @@ public class Cocina extends JFrame {
 				final OrderVO orden = arrayOrdenes.get(n);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
-				panel.setBorder(new LineBorder(Color.ORANGE, 3));
+				panel.setBorder(new LineBorder(new Color(111, 102, 238), 3));
 				transparentPanel.add(panel, "cell " + i + " " + j + ",grow");
 				panel.setLayout(new BorderLayout(0, 0));
 				panel.addMouseListener(new MouseAdapter() {
@@ -214,8 +214,8 @@ public class Cocina extends JFrame {
 				// Termina parte constante
 
 				table = new JTable();
-				table.setBorder(new LineBorder(new Color(255, 200, 0)));
-				table.setBackground(Color.LIGHT_GRAY);
+				table.setBorder(new LineBorder(new Color(111, 102, 238)));
+				table.setBackground(Color.WHITE);
 				table.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {

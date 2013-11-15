@@ -1,4 +1,4 @@
-package uy.edu.um.ui.usuarios;
+package uy.edu.um.ui.usuarios.adminAux;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,6 +25,7 @@ import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.usuarios.BasicoUsuario;
 import uy.edu.um.value_object.people.client.ClientVO;
 
 public class NewClienteU extends BasicoUsuario {

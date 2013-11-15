@@ -16,8 +16,8 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
-import uy.edu.um.ui.usuarios.ClientListU;
 import uy.edu.um.ui.usuarios.Facturacion;
+import uy.edu.um.ui.usuarios.adminAux.ClientListU;
 import uy.edu.um.value_object.table.TableVO;
 
 public class ConfirmFacturar extends JFrame {
