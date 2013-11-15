@@ -53,10 +53,10 @@ public class CajaPrincipal extends BasicoUsuario {
 	ArrayList<ArticleOrderVO> pedidoAux = new ArrayList<ArticleOrderVO>(); // Array
 																			// de
 																			// pedido
-	ArrayList<ArticleVO> listaArticulos  ; // Array
-															// de
-															// Articulos
-	ArrayList<CategoryVO> categoria  ;
+	ArrayList<ArticleVO> listaArticulos; // Array
+											// de
+											// Articulos
+	ArrayList<CategoryVO> categoria;
 	private ArrayList<ArticleVO> pedidoArticle = new ArrayList<ArticleVO>(); // Array
 																				// con
 																				// articulos
@@ -94,253 +94,271 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	/**
 	 * Create the frame.
+	 * 
 	 * @throws NoServerConnectionException
 	 * @throws NoDatabaseConnection
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa) throws NoServerConnectionException, NoDatabaseConnection  {
-		//try{
-			listaArticulos = cargoListado();
-			categoria = cargoCategorias();
-			spinners = new ArrayList<JSpinner>(categoria.size());
-			combos = new ArrayList<JComboBox>(categoria.size());
-			esp = new ArrayList<JTextField>(categoria.size());
+	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa)
+			throws NoServerConnectionException, NoDatabaseConnection {
+		// try{
+		listaArticulos = cargoListado();
+		categoria = cargoCategorias();
+		spinners = new ArrayList<JSpinner>(categoria.size());
+		combos = new ArrayList<JComboBox>(categoria.size());
+		esp = new ArrayList<JTextField>(categoria.size());
 
-			this.user = CurrentUser.getUser();
+		this.user = CurrentUser.getUser();
 
-			if (pedido != null) {
-				pedidoAux = pedido;
-				pedidoArticle = cargaArticleVO(pedidoAux);
+		if (pedido != null) {
+			pedidoAux = pedido;
+			pedidoArticle = cargaArticleVO(pedidoAux);
+		}
+
+		setTitle("Pedido");
+
+		TransparentPanel transparentPanelPedido = new TransparentPanel();
+		getContentPane().add(transparentPanelPedido, BorderLayout.NORTH);
+		transparentPanelPedido.setLayout(new MigLayout("", "[][][][][grow][]",
+				"[][][][][][][][][][][][][][grow]"));
+
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setForeground(Color.WHITE);
+		transparentPanelPedido.add(lblCantidad,
+				"cell 3 1,alignx center,aligny center");
+
+		JLabel lblEspecificaciones = new JLabel("Especificaciones");
+		lblEspecificaciones.setForeground(Color.WHITE);
+		transparentPanelPedido.add(lblEspecificaciones,
+				"cell 4 1,alignx center,aligny center");
+
+		creaElementos(transparentPanelPedido);
+
+		TransparentPanel transparentPanelBotonera = new TransparentPanel();
+		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
+		transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][][]",
+				"[]"));
+
+		TransparentPanel transparentPanelTabla = new TransparentPanel();
+		getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
+		transparentPanelTabla.setLayout(new MigLayout("", "[1px][][grow][]",
+				"[1px][grow]"));
+
+		tablePrePedido = new JTable();
+		tablePrePedido.setBorder(new LineBorder(Color.ORANGE, 2, true));
+		tablePrePedido.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		tablePrePedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablePrePedido.setEnabled(false);
+		tablePrePedido.setRowSelectionAllowed(false);
+		armarPedido(); // Creo Tabla Con Pedido Actual
+
+		TransparentPanel transparentPanel = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
+		transparentPanel.setLayout(new MigLayout("", "[]", "[][grow][][grow]"));
+
+		Component horizontalStrut = Box.createHorizontalStrut(300);
+		transparentPanel.add(horizontalStrut, "cell 0 0");
+
+		JLabel lblBusquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
+		lblBusquedaRpida.setForeground(Color.WHITE);
+		transparentPanel.add(lblBusquedaRpida,
+				"cell 0 1,alignx center,aligny bottom");
+
+		final TextFieldAutocompletar textoAutocompletado = new TextFieldAutocompletar(
+				devuelveProductos());
+		textoAutocompletado.setText("");
+		transparentPanel.add(textoAutocompletado, "cell 0 2,growx");
+
+		JButton btnAgregarAPedido = new JButton("Agregar A Pedido");
+		btnAgregarAPedido.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ArticleVO nuevo = buscaArticuloString(listaArticulos,
+						textoAutocompletado.getText());
+				ArticleOrderVO aux = new ArticleOrderVO(nuevo, 1);
+				pedidoAux.add(aux);
+				pedidoArticle.add(nuevo);
+				armarPedido();
+
+			}
+		});
+		transparentPanel.add(btnAgregarAPedido,
+				"cell 0 3,alignx center,aligny top");
+		transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
+
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		transparentPanelTabla.add(transparentPanel_1, "cell 3 1,grow");
+		transparentPanel_1.setLayout(new MigLayout("", "[grow]",
+				"[grow][][][][grow]"));
+
+		Component horizontalStrut_1 = Box.createHorizontalStrut(300);
+		transparentPanel_1.add(horizontalStrut_1, "cell 0 0");
+
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setForeground(Color.WHITE);
+		transparentPanel_1.add(lblNombre, "cell 0 1,alignx center");
+
+		textFieldEliminar = new TextFieldAutocompletar(devuelvePedido());
+		textFieldEliminar.setEditable(false);
+		textFieldEliminar.setText("");
+		transparentPanel_1.add(textFieldEliminar, "cell 0 2,growx");
+
+		JButton btnNewButton_1 = new JButton("Eliminar De Lista");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				magic(textFieldEliminar.getText());
 			}
 
-			setTitle("Pedido");
+		});
+		transparentPanel_1.add(btnNewButton_1, "cell 0 3,alignx center");
 
-			TransparentPanel transparentPanelPedido = new TransparentPanel();
-			getContentPane().add(transparentPanelPedido, BorderLayout.NORTH);
-			transparentPanelPedido.setLayout(new MigLayout("", "[][][][][grow][]",
-			"[][][][][][][][][][][][][][grow]"));
-
-			JLabel lblCantidad = new JLabel("Cantidad");
-			lblCantidad.setForeground(Color.WHITE);
-			transparentPanelPedido.add(lblCantidad,
-			"cell 3 1,alignx center,aligny center");
-
-			JLabel lblEspecificaciones = new JLabel("Especificaciones");
-			lblEspecificaciones.setForeground(Color.WHITE);
-			transparentPanelPedido.add(lblEspecificaciones,
-			"cell 4 1,alignx center,aligny center");
-
-			creaElementos(transparentPanelPedido);
-
-			TransparentPanel transparentPanelBotonera = new TransparentPanel();
-			getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
-			transparentPanelBotonera.setLayout(new MigLayout("", "[grow][][][][]",
-			"[]"));
-
-			TransparentPanel transparentPanelTabla = new TransparentPanel();
-			getContentPane().add(transparentPanelTabla, BorderLayout.CENTER);
-			transparentPanelTabla.setLayout(new MigLayout("", "[1px][][grow][]",
-			"[1px][grow]"));
-
-			tablePrePedido = new JTable();
-			tablePrePedido.setBorder(new LineBorder(Color.ORANGE, 2, true));
-			tablePrePedido.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-			tablePrePedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			tablePrePedido.setEnabled(false);
-			tablePrePedido.setRowSelectionAllowed(false);
-			armarPedido(); // Creo Tabla Con Pedido Actual
-
-			TransparentPanel transparentPanel = new TransparentPanel();
-			transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
-			transparentPanel.setLayout(new MigLayout("", "[]", "[][grow][][grow]"));
-
-			Component horizontalStrut = Box.createHorizontalStrut(300);
-			transparentPanel.add(horizontalStrut, "cell 0 0");
-
-			JLabel lblBusquedaRpida = new JLabel("B\u00FAsqueda R\u00E1pida");
-			lblBusquedaRpida.setForeground(Color.WHITE);
-			transparentPanel.add(lblBusquedaRpida,
-			"cell 0 1,alignx center,aligny bottom");
-
-			final TextFieldAutocompletar textoAutocompletado = new TextFieldAutocompletar(
-					devuelveProductos());
-			textoAutocompletado.setText("");
-			transparentPanel.add(textoAutocompletado, "cell 0 2,growx");
-
-			JButton btnAgregarAPedido = new JButton("Agregar A Pedido");
-			btnAgregarAPedido.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					ArticleVO nuevo = buscaArticuloString(listaArticulos,
-							textoAutocompletado.getText());
-					ArticleOrderVO aux = new ArticleOrderVO(nuevo, 1);
-					pedidoAux.add(aux);
-					pedidoArticle.add(nuevo);
+		JButton button_2 = new JButton("Agregar a Pedido");
+		button_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (cuentaCantidad() != 0) {
+					agregarAPedido();
 					armarPedido();
-
+					resetearPosicion();
 				}
-			});
-			transparentPanel.add(btnAgregarAPedido,
-			"cell 0 3,alignx center,aligny top");
-			transparentPanelTabla.add(tablePrePedido, "cell 2 1,grow");
+			}
 
-			TransparentPanel transparentPanel_1 = new TransparentPanel();
-			transparentPanelTabla.add(transparentPanel_1, "cell 3 1,grow");
-			transparentPanel_1.setLayout(new MigLayout("", "[grow]",
-			"[grow][][][][grow]"));
+		});
+		double cat = categoria.size();
+		double pos = (cat / 2);
+		if (pos % 1 != 0) {
+			pos = pos - (pos % 1);
+		}
+		int j = 2;
+		for (int i = 0; i < pos; i++) {
+			j = j + 2;
+		}
 
-			Component horizontalStrut_1 = Box.createHorizontalStrut(300);
-			transparentPanel_1.add(horizontalStrut_1, "cell 0 0");
+		transparentPanelPedido.add(button_2, "cell 5 " + j);
 
-			JLabel lblNombre = new JLabel("Nombre");
-			lblNombre.setForeground(Color.WHITE);
-			transparentPanel_1.add(lblNombre, "cell 0 1,alignx center");
-
-			textFieldEliminar = new TextFieldAutocompletar(devuelvePedido());
-			textFieldEliminar.setEditable(false);
-			textFieldEliminar.setText("");
-			transparentPanel_1.add(textFieldEliminar, "cell 0 2,growx");
-
-			JButton btnNewButton_1 = new JButton("Eliminar De Lista");
-			btnNewButton_1.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					magic(textFieldEliminar.getText());
-				}
-
-			});
-			transparentPanel_1.add(btnNewButton_1, "cell 0 3,alignx center");
-
-			JButton button_2 = new JButton("Agregar a Pedido");
-			button_2.addMouseListener(new MouseAdapter() {
+		if (mesa != null) {
+			JButton btnFacturar = new JButton("Facturar");
+			btnFacturar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					if (cuentaCantidad() != 0) {
-						agregarAPedido();
-						armarPedido();
-						resetearPosicion();
+					ConfirmFacturar nuevo = null;
+					try {
+						OrderVO toSend = enviarPedido(pedidoAux, mesa,
+								espTotal, user);
+						nuevo = new ConfirmFacturar(toSend.getTable(),
+								devuelve());
+						nuevo.setVisible(true);
+					} catch (NoServerConnectionException e) {
+						MensajeGenerico nuevo1 = new MensajeGenerico(e
+								.getMessage(), CajaPrincipal.this);
+						nuevo1.setVisible(true);
+					} catch (NoDatabaseConnection e) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e
+								.getMessage(), CajaPrincipal.this);
+						nuevoFrame.setVisible(true);
 					}
 				}
-
 			});
-			double cat = categoria.size();
-			double pos = (cat / 2);
-			if (pos % 1 != 0) {
-				pos = pos - (pos % 1);
-			}
-			int j = 2;
-			for (int i = 0; i < pos; i++) {
-				j = j + 2;
-			}
+			transparentPanelBotonera.add(btnFacturar,
+					"cell 2 0,alignx center,aligny center");
 
-			transparentPanelPedido.add(button_2, "cell 5 " + j);
-
-			if (mesa != null) {
-				JButton btnFacturar = new JButton("Facturar");
-				btnFacturar.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						ConfirmFacturar nuevo = null;
-						try{
-							OrderVO toSend = enviarPedido(pedidoAux, mesa, espTotal,
-									user);
-							nuevo = new ConfirmFacturar(toSend
-									.getTable(), devuelve());
-							nuevo.setVisible(true);
-						}catch(NoServerConnectionException e){
-							MensajeGenerico nuevo1 = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-							nuevo1.setVisible(true);
-						}catch(NoDatabaseConnection e){
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-							nuevoFrame.setVisible(true);
-						}
+			JButton btnAgregar = new JButton("Agregar");
+			btnAgregar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					MainUsuario mainUsr = null;
+					try {
+						enviarPedido(pedidoAux, mesa, espTotal, user);
+						mainUsr = new MainUsuario();
+						mainUsr.setVisible(true);
+						MensajeGenerico nuevo = new MensajeGenerico(
+								"Pedido Agregado A Mesa " + mesa.getNumero(),
+								devuelve());
+						nuevo.setVisible(true);
+						cerrar();
+					} catch (NoServerConnectionException e) {
+						MensajeGenerico nuevo = new MensajeGenerico(e
+								.getMessage(), CajaPrincipal.this);
+						nuevo.setVisible(true);
+					} catch (NoDatabaseConnection e) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e
+								.getMessage(), CajaPrincipal.this);
+						nuevoFrame.setVisible(true);
 					}
-				});
-				transparentPanelBotonera.add(btnFacturar,
-				"cell 2 0,alignx center,aligny center");
+				}
+			});
+			transparentPanelBotonera.add(btnAgregar, "cell 2 0");
+		} else {
 
-				JButton btnAgregar = new JButton("Agregar");
-				btnAgregar.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						MainUsuario mainUsr = null;
-						try{
-							enviarPedido(pedidoAux, mesa, espTotal, user);
-							mainUsr = new MainUsuario();
-							mainUsr.setVisible(true);
-							MensajeGenerico nuevo = new MensajeGenerico(
-									"Pedido Agregado A Mesa " + mesa.getNumero(),
-									devuelve());
-							nuevo.setVisible(true);
-							cerrar();
-						}catch(NoServerConnectionException e){
-							MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-							nuevo.setVisible(true);
-						}catch(NoDatabaseConnection e){
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-							nuevoFrame.setVisible(true);
-						}
-					}
-				});
-				transparentPanelBotonera.add(btnAgregar, "cell 2 0");
-			} else {
-
-				JButton btnNewButton = new JButton("Agregar a Mesa");
-				btnNewButton.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						if (pedidoAux.size() == 0) {
-							MensajeGenerico mensaje = new MensajeGenerico(
-									"Pedido Vacio", devuelve());
-							mensaje.setVisible(true);
-						} else {
-							Mesas nueva = null;
-							try{
+			JButton btnNewButton = new JButton("Agregar a Mesa");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					if (pedidoAux.size() == 0) {
+						MensajeGenerico mensaje = new MensajeGenerico(
+								"Pedido Vacio", devuelve());
+						mensaje.setVisible(true);
+					} else {
+						Mesas nueva = null;
+						try {
 							nueva = new Mesas(pedidoAux, espTotal);
 							nueva.setVisible(true);
 							cerrar();
-							}catch(NoDatabaseConnection e){
-								MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-								nuevoFrame.setVisible(true);
-							}catch(NoServerConnectionException e){
-								MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CajaPrincipal.this);
-								nuevoFrame.setVisible(true);
-							}
+						} catch (NoDatabaseConnection e) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e
+									.getMessage(), CajaPrincipal.this);
+							nuevoFrame.setVisible(true);
+						} catch (NoServerConnectionException e) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e
+									.getMessage(), CajaPrincipal.this);
+							nuevoFrame.setVisible(true);
 						}
 					}
+				}
 
-				});
-				transparentPanelBotonera.add(btnNewButton,
-				"cell 2 0,alignx center,aligny center");
+			});
+			transparentPanelBotonera.add(btnNewButton,
+					"cell 2 0,alignx center,aligny center");
+		}
+
+		JButton btnVaciar = new JButton("Vaciar Pedido");
+		btnVaciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				vaciarPedido();
+				armarPedido();
+				cargarAutoEliminar();
 			}
 
-			JButton btnVaciar = new JButton("Vaciar Pedido");
-			btnVaciar.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					vaciarPedido();
-					armarPedido();
-					cargarAutoEliminar();
-				}
+		});
+		transparentPanelBotonera.add(btnVaciar,
+				"cell 1 0,alignx center,aligny center");
 
-			});
-			transparentPanelBotonera.add(btnVaciar,
-			"cell 1 0,alignx center,aligny center");
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				MainUsuario nuevo = new MainUsuario();
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
+		btnVaciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				MainUsuario nuevo = new MainUsuario();
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 
-			JButton btnCancelar = new JButton("Cancelar");
-			btnVaciar.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					cerrar();
-				}
-			});
+		transparentPanelBotonera.add(btnCancelar,
+				"cell 4 0,alignx center,aligny center");
 
-			transparentPanelBotonera.add(btnCancelar,
-			"cell 4 0,alignx center,aligny center");
-
-		//}catch(NoServerConnectionException e){
-		//	MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),null);
-		//	nuevo.setVisible(true);
-		//}
+		// }catch(NoServerConnectionException e){
+		// MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),null);
+		// nuevo.setVisible(true);
+		// }
 	}
 
 	// Metodos Auxiliares
@@ -401,13 +419,15 @@ public class CajaPrincipal extends BasicoUsuario {
 	}
 
 	// Carga Articulos a arraylist
-	public ArrayList<ArticleVO> cargoListado() throws NoServerConnectionException, NoDatabaseConnection {
+	public ArrayList<ArticleVO> cargoListado()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		ArticleMgt test = ServiceFacade.getInstance().getArticleMgt();
 		return test.allArticles();
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<CategoryVO> cargoCategorias()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
@@ -604,7 +624,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	// Creo y envio OrderVO
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
-			TableVO mesa, String esp, UserVO user) throws NoServerConnectionException, NoDatabaseConnection {
+			TableVO mesa, String esp, UserVO user)
+			throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
 		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
 				CurrentUser.getUser(), esp, 0);
