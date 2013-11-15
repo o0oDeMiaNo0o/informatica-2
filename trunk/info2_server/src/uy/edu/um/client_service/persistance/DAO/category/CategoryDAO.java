@@ -32,8 +32,6 @@ public class CategoryDAO {
 			oStatement.execute("INSERT INTO CATEGORIAS (Nombre) " +
 					"VALUES ('"+c.getNombre()+"');");
 			oStatement.close();
-			//Verificacion por consola
-			System.out.println("Categoria agregada correctamente");
 		}
 		catch(SQLException e){
 			throw new NoDatabaseConnection ("No hay conexion con la base de datos");
@@ -61,7 +59,7 @@ public class CategoryDAO {
 			connection= DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias Where Estado = 'Activa';");
 
 			while (oResultSet.next()) {
 
@@ -92,6 +90,20 @@ public class CategoryDAO {
 		}
 
 	}
+	
+	public void deleteCategory(Category c) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement =con.createStatement();
+			oStatement.execute("UPDATE CATEGORIAS set Estado='Eliminada' WHERE idCategorias = "+c.getId()+";");
+			oStatement.close();
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		
+	}
 
 	public boolean existeCategory(String nombre) throws NoDatabaseConnection {
 		boolean check = false;
@@ -99,7 +111,7 @@ public class CategoryDAO {
 		try{
 			connection= DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias WHERE Nombre = '"+nombre+"';");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Categorias WHERE (Nombre = '"+nombre+"') AND (Estado = 'Activa');");
 
 			while (oResultSet.next()) {
 				check = true;
