@@ -17,7 +17,9 @@ public interface CategoryMgt {
 
 	public ArrayList<CategoryVO> allCategories()  throws NoServerConnectionException, NoDatabaseConnection;
 
-	public boolean existCategory(String nombre)  throws NoServerConnectionException, NoDatabaseConnection;
+	public boolean existCategory(String nombre) throws NoServerConnectionException, NoDatabaseConnection;
+
+	public void borrarCateogry(CategoryVO c)  throws NoServerConnectionException, NoDatabaseConnection;
 }
 
 
