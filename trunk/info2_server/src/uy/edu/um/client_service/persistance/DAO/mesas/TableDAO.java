@@ -58,11 +58,35 @@ public class TableDAO {
 		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado = 'Ocupado' WHERE Mesa.idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
-		System.out.println("Mesa "+mesa.getNumero()+", esta ocupada");
-
 		}
 		catch(SQLException e){
 			e.printStackTrace();
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
+		}
+	}
+	
+	public void deleteMesa(Table mesa) throws NoDatabaseConnection{
+		Connection con =  null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			oStatement.execute("UPDATE MESA set Estado = 'Eliminada' Where Mesa.idMesa = "+mesa.getNumero()+";");
+			oStatement.close();
+			
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -112,7 +136,7 @@ public class TableDAO {
 	try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
 		Statement oStatement = con.createStatement();
-		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa");
+		ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Mesa Where Estado <> 'Eliminada';");
 		while (oResultSet.next()) {
 			boolean oc=false;
 			int nid = oResultSet.getInt(1);
@@ -134,7 +158,7 @@ public class TableDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 			}
 		}
