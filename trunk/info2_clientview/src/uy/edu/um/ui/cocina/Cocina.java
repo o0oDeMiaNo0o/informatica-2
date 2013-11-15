@@ -135,11 +135,11 @@ public class Cocina extends JFrame {
 
 	private String tiempoEspera(Date date) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
+		//calendar.setTime(date);
 		int horasC = calendar.HOUR_OF_DAY;
 		int minutosC = calendar.MINUTE;
 		int segundosC = calendar.SECOND;
-		System.out.println(String.valueOf(date.getTime()));
+		//System.out.println(String.valueOf(date.getTime()));
 
 		System.out.println(horasC);
 		return String.valueOf(horasC + ":" + minutosC + ":" + segundosC);
