@@ -196,7 +196,7 @@ public class Cocina extends JFrame {
 					"cell 1 0,alignx center,aligny center");
 		}
 		// Musica
-		// Musica nuevo = new Musica();
+		Musica nuevo = new Musica();
 
 	}
 
