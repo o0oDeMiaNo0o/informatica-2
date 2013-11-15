@@ -259,6 +259,23 @@ INSERT INTO `Info2`.`Clientes`
 `Telefono`,
 `Descuento`)
 VALUES
+(1,
+'Cliente no Registrdo',
+'',
+'',
+'',
+0,
+0);
+
+INSERT INTO `Info2`.`Clientes`
+(`Ci`,
+`Nombre`,
+`Apellido`,
+`Mail`,
+`Direccion`,
+`Telefono`,
+`Descuento`)
+VALUES
 (4377032,
 'Matias',
 'Garcia',
