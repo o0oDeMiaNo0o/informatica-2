@@ -23,4 +23,6 @@ public interface DeliveryMgt {
 	public void enViaje(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public void facturado(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
+
+	public ArrayList<DeliveryVO> allDeliveries() throws NoServerConnectionException, NoDatabaseConnection;
 }

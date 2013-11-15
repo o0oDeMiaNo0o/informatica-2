@@ -36,7 +36,7 @@ public class DeliveryMgr implements DeliveryMgt{
 					.lookup(sObjectService);
 			oDeliveryRemoteMgt.addDelivery(d);
 		} catch (Exception e) {
-			System.err.println("error:");
+			e.printStackTrace();
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 					"y abrirlo nuevamente");
 		}
@@ -109,6 +109,25 @@ public class DeliveryMgr implements DeliveryMgt{
 	public DeliveryVO createDeliveryVO(ArrayList<ArticleOrderVO> articles,
 			Date time, UserVO user, String specs, int estado, boolean enCocina) {
 		return new DeliveryVO(articles,time,user,specs,estado,enCocina);
+	}
+
+	@Override
+	public ArrayList<DeliveryVO> allDeliveries()
+			throws NoServerConnectionException, NoDatabaseConnection {
+		ArrayList<DeliveryVO> allDeliveries = new ArrayList<DeliveryVO>(2);
+		try {
+			String sObjectService = "DeliveryRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
+					.lookup(sObjectService);
+			allDeliveries = oDeliveryRemoteMgt.allDeliveries();
+			//System.out.println("articulo agregado");
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+					"y abrirlo nuevamente");
+
+		}
+		return allDeliveries;
 	}
 
 }

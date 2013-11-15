@@ -1,5 +1,6 @@
 package uy.edu.um.services.bill.interfaces;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -11,7 +12,7 @@ import uy.edu.um.value_object.table.TableVO;
 
 public interface BillMgt {
 
-	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t);
+	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t, BigDecimal montoTotal);
 
 	public void addBillVO(BillVO b) throws NoServerConnectionException, NoDatabaseConnection;
 

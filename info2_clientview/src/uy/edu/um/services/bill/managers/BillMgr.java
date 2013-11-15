@@ -1,5 +1,6 @@
 package uy.edu.um.services.bill.managers;
 
+import java.math.BigDecimal;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class BillMgr implements BillMgt{
 	}
 
 	@Override
-	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t) {
+	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t, BigDecimal montoTotal) {
 		BillVO toReturn = new BillVO(orders,c,t);
 		return toReturn;
 	}
