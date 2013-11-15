@@ -29,5 +29,7 @@ public interface OrderRemoteMgt extends Remote{
 
 	public ArrayList<OrderVO> allOrdersTable(TableVO t) throws RemoteException, NoDatabaseConnection;
 
+	public ArrayList<OrderVO> allDeliveries() throws RemoteException, NoDatabaseConnection;
+
 }
 
