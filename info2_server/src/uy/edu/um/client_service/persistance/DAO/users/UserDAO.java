@@ -148,6 +148,31 @@ public class UserDAO {
 
 		return checked;
 	}
+	
+	public void deleteUser(User u) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			oStatement.execute("UPDATE Users set Vigente = 'Eliminada' Where Users.Username = '"+u.getUsername()+"';");
+			oStatement.close();
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
+		}
+	}
 
 	public ArrayList<User> allUsers() throws NoDatabaseConnection {
 		Connection con = null;
