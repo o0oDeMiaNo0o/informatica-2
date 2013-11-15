@@ -18,8 +18,10 @@ CREATE TABLE `Articles` (
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
+  `Estado` enum('Activa','Eliminada') NOT NULL DEFAULT 'Activa',
   PRIMARY KEY (`idCategorias`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
