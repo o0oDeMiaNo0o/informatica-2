@@ -13,8 +13,6 @@ public interface OrderMgt {
 
 	public void addOrder(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void removeOrder(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
-
 	public OrderVO createOrderVO(ArrayList<ArticleOrderVO> ao, TableVO t, UserVO u, String spec,
 			int estado);
 
