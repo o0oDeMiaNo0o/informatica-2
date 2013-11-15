@@ -56,74 +56,76 @@ public class Mesas extends BasicoUsuario {
 		});
 	}
 
-	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp) throws NoDatabaseConnection, NoServerConnectionException {
-//		try {
-			mesas = cargoMesas();
+	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp)
+			throws NoDatabaseConnection, NoServerConnectionException {
+		// try {
+		mesas = cargoMesas();
 
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 450, 300);
-			getContentPane().setLayout(new BorderLayout(0, 0));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 
-			TransparentPanel transparentPanel = new TransparentPanel();
-			getContentPane().add(transparentPanel);
-			transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
-			"[][][][][][][][grow]"));
+		TransparentPanel transparentPanel = new TransparentPanel();
+		getContentPane().add(transparentPanel);
+		transparentPanel.setLayout(new MigLayout("", "[][][grow][][grow]",
+				"[][][][][][][][grow]"));
 
-			Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
-			transparentPanel.add(rigidArea, "cell 0 0");
+		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
+		transparentPanel.add(rigidArea, "cell 0 0");
 
-			TransparentPanel transparentPanel_1 = new TransparentPanel();
-			getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
 
-			JLabel lblMesas = new JLabel("MESAS");
-			lblMesas.setForeground(Color.WHITE);
-			lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			transparentPanel_1.add(lblMesas);
-			cargaBotones(transparentPanel, pedidoAux, esp);
+		JLabel lblMesas = new JLabel("MESAS");
+		lblMesas.setForeground(Color.WHITE);
+		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+		transparentPanel_1.add(lblMesas);
+		cargaBotones(transparentPanel, pedidoAux, esp);
 
-			ImagePanel imagePanelDelivery = new ImagePanel(delivery);
-			imagePanelDelivery.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					if (pedidoAux != null) {
-						DeliveryVO delivery = new DeliveryVO(pedidoAux, null,
-								CurrentUser.getUser(), esp, 0, false);
-						DeliveryMgt nuevo = ServiceFacade.getInstance()
-						.getDeliveryMgt();
-						// nuevo.addOrder(delivery);
-						MensajeGenerico msg = new MensajeGenerico(
-								"Agregado A Delivery Correctamente",Mesas.this);
-						msg.setVisible(true);
-					} else {
-						TableVO tableDelivery = new TableVO();
-						tableDelivery.setNumero(999);
-						ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
-								esp, Mesas.this);
-						nuevo.setVisible(true);
-					}
+		ImagePanel imagePanelDelivery = new ImagePanel(delivery);
+		imagePanelDelivery.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (pedidoAux != null) {
+					DeliveryVO delivery = new DeliveryVO(pedidoAux, null,
+							CurrentUser.getUser(), esp, 0, false);
+					DeliveryMgt nuevo = ServiceFacade.getInstance()
+							.getDeliveryMgt();
+					// nuevo.addOrder(delivery);
+					MensajeGenerico msg = new MensajeGenerico(
+							"Agregado A Delivery Correctamente", Mesas.this);
+					msg.setVisible(true);
+				} else {
+					TableVO tableDelivery = new TableVO();
+					tableDelivery.setNumero(999);
+					ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
+							esp, Mesas.this);
+					nuevo.setVisible(true);
 				}
-			});
-			transparentPanel.add(imagePanelDelivery,
-			"cell 1 1,alignx center,aligny center");
-			imagePanelDelivery.setLayout(new MigLayout("", "[150px]", "[100px]"));
-			JLabel lblNewLabel = new JLabel("DELIVERY");
-			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-			imagePanelDelivery.add(lblNewLabel,
-			"cell 0 0,alignx center,aligny center");
+			}
+		});
+		transparentPanel.add(imagePanelDelivery,
+				"cell 1 1,alignx center,aligny center");
+		imagePanelDelivery.setLayout(new MigLayout("", "[150px]", "[100px]"));
+		JLabel lblNewLabel = new JLabel("DELIVERY");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		imagePanelDelivery.add(lblNewLabel,
+				"cell 0 0,alignx center,aligny center");
 
-			TransparentPanel transparentPanel_2 = new TransparentPanel();
-			getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
-			transparentPanel_2
-			.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
+		TransparentPanel transparentPanel_2 = new TransparentPanel();
+		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
+		transparentPanel_2
+				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
 
-			JButton btnNewButton = new JButton("Cancelar");
-			transparentPanel_2.add(btnNewButton,
-			"cell 0 0,alignx right,aligny center");
-			;
-//		} catch (NoServerConnectionException e1) {
-//			MensajeGenerico newFrame = new MensajeGenerico(e1.getMessage(),devuelve());
-//			newFrame.setVisible(true);
-//		}
+		JButton btnNewButton = new JButton("Cancelar");
+		transparentPanel_2.add(btnNewButton,
+				"cell 0 0,alignx right,aligny center");
+		;
+		// } catch (NoServerConnectionException e1) {
+		// MensajeGenerico newFrame = new
+		// MensajeGenerico(e1.getMessage(),devuelve());
+		// newFrame.setVisible(true);
+		// }
 	}
 
 	// Metodos auxiliares
@@ -159,20 +161,24 @@ public class Mesas extends BasicoUsuario {
 					imagePanel.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
-							try{
-							if (mesa.isOcupado()) {
-								MesaPedido nuevo = new MesaPedido(mesa);
-								nuevo.setVisible(true);
-							} else {
-								OrderVO toSend = enviarPedido(pedidoAux, mesa,
-										esp, CurrentUser.getUser());
-								ConfirmMesa conf = new ConfirmMesa(mesa,
-										toSend, "Confirma Seleccion De : Mesa "
-												+ nom2 + " ?", devuelve());
-								conf.setVisible(true);
-							}
-							}catch(NoDatabaseConnection e1){
-								MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),Mesas.this);
+							try {
+								if (mesa.isOcupado()) {
+
+									MesaPedido nuevo = new MesaPedido(mesa);
+									nuevo.setVisible(true);
+									cerrar();
+								} else {
+									OrderVO toSend = enviarPedido(pedidoAux,
+											mesa, esp, CurrentUser.getUser());
+									ConfirmMesa conf = new ConfirmMesa(mesa,
+											toSend,
+											"Confirma Seleccion De : Mesa "
+													+ nom2 + " ?", devuelve());
+									conf.setVisible(true);
+								}
+							} catch (NoDatabaseConnection e1) {
+								MensajeGenerico nuevo = new MensajeGenerico(e1
+										.getMessage(), Mesas.this);
 								nuevo.setVisible(true);
 							}
 						}
@@ -190,7 +196,7 @@ public class Mesas extends BasicoUsuario {
 					}
 					n++;
 
-				}else{
+				} else {
 					n++;
 				}
 
@@ -213,7 +219,8 @@ public class Mesas extends BasicoUsuario {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException, NoDatabaseConnection{
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException,
+			NoDatabaseConnection {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
 

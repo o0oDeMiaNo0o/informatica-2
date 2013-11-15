@@ -76,7 +76,7 @@ public class Cocina extends JFrame {
 		TransparentPanel transparentPanel = new TransparentPanel();
 		imagePanel.add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
-		"[][263.00][][][][][][grow]"));
+				"[][263.00][][][][][][grow]"));
 
 		// Creo los elementos
 		armarPedido(transparentPanel);
@@ -106,7 +106,8 @@ public class Cocina extends JFrame {
 				panel.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						OpcionesCocina nueva = new OpcionesCocina(orden);
+						OpcionesCocina nueva = new OpcionesCocina(orden,
+								Cocina.this);
 						nueva.setVisible(true);
 					}
 				});
@@ -121,7 +122,8 @@ public class Cocina extends JFrame {
 				transparentPanel_2.add(lblPedido,
 						"cell 1 0,alignx center,aligny center");
 
-				JLabel lblDynamic = new JLabel("Dynamic");
+				JLabel lblDynamic = new JLabel(String.valueOf(arrayOrdenes.get(
+						n).getId()));
 				transparentPanel_2.add(lblDynamic,
 						"cell 2 0,alignx center,aligny center");
 
@@ -149,7 +151,8 @@ public class Cocina extends JFrame {
 				table.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						OpcionesCocina nueva = new OpcionesCocina(orden);
+						OpcionesCocina nueva = new OpcionesCocina(orden,
+								Cocina.this);
 						nueva.setVisible(true);
 					}
 				});
@@ -208,12 +211,13 @@ public class Cocina extends JFrame {
 	}
 
 	// Carga Ordenes
-	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<OrderVO> cargaOrdenes()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}
 
-	public JFrame devuelve(){
+	public JFrame devuelve() {
 		return this;
 	}
 }
