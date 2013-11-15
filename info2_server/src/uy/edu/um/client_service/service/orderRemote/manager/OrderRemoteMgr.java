@@ -93,4 +93,11 @@ public class OrderRemoteMgr implements OrderRemoteMgt{
 
 	}
 
+	@Override
+	public ArrayList<OrderVO> allDeliveries() throws RemoteException,
+			NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		return oMgt.allDeliveries();
+	}
+
 }

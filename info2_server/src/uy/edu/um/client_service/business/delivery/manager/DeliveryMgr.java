@@ -99,9 +99,18 @@ public class DeliveryMgr implements DeliveryMgt{
 
 	@Override
 	public ArrayList<DeliveryVO> allDeliveries() throws NoDatabaseConnection {
+		DeliveryMgt dMgt = BusinessFacade.getInstance().getDeliveryMgt();
 		DeliveryDAO dao = DeliveryDAO.getInstance();
 		ArrayList<Delivery> allDeliveries = new ArrayList<Delivery>(2);
-		return null;
+		ArrayList<DeliveryVO> toReturn = new ArrayList<DeliveryVO>(1);
+		allDeliveries = dao.getDeliverys();
+		for(Delivery d : allDeliveries){
+			if(d!=null){
+				DeliveryVO toAdd = dMgt.getDeliveryVO(d);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
 	}
 
 

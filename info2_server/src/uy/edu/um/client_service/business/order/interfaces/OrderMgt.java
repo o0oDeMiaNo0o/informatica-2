@@ -19,6 +19,8 @@ public interface OrderMgt {
 
 	public ArrayList<OrderVO> allOrders() throws NoDatabaseConnection;
 
+	public ArrayList<OrderVO> allDeliveries() throws NoDatabaseConnection;
+
 	public OrderVO getOrderVO(Order o);
 
 	public ArrayList<OrderVO> getOrderTable(Table t) throws NoDatabaseConnection;
