@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -95,12 +96,6 @@ public class Cocina extends JFrame {
 		transparentPanel_1.add(lblCocina, "cell 1 0");
 
 		// refresh
-		timer = new Timer(5000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Aqu’ el c—digo que queramos ejecutar.
-			}
-		});
-		timer.start();
 
 	}
 
