@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.bill.entities.Bill;
 import uy.edu.um.client_service.business.order.entities.Order;
@@ -16,6 +18,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class BillDAO {
 
 	private static BillDAO instance = null;
+	private final static Logger log = Logger.getLogger(BillDAO.class);
 	
 	public static BillDAO getInstance(){
 		if (instance==null){
@@ -27,6 +30,7 @@ public class BillDAO {
 	@SuppressWarnings("null")
 	public void addBill(Bill b) throws NoDatabaseConnection{
 		Connection con = null;
+		log.info("Intento de agregar una factura");
 		
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -58,10 +62,10 @@ public class BillDAO {
 			}
 			
 			oStatement.close();
-			//Verificacion por consola
-			System.out.println("Factura agregada correctamente");
+			log.info("Factura agregada");
 		}
 		catch(SQLException e){
+			log.error("Error al agregar la factura");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");	
 		}
 		finally{

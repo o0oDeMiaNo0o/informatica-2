@@ -38,7 +38,7 @@ CREATE TABLE `Clientes` (
 CREATE TABLE `Delivery` (
   `idDelivery` int(11) NOT NULL AUTO_INCREMENT,
   `HoraDelivery` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Estado` enum('En Preparacion','Entregado','Rechazado') NOT NULL DEFAULT 'En Preparacion',
+  `Estado` enum('En Preparacion','En Viaje','Rechazado','En cola de espera') NOT NULL DEFAULT 'En cola de espera',
   `Facturas_idFacturas` int(11) DEFAULT NULL,
   `Users_Username` varchar(45) NOT NULL,
   `Especificaciones` varchar(250) NOT NULL,
@@ -47,6 +47,7 @@ CREATE TABLE `Delivery` (
   KEY `fk_Delivery_Facturas1_idx` (`Facturas_idFacturas`),
   KEY `fk_Delivery_Users1_idx` (`Users_Username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
 
 
 CREATE TABLE `Facturas` (

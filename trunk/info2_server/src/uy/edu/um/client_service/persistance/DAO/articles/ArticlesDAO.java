@@ -11,10 +11,12 @@ import uy.edu.um.client_service.business.article.entities.Article;
 import uy.edu.um.client_service.business.categories.entities.Category;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import org.apache.log4j.*;
 
 public class ArticlesDAO {
 
 	private static ArticlesDAO instance = null;
+	private final static Logger log = Logger.getLogger(ArticlesDAO.class);
 
 	//constructor
 	public ArticlesDAO() {
@@ -41,33 +43,49 @@ public class ArticlesDAO {
 		} catch (SQLException e) {
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");	
 		}
+		finally{
+			if (con != null) {
+
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+		}
+		}
 		
 	}
 	
 	public void addArticle(Article articulo, Connection con) throws NoDatabaseConnection{
 		try{
+			log.info("Intento de agregar articulo");
 			Statement oStatement =con.createStatement();
 			oStatement.execute("INSERT INTO ARTICLES ( NAME, PRICE, Categorias_idCategorias) " +
 					"VALUES ('"+articulo.getNombre()+"',"+articulo.getPrecio()+","+articulo.getCategory().getId()+");");
 			oStatement.close();
-			//Verificacion por consola
+			log.info("Articulo agregado");
 		}
 		catch(SQLException e){
+			log.error("Error al agregar articulo");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
+		
 
 	}
 
 	public void deleteArticle(Article articulo) throws NoDatabaseConnection{
 		Connection con = null;
 		try{
+			log.info("Intento de borrar articulo");
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+articulo.getId()+";");
 			oStatement.close();
+			log.info("Articulo Eliminado");
 			//Verificacion por consola
 		}
 		catch(SQLException e){
+			log.error("Error al eliminar articulo");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -86,7 +104,7 @@ public class ArticlesDAO {
 	public ArrayList<Article> getArticles() throws NoDatabaseConnection {
 		Connection con = null;
 		try {
-
+			
 			ArrayList<Article> toReturn = new ArrayList<Article>(10);
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
@@ -105,6 +123,7 @@ public class ArticlesDAO {
 			return toReturn;
 		}
 		catch (SQLException e) {
+			log.error("Error al retirar lista de articulos");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -123,6 +142,7 @@ public class ArticlesDAO {
 	public void editArticle(Article a) throws NoDatabaseConnection{
 		Connection con = null;
 		try{
+			log.info("Intento de editar articulo");
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			if(existeArticle(a.getNombre())){
 				Statement oStatement = con.createStatement();
@@ -131,13 +151,15 @@ public class ArticlesDAO {
 				addArticle(a);
 			}
 			else{
-				// que tire algo
+				log.error("El articulo no existe");
 			}
 
 		}
 		catch(SQLException e){
+			log.error("Error al editar el articulo");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		} catch (NoDatabaseConnection e) {
+			log.error("Error al editar el articulo");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 
 		}
@@ -149,6 +171,7 @@ public class ArticlesDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al cerrar la conexion a la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -156,33 +179,6 @@ public class ArticlesDAO {
 
 	}
 	
-	public Category getCategory(int catId) throws NoDatabaseConnection{
-		Category c =null;
-		Connection con=null;
-		try{
-			con = DatabaseConnectionMgr.getInstance().getConnection();
-			c = getCategory(catId,con);
-		}
-		catch(NoDatabaseConnection n){
-			throw new NoDatabaseConnection("No hay conexion con la base de datos");
-		} catch (SQLException e) {
-			throw new NoDatabaseConnection("No hay conexion con la base de datos");
-		}
-		finally{
-			if (con != null) {
-
-				try {
-
-					con.close();
-
-				} catch (SQLException e) {
-					throw new NoDatabaseConnection("No hay conexion con la base de datos");
-				}
-		}
-		}
-		
-		return c;
-	}
 
 	public Category getCategory(int catId, Connection con) throws NoDatabaseConnection{
 		Category c=null;
@@ -198,6 +194,7 @@ public class ArticlesDAO {
 
 		}
 		catch(SQLException e){
+			log.error("Error al retirar la categoria");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 
 		}
@@ -253,6 +250,7 @@ public class ArticlesDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al cerrar la conexion");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -263,6 +261,7 @@ public class ArticlesDAO {
 	public boolean existeArticle(String nombre, Connection con) throws NoDatabaseConnection{
 		boolean result = false;
 		try {
+			log.info("Chequeando la existencia de un articulo llamado "+nombre+"");
 			Statement oStatement = con.createStatement();
 			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Articles` where Name = '"+nombre+"' "+
 					"and Estado = 'Activo';");
@@ -272,10 +271,27 @@ public class ArticlesDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
+			log.info("El articulo existe");
 		} catch (SQLException e) {
+			log.error("El articulo no existe");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		return result;
+	}
+	
+	public void deleteArticlesCategory(Category c, Connection con) throws NoDatabaseConnection{
+		try{
+			log.info("Intento de borrar todos los articulos de una categoria");
+			Statement oStatement = con.createStatement();
+			oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `Categorias_idCategorias` = "+c.getId()+";");
+			oStatement.close();
+			log.info("Articulos de la categoria eliminados");
+		}
+		catch(SQLException e){
+			log.error("Error al borrar los articulos pertenecientes a la categoria"+c.getNombre()+"");
+			throw new NoDatabaseConnection("No hay conexion a la base de datos");
+		}
+		
 	}
 
 }
