@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -132,6 +135,19 @@ public class CocinaUsuarios extends BasicoUsuario {
 		// }
 	}
 
+	// Cuento tiempo que lleva el pedido
+
+	private String tiempoEspera(Date date) {
+		Calendar cal = new GregorianCalendar();
+		int horaA = cal.get(cal.HOUR_OF_DAY);
+		int minA = cal.get(cal.MINUTE);
+		int horas = date.getHours();
+		int min = date.getMinutes();
+		int HORA = horaA - horas;
+		int MIN = minA - min;
+		return HORA + ":" + MIN;
+	}
+
 	// compara si hay que refrescar pantalla
 	private boolean comparaOrdenes(ArrayList<OrderVO> arrayOrdenesAux) {
 		if (arrayOrdenesAux.size() != arrayOrdenes.size()) {
@@ -154,7 +170,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 				final OrderVO orden = arrayOrdenes.get(n);
 				JPanel panel = new JPanel();
 				panel.setBackground(Color.LIGHT_GRAY);
-				panel.setBorder(new LineBorder(Color.ORANGE, 3));
+				panel.setBorder(new LineBorder(new Color(111, 102, 238), 3));
 				transparentPanel.add(panel, "cell " + i + " " + j + ",grow");
 				panel.setLayout(new BorderLayout(0, 0));
 				panel.addMouseListener(new MouseAdapter() {
@@ -183,11 +199,11 @@ public class CocinaUsuarios extends BasicoUsuario {
 				Component horizontalStrut = Box.createHorizontalStrut(20);
 				transparentPanel_2.add(horizontalStrut, "cell 3 0");
 
-				JLabel lblTiempo = new JLabel("Tiempo:");
+				JLabel lblTiempo = new JLabel("Tiempo (HH:MM) :");
 				transparentPanel_2.add(lblTiempo,
 						"cell 4 0,alignx center,aligny center");
 
-				JLabel lblDynamic_1 = new JLabel("Dynamic");
+				JLabel lblDynamic_1 = new JLabel(tiempoEspera(orden.getTime()));
 				transparentPanel_2.add(lblDynamic_1,
 						"cell 5 0,alignx center,aligny center");
 
@@ -207,8 +223,8 @@ public class CocinaUsuarios extends BasicoUsuario {
 						nueva.setVisible(true);
 					}
 				});
-				table.setBorder(new LineBorder(new Color(255, 200, 0)));
-				table.setBackground(Color.LIGHT_GRAY);
+				table.setBorder(new LineBorder(new Color(111, 102, 238)));
+				table.setBackground(Color.WHITE);
 
 				Object[][] aux = armarTabla(arrayOrdenes.get(n).getArticulos());
 				table.setModel(new DefaultTableModel(aux, new String[] {
