@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -17,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,7 +33,6 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
@@ -39,6 +42,7 @@ public class Cocina extends JFrame {
 	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes;
+	Timer timer = null;
 
 	/**
 	 * Launch the application.
@@ -73,7 +77,7 @@ public class Cocina extends JFrame {
 		contentPane.add(imagePanel, BorderLayout.CENTER);
 		imagePanel.setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
+		final TransparentPanel transparentPanel = new TransparentPanel();
 		imagePanel.add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
 				"[][263.00][][][][][][grow]"));
@@ -89,6 +93,14 @@ public class Cocina extends JFrame {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
+
+		// refresh
+		timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Aqu’ el c—digo que queramos ejecutar.
+			}
+		});
+		timer.start();
 
 	}
 
@@ -152,7 +164,7 @@ public class Cocina extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						OpcionesCocina nueva = new OpcionesCocina(orden,
-								Cocina.this);
+								devuelve());
 						nueva.setVisible(true);
 					}
 				});
@@ -183,8 +195,8 @@ public class Cocina extends JFrame {
 			transparentPanel.add(lblPedido,
 					"cell 1 0,alignx center,aligny center");
 		}
-
-		Musica nuevo = new Musica();
+		// Musica
+		// Musica nuevo = new Musica();
 
 	}
 
