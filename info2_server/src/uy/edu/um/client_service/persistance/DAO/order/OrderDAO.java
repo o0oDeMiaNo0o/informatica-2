@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
 import uy.edu.um.client_service.business.order.entities.Order;
 import uy.edu.um.client_service.business.table.entities.Table;
@@ -20,6 +22,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class OrderDAO {
 
 	private static OrderDAO instance = null;
+	private final static Logger log = Logger.getLogger(OrderDAO.class);
 	
 	public static OrderDAO getInstance(){
 		if (instance == null){
@@ -49,10 +52,10 @@ public class OrderDAO {
 			}
 
 			oStatement.close();
-			//Verificacion por consola
-			//System.out.println("Orden agregada correctamente");
+			log.info("Orden agregada correctamente");
 		}
 		catch(SQLException e){
+			log.info("Error al agregar la orden");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -63,6 +66,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -90,8 +94,10 @@ public class OrderDAO {
 			}
 
 			oStatement.close();
+			log.info("Orden agregada al delivery correctamente");
 		}
 		catch(SQLException e){
+			log.error("Error al agregar pedido al delivery");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -102,6 +108,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -118,20 +125,19 @@ public class OrderDAO {
 			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE Pedido SET `Estado` = '"+estado+"' WHERE Pedido.idpedido="+o.getId()+";");
 			oStatement.close();
-			// Consola
-			System.out.println("El pedido "+o.getId()+" esta "+estado+".");
+			log.info("El pedido "+o.getId()+" esta "+estado+".");
 
 		} catch (SQLException e) {
+			log.error("Error al cambiar el estado del pedido "+o.getId()+"");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
 
 				try {
-
 					con.close();
-
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -169,8 +175,10 @@ public class OrderDAO {
 
 			oResultSet.close();
 			oStatement.close();
+			log.info("Lista de todos los deliverys entregada");
 		}
 			 catch (SQLException e) {
+				 log.error("Error al levantar lista de deliverys");
 				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -181,6 +189,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -188,7 +197,6 @@ public class OrderDAO {
 		return toReturn;
 	}
 
-	// Esto hay que ver, porque para mostrar las ordenes a la cocina solo me importarian las "En preparacion" o algo de eso
 
 	public ArrayList<Order> getOrders() throws NoDatabaseConnection {
 		ArrayList<Order> toReturn = new ArrayList<Order>();
@@ -219,8 +227,10 @@ public class OrderDAO {
 
 			oResultSet.close();
 			oStatement.close();
+			log.info("Entregada lista de todos los pedidos");
 		}
 			 catch (SQLException e) {
+				 log.error("Error al levantar lista de todos los pedidos");
 				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -231,6 +241,7 @@ public class OrderDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -269,14 +280,17 @@ public class OrderDAO {
 
 			oResultSet.close();
 			oStatement.close();
+			log.info("Obtenidas las ordenes de la mesa "+t.getNumero()+"");
 		}
 			 catch (SQLException e) {
+				 log.error("Error al obtener ordenes de mesa "+t.getNumero()+"");
 				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		} finally {
 
 			try {
 				con.close();
 			} catch (SQLException e) {
+				log.error("Error al finalizar la conexion con la base de datos");
 				throw new NoDatabaseConnection("No hay conexion con la base de datos");
 			}
 
