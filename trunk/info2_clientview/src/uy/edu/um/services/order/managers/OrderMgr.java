@@ -53,12 +53,6 @@ public class OrderMgr implements OrderMgt{
 	}
 
 	@Override
-	public void removeOrder(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection  {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public ArrayList<OrderVO> allOrders()  throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
 		try {

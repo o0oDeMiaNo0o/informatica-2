@@ -33,12 +33,10 @@ public class BillMgr implements BillMgt{
 			String host = ServiceFacade.getInstance().getHost();
 			String sObjectService = "BillRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(host, ServiceFacade.getInstance().getPort());
-			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry
-					.lookup(sObjectService);
+			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry.lookup(sObjectService);
 			oBillRemoteMgt.addBill(b);
-			System.out.println("Factura agregada");
 		} catch (Exception e) {
-			System.err.println("error:");
+			e.printStackTrace();
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 				"y abrirlo nuevamente");
 		}
