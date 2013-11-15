@@ -1,6 +1,5 @@
 package uy.edu.um.services.user.interfaces;
 
-import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.ErrorLoginException;
