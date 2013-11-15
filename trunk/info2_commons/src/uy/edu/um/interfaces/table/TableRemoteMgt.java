@@ -22,7 +22,7 @@ public interface TableRemoteMgt extends Remote{
 
 	public void setOcupado(TableVO t) throws RemoteException, NoDatabaseConnection;
 
-	public void removeTable(TableVO t) throws RemoteException;
+	public void removeTable(TableVO t) throws RemoteException, NoDatabaseConnection;
 
 	public void setLibre(TableVO t) throws RemoteException, NoDatabaseConnection;
 

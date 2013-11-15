@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.value_object.categories.CategoryVO;
 
 public interface CategoryRemoteMgt extends Remote{
@@ -14,4 +15,6 @@ public interface CategoryRemoteMgt extends Remote{
 	public ArrayList<CategoryVO> allCategories() throws RemoteException, NoDatabaseConnection;
 
 	public boolean existsCategory(String nombre) throws RemoteException, NoDatabaseConnection;
+
+	public void eliminarCategory(CategoryVO c) throws RemoteException, NoDatabaseConnection;
 }
