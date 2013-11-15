@@ -91,7 +91,7 @@ public class CategoryList extends BasicoAdmin {
 				if (buscaCategoria(textFieldID.getText())) {
 					CategoryMgt nuevo = ServiceFacade.getInstance()
 							.getCategoryMgt();
-					// nuevo.
+					//nuevo.
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Categoria No Existe", devuelve());

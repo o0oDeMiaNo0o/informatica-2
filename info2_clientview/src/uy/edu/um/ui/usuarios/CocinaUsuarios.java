@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,6 +41,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 	private JTable table;
 	private ArrayList<OrderVO> arrayOrdenes;
+	Timer timer = null;
 
 	/**
 	 * Launch the application.
@@ -70,7 +74,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 		contentPane.add(imagePanel, BorderLayout.CENTER);
 		imagePanel.setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
+		final TransparentPanel transparentPanel = new TransparentPanel();
 		imagePanel.add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
 				"[][263.00][][][][][][grow]"));
@@ -86,6 +90,32 @@ public class CocinaUsuarios extends BasicoUsuario {
 		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<OrderVO> arrayOrdenesAux = null;
+				try {
+					// Cargo ordenes
+					arrayOrdenesAux = cargaOrdenes();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				// armo los pedidos
+				if (comparaOrdenes(arrayOrdenesAux)) {
+					arrayOrdenes = arrayOrdenesAux;
+					transparentPanel.removeAll();
+					armarPedido(transparentPanel);
+					transparentPanel.invalidate();
+					transparentPanel.validate();
+					transparentPanel.repaint();
+				}
+
+			}
+
+		});
 
 		// catch(NoServerConnectionException e ){
 		// MensajeGenerico nuevo = new
@@ -96,6 +126,20 @@ public class CocinaUsuarios extends BasicoUsuario {
 		// MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
 		// nuevoFrame.setVisible(true);
 		// }
+	}
+
+	// compara si hay que refrescar pantalla
+	private boolean comparaOrdenes(ArrayList<OrderVO> arrayOrdenesAux) {
+		if (arrayOrdenesAux.size() != arrayOrdenes.size()) {
+			return true;
+		} else {
+			for (int i = 0; i < arrayOrdenes.size(); i++) {
+				if (arrayOrdenes.get(i) != arrayOrdenesAux.get(i)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void armarPedido(JPanel transparentPanel) {

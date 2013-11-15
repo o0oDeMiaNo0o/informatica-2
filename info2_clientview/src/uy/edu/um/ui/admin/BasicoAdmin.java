@@ -24,6 +24,7 @@ import uy.edu.um.ui.admin.creacion.NewClientA;
 import uy.edu.um.ui.admin.creacion.NewProduct;
 import uy.edu.um.ui.admin.creacion.NewTable;
 import uy.edu.um.ui.admin.creacion.NewUser;
+import uy.edu.um.ui.admin.listas.CategoryList;
 import uy.edu.um.ui.admin.listas.ClientList;
 import uy.edu.um.ui.admin.listas.ProductList;
 import uy.edu.um.ui.admin.listas.TableList;
@@ -96,6 +97,7 @@ public class BasicoAdmin extends JFrame {
 				try {
 					nuevo = new NewProduct();
 					nuevo.setVisible(true);
+					cerrar();
 				} catch (NoServerConnectionException e) {
 					MensajeGenerico nuevo1 = new MensajeGenerico(
 							e.getMessage(), BasicoAdmin.this);
@@ -116,10 +118,10 @@ public class BasicoAdmin extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				ProductList nuevo = null;
-				try{
-				nuevo = new ProductList();
-				nuevo.setVisible(true);
-				cerrar();
+				try {
+					nuevo = new ProductList();
+					nuevo.setVisible(true);
+					cerrar();
 				} catch (NoServerConnectionException e) {
 					MensajeGenerico nuevo1 = new MensajeGenerico(
 							e.getMessage(), BasicoAdmin.this);
@@ -149,6 +151,23 @@ public class BasicoAdmin extends JFrame {
 		mnCategorias.add(menuItem_1);
 
 		JMenuItem menuItem_3 = new JMenuItem("Eliminar Categor\u00EDa");
+		menuItem_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				CategoryList nuevo = null;
+				try {
+					nuevo = new CategoryList();
+				} catch (NoDatabaseConnection e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoServerConnectionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		mnCategorias.add(menuItem_3);
 
 		JMenu menuMesas = new JMenu("Mesas");
@@ -206,6 +225,7 @@ public class BasicoAdmin extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				NewUser nuevo = new NewUser();
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		Usuarios.add(mntmNuevoUsuario);
@@ -264,6 +284,7 @@ public class BasicoAdmin extends JFrame {
 							e.getMessage(), BasicoAdmin.this);
 					nuevo1.setVisible(true);
 				}
+				cerrar();
 
 			}
 		});
@@ -284,6 +305,7 @@ public class BasicoAdmin extends JFrame {
 					e1.printStackTrace();
 				}
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		mnClientes.add(mntmListadoClientes);
@@ -303,6 +325,7 @@ public class BasicoAdmin extends JFrame {
 				ConfirmSesion nuevo = new ConfirmSesion("Desea Cerrar Sesion?",
 						ventana());
 				nuevo.setVisible(true);
+				cerrar();
 			}
 		});
 		menuItem_7.setForeground(Color.BLACK);

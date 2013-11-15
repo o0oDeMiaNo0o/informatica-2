@@ -2,12 +2,18 @@ package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,7 +35,6 @@ import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.CurrentUser;
-import uy.edu.um.ui.clasesAuxiliares.Java2sAutoComboBox;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.ConfirmFacturar;
@@ -39,12 +45,6 @@ import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.util.List;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class CajaPrincipal extends BasicoUsuario {
 
@@ -74,7 +74,8 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	private String[] textos;
 	private JTable tablePrePedido;
-	TextFieldAutocompletar textFieldEliminar;
+	private TextFieldAutocompletar textFieldEliminar;
+	private Timer timer = null;
 
 	/**
 	 * Launch the application.
@@ -98,8 +99,9 @@ public class CajaPrincipal extends BasicoUsuario {
 	 * @throws NoServerConnectionException
 	 * @throws NoDatabaseConnection
 	 */
-	public CajaPrincipal(ArrayList<ArticleOrderVO> pedido, final TableVO mesa)
-			throws NoServerConnectionException, NoDatabaseConnection {
+	public CajaPrincipal(final ArrayList<ArticleOrderVO> pedido,
+			final TableVO mesa) throws NoServerConnectionException,
+			NoDatabaseConnection {
 		// try{
 		listaArticulos = cargoListado();
 		categoria = cargoCategorias();
@@ -116,7 +118,7 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		setTitle("Pedido");
 
-		TransparentPanel transparentPanelPedido = new TransparentPanel();
+		final TransparentPanel transparentPanelPedido = new TransparentPanel();
 		getContentPane().add(transparentPanelPedido, BorderLayout.NORTH);
 		transparentPanelPedido.setLayout(new MigLayout("", "[][][][][grow][]",
 				"[][][][][][][][][][][][][][grow]"));
@@ -131,7 +133,9 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.add(lblEspecificaciones,
 				"cell 4 1,alignx center,aligny center");
 
+		// Creo los elementes categorias y articulso de cada uno
 		creaElementos(transparentPanelPedido);
+		//
 
 		TransparentPanel transparentPanelBotonera = new TransparentPanel();
 		getContentPane().add(transparentPanelBotonera, BorderLayout.SOUTH);
@@ -149,8 +153,10 @@ public class CajaPrincipal extends BasicoUsuario {
 		tablePrePedido.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePrePedido.setEnabled(false);
 		tablePrePedido.setRowSelectionAllowed(false);
-		armarPedido(); // Creo Tabla Con Pedido Actual
 
+		//
+		armarPedido(); // Creo Tabla Con Pedido Actual
+		//
 		TransparentPanel transparentPanel = new TransparentPanel();
 		transparentPanelTabla.add(transparentPanel, "cell 1 1,grow");
 		transparentPanel.setLayout(new MigLayout("", "[]", "[][grow][][grow]"));
@@ -211,30 +217,6 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		});
 		transparentPanel_1.add(btnNewButton_1, "cell 0 3,alignx center");
-
-		JButton button_2 = new JButton("Agregar a Pedido");
-		button_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (cuentaCantidad() != 0) {
-					agregarAPedido();
-					armarPedido();
-					resetearPosicion();
-				}
-			}
-
-		});
-		double cat = categoria.size();
-		double pos = (cat / 2);
-		if (pos % 1 != 0) {
-			pos = pos - (pos % 1);
-		}
-		int j = 2;
-		for (int i = 0; i < pos; i++) {
-			j = j + 2;
-		}
-
-		transparentPanelPedido.add(button_2, "cell 5 " + j);
 
 		if (mesa != null) {
 			JButton btnFacturar = new JButton("Facturar");
@@ -354,6 +336,34 @@ public class CajaPrincipal extends BasicoUsuario {
 
 		transparentPanelBotonera.add(btnCancelar,
 				"cell 4 0,alignx center,aligny center");
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					listaArticulos.clear();
+					categoria.clear();
+					listaArticulos = cargoListado();
+					categoria = cargoCategorias();
+					transparentPanelPedido.removeAll();
+					creaElementos(transparentPanelPedido);
+					transparentPanelPedido.invalidate();
+					transparentPanelPedido.validate();
+					transparentPanelPedido.repaint();
+
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+		});
+
+		timer.start();
 
 		// }catch(NoServerConnectionException e){
 		// MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),null);
@@ -476,6 +486,29 @@ public class CajaPrincipal extends BasicoUsuario {
 
 				// coleccion.add(lblTemp);
 			}
+			JButton button_2 = new JButton("Agregar a Pedido");
+			button_2.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					if (cuentaCantidad() != 0) {
+						agregarAPedido();
+						armarPedido();
+						resetearPosicion();
+					}
+				}
+
+			});
+			double cat = categoria.size();
+			double pos = (cat / 2);
+			if (pos % 1 != 0) {
+				pos = pos - (pos % 1);
+			}
+			int m = 2;
+			for (int i = 0; i < pos; i++) {
+				m = m + 2;
+			}
+
+			a.add(button_2, "cell 5 " + m);
 		} else {
 			JLabel lblTemp = new JLabel(
 					"NO EXISTEN CATEGORIAS (MENUS/Agregar Nuevo)");
