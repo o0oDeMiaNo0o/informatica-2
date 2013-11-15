@@ -23,7 +23,7 @@ public interface TableMgt {
 
 	public TableVO getTableVO(Table t);
 
-	public void removeTable(Table t);
+	public void removeTable(Table t) throws NoDatabaseConnection;
 
 	public void setOcupado(Table t) throws NoDatabaseConnection;
 
