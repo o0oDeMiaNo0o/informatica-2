@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -14,6 +16,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class TableDAO {
 
 	private static TableDAO instance = null;
+	private final static Logger log = Logger.getLogger(TableDAO.class);
 	
 	public static TableDAO getInstance(){
 		if (instance == null){
@@ -24,16 +27,18 @@ public class TableDAO {
 
 	public void addTable() throws NoDatabaseConnection{
 		Connection con =null;
+		log.info("Agregando mesa");
 
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO Mesa (Estado) VALUES (DEFAULT);");
 			oStatement.close();
-			//Verificacion por consola
+			log.info("Mesa Agregada");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			log.error("Error al agregar una mesa");
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -43,6 +48,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -58,9 +64,11 @@ public class TableDAO {
 		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado = 'Ocupado' WHERE Mesa.idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
+		log.info("Mesa "+mesa.getNumero()+" ahora esta Ocupada");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			log.error("Error al cambiar el estado de la mesa");
+			throw new NoDatabaseConnection("No hay conexion a la base de datos");
 		}
 		finally{
 			if (con != null) {
@@ -70,6 +78,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -83,9 +92,11 @@ public class TableDAO {
 			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE MESA set Estado = 'Eliminada' Where Mesa.idMesa = "+mesa.getNumero()+";");
 			oStatement.close();
+			log.info("Mesa "+mesa.getNumero()+" eliminada");
 			
 		}
 		catch(SQLException e){
+			log.error("Error al eliminar la mesa");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -96,6 +107,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -109,11 +121,11 @@ public class TableDAO {
 		Statement oStatement = con.createStatement();
 		oStatement.execute("UPDATE MESA set Estado='Libre' WHERE idMesa = "+mesa.getNumero()+";");
 		oStatement.close();
-		System.out.println("Mesa "+mesa.getNumero()+", esta libre");
-
+		log.info("Mesa "+mesa.getNumero()+" esta libre");
 		}
 		catch(SQLException e){
-			e.printStackTrace();
+			log.error("Error al cambiar el estado de la mesa");
+			throw new NoDatabaseConnection("No hay conexion con el servidor");
 		}
 		finally{
 			if (con != null) {
@@ -123,6 +135,7 @@ public class TableDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -149,8 +162,10 @@ public class TableDAO {
 		}
 		oResultSet.close();
 		oStatement.close();
+		log.info("Entregado lista de mesas");
 		}
 		catch(SQLException e){
+			log.error("Error al retirar estados de las mesas");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -158,6 +173,7 @@ public class TableDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
+					log.error("Error al finaliza la conexion a la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 			}
@@ -188,6 +204,7 @@ public class TableDAO {
 		oStatement.close();
 	}
 	catch (SQLException e) {
+		log.error("Error al buscar la mesa "+id+"");
 		throw new NoDatabaseConnection("No hay conexion con la base de datos");
 	}
 
