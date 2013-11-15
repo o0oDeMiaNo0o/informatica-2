@@ -43,6 +43,7 @@ public class BillVO implements Serializable{
 	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t){
 		this.orders = orders;
 		this.client = client;
+		this.table = t;
 		this.montoTotal = this.getTotal();
 	}
 
@@ -84,7 +85,9 @@ public class BillVO implements Serializable{
 			for(ArticleOrderVO a : articles){
 				ArticleVO currentArticle = a.getArticle();
 				BigDecimal currentPrice = currentArticle.getPrecio();
-				total = currentPrice.add(currentPrice);
+				BigDecimal cantidad = new BigDecimal(a.getCantidad());
+				BigDecimal aux = currentPrice.multiply(cantidad);
+				total = currentPrice.add(aux);
 			}
 		}
 		return total;
