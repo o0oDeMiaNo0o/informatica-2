@@ -11,8 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.TimerTask;
+import java.util.Calendar;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -20,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -83,8 +83,37 @@ public class Cocina extends JFrame {
 		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
 				"[][263.00][][][][][][grow]"));
 
-		// Creo los elementos
+		// armo los pedidos
 		armarPedido(transparentPanel);
+
+		// refresh
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<OrderVO> arrayOrdenesAux = null;
+				try {
+					// Cargo ordenes
+					arrayOrdenesAux = cargaOrdenes();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				// armo los pedidos
+				if (comparaOrdenes(arrayOrdenesAux)) {
+					arrayOrdenes = arrayOrdenesAux;
+					transparentPanel.removeAll();
+					armarPedido(transparentPanel);
+					transparentPanel.invalidate();
+					transparentPanel.validate();
+					transparentPanel.repaint();
+				}
+
+			}
+
+		});
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		imagePanel.add(transparentPanel_1, BorderLayout.NORTH);
@@ -95,10 +124,42 @@ public class Cocina extends JFrame {
 		lblCocina.setForeground(Color.WHITE);
 		transparentPanel_1.add(lblCocina, "cell 1 0");
 
-		// refresh
+		// Musica
+		Musica nuevo = new Musica();
+
+		this.timer.start();
 
 	}
 
+	// Cuento tiempo que lleva el pedido
+
+	private String tiempoEspera(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int horasC = calendar.HOUR_OF_DAY;
+		int minutosC = calendar.MINUTE;
+		int segundosC = calendar.SECOND;
+		System.out.println(String.valueOf(date.getTime()));
+
+		System.out.println(horasC);
+		return String.valueOf(horasC + ":" + minutosC + ":" + segundosC);
+	}
+
+	// compara si hay que refrescar pantalla de ordenes
+	private boolean comparaOrdenes(ArrayList<OrderVO> arrayOrdenesAux) {
+		if (arrayOrdenesAux.size() != arrayOrdenes.size()) {
+			return true;
+		} else {
+			for (int i = 0; i < arrayOrdenes.size(); i++) {
+				if (arrayOrdenes.get(i) != arrayOrdenesAux.get(i)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Arma el pedido para mostrar
 	private void armarPedido(JPanel transparentPanel) {
 		if (arrayOrdenes.size() != 0) {
 			int i = 1, j = 1;
@@ -141,7 +202,7 @@ public class Cocina extends JFrame {
 				transparentPanel_2.add(lblTiempo,
 						"cell 4 0,alignx center,aligny center");
 
-				JLabel lblDynamic_1 = new JLabel("Dynamic");
+				JLabel lblDynamic_1 = new JLabel(tiempoEspera(orden.getTime()));
 				transparentPanel_2.add(lblDynamic_1,
 						"cell 5 0,alignx center,aligny center");
 
@@ -190,8 +251,6 @@ public class Cocina extends JFrame {
 			transparentPanel.add(lblPedido,
 					"cell 1 0,alignx center,aligny center");
 		}
-		// Musica
-		Musica nuevo = new Musica();
 
 	}
 
