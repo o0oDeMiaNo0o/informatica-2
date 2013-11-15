@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
@@ -158,15 +159,14 @@ public class Cocina extends JFrame {
 	// Cuento tiempo que lleva el pedido
 
 	private String tiempoEspera(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		// calendar.setTime(date);
-		int horasC = calendar.HOUR_OF_DAY;
-		int minutosC = calendar.MINUTE;
-		int segundosC = calendar.SECOND;
-		// System.out.println(String.valueOf(date.getTime()));
-
-		System.out.println(horasC);
-		return String.valueOf(horasC + ":" + minutosC + ":" + segundosC);
+		Calendar cal = new GregorianCalendar();
+		int horaA = cal.get(cal.HOUR_OF_DAY);
+		int minA = cal.get(cal.MINUTE);
+		int horas = date.getHours();
+		int min = date.getMinutes();
+		int HORA = horaA - horas;
+		int MIN = minA - min;
+		return HORA + ":" + MIN;
 	}
 
 	// compara si hay que refrescar pantalla de ordenes
@@ -222,7 +222,7 @@ public class Cocina extends JFrame {
 				Component horizontalStrut = Box.createHorizontalStrut(20);
 				transparentPanel_2.add(horizontalStrut, "cell 3 0");
 
-				JLabel lblTiempo = new JLabel("Tiempo:");
+				JLabel lblTiempo = new JLabel("Tiempo (HH:MM) :");
 				transparentPanel_2.add(lblTiempo,
 						"cell 4 0,alignx center,aligny center");
 

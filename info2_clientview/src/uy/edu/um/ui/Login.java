@@ -139,10 +139,14 @@ public class Login extends JFrame {
 						cocina = new Cocina();
 					} catch (NoDatabaseConnection e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), Login.this);
+						nuevo1.setVisible(true);
 					} catch (NoServerConnectionException e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), Login.this);
+						nuevo1.setVisible(true);
 					}
 					cocina.setVisible(true);
 					cerrar();

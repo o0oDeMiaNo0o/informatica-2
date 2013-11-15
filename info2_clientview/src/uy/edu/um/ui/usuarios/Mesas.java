@@ -91,20 +91,30 @@ public class Mesas extends BasicoUsuario {
 							CurrentUser.getUser(), esp, 0, false);
 					DeliveryMgt nuevo = ServiceFacade.getInstance()
 							.getDeliveryMgt();
-					
-					
-					// nuevo.addOrder(delivery);
-					
-					
-					
+
+					try {
+						nuevo.addDelivery(delivery);
+					} catch (NoServerConnectionException e1) {
+						// TODO Auto-generated catch block
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), Mesas.this);
+						nuevo1.setVisible(true);
+					} catch (NoDatabaseConnection e1) {
+						// TODO Auto-generated catch block
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), Mesas.this);
+						nuevo1.setVisible(true);
+					}
+
 					MensajeGenerico msg = new MensajeGenerico(
 							"Agregado A Delivery Correctamente", Mesas.this);
 					msg.setVisible(true);
 				} else {
 					TableVO tableDelivery = new TableVO();
 					tableDelivery.setNumero(1);
+					tableDelivery.setOcupado(false);
 					ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
-							esp, Mesas.this);
+							"Confirma Seleccion Delivery?", Mesas.this);
 					nuevo.setVisible(true);
 				}
 			}
