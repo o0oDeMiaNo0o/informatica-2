@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -14,6 +16,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class ClientDAO {
 
 	private static ClientDAO instance = null;
+	private final static Logger log = Logger.getLogger(ClientDAO.class);
 
 	private ClientDAO(){};
 
@@ -26,14 +29,17 @@ public class ClientDAO {
 
 	public void addClient(Client cliente) throws NoDatabaseConnection{
 		Connection connection = null;
+		log.info("Agregando cliente");
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 			oStatement.execute("INSERT INTO CLIENTES (CI, NOMBRE, APELLIDO, MAIL, DIRECCION, TELEFONO, DESCUENTO) " +
 					"VALUES ("+cliente.getCi()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"','"+cliente.getMail()+"','"+cliente.getDireccion()+"',"+cliente.getTel()+",'"+cliente.getDescuento()+"');");
 			oStatement.close();
+			log.info("Cliente agregado correctamente");
 		}
 		catch(SQLException e){
+			log.error("Error al agregar cliente");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -44,6 +50,7 @@ public class ClientDAO {
 					connection.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 		}
@@ -54,6 +61,7 @@ public class ClientDAO {
 
 	public ArrayList<Client> getClients() throws NoDatabaseConnection{
 		Connection connection = null;
+		log.info("Retirando la lista de todos los clientes");
 		try {
 			ArrayList<Client> toReturn = new ArrayList<Client>();
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
@@ -73,9 +81,11 @@ public class ClientDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
+			log.info("Lista retirada con exito");
 			return toReturn;
 		}
 			 catch (SQLException e) {
+				 log.error("Error al retirar la lista de clientes");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -83,6 +93,7 @@ public class ClientDAO {
 				try {
 					connection.close();
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection ("No hay conexion con la base de datos");
 				}
 		}
@@ -93,6 +104,7 @@ public class ClientDAO {
 	public boolean existeCliente(String nombre, int ci) throws NoDatabaseConnection{
 		boolean check = false;
 		Connection connection = null;
+		log.info("Chequeando la existencia de el cliente "+nombre+"");
 		try{
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
@@ -105,6 +117,7 @@ public class ClientDAO {
 				}
 			}
 			oStatement.close();
+		
 			}
 		catch(SQLException e){
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
