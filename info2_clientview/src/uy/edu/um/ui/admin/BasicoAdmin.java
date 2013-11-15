@@ -93,7 +93,7 @@ public class BasicoAdmin extends JFrame {
 		mntmNArticle.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				NewProduct nuevo;
+				NewProduct nuevo = null;
 				try {
 					nuevo = new NewProduct();
 					nuevo.setVisible(true);
@@ -158,11 +158,13 @@ public class BasicoAdmin extends JFrame {
 				try {
 					nuevo = new CategoryList();
 				} catch (NoDatabaseConnection e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					MensajeGenerico msg = new MensajeGenerico(e.getMessage(),
+							BasicoAdmin.this);
+					msg.setVisible(true);
 				} catch (NoServerConnectionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					MensajeGenerico msg = new MensajeGenerico(e.getMessage(),
+							BasicoAdmin.this);
+					msg.setVisible(true);
 				}
 				nuevo.setVisible(true);
 				cerrar();
@@ -178,8 +180,9 @@ public class BasicoAdmin extends JFrame {
 		mntmNuevaMesa.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				NewTable nueva = null;
 				try {
-					NewTable nueva = new NewTable();
+					nueva = new NewTable();
 					nueva.setVisible(true);
 					cerrar();
 				} catch (NoServerConnectionException e1) {
@@ -204,10 +207,14 @@ public class BasicoAdmin extends JFrame {
 					nuevo = new TableList();
 				} catch (NoServerConnectionException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
+					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
+					nuevo1.setVisible(true);
 				}
 				nuevo.setVisible(true);
 				cerrar();
@@ -272,8 +279,9 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
+				ClientList nuevo = null;
 				try {
-					ClientList nuevo = new ClientList();
+					nuevo = new ClientList();
 					nuevo.setVisible(true);
 				} catch (NoServerConnectionException e) {
 					MensajeGenerico nuevo1 = new MensajeGenerico(
@@ -299,10 +307,14 @@ public class BasicoAdmin extends JFrame {
 					nuevo = new ClientList();
 				} catch (NoServerConnectionException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
+					nuevo1.setVisible(true);
 				} catch (NoDatabaseConnection e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MensajeGenerico nuevo1 = new MensajeGenerico(e1
+							.getMessage(), BasicoAdmin.this);
+					nuevo1.setVisible(true);
 				}
 				nuevo.setVisible(true);
 				cerrar();

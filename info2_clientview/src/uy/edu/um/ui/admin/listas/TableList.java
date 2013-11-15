@@ -58,10 +58,7 @@ public class TableList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[][][][][grow]", "[][][][][][][][grow]"));
-
-		Component rigidArea = Box.createRigidArea(new Dimension(100, 100));
-		transparentPanel.add(rigidArea, "cell 0 0");
+		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][][grow]", "[][][][][][][][grow]"));
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
