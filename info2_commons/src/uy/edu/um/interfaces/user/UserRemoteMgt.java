@@ -12,9 +12,9 @@ public interface UserRemoteMgt extends Remote{
 
 	public void addUser(UserVO u) throws RemoteException, NoDatabaseConnection;
 
-	public void deleteUser(UserVO a) throws RemoteException;
+	public void deleteUser(UserVO a) throws RemoteException, NoDatabaseConnection;
 
-	public void editUser(UserVO a) throws RemoteException;
+	public void editUser(UserVO a) throws RemoteException, NoDatabaseConnection;
 
 	public ArrayList<UserVO> allUsers() throws RemoteException, NoDatabaseConnection;
 

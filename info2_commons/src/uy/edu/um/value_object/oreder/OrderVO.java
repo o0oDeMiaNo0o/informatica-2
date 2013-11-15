@@ -35,6 +35,16 @@ public class OrderVO implements Serializable{
 		this.id = id;
 	}
 
+	public OrderVO(int id,ArrayList<ArticleOrderVO> articulos, TableVO table, UserVO u, String spec,int estado, Date date){
+		this.articulos = articulos;
+		this.table = table;
+		this.user = u;
+		this.especificaciones = spec;
+		this.estado = estado;
+		this.id = id;
+		this.time = date;
+	}
+
 
 	public ArrayList<ArticleOrderVO> getArticulos() {
 		return articulos;
