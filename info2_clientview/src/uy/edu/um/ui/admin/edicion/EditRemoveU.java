@@ -41,12 +41,12 @@ public class EditRemoveU extends JFrame {
 
 	/**
 	 * Create the frame.
-	 *
+	 * 
 	 * @param toSend
 	 */
 	public EditRemoveU(UserVO user, JPanel cPanel, final boolean editable,
 			String mensaje) {
-		try{
+		try {
 			categorias = cargoCategorias();
 			setTitle("Confirma");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,11 +59,11 @@ public class EditRemoveU extends JFrame {
 			JPanel ZonaEdicion = new JPanel();
 			contentPane.add(ZonaEdicion, BorderLayout.CENTER);
 			ZonaEdicion.setLayout(new MigLayout("", "[grow][][388.00px][grow]",
-			"[grow][16px][][grow]"));
+					"[grow][16px][][grow]"));
 			if (!mensaje.equals("")) {
 				JLabel lblNewLabelMensaje = new JLabel(mensaje);
-				lblNewLabelMensaje
-				.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
+				lblNewLabelMensaje.setFont(new Font("Lucida Grande",
+						Font.PLAIN, 21));
 				ZonaEdicion.add(lblNewLabelMensaje, "cell 2 0,alignx center");
 			}
 
@@ -86,6 +86,10 @@ public class EditRemoveU extends JFrame {
 			ZonaEdicion.add(textFieldPass, "cell 2 2,growx,aligny center");
 
 			JRadioButton rdbtnAdmin = new JRadioButton("Es Administrador");
+			if ((editable == true) && (user.isAdmin())) {
+				rdbtnAdmin.setSelected(true);
+				rdbtnAdmin.setEnabled(false);
+			}
 			ZonaEdicion.add(rdbtnAdmin, "cell 2 3,alignx right,aligny top");
 
 			JPanel ZonaBotones = new JPanel();
@@ -105,7 +109,8 @@ public class EditRemoveU extends JFrame {
 								// Hacer ma–ana
 
 								MensajeGenerico mensaje = new MensajeGenerico(
-										"Usuario Editado Correctamente", devuelve());
+										"Usuario Editado Correctamente",
+										devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
 							} else {
@@ -134,11 +139,13 @@ public class EditRemoveU extends JFrame {
 				}
 			});
 			ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+		} catch (NoServerConnectionException e) {
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),
+					devuelve());
 			nuevo.setVisible(true);
-		}catch(NoDatabaseConnection e){
-			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+		} catch (NoDatabaseConnection e) {
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),
+					devuelve());
 			nuevoFrame.setVisible(true);
 		}
 
@@ -177,7 +184,8 @@ public class EditRemoveU extends JFrame {
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<CategoryVO> cargoCategorias()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}

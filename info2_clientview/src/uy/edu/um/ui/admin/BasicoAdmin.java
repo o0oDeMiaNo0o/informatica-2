@@ -322,7 +322,6 @@ public class BasicoAdmin extends JFrame {
 				ConfirmSesion nuevo = new ConfirmSesion("Desea Cerrar Sesion?",
 						ventana());
 				nuevo.setVisible(true);
-				cerrar();
 			}
 		});
 		menuItem_7.setForeground(Color.BLACK);

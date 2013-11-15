@@ -46,10 +46,12 @@ public class CategoryList extends BasicoAdmin {
 
 	/**
 	 * Create the frame.
+	 * 
 	 * @throws NoServerConnectionException
 	 * @throws NoDatabaseConnection
 	 */
-	public CategoryList() throws NoDatabaseConnection, NoServerConnectionException {
+	public CategoryList() throws NoDatabaseConnection,
+			NoServerConnectionException {
 		categorias = cargoCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -88,10 +90,23 @@ public class CategoryList extends BasicoAdmin {
 		btnEliminarCategoria.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if (buscaCategoria(textFieldID.getText())) {
+				CategoryVO cat = buscaCategoria(textFieldID.getText());
+				if (cat != null) {
 					CategoryMgt nuevo = ServiceFacade.getInstance()
 							.getCategoryMgt();
-					//nuevo.
+					try {
+						nuevo.borrarCateogry(cat);
+					} catch (NoServerConnectionException e) {
+						// TODO Auto-generated catch block
+						MensajeGenerico msg = new MensajeGenerico(e
+								.getMessage(), CategoryList.this);
+						msg.setVisible(true);
+					} catch (NoDatabaseConnection e) {
+						// TODO Auto-generated catch block
+						MensajeGenerico msg = new MensajeGenerico(e
+								.getMessage(), CategoryList.this);
+						msg.setVisible(true);
+					}
 				} else {
 					MensajeGenerico nuevo = new MensajeGenerico(
 							"Categoria No Existe", devuelve());
@@ -108,17 +123,18 @@ public class CategoryList extends BasicoAdmin {
 	// Metodos Auxiliares
 
 	// Busca categoria elegida
-	private boolean buscaCategoria(String text) {
+	private CategoryVO buscaCategoria(String text) {
 		for (int i = 0; i < categorias.size(); i++) {
 			if (categorias.get(i).getId() == Integer.parseInt(text)) {
-				return true;
+				return categorias.get(i);
 			}
 		}
-		return false;
+		return null;
 	}
 
 	// Cargo categorias a arraylist
-	private ArrayList<CategoryVO> cargoCategorias() throws NoDatabaseConnection, NoServerConnectionException {
+	private ArrayList<CategoryVO> cargoCategorias()
+			throws NoDatabaseConnection, NoServerConnectionException {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		ArrayList<CategoryVO> categories = new ArrayList<CategoryVO>(2);
 		categories = cat.allCategories();

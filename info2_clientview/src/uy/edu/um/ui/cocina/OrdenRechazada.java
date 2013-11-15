@@ -25,7 +25,7 @@ public class OrdenRechazada extends JFrame {
 	JKeyboardPane teclado;
 
 	public OrdenRechazada(final OrderVO orden) {
-		
+
 		setMinimumSize(new Dimension(700, 400));
 
 		colocarSkin();
