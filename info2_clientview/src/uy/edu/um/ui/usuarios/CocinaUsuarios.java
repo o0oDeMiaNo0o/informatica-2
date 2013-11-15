@@ -24,13 +24,11 @@ import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
-import uy.edu.um.musica.Musica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.ui.cocina.OpcionesCocina;
-import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.mensajes.RechazoCocinaU;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
@@ -57,53 +55,47 @@ public class CocinaUsuarios extends BasicoUsuario {
 		});
 	}
 
-	/**
-	 * Create the frame.
-<<<<<<< .mine
-	 *
-	 * @throws JavaLayerException
-	 * @throws InterruptedException
-=======
->>>>>>> .r567
-	 */
-	public CocinaUsuarios() throws NoDatabaseConnection, NoServerConnectionException{
-			arrayOrdenes = cargaOrdenes();
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 450, 300);
-			setExtendedState(Frame.MAXIMIZED_BOTH);
-			contentPane = new JPanel();
-			contentPane.setBorder(null);
-			contentPane.setLayout(new BorderLayout(0, 0));
-			setContentPane(contentPane);
+	public CocinaUsuarios() throws NoDatabaseConnection,
+			NoServerConnectionException {
+		arrayOrdenes = cargaOrdenes();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
+		contentPane = new JPanel();
+		contentPane.setBorder(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
 
-			ImagePanel imagePanel = new ImagePanel(DirFondo);
-			contentPane.add(imagePanel, BorderLayout.CENTER);
-			imagePanel.setLayout(new BorderLayout(0, 0));
+		ImagePanel imagePanel = new ImagePanel(DirFondo);
+		contentPane.add(imagePanel, BorderLayout.CENTER);
+		imagePanel.setLayout(new BorderLayout(0, 0));
 
-			TransparentPanel transparentPanel = new TransparentPanel();
-			imagePanel.add(transparentPanel, BorderLayout.CENTER);
-			transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
-			"[][263.00][][][][][][grow]"));
+		TransparentPanel transparentPanel = new TransparentPanel();
+		imagePanel.add(transparentPanel, BorderLayout.CENTER);
+		transparentPanel.setLayout(new MigLayout("", "[][309.00][][][grow]",
+				"[][263.00][][][][][][grow]"));
 
-			// Creo los elementos
-			armarPedido(transparentPanel);
+		// Creo los elementos
+		armarPedido(transparentPanel);
 
-			TransparentPanel transparentPanel_1 = new TransparentPanel();
-			imagePanel.add(transparentPanel_1, BorderLayout.NORTH);
-			transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]", "[]"));
+		TransparentPanel transparentPanel_1 = new TransparentPanel();
+		imagePanel.add(transparentPanel_1, BorderLayout.NORTH);
+		transparentPanel_1.setLayout(new MigLayout("", "[grow][][grow]", "[]"));
 
-			JLabel lblCocina = new JLabel("COCINA");
-			lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-			lblCocina.setForeground(Color.WHITE);
-			transparentPanel_1.add(lblCocina, "cell 1 0");
+		JLabel lblCocina = new JLabel("COCINA");
+		lblCocina.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
+		lblCocina.setForeground(Color.WHITE);
+		transparentPanel_1.add(lblCocina, "cell 1 0");
 
-		//catch(NoServerConnectionException e ){
-		//	MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
-		//	nuevo.setVisible(true);
-		//}catch(NoDatabaseConnection e){
-		//	MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
-		//	nuevoFrame.setVisible(true);
-		//}
+		// catch(NoServerConnectionException e ){
+		// MensajeGenerico nuevo = new
+		// MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
+		// nuevo.setVisible(true);
+		// }catch(NoDatabaseConnection e){
+		// MensajeGenerico nuevoFrame = new
+		// MensajeGenerico(e.getMessage(),CocinaUsuarios.this);
+		// nuevoFrame.setVisible(true);
+		// }
 	}
 
 	private void armarPedido(JPanel transparentPanel) {
@@ -117,6 +109,14 @@ public class CocinaUsuarios extends BasicoUsuario {
 				panel.setBorder(new LineBorder(Color.ORANGE, 3));
 				transparentPanel.add(panel, "cell " + i + " " + j + ",grow");
 				panel.setLayout(new BorderLayout(0, 0));
+				panel.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						RechazoCocinaU nueva = new RechazoCocinaU(orden,
+								devuelve());
+						nueva.setVisible(true);
+					}
+				});
 
 				// Constante
 				TransparentPanel transparentPanel_2 = new TransparentPanel();
@@ -126,31 +126,39 @@ public class CocinaUsuarios extends BasicoUsuario {
 
 				JLabel lblPedido = new JLabel("Pedido :");
 				transparentPanel_2.add(lblPedido,
-				"cell 1 0,alignx center,aligny center");
+						"cell 1 0,alignx center,aligny center");
 
 				JLabel lblDynamic = new JLabel("Dynamic");
 				transparentPanel_2.add(lblDynamic,
-				"cell 2 0,alignx center,aligny center");
+						"cell 2 0,alignx center,aligny center");
 
 				Component horizontalStrut = Box.createHorizontalStrut(20);
 				transparentPanel_2.add(horizontalStrut, "cell 3 0");
 
 				JLabel lblTiempo = new JLabel("Tiempo:");
 				transparentPanel_2.add(lblTiempo,
-				"cell 4 0,alignx center,aligny center");
+						"cell 4 0,alignx center,aligny center");
 
 				JLabel lblDynamic_1 = new JLabel("Dynamic");
 				transparentPanel_2.add(lblDynamic_1,
-				"cell 5 0,alignx center,aligny center");
+						"cell 5 0,alignx center,aligny center");
 
 				TransparentPanel transparentPanel_3 = new TransparentPanel();
 				panel.add(transparentPanel_3, BorderLayout.CENTER);
 				transparentPanel_3.setLayout(new MigLayout("", "[1px][grow]",
-				"[1px][grow][]"));
+						"[1px][grow][]"));
 
 				// Termina parte constante
 
 				table = new JTable();
+				table.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						RechazoCocinaU nueva = new RechazoCocinaU(orden,
+								devuelve());
+						nueva.setVisible(true);
+					}
+				});
 				table.setBorder(new LineBorder(new Color(255, 200, 0)));
 				table.setBackground(Color.LIGHT_GRAY);
 
@@ -163,7 +171,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 				textArea.setEditable(false);
 				textArea.setText(orden.getEspecificaciones());
 				transparentPanel_3
-				.add(textArea, "cell 1 2,growx,aligny center");
+						.add(textArea, "cell 1 2,growx,aligny center");
 
 				j++;
 				if (j > 3) {
@@ -178,7 +186,7 @@ public class CocinaUsuarios extends BasicoUsuario {
 			lblPedido.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 			lblPedido.setForeground(Color.RED);
 			transparentPanel.add(lblPedido,
-			"cell 1 0,alignx center,aligny center");
+					"cell 1 0,alignx center,aligny center");
 		}
 
 	}
@@ -206,12 +214,13 @@ public class CocinaUsuarios extends BasicoUsuario {
 	}
 
 	// Carga Ordenes
-	private ArrayList<OrderVO> cargaOrdenes() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<OrderVO> cargaOrdenes()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		return nuevo.allOrders();
 	}
 
-	public JFrame devuelve(){
+	public JFrame devuelve() {
 		return this;
 	}
 }
