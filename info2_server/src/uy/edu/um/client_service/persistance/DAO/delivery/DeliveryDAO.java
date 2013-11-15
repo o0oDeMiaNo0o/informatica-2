@@ -159,7 +159,7 @@ public class DeliveryDAO {
 			break;
 		case 2: estado="Rechazado";
 			break;
-		case 3: estado="Facturado";
+		case 3: estado="En cola de espera";
 			break;
 
 		default:
@@ -180,7 +180,7 @@ public class DeliveryDAO {
 		else if(e.equals("Rechazado")){
 			estado = 2;
 		}
-		else if(e.equals("Facturando")){
+		else if(e.equals("En cola de espera")){
 			estado = 3;
 		}
 		return estado;
