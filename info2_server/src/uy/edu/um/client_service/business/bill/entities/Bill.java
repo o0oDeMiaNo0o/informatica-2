@@ -45,6 +45,13 @@ public class Bill {
 		this.montoTotal = montoTotal;
 		this.date = date;
 	}
+	public Bill(ArrayList<Order> orders,Client client, Table table, BigDecimal montoTotal){
+		this.orders = orders;
+		this.client = client;
+		this.table = table;
+		this.montoTotal = montoTotal;
+	}
+
 	private BigDecimal costoTotal(){
 		BigDecimal total = new BigDecimal(0);
 		for(Order o: orders){

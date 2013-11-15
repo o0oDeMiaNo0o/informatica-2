@@ -13,6 +13,8 @@ import uy.edu.um.client_service.business.people.clients.entities.Client;
 import uy.edu.um.client_service.business.people.clients.interfaces.ClientMgt;
 import uy.edu.um.client_service.business.table.entities.Table;
 import uy.edu.um.client_service.business.table.interfaces.TableMgt;
+import uy.edu.um.client_service.persistance.DAO.bill.BillDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
@@ -32,8 +34,9 @@ public class BillMgr implements BillMgt{
 	}
 
 	@Override
-	public void addBill(Bill b) {
-		//
+	public void addBill(Bill b) throws NoDatabaseConnection {
+		BillDAO dao = BillDAO.getInstance();
+		dao.addBill(b);
 
 	}
 
@@ -55,7 +58,8 @@ public class BillMgr implements BillMgt{
 		Table tAdd = tMgt.getTable(b.getTable());
 		Client cAdd = cMgt.getClient(b.getClient());
 		Date date = b.getDate();
-		Bill toReturn = new Bill(orders,cAdd,tAdd,date);
+		BigDecimal montoTotal = b.getMontoTotal();
+		Bill toReturn = new Bill(orders,cAdd,tAdd,montoTotal);
 		return toReturn;
 	}
 

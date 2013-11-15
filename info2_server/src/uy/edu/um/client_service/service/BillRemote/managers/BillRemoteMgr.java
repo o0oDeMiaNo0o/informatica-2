@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.bill.entities.Bill;
 import uy.edu.um.client_service.business.bill.interfaces.BillMgt;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.value_object.bill.BillVO;
 
@@ -22,11 +23,10 @@ public class BillRemoteMgr implements BillRemoteMgt{
 	}
 
 	@Override
-	public void addBill(BillVO b) throws RemoteException {
+	public void addBill(BillVO b) throws RemoteException, NoDatabaseConnection {
 		BillMgt bMgt = BusinessFacade.getInstance().getBillMgt();
 		Bill toAdd = bMgt.getBill(b);
 		bMgt.addBill(toAdd);
-		System.out.println("Llego correctamente por RMI");
 	}
 
 }
