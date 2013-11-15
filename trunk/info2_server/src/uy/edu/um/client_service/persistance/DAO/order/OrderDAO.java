@@ -70,6 +70,45 @@ public class OrderDAO {
 
 
 	}
+	
+	
+	
+	public void addDelivery(Order orden) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			ArrayList <ArticleOrder> articles = orden.getArticles();
+			Statement oStatement = con.createStatement();
+			oStatement.execute("INSERT INTO pedido (Mesa_idMesa,Users_Username,Especificaciones,Estado) VALUES ("+orden.getTable().getNumero()+",'"+orden.getUser().getUsername()+"','"+orden.getSpec()+"','Delivery');");
+			for(int i =0;i<articles.size();i++){
+				ResultSet oResultSet1 = oStatement.executeQuery("SELECT ID FROM ARTICLES WHERE ARTICLES.NAME='"+articles.get(i).getArticle().getNombre()+"';");
+				int nId= 0;
+				while(oResultSet1.next()){
+					nId = oResultSet1.getInt(1);
+				}
+				oStatement.execute("INSERT INTO `Pedido/Articulos` (pedido_idpedido, Articles_ID,Cantidad) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+");");
+			}
+
+			oStatement.close();
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
+		}
+
+
+	}
 
 	public void cambioEstadoOrder(Order o) throws NoDatabaseConnection{
 		Connection con = null;
@@ -99,6 +138,54 @@ public class OrderDAO {
 		}
 
 
+	}
+	
+	public ArrayList<Order> getDeliverys() throws NoDatabaseConnection {
+		ArrayList<Order> toReturn = new ArrayList<Order>();
+		ArticleOrderDAO aOdao =ArticleOrderDAO.getInstance();
+		TableDAO tDAO = TableDAO.getInstance();
+		UserDAO uDAO = UserDAO.getInstance();
+		Connection con = null;
+		try {
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Pedido Where (Estado = 'Delivery'); ");
+
+			while (oResultSet.next()) {
+				int nid = oResultSet.getInt(1);
+				Date date = oResultSet.getTimestamp(2);
+				int nIdmesa = oResultSet.getInt(3);
+				String sEstado = oResultSet.getString(4);
+				String sUsername = oResultSet.getString(6);
+				String specs = oResultSet.getString(7);
+				ArrayList<ArticleOrder> articles = aOdao.getArticleOrder(nid, con);
+				Table t = tDAO.searchTable(nIdmesa,con);
+				User u = uDAO.searchUser(sUsername,con);
+
+				int estado=defEstado(sEstado);
+				Order a = new Order(nid,articles,t,u,estado,specs,date);
+				toReturn.add(a);
+			}
+
+			oResultSet.close();
+			oStatement.close();
+		}
+			 catch (SQLException e) {
+				throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+
+				try {
+
+					con.close();
+
+				} catch (SQLException e) {
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+		}
+		}
+		return toReturn;
 	}
 
 	// Esto hay que ver, porque para mostrar las ordenes a la cocina solo me importarian las "En preparacion" o algo de eso
@@ -211,6 +298,9 @@ public class OrderDAO {
 		else if(e.equals("Cerrado")){
 			estado = 3;
 		}
+		else if(e.equals("Delivery")){
+			estado = 4;
+		}
 		return estado;
 	}
 
@@ -224,7 +314,8 @@ public class OrderDAO {
 		case 2: estado="Rechazado";
 			break;
 		case 3: estado="Cerrado";
-		break;
+			break;
+		case 4: estado="Delivery";
 
 		default:
 			estado=null;
