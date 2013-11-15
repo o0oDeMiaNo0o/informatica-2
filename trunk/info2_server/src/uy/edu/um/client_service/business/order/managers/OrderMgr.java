@@ -1,7 +1,7 @@
 package uy.edu.um.client_service.business.order.managers;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import uy.edu.um.client_service.business.BusinessFacade;
 import uy.edu.um.client_service.business.articleOrder.entities.ArticleOrder;
@@ -63,7 +63,6 @@ public class OrderMgr implements OrderMgt{
 		String spec = o.getEspecificaciones();
 		int estado = o.getEstado();
 		int id = o.getId();
-		//public Order(int id,ArrayList<ArticleOrder> articles, Table table, User user, int e, String specs){
 		Order toReturn = new Order(id,articleReturn,tAdd,uAdd,spec,estado);
 		return toReturn;
 	}
@@ -111,7 +110,8 @@ public class OrderMgr implements OrderMgt{
 
 		int estado = o.getEstado();
 		int id = o.getId();
-		OrderVO toReturn = new OrderVO(id,aoVO,tAdd,uAdd,o.getSpec(),estado);
+		Date date = o.getTime();
+		OrderVO toReturn = new OrderVO(id,aoVO,tAdd,uAdd,o.getSpec(),estado,date);
 
 		return toReturn;
 

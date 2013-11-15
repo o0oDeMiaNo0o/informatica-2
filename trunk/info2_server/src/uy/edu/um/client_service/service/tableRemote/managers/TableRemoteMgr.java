@@ -70,7 +70,7 @@ public class TableRemoteMgr implements TableRemoteMgt{
 	}
 
 	@Override
-	public void removeTable(TableVO t) throws RemoteException {
+	public void removeTable(TableVO t) throws RemoteException, NoDatabaseConnection {
 		TableMgt tMgt = BusinessFacade.getInstance().getTableMgt();
 		Table toRemove = tMgt.getTable(t);
 		tMgt.removeTable(toRemove);

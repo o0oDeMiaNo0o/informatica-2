@@ -80,9 +80,9 @@ public class TableMgr implements TableMgt{
 	}
 
 	@Override
-	public void removeTable(Table t) {
+	public void removeTable(Table t) throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
-
+		dao.deleteMesa(t);
 	}
 
 	@Override

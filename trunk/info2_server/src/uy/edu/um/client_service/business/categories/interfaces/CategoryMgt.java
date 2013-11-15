@@ -18,4 +18,6 @@ public interface CategoryMgt {
 
 	public boolean existCategory(String nombre) throws NoDatabaseConnection;
 
+	public void borrarCategory(Category c) throws NoDatabaseConnection;
+
 }

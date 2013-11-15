@@ -64,4 +64,10 @@ public class CategoryMgr implements CategoryMgt{
 		return dao.existeCategory(nombre);
 	}
 
+	@Override
+	public void borrarCategory(Category c) throws NoDatabaseConnection {
+		CategoryDAO dao = CategoryDAO.getInstance();
+		dao.deleteCategory(c);
+	}
+
 }
