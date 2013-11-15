@@ -167,5 +167,21 @@ public class OrderMgr implements OrderMgt{
 		dao.addDelivery(o);
 	}
 
+	@Override
+	public ArrayList<OrderVO> allDeliveries() throws NoDatabaseConnection {
+		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
+		OrderDAO dao = OrderDAO.getInstance();
+		ArrayList<Order> allDeliveries = new ArrayList<Order>(2);
+		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>(2);
+		allDeliveries = dao.getDeliverys();
+		for(Order o:allDeliveries){
+			if(o!=null){
+				OrderVO toAdd = oMgt.getOrderVO(o);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
+	}
+
 
 }
