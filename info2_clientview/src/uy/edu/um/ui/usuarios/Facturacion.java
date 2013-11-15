@@ -4,10 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -38,12 +34,6 @@ import uy.edu.um.value_object.bill.BillVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.people.client.ClientVO;
 import uy.edu.um.value_object.table.TableVO;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.awt.event.HierarchyListener;
-import java.awt.event.HierarchyEvent;
 
 public class Facturacion extends BasicoUsuario {
 	private JTextField textFieldCliente;
@@ -214,6 +204,14 @@ public class Facturacion extends BasicoUsuario {
 		transparentPanel_1.add(btnAceptar, "flowx,cell 2 5,alignx right");
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				MainUsuario nuevo = new MainUsuario();
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
 		transparentPanel_1.add(btnCancelar, "cell 2 5,alignx right");
 
 		JLabel labelTotal = new JLabel(total);
