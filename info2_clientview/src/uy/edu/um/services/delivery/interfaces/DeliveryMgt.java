@@ -18,11 +18,11 @@ public interface DeliveryMgt {
 
 	public void isPreparing(DeliveryVO d)  throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void isDone(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
+	public void rechazado(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public void enViaje(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void facturado(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
+	public void enEspera(DeliveryVO d) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public ArrayList<DeliveryVO> allDeliveries() throws NoServerConnectionException, NoDatabaseConnection;
 }

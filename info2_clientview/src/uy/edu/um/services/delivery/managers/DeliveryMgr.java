@@ -45,6 +45,8 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void enViaje(DeliveryVO d) throws NoServerConnectionException{
 		try {
+			int id = 1;
+			d.setEstado(id);
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
@@ -59,8 +61,10 @@ public class DeliveryMgr implements DeliveryMgt{
 	}
 
 	@Override
-	public void facturado(DeliveryVO d) throws NoServerConnectionException{
+	public void enEspera(DeliveryVO d) throws NoServerConnectionException{
 		try {
+			int id = 3;
+			d.setEstado(id);
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
@@ -76,8 +80,10 @@ public class DeliveryMgr implements DeliveryMgt{
 
 
 	@Override
-	public void isDone(DeliveryVO d) throws NoServerConnectionException{
+	public void rechazado(DeliveryVO d) throws NoServerConnectionException{
 		try {
+			int id = 2;
+			d.setEstado(id);
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
@@ -93,6 +99,8 @@ public class DeliveryMgr implements DeliveryMgt{
 	@Override
 	public void isPreparing(DeliveryVO d) throws NoServerConnectionException{
 		try {
+			int id = 0;
+			d.setEstado(id);
 			String sObjectService = "DeliveryRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			DeliveryRemoteMgt oDeliveryRemoteMgt = (DeliveryRemoteMgt) oRegitry
