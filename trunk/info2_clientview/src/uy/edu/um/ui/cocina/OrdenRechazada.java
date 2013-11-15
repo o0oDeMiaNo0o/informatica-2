@@ -36,7 +36,7 @@ public class OrdenRechazada extends JFrame {
 		getContentPane().add(pafuera);
 
 		final JTextPane textPane = new JTextPane();
-		textPane.setBorder(new LineBorder(Color.ORANGE, 4, true));
+		textPane.setBorder(new LineBorder(new Color(111, 102, 238), 4, true));
 
 		JLabel lblMensaje = new JLabel("Mensaje");
 		lblMensaje.setFont(new Font("Lucida Grande", Font.PLAIN, 16));

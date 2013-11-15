@@ -47,6 +47,7 @@ public class Facturacion extends BasicoUsuario {
 	private ArrayList<OrderVO> ordenesMesa = new ArrayList<OrderVO>();
 	private String subTotal = "0";
 	private String total = "0";
+	private BigDecimal totalBig;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -160,7 +161,7 @@ public class Facturacion extends BasicoUsuario {
 
 					try {
 						BillVO factura = nuevo.createBillVO(ordenesMesa,
-								cliente, mesa);
+								cliente, mesa,totalBig);
 						nuevo.addBillVO(factura);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
@@ -180,7 +181,7 @@ public class Facturacion extends BasicoUsuario {
 				} else {
 					try {
 						BillVO factura = nuevo.createBillVO(ordenesMesa,
-								cliente, mesa);
+								cliente, mesa,totalBig);
 						nuevo.addBillVO(factura);
 						BillMgt bMgt = ServiceFacade.getInstance().getBillMgt();
 						TableMgt tables = ServiceFacade.getInstance()
@@ -275,8 +276,10 @@ public class Facturacion extends BasicoUsuario {
 			BigDecimal tDis = hun.subtract(dDis);
 			BigDecimal trueDist = tDis.divide(hun);
 			BigDecimal totalAux = dMonto.multiply(trueDist);
+			totalBig = totalAux;
 			total = totalAux.toString();
 		} else {
+			totalBig = new BigDecimal(Integer.parseInt(subTotal));
 			total = subTotal;
 		}
 	}

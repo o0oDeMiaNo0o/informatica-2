@@ -34,6 +34,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -93,12 +94,6 @@ public class CajaPrincipal extends BasicoUsuario {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws NoServerConnectionException
-	 * @throws NoDatabaseConnection
-	 */
 	public CajaPrincipal(final ArrayList<ArticleOrderVO> pedido,
 			final TableVO mesa) throws NoServerConnectionException,
 			NoDatabaseConnection {
@@ -656,6 +651,8 @@ public class CajaPrincipal extends BasicoUsuario {
 	private OrderVO enviarPedido(ArrayList<ArticleOrderVO> pedidoAux,
 			TableVO mesa, String esp, UserVO user)
 			throws NoServerConnectionException, NoDatabaseConnection {
+		TableMgt nuevoMesas = ServiceFacade.getInstance().getTableMgt();
+		nuevoMesas.setOcupado(mesa);
 		OrderMgt nueva = ServiceFacade.getInstance().getOrderMgt();
 		OrderVO toSend = nueva.createOrderVO(pedidoAux, mesa,
 				CurrentUser.getUser(), esp, 0);
