@@ -22,6 +22,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class OpcionesCocina extends JFrame {
@@ -85,7 +86,9 @@ public class OpcionesCocina extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				SwingUtilities.updateComponentTreeUI(frame);
+				MensajeGenerico nuevo = new MensajeGenerico(
+						"Pedido Cerrado Con Exito", frame);
+				nuevo.setVisible(true);
 				cerrar();
 			}
 		});
