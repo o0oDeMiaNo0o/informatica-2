@@ -14,7 +14,7 @@ public class Delivery {
 	private Date time;
 	private User user;
 	private boolean enCocina;
-	
+
 
 
 	public Delivery (ArrayList<ArticleOrder> articulos, User user, Date time, String specs, int estado, boolean enCocina){
@@ -25,7 +25,7 @@ public class Delivery {
 		this.estado = estado;
 		this.enCocina = enCocina;
 	}
-	
+
 	public Delivery (int id,ArrayList<ArticleOrder> articulos, User user, Date time, String specs, int estado, boolean enCocina){
 		this.id=id;
 		this.articles = articulos;
