@@ -10,6 +10,7 @@ import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
+import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -180,6 +181,22 @@ public class OrderMgr implements OrderMgt{
 			"y abrirlo nuevamente");
 		}
 
+	}
+
+	@Override
+	public ArrayList<OrderVO> allDeliveries()
+			throws NoServerConnectionException, NoDatabaseConnection {
+		ArrayList<OrderVO> array = new ArrayList<OrderVO>(10);
+		try {
+			String sObjectService = "OrderRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
+			array = oOrderRemoteMgt.allDeliveries();
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+						"y abrirlo nuevamente");
+		}
+		return array;
 	}
 
 }
