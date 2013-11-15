@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
+import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -29,5 +30,7 @@ public interface OrderMgt {
 	public void addDelivery(OrderVO o) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public ArrayList<OrderVO> getOrderTable(TableVO t) throws NoServerConnectionException, NoDatabaseConnection;
+
+	public ArrayList<OrderVO> allDeliveries() throws NoServerConnectionException, NoDatabaseConnection;
 
 }
