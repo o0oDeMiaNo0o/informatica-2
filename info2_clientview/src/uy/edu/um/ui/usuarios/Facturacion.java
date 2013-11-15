@@ -28,6 +28,7 @@ import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.usuarios.adminAux.ClientListU;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.bill.BillVO;
@@ -96,6 +97,7 @@ public class Facturacion extends BasicoUsuario {
 		transparentPanel.add(lblCliente, "cell 1 1,alignx left");
 
 		textFieldCliente = new JTextField();
+		textFieldCliente.setText("1");
 		if (cliente != null) {
 			textFieldCliente.setText(String.valueOf(cliente.getCi()));
 		}

@@ -315,9 +315,6 @@ public class BasicoAdmin extends JFrame {
 		menuUsuario.setBackground(Color.DARK_GRAY);
 		menuBar.add(menuUsuario);
 
-		JMenuItem mntmVerLista = new JMenuItem("Ver Info");
-		menuUsuario.add(mntmVerLista);
-
 		JMenuItem menuItem_7 = new JMenuItem("Salir");
 		menuItem_7.addMouseListener(new MouseAdapter() {
 			@Override

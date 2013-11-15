@@ -123,16 +123,6 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelPedido.setLayout(new MigLayout("", "[][][][][grow][]",
 				"[][][][][][][][][][][][][][grow]"));
 
-		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblCantidad,
-				"cell 3 1,alignx center,aligny center");
-
-		JLabel lblEspecificaciones = new JLabel("Especificaciones");
-		lblEspecificaciones.setForeground(Color.WHITE);
-		transparentPanelPedido.add(lblEspecificaciones,
-				"cell 4 1,alignx center,aligny center");
-
 		// Creo los elementes categorias y articulso de cada uno
 		creaElementos(transparentPanelPedido);
 		//
@@ -337,7 +327,7 @@ public class CajaPrincipal extends BasicoUsuario {
 		transparentPanelBotonera.add(btnCancelar,
 				"cell 4 0,alignx center,aligny center");
 
-		this.timer = new Timer(5000, new ActionListener() {
+		this.timer = new Timer(15000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
@@ -444,6 +434,13 @@ public class CajaPrincipal extends BasicoUsuario {
 
 	// Crea Elementos dependiendo de categoria
 	private void creaElementos(TransparentPanel a) {
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setForeground(Color.WHITE);
+		a.add(lblCantidad, "cell 3 1,alignx center,aligny center");
+
+		JLabel lblEspecificaciones = new JLabel("Especificaciones");
+		lblEspecificaciones.setForeground(Color.WHITE);
+		a.add(lblEspecificaciones, "cell 4 1,alignx center,aligny center");
 		if (categoria.size() != 0) {
 			String posicion = null;
 

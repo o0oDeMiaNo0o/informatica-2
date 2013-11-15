@@ -1,4 +1,4 @@
-package uy.edu.um.ui.usuarios;
+package uy.edu.um.ui.usuarios.adminAux;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -21,6 +21,8 @@ import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.usuarios.BasicoUsuario;
+import uy.edu.um.ui.usuarios.Facturacion;
 import uy.edu.um.value_object.people.client.ClientVO;
 import uy.edu.um.value_object.table.TableVO;
 
@@ -108,19 +110,33 @@ public class ClientListU extends BasicoUsuario {
 				public void mousePressed(MouseEvent e) {
 					ClientVO cliente = buscaEnLista(textFieldID.getText());
 					if (cliente != null) {
-						Facturacion nuevo1 = null;
-						try {
-							nuevo1 = new Facturacion(mesa, cliente);
-							nuevo1.setVisible(true);
-							cerrar();
-						} catch (NoServerConnectionException ex) {
-							MensajeGenerico newFrame = new MensajeGenerico(ex
-									.getMessage(), ClientListU.this);
-							newFrame.setVisible(true);
-						} catch (NoDatabaseConnection ex) {
-							MensajeGenerico newFrame = new MensajeGenerico(ex
-									.getMessage(), ClientListU.this);
-							newFrame.setVisible(true);
+						if (mesa != null) {
+							Facturacion nuevo1 = null;
+							try {
+								nuevo1 = new Facturacion(mesa, cliente);
+								nuevo1.setVisible(true);
+								cerrar();
+							} catch (NoServerConnectionException ex) {
+								MensajeGenerico newFrame = new MensajeGenerico(
+										ex.getMessage(), ClientListU.this);
+								newFrame.setVisible(true);
+							} catch (NoDatabaseConnection ex) {
+								MensajeGenerico newFrame = new MensajeGenerico(
+										ex.getMessage(), ClientListU.this);
+								newFrame.setVisible(true);
+							}
+						} else {
+							ClientMgt nuevo = ServiceFacade.getInstance()
+									.getClientMgt();
+							try {
+								nuevo.removeClientVO(cliente);
+							} catch (NoServerConnectionException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (NoDatabaseConnection e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 					} else {
 						MensajeGenerico nuevo = new MensajeGenerico(
