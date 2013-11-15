@@ -52,6 +52,7 @@ public class ClientMgr implements ClientMgt{
 
 	@Override
 	public Client getClient(ClientVO c) {
+		int id = c.getId();
 		String nombre = c.getNombre();
 		String apellido = c.getApellido();
 		String mail = c.getEmail();
@@ -59,7 +60,7 @@ public class ClientMgr implements ClientMgt{
 		int tel = c.getTel();
 		int ci = c.getCi();
 		BigDecimal descuento = c.getDescuento();
-		Client toReturn = new Client(nombre,apellido,ci,tel,direccion,mail,descuento);
+		Client toReturn = new Client(id,nombre,apellido,ci,tel,direccion,mail,descuento);
 		return toReturn;
 	}
 
