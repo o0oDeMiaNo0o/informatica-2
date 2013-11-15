@@ -30,6 +30,7 @@ public class BillVO implements Serializable{
 	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,BigDecimal montoTotal){
 		this.orders = orders;
 		this.client = client;
+		this.table = t;
 		this.montoTotal = montoTotal;
 	}
 

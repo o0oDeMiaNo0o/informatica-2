@@ -1,5 +1,6 @@
 package uy.edu.um.value_object.delivery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
 import uy.edu.um.value_object.user.UserVO;
 
 
-public class DeliveryVO {
+public class DeliveryVO implements Serializable{
 
 	private ArrayList<ArticleOrderVO> articulos = new ArrayList<ArticleOrderVO>(10);
 	private String specs;
