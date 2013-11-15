@@ -109,9 +109,6 @@ public class ConfirmMesa extends JFrame {
 					} else {
 						try {
 							CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
-							TableMgt nuevoMesas = ServiceFacade.getInstance()
-									.getTableMgt();
-							nuevoMesas.setOcupado(mesa);
 							nuevo.setVisible(true);
 							frame.dispose();
 							cerrar();

@@ -22,6 +22,7 @@ import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.categories.CategoryVO;
+import java.awt.Color;
 
 public class CategoryList extends BasicoAdmin {
 	private ArrayList<CategoryVO> categorias;
@@ -44,22 +45,16 @@ public class CategoryList extends BasicoAdmin {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws NoServerConnectionException
-	 * @throws NoDatabaseConnection
-	 */
 	public CategoryList() throws NoDatabaseConnection,
 			NoServerConnectionException {
+		getContentPane().setBackground(Color.LIGHT_GRAY);
 		categorias = cargoCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
-		transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
-				"[grow][grow][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][grow][]", "[grow][grow][grow]"));
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		transparentPanel.add(transparentPanel_2, "cell 2 1,grow");
@@ -85,38 +80,38 @@ public class CategoryList extends BasicoAdmin {
 		});
 		table.setSurrendersFocusOnKeystroke(true);
 		transparentPanel.add(table, "cell 1 1,grow");
-
-		JButton btnEliminarCategoria = new JButton("Eliminar Categoria");
-		btnEliminarCategoria.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				CategoryVO cat = buscaCategoria(textFieldID.getText());
-				if (cat != null) {
-					CategoryMgt nuevo = ServiceFacade.getInstance()
-							.getCategoryMgt();
-					try {
-						nuevo.borrarCateogry(cat);
-					} catch (NoServerConnectionException e) {
-						// TODO Auto-generated catch block
-						MensajeGenerico msg = new MensajeGenerico(e
-								.getMessage(), CategoryList.this);
-						msg.setVisible(true);
-					} catch (NoDatabaseConnection e) {
-						// TODO Auto-generated catch block
-						MensajeGenerico msg = new MensajeGenerico(e
-								.getMessage(), CategoryList.this);
-						msg.setVisible(true);
+		
+				JButton btnEliminarCategoria = new JButton("Eliminar Categoria");
+				btnEliminarCategoria.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						CategoryVO cat = buscaCategoria(textFieldID.getText());
+						if (cat != null) {
+							CategoryMgt nuevo = ServiceFacade.getInstance()
+									.getCategoryMgt();
+							try {
+								nuevo.borrarCateogry(cat);
+							} catch (NoServerConnectionException e) {
+								// TODO Auto-generated catch block
+								MensajeGenerico msg = new MensajeGenerico(e
+										.getMessage(), CategoryList.this);
+								msg.setVisible(true);
+							} catch (NoDatabaseConnection e) {
+								// TODO Auto-generated catch block
+								MensajeGenerico msg = new MensajeGenerico(e
+										.getMessage(), CategoryList.this);
+								msg.setVisible(true);
+							}
+						} else {
+							MensajeGenerico nuevo = new MensajeGenerico(
+									"Categoria No Existe", devuelve());
+							nuevo.setVisible(true);
+						}
 					}
-				} else {
-					MensajeGenerico nuevo = new MensajeGenerico(
-							"Categoria No Existe", devuelve());
-					nuevo.setVisible(true);
-				}
-			}
 
-		});
-		transparentPanel_2.add(btnEliminarCategoria,
-				"cell 1 2,alignx center,aligny top");
+				});
+				transparentPanel_2.add(btnEliminarCategoria,
+						"cell 1 1,alignx center,aligny top");
 		cargaATabla();
 	}
 
