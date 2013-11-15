@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -32,6 +35,7 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.musica.Musica;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
+import uy.edu.um.ui.Login;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
@@ -69,6 +73,26 @@ public class Cocina extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
+
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.DARK_GRAY);
+		setJMenuBar(menuBar);
+
+		JMenu mnSesion = new JMenu("Sesion");
+		mnSesion.setBackground(Color.DARK_GRAY);
+		menuBar.add(mnSesion);
+
+		JMenuItem mntmCerrar = new JMenuItem("Salir");
+		mntmCerrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				Login nuevo = new Login();
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
+		mntmCerrar.setBackground(Color.RED);
+		mnSesion.add(mntmCerrar);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -283,6 +307,12 @@ public class Cocina extends JFrame {
 		return nuevo.allOrders();
 	}
 
+	// Ciera Ventana
+	private void cerrar() {
+		this.dispose();
+	}
+
+	// Devuelve frame para mensajes
 	public JFrame devuelve() {
 		return this;
 	}

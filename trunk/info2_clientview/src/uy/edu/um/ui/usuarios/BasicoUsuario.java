@@ -196,13 +196,10 @@ public class BasicoUsuario extends JFrame {
 		mntmEliminarCliente.setBackground(Color.WHITE);
 		mnClientes.add(mntmEliminarCliente);
 
-		JMenu menuUsuario = new JMenu("Sesi\u00F3n Usuario");
+		JMenu menuUsuario = new JMenu("Sesi\u00F3n");
 		menuUsuario.setForeground(Color.BLACK);
 		menuUsuario.setBackground(Color.DARK_GRAY);
 		menuBar.add(menuUsuario);
-
-		JMenuItem mntmVerLista = new JMenuItem("Ver Info");
-		menuUsuario.add(mntmVerLista);
 
 		JMenuItem menuItem_7 = new JMenuItem("Salir");
 		menuItem_7.addMouseListener(new MouseAdapter() {

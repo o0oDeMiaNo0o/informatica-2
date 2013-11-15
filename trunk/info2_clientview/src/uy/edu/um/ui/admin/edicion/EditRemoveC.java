@@ -144,6 +144,12 @@ public class EditRemoveC extends JFrame {
 			ZonaBotones.setLayout(new MigLayout("", "[grow][][]", "[]"));
 
 			JButton btnAceptar = new JButton("Aceptar");
+			btnAceptar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
+					//HACERRRRRRRRRRRRRR
+				}
+			});
 			ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
 
 			JButton btnCancelar = new JButton("Cancelar");
