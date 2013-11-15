@@ -54,7 +54,7 @@ public class RechazoCocinaU extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(frame);
-		setBounds(100, 100, 500, 325);
+		setBounds(100, 100, 349, 225);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -69,7 +69,7 @@ public class RechazoCocinaU extends JFrame {
 		transparentPanel.add(imagePanel, "cell 1 1,grow");
 		imagePanel.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblPedidoRechazado = new JLabel("Cancelar");
+		JLabel lblPedidoRechazado = new JLabel("Eliminar Orden");
 		lblPedidoRechazado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
