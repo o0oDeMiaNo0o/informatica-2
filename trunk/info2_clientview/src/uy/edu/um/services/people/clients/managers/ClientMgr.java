@@ -91,13 +91,13 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void editClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection {
+	public void editClient(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
-			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
+			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
-			oArticleRemoteMgt.addClient(c);
+			oClientRemoteMgt.editClient(c);
 			} catch (Exception e) {
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
@@ -105,7 +105,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void removeClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection{
+	public void removeClient(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
