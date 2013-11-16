@@ -44,7 +44,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 	public void removeClient(ClientVO c) throws RemoteException {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		Client toRemove = cMgt.getClient(c);
-		cMgt.editClient(toRemove);
+		cMgt.removeClient(toRemove);
 
 	}
 
