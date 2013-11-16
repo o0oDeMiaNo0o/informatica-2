@@ -13,7 +13,6 @@ import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
-import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class ControlaDelivery {
