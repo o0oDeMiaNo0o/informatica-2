@@ -1,6 +1,7 @@
 package uy.edu.um.ui;
 
 import uy.edu.um.ui.cocina.ControlaDelivery;
+import uy.edu.um.ui.usuarios.ChatUsuarios;
 
 public class Main {
 
@@ -9,5 +10,6 @@ public class Main {
 		nuevo.setVisible(true);
 		CurrentUser user = new CurrentUser(null);
 		ControlaDelivery delivery = new ControlaDelivery();
+		ChatUsuarios chat = new ChatUsuarios();
 	}
 }
