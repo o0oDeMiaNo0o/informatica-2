@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -13,6 +15,7 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 public class UserDAO {
 
 	private static UserDAO instance = null;
+	private final static Logger log = Logger.getLogger(UserDAO.class);
 
 	private UserDAO(){}
 
@@ -37,8 +40,10 @@ public class UserDAO {
 			oStatement.execute("INSERT INTO USERS (USERNAME, PASSWORD, ADMIN) " +
 					"VALUES ('"+usuario.getUsername()+"','"+usuario.getPassword()+"','"+adm+"');");
 			oStatement.close();
+			log.info("Usuario "+usuario.getUsername()+" agregado al sistema");
 		}
 		catch(SQLException e){
+			log.error("Error al agregar usuario");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -49,6 +54,7 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -67,7 +73,8 @@ public class UserDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					throw new RuntimeException(e);
+					log.error("Error al finalizar la conexion con la base de datos");
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 			}
 		}
@@ -96,6 +103,7 @@ public class UserDAO {
 			oStatement.close();
 		}
 		catch (SQLException e) {
+			log.error("Error al buscar el usuario "+Username+"");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 
@@ -141,6 +149,7 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -156,8 +165,10 @@ public class UserDAO {
 			Statement oStatement = con.createStatement();
 			oStatement.execute("UPDATE Users set Vigente = 'Eliminada' Where Users.Username = '"+u.getUsername()+"';");
 			oStatement.close();
+			log.info("El usuario "+u.getUsername()+" fue eliminado");
 		}
 		catch(SQLException e){
+			log.error("Error al eliminar el usuario "+u.getUsername()+"");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -168,6 +179,7 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -198,9 +210,11 @@ public class UserDAO {
 
 			oResultSet.close();
 			oStatement.close();
+			log.info("Lista de usuarios entregada");
 			return toReturn;
 		}
 		catch (SQLException e) {
+			log.error("Error al retirar lista de usuarios de la BD");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -211,6 +225,7 @@ public class UserDAO {
 					con.close();
 
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 		}
@@ -265,9 +280,13 @@ public class UserDAO {
 			}
 			oResultSet.close();
 			oStatement.close();
+			if(check){
+				log.info("Usuario "+username+" fue logueado");
+			}
 			return check;
 		}
 		catch(SQLException e){
+			log.error("Error al chequear el logueo del un usuario");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -275,6 +294,7 @@ public class UserDAO {
 				try {
 					con.close();
 				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
 			}
