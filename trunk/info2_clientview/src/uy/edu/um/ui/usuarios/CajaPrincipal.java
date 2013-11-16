@@ -268,7 +268,7 @@ public class CajaPrincipal extends BasicoUsuario {
 					} else {
 						Mesas nueva = null;
 						try {
-							nueva = new Mesas(pedidoAux, espTotal);
+							nueva = new Mesas(pedidoAux, espTotal,true);
 							nueva.setVisible(true);
 							cerrar();
 						} catch (NoDatabaseConnection e) {

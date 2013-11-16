@@ -56,7 +56,8 @@ public class NewClienteU extends BasicoUsuario {
 	/**
 	 * Create the frame.
 	 */
-	public NewClienteU() throws NoServerConnectionException, NoServerConnectionException{
+	public NewClienteU() throws NoServerConnectionException,
+			NoServerConnectionException {
 		super();
 
 		TransparentPanel transparentPanel = new TransparentPanel();
@@ -147,52 +148,52 @@ public class NewClienteU extends BasicoUsuario {
 												Integer.parseInt(spinner
 														.getValue().toString()));
 										ClientMgt client = ServiceFacade
-										.getInstance().getClientMgt();
+												.getInstance().getClientMgt();
 										ClientVO cliente = null;
 										try {
 											cliente = client.createClientVO(
 													textFieldNom.getText(),
-													textFieldAp.getText(), Integer
-													.parseInt(textFieldCi
+													textFieldAp.getText(),
+													Integer.parseInt(textFieldCi
 															.getText()),
-															Integer.parseInt(textFieldTel
-																	.getText()),
-																	textFieldDir.getText(),
-																	textFieldEmail.getText(),
-																	descuento);
+													Integer.parseInt(textFieldTel
+															.getText()),
+													textFieldDir.getText(),
+													textFieldEmail.getText(),
+													descuento);
 											client.addClientVO(cliente);
 											MensajeGenerico new10 = new MensajeGenerico(
-													"Cliente Agregado", devuelve());
+													"Cliente Agregado",
+													devuelve());
 											new10.setVisible(true);
-										} catch(NoDatabaseConnection e1){
+										} catch (NoDatabaseConnection e1) {
 											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
+													e1.getMessage(),
+													NewClienteU.this);
 											new10.setVisible(true);
 										} catch (NoServerConnectionException e1) {
 											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
+													e1.getMessage(),
+													NewClienteU.this);
 											new10.setVisible(true);
-										}
-										catch (NumberFormatException e1) {
+										} catch (NumberFormatException e1) {
 											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
-											new10.setVisible(true);
-										} catch (ExisteClientException e1) {
-											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
+													e1.getMessage(),
+													NewClienteU.this);
 											new10.setVisible(true);
 										} catch (HasBlanksException e1) {
 											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
+													e1.getMessage(),
+													NewClienteU.this);
 											new10.setVisible(true);
 										} catch (HasNumberException e1) {
 											MensajeGenerico new10 = new MensajeGenerico(
-													e1.getMessage(), NewClienteU.this);
+													e1.getMessage(),
+													NewClienteU.this);
 											new10.setVisible(true);
 										}
 
-									}
-									else {
+									} else {
 										MensajeGenerico new6 = new MensajeGenerico(
 												"Direccion Vacia", devuelve());
 										new6.setVisible(true);

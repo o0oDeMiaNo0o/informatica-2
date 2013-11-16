@@ -3,14 +3,11 @@ package uy.edu.um.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,7 +38,6 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private TransparentPanel transparentPanel_1;
 	private JButton btnNewButton;
-	private Logger logger;
 
 	/**
 	 * Launch the application.
@@ -110,6 +106,11 @@ public class Login extends JFrame {
 								nuevoVentana.setVisible(true);
 								cerrar();
 							}
+						} else {
+							MensajeGenerico msg = new MensajeGenerico(
+									"Usuario y/o Contrase–a Incorrecto/s",
+									Login.this);
+							msg.setVisible(true);
 						}
 					} catch (NoServerConnectionException e) {
 						MensajeGenerico nuevoFrame = new MensajeGenerico(e
