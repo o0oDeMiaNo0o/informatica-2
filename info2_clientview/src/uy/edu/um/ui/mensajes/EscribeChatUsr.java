@@ -22,26 +22,7 @@ public class EscribeChatUsr extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EscribeChatUsr frame = new EscribeChatUsr(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public EscribeChatUsr(final ChatVO mensaje) {
+	public EscribeChatUsr() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -50,7 +31,6 @@ public class EscribeChatUsr extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][grow][]", "[][grow][]"));
 
 		final JTextPane textPane = new JTextPane();
-		textPane.setText(mensaje.getMensaje());
 		textPane.setBorder(new LineBorder(new Color(111, 102, 238), 2));
 		contentPane.add(textPane, "cell 1 1,grow");
 
@@ -61,7 +41,7 @@ public class EscribeChatUsr extends JFrame {
 				ChatMgt chat = ServiceFacade.getInstance().getChatMgt();
 				ChatVO mensaje = new ChatVO(textPane.getText(), true);
 				try {
-					chat.removeChat(mensaje);
+					chat.addChat(mensaje);
 				} catch (NoServerConnectionException e1) {
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
 							null);

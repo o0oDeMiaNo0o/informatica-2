@@ -252,10 +252,10 @@ public class Mesas extends BasicoUsuario {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas(boolean tengoPedido)
+	private ArrayList<TableVO> cargoMesas(boolean vengoDeCocina)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
-		if (tengoPedido) {
+		if (!vengoDeCocina) {
 			return nueva.allTables();
 		} else {
 			ArrayList<TableVO> aux = new ArrayList<TableVO>();
