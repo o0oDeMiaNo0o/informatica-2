@@ -251,12 +251,10 @@ public class EditRemoveC extends JFrame {
 						try {
 							client.removeClientVO(cliente);
 						} catch (NoServerConnectionException e1) {
-							// TODO Auto-generated catch block
 							MensajeGenerico nuevo = new MensajeGenerico(e1
 									.getMessage(), EditRemoveC.this);
 							nuevo.setVisible(true);
 						} catch (NoDatabaseConnection e1) {
-							// TODO Auto-generated catch block
 							MensajeGenerico nuevo = new MensajeGenerico(e1
 									.getMessage(), EditRemoveC.this);
 							nuevo.setVisible(true);

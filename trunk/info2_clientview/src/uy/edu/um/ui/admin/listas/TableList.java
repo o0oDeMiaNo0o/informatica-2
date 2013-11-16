@@ -2,19 +2,19 @@ package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -36,6 +36,7 @@ public class TableList extends BasicoAdmin {
 	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
 	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
 	public ArrayList<TableVO> mesas;
+	public Timer timer = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,7 +57,7 @@ public class TableList extends BasicoAdmin {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
+		final TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
 		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][][grow]",
 				"[][][][][][][][grow]"));
@@ -68,6 +69,8 @@ public class TableList extends BasicoAdmin {
 		lblMesas.setForeground(Color.WHITE);
 		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		transparentPanel_1.add(lblMesas);
+
+		//
 		cargaBotones(transparentPanel);
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
@@ -86,6 +89,31 @@ public class TableList extends BasicoAdmin {
 		});
 		transparentPanel_2.add(btnNewButton,
 				"cell 0 0,alignx right,aligny center");
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					mesas = cargoMesas();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							TableList.this);
+					msg.setVisible(true);
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							TableList.this);
+					msg.setVisible(true);
+				}
+				transparentPanel.removeAll();
+				cargaBotones(transparentPanel);
+				transparentPanel.invalidate();
+				transparentPanel.validate();
+				transparentPanel.repaint();
+			}
+
+		});
+		timer.start();
 	}
 
 	// Metodos auxiliares
@@ -148,6 +176,7 @@ public class TableList extends BasicoAdmin {
 
 			}
 		}
+
 	}
 
 	private JFrame devuelve() {
