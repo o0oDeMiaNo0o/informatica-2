@@ -2,7 +2,6 @@ package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,6 +18,7 @@ import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.mensajes.ConfirmSesion;
+import uy.edu.um.ui.mensajes.EscribeChatUsr;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.ui.usuarios.adminAux.ClientListU;
 import uy.edu.um.ui.usuarios.adminAux.NewClienteU;
@@ -168,7 +168,8 @@ public class BasicoUsuario extends JFrame {
 		mntmEnviarMensaje.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				EscribeChatUsr nuevo = new EscribeChatUsr();
+				nuevo.setVisible(true);
 			}
 		});
 		menuCocina.add(mntmEnviarMensaje);

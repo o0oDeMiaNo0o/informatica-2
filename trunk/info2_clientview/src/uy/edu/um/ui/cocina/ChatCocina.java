@@ -31,11 +31,13 @@ public class ChatCocina {
 							null);
 					msg.setVisible(true);
 				}
-				if (aux.size() != 0) {
-					for (int i = 0; i < aux.size(); i++) {
-						if (aux.get(i).isCocina()) {
-							MensajeChat msg = new MensajeChat(aux.get(i));
-							msg.setVisible(true);
+				if (aux != null) {
+					if (aux.size() != 0) {
+						for (int i = 0; i < aux.size(); i++) {
+							if (aux.get(i).isCocina()) {
+								MensajeChat msg = new MensajeChat(aux.get(i));
+								msg.setVisible(true);
+							}
 						}
 					}
 				}
