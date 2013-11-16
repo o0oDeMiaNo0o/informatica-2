@@ -91,7 +91,6 @@ public class UserDAO {
 		
 	}
 	
-	
 
 	public User searchUser(String Username) throws NoDatabaseConnection{
 		Connection con = null;
@@ -118,7 +117,7 @@ public class UserDAO {
 		try {
 
 			Statement oStatement = oConnection.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where `Users`.`Username` = '"+Username+"';");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM `Users` where (`Users`.`Username` = '"+Username+"') AND (Vigente = 'Activo');");
 
 			while(oResultSet.next()){
 				boolean adm=false;

@@ -13,7 +13,8 @@ CREATE TABLE `Articles` (
   `Estado` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
   PRIMARY KEY (`ID`),
   KEY `fk_Articles_Categorias1_idx` (`Categorias_idCategorias`)
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
