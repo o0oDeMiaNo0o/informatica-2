@@ -43,8 +43,7 @@ public class CategoryRemoteMgr implements CategoryRemoteMgt{
 	}
 
 	@Override
-	public void eliminarCategory(CategoryVO c) throws RemoteException,
-			NoDatabaseConnection {
+	public void eliminarCategory(CategoryVO c) throws RemoteException,NoDatabaseConnection {
 		CategoryMgt cMgt = BusinessFacade.getInstance().getCategoryMgt();
 		Category toDelete = cMgt.createCategory(c);
 		cMgt.borrarCategory(toDelete);
