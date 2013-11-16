@@ -34,7 +34,7 @@ public class ConfirmRemoveTable extends JFrame {
 
 	/**
 	 * Create the frame.
-	 *
+	 * 
 	 * @param toSend
 	 */
 	public ConfirmRemoveTable(final TableVO mesa, final JFrame panel) {
@@ -64,17 +64,20 @@ public class ConfirmRemoveTable extends JFrame {
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try{
-				TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
-				nuevo.removeTable(mesa);
-				TableList aux = new TableList();
-				aux.setVisible(true);
-				panel.dispose();
-				}catch(NoServerConnectionException e1){
-					MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(),devuelve());
+				try {
+					TableMgt nuevo = ServiceFacade.getInstance().getTableMgt();
+					nuevo.removeTable(mesa);
+					TableList aux = new TableList();
+					aux.setVisible(true);
+					panel.dispose();
+					cerrar();
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico nuevo = new MensajeGenerico(
+							e1.getMessage(), devuelve());
 					nuevo.setVisible(true);
-				}catch(NoDatabaseConnection e1){
-					MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),devuelve());
+				} catch (NoDatabaseConnection e1) {
+					MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+							.getMessage(), devuelve());
 					nuevoFrame.setVisible(true);
 				}
 			}
@@ -91,7 +94,7 @@ public class ConfirmRemoveTable extends JFrame {
 		ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
 	}
 
-	public JFrame devuelve(){
+	public JFrame devuelve() {
 		return this;
 	}
 

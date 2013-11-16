@@ -2,19 +2,19 @@ package uy.edu.um.ui.admin.creacion;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -23,10 +23,10 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
-import uy.edu.um.ui.admin.creacion.NewTable;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.ui.usuarios.Mesas;
 import uy.edu.um.value_object.table.TableVO;
 
 public class NewTable extends BasicoAdmin {
@@ -35,19 +35,7 @@ public class NewTable extends BasicoAdmin {
 	public URL ocupado = DirLocal.class.getResource("Ocupado.jpg");
 	public URL dirNew = DirLocal.class.getResource("Nuevo.png");
 	public ArrayList<TableVO> mesas;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewTable frame = new NewTable();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	Timer timer = null;
 
 	public NewTable() throws NoServerConnectionException, NoDatabaseConnection {
 		// try{
@@ -56,7 +44,7 @@ public class NewTable extends BasicoAdmin {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		TransparentPanel transparentPanel = new TransparentPanel();
+		final TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
 		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][][grow]",
 				"[][][][][][][][grow]"));
@@ -68,6 +56,8 @@ public class NewTable extends BasicoAdmin {
 		lblMesas.setForeground(Color.WHITE);
 		lblMesas.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		transparentPanel_1.add(lblMesas);
+
+		// Cargo mesas
 		cargaBotones(transparentPanel);
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
@@ -79,6 +69,27 @@ public class NewTable extends BasicoAdmin {
 		transparentPanel_2.add(btnNewButton,
 				"cell 0 0,alignx right,aligny center");
 		;
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					mesas = cargoMesas();
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				transparentPanel.removeAll();
+				cargaBotones(transparentPanel);
+				transparentPanel.invalidate();
+				transparentPanel.validate();
+				transparentPanel.repaint();
+			}
+
+		});
+		timer.start();
 
 		// }catch(NoServerConnectionException e){
 		// MensajeGenerico nuevo = new
@@ -135,12 +146,6 @@ public class NewTable extends BasicoAdmin {
 						TableMgt nuevo = ServiceFacade.getInstance()
 								.getTableMgt();
 						nuevo.addTable();
-						panel.removeAll();
-						cargaBotones(panel);
-						mesas = cargoMesas();
-						panel.invalidate();
-						panel.validate();
-						panel.repaint();
 					} catch (NoServerConnectionException e1) {
 						MensajeGenerico nFrame = new MensajeGenerico(e1
 								.getMessage(), devuelve());

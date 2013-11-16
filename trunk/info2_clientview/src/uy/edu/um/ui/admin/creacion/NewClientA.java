@@ -131,7 +131,7 @@ public class NewClientA extends BasicoAdmin {
 		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0),
 				null, new Integer(1)));
-		transparentPanel.add(spinner, "cell 2 7,alignx left,growy");
+		transparentPanel.add(spinner, "flowx,cell 2 7,alignx left,growy");
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addMouseListener(new MouseAdapter() {
@@ -228,6 +228,10 @@ public class NewClientA extends BasicoAdmin {
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel.add(btnCancelar,
 				"cell 4 13,alignx right,aligny center");
+		
+		JLabel label_3 = new JLabel("%");
+		label_3.setForeground(Color.WHITE);
+		transparentPanel.add(label_3, "cell 2 7");
 	}
 
 	public JFrame devuelve() {

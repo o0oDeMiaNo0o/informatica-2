@@ -298,30 +298,6 @@ public class BasicoAdmin extends JFrame {
 		});
 		mnClientes.add(mntmEditarCliente);
 
-		JMenuItem mntmListadoClientes = new JMenuItem("Ver Lista Clientes");
-		mntmListadoClientes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				ClientList nuevo = null;
-				try {
-					nuevo = new ClientList();
-				} catch (NoServerConnectionException e1) {
-					// TODO Auto-generated catch block
-					MensajeGenerico nuevo1 = new MensajeGenerico(e1
-							.getMessage(), BasicoAdmin.this);
-					nuevo1.setVisible(true);
-				} catch (NoDatabaseConnection e1) {
-					// TODO Auto-generated catch block
-					MensajeGenerico nuevo1 = new MensajeGenerico(e1
-							.getMessage(), BasicoAdmin.this);
-					nuevo1.setVisible(true);
-				}
-				nuevo.setVisible(true);
-				cerrar();
-			}
-		});
-		mnClientes.add(mntmListadoClientes);
-
 		JMenu menuUsuario = new JMenu("Sesi\u00F3n");
 		menuUsuario.setForeground(Color.BLACK);
 		menuUsuario.setBackground(Color.DARK_GRAY);

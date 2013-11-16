@@ -22,6 +22,7 @@ import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.user.UserVO;
+import javax.swing.JCheckBox;
 
 public class NewUser extends BasicoAdmin {
 	private JTextField textFieldNombre;
@@ -29,8 +30,6 @@ public class NewUser extends BasicoAdmin {
 	private JButton btnCancelar;
 	private JLabel lblContrasea;
 	private JTextField textField;
-	private JRadioButton rdbtnNewRadioButton;
-	private URL bernie = DirLocal.class.getResource("Bernie's.png");
 	private TransparentPanel transparentPanelBotones;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -79,8 +78,8 @@ public class NewUser extends BasicoAdmin {
 		textField_2.setColumns(10);
 		transparentPanel_1.add(textField_2, "cell 2 2,growx");
 
-		JRadioButton rdbtnEsAdministrador = new JRadioButton("Es Administrador");
-		transparentPanel_1.add(rdbtnEsAdministrador, "cell 2 3,alignx right");
+		final JCheckBox esAdmin = new JCheckBox("Es Administrador");
+		transparentPanel_1.add(esAdmin, "cell 2 3,alignx right");
 
 		TransparentPanel transparentPanel_2 = new TransparentPanel();
 		getContentPane().add(transparentPanel_2, BorderLayout.SOUTH);
@@ -101,7 +100,7 @@ public class NewUser extends BasicoAdmin {
 				} else {
 					try {
 						boolean admin = false;
-						if (rdbtnNewRadioButton.isSelected()) {
+						if (esAdmin.isSelected()) {
 							admin = true;
 						}
 						UserMgt nuevo = ServiceFacade.getInstance()
@@ -113,7 +112,9 @@ public class NewUser extends BasicoAdmin {
 									textField_2.getText(), admin);
 						} catch (HasBlanksException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							MensajeGenerico fin = new MensajeGenerico(e
+									.getMessage(), devuelve());
+							fin.setVisible(true);
 						}
 						nuevo.addUser(nuevoUser);
 						MensajeGenerico fin = new MensajeGenerico(
@@ -135,27 +136,6 @@ public class NewUser extends BasicoAdmin {
 
 		transparentPanelBotones = new TransparentPanel();
 		transparentPanelBotones.setLayout(new MigLayout("", "[grow]", "[]"));
-
-		JButton btnAceptar = new JButton("Aceptar");
-		transparentPanelBotones.add(btnAceptar,
-				"flowx,cell 0 0,alignx right,aligny center");
-		btnAceptar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if (!textFieldNombre.getText().isEmpty()) {
-					if (!textField.getText().isEmpty()) {
-						boolean admin = rdbtnNewRadioButton.isSelected();
-
-					} else {
-						MensajeGenerico test = new MensajeGenerico(
-								"Contrase–a Vacia", devuelve());
-					}
-				} else {
-					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
-							devuelve());
-				}
-			}
-		});
 
 		btnCancelar = new JButton("Cancelar");
 		transparentPanelBotones.add(btnCancelar, "cell 0 0");
@@ -185,9 +165,6 @@ public class NewUser extends BasicoAdmin {
 		textField.setColumns(10);
 		transparentPanel.add(textField, "cell 2 1,growx");
 
-		rdbtnNewRadioButton = new JRadioButton("Es Administrador");
-		transparentPanel
-				.add(rdbtnNewRadioButton, "cell 2 2,alignx right,growy");
 	}
 
 	private void cerrar() {

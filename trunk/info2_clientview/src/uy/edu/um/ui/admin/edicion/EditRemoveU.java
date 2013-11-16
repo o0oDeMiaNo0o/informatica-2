@@ -4,26 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
-import uy.edu.um.ui.clasesAuxiliares.Helpers;
+import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
-import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
 
@@ -44,8 +42,8 @@ public class EditRemoveU extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public EditRemoveU(UserVO user, JPanel cPanel, final boolean editable,
-			String mensaje) {
+	public EditRemoveU(final UserVO user, JPanel cPanel,
+			final boolean editable, String mensaje) {
 		try {
 			categorias = cargoCategorias();
 			setTitle("Confirma");
@@ -71,8 +69,9 @@ public class EditRemoveU extends JFrame {
 			ZonaEdicion.add(lblNombre, "cell 1 1,alignx left,aligny center");
 
 			textFieldNombre = new JTextField();
-			textFieldNombre.setText(user.getUser());
+			textFieldNombre.setEnabled(false);
 			textFieldNombre.setEditable(false);
+			textFieldNombre.setText(user.getUser());
 			ZonaEdicion.add(textFieldNombre, "cell 2 1,growx");
 			textFieldNombre.setColumns(10);
 
@@ -85,12 +84,10 @@ public class EditRemoveU extends JFrame {
 			textFieldPass.setColumns(10);
 			ZonaEdicion.add(textFieldPass, "cell 2 2,growx,aligny center");
 
-			JRadioButton rdbtnAdmin = new JRadioButton("Es Administrador");
-			if ((editable == true) && (user.isAdmin())) {
-				rdbtnAdmin.setSelected(true);
-				rdbtnAdmin.setEnabled(false);
-			}
-			ZonaEdicion.add(rdbtnAdmin, "cell 2 3,alignx right,aligny top");
+			final JCheckBox esAdmin = new JCheckBox("Es Administrador");
+			ZonaEdicion.add(esAdmin, "cell 2 3,alignx right,aligny top");
+			esAdmin.setSelected(user.isAdmin());
+			esAdmin.setEnabled(editable);
 
 			JPanel ZonaBotones = new JPanel();
 			contentPane.add(ZonaBotones, BorderLayout.SOUTH);
@@ -106,7 +103,32 @@ public class EditRemoveU extends JFrame {
 						if (!password.equals("")) {
 							if (editable == true) {
 
-								// Hacer ma–ana
+								UserMgt nuevo = ServiceFacade.getInstance()
+										.getUserMgt();
+								UserVO usrEdit = null;
+								try {
+									usrEdit = nuevo.createUserVO(
+											user.getUser(),
+											textFieldPass.getText(),
+											esAdmin.isSelected());
+									nuevo.editUser(usrEdit);
+									cerrar();
+								} catch (HasBlanksException e1) {
+									// TODO Auto-generated catch block
+									MensajeGenerico mensaje = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									mensaje.setVisible(true);
+								} catch (NoServerConnectionException e1) {
+									// TODO Auto-generated catch block
+									MensajeGenerico mensaje = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									mensaje.setVisible(true);
+								} catch (NoDatabaseConnection e1) {
+									// TODO Auto-generated catch block
+									MensajeGenerico mensaje = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									mensaje.setVisible(true);
+								}
 
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Usuario Editado Correctamente",
