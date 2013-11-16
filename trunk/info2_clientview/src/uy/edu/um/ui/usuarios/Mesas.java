@@ -46,6 +46,7 @@ public class Mesas extends BasicoUsuario {
 	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
 	public ArrayList<TableVO> mesas;
 	Timer timer = null;
+	private boolean tengoPedido;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,7 +64,13 @@ public class Mesas extends BasicoUsuario {
 	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp)
 			throws NoDatabaseConnection, NoServerConnectionException {
 		// try {
-		mesas = cargoMesas();
+
+		if (pedidoAux == null) {
+			tengoPedido = false;
+		} else {
+			tengoPedido = true;
+		}
+		mesas = cargoMesas(tengoPedido);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -98,7 +105,7 @@ public class Mesas extends BasicoUsuario {
 		this.timer = new Timer(5000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					mesas = cargoMesas();
+					mesas = cargoMesas(tengoPedido);
 				} catch (NoServerConnectionException e1) {
 					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
@@ -261,10 +268,20 @@ public class Mesas extends BasicoUsuario {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException,
-			NoDatabaseConnection {
+	private ArrayList<TableVO> cargoMesas(boolean tengoPedido)
+			throws NoServerConnectionException, NoDatabaseConnection {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
-		return nueva.allTables();
-
+		if (tengoPedido) {
+			return nueva.allTables();
+		} else {
+			ArrayList<TableVO> aux = new ArrayList<TableVO>();
+			ArrayList<TableVO> todas = nueva.allTables();
+			for (int i = 0; i < todas.size(); i++) {
+				if (!todas.get(i).isOcupado()) {
+					aux.add(todas.get(i));
+				}
+			}
+			return aux;
+		}
 	}
 }
