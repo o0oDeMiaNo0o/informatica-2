@@ -50,7 +50,7 @@ public class BillMgr implements BillMgt{
 
 	@Override
 	public BillVO createBillVO(ArrayList<OrderVO> orders, ClientVO c, TableVO t, BigDecimal montoTotal) {
-		BillVO toReturn = new BillVO(orders,c,t);
+		BillVO toReturn = new BillVO(orders,c,t,montoTotal);
 		return toReturn;
 	}
 
