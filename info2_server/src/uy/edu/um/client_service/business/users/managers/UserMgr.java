@@ -35,8 +35,11 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void editUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
-		String crypted = this.hashPassword(u.getPassword());
-		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
+		String pass = u.getPassword();
+		if(checkLogin(u.getUsername(),u.getPassword())){
+			pass = this.hashPassword(u.getPassword());
+		}
+		User uNew = new User(u.getUsername(),pass,u.isAdmin());
 		dao.editUser(uNew);
 	}
 
