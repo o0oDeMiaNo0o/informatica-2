@@ -10,7 +10,6 @@ import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
-import uy.edu.um.interfaces.delivery.DeliveryRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
@@ -118,16 +117,16 @@ public class MainServer {
 
 			oRegistry.rebind(name, oStubArticleOrder);
 
-			// componente de delivery
+			//componente de articleOrder
 
-			name = "DeliveryRemoteMgr";
+			name = "ChatRemoteMgr";
 
-			DeliveryRemoteMgt oDeliveryRemoteMgr = BusinessFacade.getInstance().getDeliveryRemote();
+			ArticleOrderRemoteMgt oChatRemoteMgr = BusinessFacade.getInstance().getArticleOrderRemote();
 
-			DeliveryRemoteMgt oStubDelivery = (DeliveryRemoteMgt) UnicastRemoteObject
-					.exportObject((Remote) oDeliveryRemoteMgr, 0);
+			ArticleOrderRemoteMgt oStubChat = (ArticleOrderRemoteMgt) UnicastRemoteObject
+					.exportObject((Remote) oChatRemoteMgr, 0);
 
-			oRegistry.rebind(name, oStubDelivery);
+			oRegistry.rebind(name, oStubChat);
 
 
 			System.out.println("Ready and waiting");
