@@ -10,6 +10,7 @@ import uy.edu.um.interfaces.article.ArticleRemoteMgt;
 import uy.edu.um.interfaces.articleOrder.ArticleOrderRemoteMgt;
 import uy.edu.um.interfaces.bill.BillRemoteMgt;
 import uy.edu.um.interfaces.categories.CategoryRemoteMgt;
+import uy.edu.um.interfaces.chat.ChatRemoteMgt;
 import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.interfaces.people.clients.ClientRemoteMgt;
 import uy.edu.um.interfaces.table.TableRemoteMgt;
@@ -121,7 +122,7 @@ public class MainServer {
 
 			name = "ChatRemoteMgr";
 
-			ArticleOrderRemoteMgt oChatRemoteMgr = BusinessFacade.getInstance().getArticleOrderRemote();
+			ChatRemoteMgt oChatRemoteMgr = BusinessFacade.getInstance().getChatRemote();
 
 			ArticleOrderRemoteMgt oStubChat = (ArticleOrderRemoteMgt) UnicastRemoteObject
 					.exportObject((Remote) oChatRemoteMgr, 0);
