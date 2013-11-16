@@ -124,7 +124,7 @@ public class MainServer {
 
 			ChatRemoteMgt oChatRemoteMgr = BusinessFacade.getInstance().getChatRemote();
 
-			ArticleOrderRemoteMgt oStubChat = (ArticleOrderRemoteMgt) UnicastRemoteObject
+			ChatRemoteMgt oStubChat = (ChatRemoteMgt) UnicastRemoteObject
 					.exportObject((Remote) oChatRemoteMgr, 0);
 
 			oRegistry.rebind(name, oStubChat);
