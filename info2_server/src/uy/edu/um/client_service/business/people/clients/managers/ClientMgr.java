@@ -32,9 +32,9 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void editClient(Client c) {
+	public void editClient(Client c) throws NoDatabaseConnection {
 		ClientDAO dao = ClientDAO.getInstance();
-
+		dao.editClient(c);
 
 	}
 
@@ -45,9 +45,9 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void removeClient(Client c) {
+	public void removeClient(Client c) throws NoDatabaseConnection {
 		ClientDAO dao = ClientDAO.getInstance();
-
+		dao.removeClient(c);
 	}
 
 	@Override

@@ -11,9 +11,9 @@ public interface ClientMgt {
 
 	public void addClient(Client c) throws NoDatabaseConnection;
 
-	public void editClient(Client c);
+	public void editClient(Client c) throws NoDatabaseConnection;
 
-	public void removeClient(Client c);
+	public void removeClient(Client c) throws NoDatabaseConnection;
 
 	public Client getClient(ClientVO c);
 
