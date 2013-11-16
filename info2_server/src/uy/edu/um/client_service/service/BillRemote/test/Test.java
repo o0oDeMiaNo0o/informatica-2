@@ -20,7 +20,7 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class Test {
 	public static void main(String[] args) throws NoDatabaseConnection{
-		ArticleMgt amgt = BusinessFacade.getInstance().getArticleMgt();
+/*		ArticleMgt amgt = BusinessFacade.getInstance().getArticleMgt();
 		TableMgt tmgt = BusinessFacade.getInstance().getTableMgt();
 		ClientMgt cmgt = BusinessFacade.getInstance().getClientMgt();
 		UserMgt umgt = BusinessFacade.getInstance().getUserMgt();
@@ -42,8 +42,9 @@ public class Test {
 		OrderVO alksdj = new OrderVO(articlesOrder,tables.get(0), users.get(0), "", 0);
 		ArrayList<OrderVO> toAdd = new ArrayList<OrderVO>(1);
 		toAdd.add(alksdj);
+
 		BillVO tBill = new BillVO(toAdd,clients.get(0),tables.get(0));
 		Bill addBIll = bmgt.getBill(tBill);
-		bmgt.addBill(addBIll);
+		bmgt.addBill(addBIll);*/
 	}
 }
