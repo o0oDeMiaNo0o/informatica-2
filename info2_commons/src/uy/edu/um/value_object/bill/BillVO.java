@@ -34,35 +34,35 @@ public class BillVO implements Serializable{
 		this.montoTotal = montoTotal;
 	}
 
-	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
-		this.orders = orders;
-		this.client = client;
-		this.montoTotal = this.getTotal();
-		this.date = date;
-	}
-
-	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t){
-		this.orders = orders;
-		this.client = client;
-		this.table = t;
-		this.montoTotal = this.getTotal();
-	}
-
-	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
-		this.id = id;
-		this.orders = orders;
-		this.client = client;
-		this.montoTotal = this.getTotal();
-		this.date = date;
-	}
-
-	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t, BigDecimal montoTotal,Date date){
-		this.id = id;
-		this.orders = orders;
-		this.client = client;
-		this.montoTotal = montoTotal;
-		this.date = date;
-	}
+//	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
+//		this.orders = orders;
+//		this.client = client;
+//		this.montoTotal = this.getTotal();
+//		this.date = date;
+//	}
+//
+//	public BillVO(ArrayList<OrderVO> orders, ClientVO client, TableVO t){
+//		this.orders = orders;
+//		this.client = client;
+//		this.table = t;
+//		this.montoTotal = this.getTotal();
+//	}
+//
+//	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t,Date date){
+//		this.id = id;
+//		this.orders = orders;
+//		this.client = client;
+//		this.montoTotal = this.getTotal();
+//		this.date = date;
+//	}
+//
+//	public BillVO(int id, ArrayList<OrderVO> orders, ClientVO client, TableVO t, BigDecimal montoTotal,Date date){
+//		this.id = id;
+//		this.orders = orders;
+//		this.client = client;
+//		this.montoTotal = montoTotal;
+//		this.date = date;
+//	}
 
 	public ArrayList<OrderVO> getOrders() {
 		return orders;
@@ -79,20 +79,20 @@ public class BillVO implements Serializable{
 		this.client = client;
 	}
 
-	public BigDecimal getTotal(){
-		BigDecimal total = new BigDecimal(0);
-		for(OrderVO current : orders){
-			ArrayList<ArticleOrderVO> articles = current.getArticulos();
-			for(ArticleOrderVO a : articles){
-				ArticleVO currentArticle = a.getArticle();
-				BigDecimal currentPrice = currentArticle.getPrecio();
-				BigDecimal cantidad = new BigDecimal(a.getCantidad());
-				BigDecimal aux = currentPrice.multiply(cantidad);
-				total = currentPrice.add(aux);
-			}
-		}
-		return total;
-	}
+//	public BigDecimal getTotal(){
+//		BigDecimal total = new BigDecimal(0);
+//		for(OrderVO current : orders){
+//			ArrayList<ArticleOrderVO> articles = current.getArticulos();
+//			for(ArticleOrderVO a : articles){
+//				ArticleVO currentArticle = a.getArticle();
+//				BigDecimal currentPrice = currentArticle.getPrecio();
+//				BigDecimal cantidad = new BigDecimal(a.getCantidad());
+//				BigDecimal aux = currentPrice.multiply(cantidad);
+//				total = currentPrice.add(aux);
+//			}
+//		}
+//		return total;
+//	}
 
 	public TableVO getTable() {
 		return table;
