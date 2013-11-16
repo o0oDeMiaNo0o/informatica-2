@@ -18,6 +18,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.usuarios.CajaPrincipal;
+import uy.edu.um.ui.usuarios.Facturacion;
 import uy.edu.um.ui.usuarios.MesaPedido;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
@@ -44,7 +45,6 @@ public class ConfirmMesa extends JFrame {
 	 */
 	public ConfirmMesa(final TableVO mesa, final OrderVO toSend, String text,
 			final JFrame frame) {
-
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(frame);
@@ -70,56 +70,103 @@ public class ConfirmMesa extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (mesa.isOcupado()) {
-					try {
-						
-						MesaPedido nueva = new MesaPedido(mesa);
-						nueva.setVisible(true);
-						frame.setVisible(false);
-						frame.dispose();
-						cerrar();
-					} catch (NoDatabaseConnection e1) {
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
-								.getMessage(), devuelve());
-						nuevoFrame.setVisible(true);
-					}
-				} else {
-					if (toSend.getArticulos() != null) {
+			public void mousePressed(MouseEvent e) {
+				if (mesa.getNumero() == 1) {
+					if (toSend != null) {
+						OrderMgt nuevo = ServiceFacade.getInstance()
+								.getOrderMgt();
 						try {
-							OrderMgt nuevo = ServiceFacade.getInstance()
-									.getOrderMgt();
-							nuevo.addOrder(toSend);
-							TableMgt nuevoMesas = ServiceFacade.getInstance()
-									.getTableMgt();
-							nuevoMesas.setOcupado(toSend.getTable());
-							ConfirmFacturar nueva = new ConfirmFacturar(mesa,
-									frame);
-							nueva.setVisible(true);
+							nuevo.addDelivery(toSend);
+							frame.dispose();
+							Facturacion fac = new Facturacion(
+									toSend.getTable(), null);
+							fac.setVisible(true);
 							cerrar();
 						} catch (NoServerConnectionException e1) {
-							MensajeGenerico nuevo = new MensajeGenerico(e1
-									.getMessage(), devuelve());
-							nuevo.setVisible(true);
+							// TODO Auto-generated catch block
+							MensajeGenerico msg = new MensajeGenerico(e1
+									.getMessage(), frame);
+							msg.setVisible(true);
+						} catch (NoDatabaseConnection e1) {
+							// TODO Auto-generated catch block
+							MensajeGenerico msg = new MensajeGenerico(e1
+									.getMessage(), frame);
+							msg.setVisible(true);
+						}
+					} else {
+						CajaPrincipal caja = null;
+						try {
+							caja = new CajaPrincipal(null, mesa);
+							caja.setVisible(true);
+							frame.dispose();
+							cerrar();
+						} catch (NoServerConnectionException e1) {
+							// TODO Auto-generated catch block
+							MensajeGenerico msg = new MensajeGenerico(e1
+									.getMessage(), frame);
+							msg.setVisible(true);
+						} catch (NoDatabaseConnection e1) {
+							// TODO Auto-generated catch block
+							MensajeGenerico msg = new MensajeGenerico(e1
+									.getMessage(), frame);
+							msg.setVisible(true);
+						}
+						caja.setVisible(true);
+						cerrar();
+					}
+				} else {
+					if (mesa.isOcupado()) {
+						try {
+
+							MesaPedido nueva = new MesaPedido(mesa);
+							nueva.setVisible(true);
+							frame.setVisible(false);
+							frame.dispose();
+							cerrar();
 						} catch (NoDatabaseConnection e1) {
 							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
 									.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						}
 					} else {
-						try {
-							CajaPrincipal nuevo = new CajaPrincipal(null, mesa);
-							nuevo.setVisible(true);
-							frame.dispose();
-							cerrar();
-						} catch (NoServerConnectionException e1) {
-							MensajeGenerico nuevo = new MensajeGenerico(e1
-									.getMessage(), devuelve());
-							nuevo.setVisible(true);
-						} catch (NoDatabaseConnection e1) {
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
-									.getMessage(), devuelve());
-							nuevoFrame.setVisible(true);
+						if (toSend.getArticulos() != null) {
+							try {
+								OrderMgt nuevo = ServiceFacade.getInstance()
+										.getOrderMgt();
+								nuevo.addOrder(toSend);
+								TableMgt nuevoMesas = ServiceFacade
+										.getInstance().getTableMgt();
+								nuevoMesas.setOcupado(toSend.getTable());
+								ConfirmFacturar nueva = new ConfirmFacturar(
+										mesa, frame);
+								nueva.setVisible(true);
+								cerrar();
+
+							} catch (NoServerConnectionException e1) {
+								MensajeGenerico nuevo = new MensajeGenerico(e1
+										.getMessage(), devuelve());
+								nuevo.setVisible(true);
+							} catch (NoDatabaseConnection e1) {
+								MensajeGenerico nuevoFrame = new MensajeGenerico(
+										e1.getMessage(), devuelve());
+								nuevoFrame.setVisible(true);
+							}
+						} else {
+							try {
+								CajaPrincipal nuevo = new CajaPrincipal(null,
+										mesa);
+								nuevo.setVisible(true);
+								frame.dispose();
+								cerrar();
+							} catch (NoServerConnectionException e1) {
+								MensajeGenerico nuevo = new MensajeGenerico(e1
+										.getMessage(), devuelve());
+								nuevo.setVisible(true);
+							} catch (NoDatabaseConnection e1) {
+								MensajeGenerico nuevoFrame = new MensajeGenerico(
+										e1.getMessage(), devuelve());
+								nuevoFrame.setVisible(true);
+							}
 						}
 					}
 				}

@@ -132,10 +132,14 @@ public class ClientListU extends BasicoUsuario {
 								nuevo.removeClientVO(cliente);
 							} catch (NoServerConnectionException e1) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								MensajeGenerico newFrame = new MensajeGenerico(
+										e1.getMessage(), ClientListU.this);
+								newFrame.setVisible(true);
 							} catch (NoDatabaseConnection e1) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								MensajeGenerico newFrame = new MensajeGenerico(
+										e1.getMessage(), ClientListU.this);
+								newFrame.setVisible(true);
 							}
 						}
 					} else {
