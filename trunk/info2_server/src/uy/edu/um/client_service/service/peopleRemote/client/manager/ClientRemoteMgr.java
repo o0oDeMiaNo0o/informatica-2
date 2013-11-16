@@ -32,7 +32,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 	}
 
 	@Override
-	public void editClient(ClientVO c) throws RemoteException {
+	public void editClient(ClientVO c) throws RemoteException, NoDatabaseConnection {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		Client toEdit = cMgt.getClient(c);
 		cMgt.editClient(toEdit);
@@ -41,7 +41,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 
 	@Override
-	public void removeClient(ClientVO c) throws RemoteException {
+	public void removeClient(ClientVO c) throws RemoteException, NoDatabaseConnection {
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		Client toRemove = cMgt.getClient(c);
 		cMgt.removeClient(toRemove);
