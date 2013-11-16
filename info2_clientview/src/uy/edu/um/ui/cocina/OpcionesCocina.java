@@ -82,6 +82,21 @@ public class OpcionesCocina extends JFrame {
 		lblPedidoRechazado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				OrderMgt ordenAux = ServiceFacade.getInstance().getOrderMgt();
+				try {
+					ordenAux.rechazado(orden);
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							null);
+					msg.setVisible(true);
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							null);
+					msg.setVisible(true);
+
+				}
 				OrdenRechazada nuevo = new OrdenRechazada(orden);
 				nuevo.setVisible(true);
 				cerrar();
