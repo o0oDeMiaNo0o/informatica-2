@@ -141,7 +141,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void editUser(UserVO u) throws NoServerConnectionException,
+	public void editUserVO(UserVO u) throws NoServerConnectionException,
 	NoDatabaseConnection {
 		try{
 			String sObjectService = "UserRemoteMgr";
@@ -156,7 +156,7 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void removeUser(UserVO u) throws NoServerConnectionException,
+	public void removeUserVO(UserVO u) throws NoServerConnectionException,
 			NoDatabaseConnection {
 		try{
 			String sObjectService = "UserRemoteMgr";

@@ -29,8 +29,8 @@ public interface UserMgt {
 
 	public UserVO isUser(String nombre) throws NoServerConnectionException;
 
-	public void editUser(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
+	public void editUserVO(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void removeUser(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
+	public void removeUserVO(UserVO u) throws NoServerConnectionException, NoDatabaseConnection;
 
 }

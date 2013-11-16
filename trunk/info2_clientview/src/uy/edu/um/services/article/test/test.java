@@ -13,6 +13,9 @@ public class test {
 		ArticleMgt aMgt = ServiceFacade.getInstance().getArticleMgt();
 		ArrayList<ArticleVO> articles = new ArrayList<ArticleVO>(2);
 		articles = aMgt.allArticles();
+		ArticleVO a1 = articles.get(4);
+		a1.setNombre("jajajaja");
+		aMgt.editArticle(a1);
 		int v = 34;
 	}
 }

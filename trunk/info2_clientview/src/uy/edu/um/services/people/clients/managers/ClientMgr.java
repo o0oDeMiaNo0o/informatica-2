@@ -105,7 +105,7 @@ public class ClientMgr implements ClientMgt{
 	}
 
 	@Override
-	public void removeClient(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection{
+	public void removeClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection{
 		try {
 			String sObjectService = "ClientRemoteMgr";
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
