@@ -58,7 +58,13 @@ public class Facturacion extends BasicoUsuario {
 		}else{
 			OrderMgt oMgt = ServiceFacade.getInstance().getOrderMgt();
 			ArrayList<OrderVO> deliveries = oMgt.allDeliveries();
-			OrderVO last = deliveries.get(deliveries.size() - 1);
+			OrderVO last = deliveries.get(deliveries.size() -1);
+			for(OrderVO d : deliveries){
+				int id = d.getId();
+				if(id > last.getId()){
+					last = d;
+				}
+			}
 			ordenesMesa.clear();
 			ordenesMesa.add(last);
 		}
