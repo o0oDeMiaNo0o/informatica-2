@@ -17,7 +17,7 @@ public class ChatUsuarios {
 
 	private Timer timer = null;
 
-	private ChatUsuarios() {
+	public ChatUsuarios() {
 
 		this.timer = new Timer(15000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
