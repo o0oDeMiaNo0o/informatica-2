@@ -77,7 +77,7 @@ public class ClientMgr implements ClientMgt{
 
 		ClientDAO dao = ClientDAO.getInstance();
 		ArrayList<Client> clients =  dao.getClients();
-		ArrayList<ClientVO> toReturn = new ArrayList<ClientVO>(10);
+		ArrayList<ClientVO> toReturn = new ArrayList<ClientVO>();
 		for(Client c : clients){
 			if(c!=null){
 				ClientVO tAdd = cMgt.getClientVO(c);

@@ -79,7 +79,7 @@ public class ArticleMgr implements ArticleMgt{
 	public ArrayList<ArticleVO> allArticles() throws NoDatabaseConnection {
 		ArticlesDAO dao = ArticlesDAO.getInstance();
 		ArrayList<Article> articles =  dao.getArticles();
-		ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>(10);
+		ArrayList<ArticleVO> toReturn = new ArrayList<ArticleVO>();
 		for(Article a : articles){
 			if(a!=null){
 				ArticleVO toAdd = this.getArticleVO(a);
