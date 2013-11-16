@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -136,9 +135,10 @@ public class Mesas extends BasicoUsuario {
 					OrderVO delivery = new OrderVO(pedidoAux, tableDelivery,
 							CurrentUser.getUser(), esp, 4);
 					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-
+					Facturacion fac = null;
 					try {
 						nuevo.addDelivery(delivery);
+						fac = new Facturacion(tableDelivery, null);
 					} catch (NoServerConnectionException e1) {
 						MensajeGenerico nuevo1 = new MensajeGenerico(e1
 								.getMessage(), Mesas.this);
@@ -148,10 +148,9 @@ public class Mesas extends BasicoUsuario {
 								.getMessage(), Mesas.this);
 						nuevo1.setVisible(true);
 					}
+					fac.setVisible(true);
+					cerrar();
 
-					MensajeGenerico msg = new MensajeGenerico(
-							"Agregado A Delivery Correctamente", Mesas.this);
-					msg.setVisible(true);
 				} else {
 					TableVO tableDelivery = new TableVO();
 					tableDelivery.setNumero(1);

@@ -48,7 +48,6 @@ public class Facturacion extends BasicoUsuario {
 	private String total = "0";
 	private BigDecimal totalBig;
 
-
 	public Facturacion(final TableVO mesa, ClientVO cliente)
 			throws NoServerConnectionException, NoDatabaseConnection {
 		// try{
@@ -178,8 +177,6 @@ public class Facturacion extends BasicoUsuario {
 						bMgt.addBillVO(factura);
 						MainUsuario main = new MainUsuario();
 						main.setVisible(true);
-						MainUsuario mainUs = new MainUsuario();
-						mainUs.setVisible(true);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
 						msg.setVisible(true);
