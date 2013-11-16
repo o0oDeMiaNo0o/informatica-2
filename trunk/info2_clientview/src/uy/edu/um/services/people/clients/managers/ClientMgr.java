@@ -55,10 +55,10 @@ public class ClientMgr implements ClientMgt{
 			oArticleRemoteMgt.addClient(c);
 		} catch (RemoteException e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-					" y abrirlo nuevamente");
+					"y abrirlo nuevamente");
 		} catch (NotBoundException e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-			" y abrirlo nuevamente");
+			"y abrirlo nuevamente");
 		}
 	}
 
