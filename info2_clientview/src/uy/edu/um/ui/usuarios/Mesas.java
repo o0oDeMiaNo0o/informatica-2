@@ -45,14 +45,13 @@ public class Mesas extends BasicoUsuario {
 	public URL delivery = DirLocal.class.getResource("Delivery.jpg");
 	public URL mostrador = DirLocal.class.getResource("Mostrador.jpg");
 	public ArrayList<TableVO> mesas;
-	Timer timer = null;
-	private boolean tengoPedido;
+	public Timer timer = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Mesas frame = new Mesas(null, null);
+					Mesas frame = new Mesas(null, null, true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,16 +60,11 @@ public class Mesas extends BasicoUsuario {
 		});
 	}
 
-	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp)
-			throws NoDatabaseConnection, NoServerConnectionException {
+	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp,
+			final boolean vengoDeCocina) throws NoDatabaseConnection,
+			NoServerConnectionException {
 		// try {
-
-		if (pedidoAux == null) {
-			tengoPedido = false;
-		} else {
-			tengoPedido = true;
-		}
-		mesas = cargoMesas(tengoPedido);
+		mesas = cargoMesas(vengoDeCocina);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -105,7 +99,7 @@ public class Mesas extends BasicoUsuario {
 		this.timer = new Timer(5000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					mesas = cargoMesas(tengoPedido);
+					mesas = cargoMesas(vengoDeCocina);
 				} catch (NoServerConnectionException e1) {
 					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),

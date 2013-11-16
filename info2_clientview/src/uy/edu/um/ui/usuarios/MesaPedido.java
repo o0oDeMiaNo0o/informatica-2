@@ -114,7 +114,7 @@ public class MesaPedido extends BasicoUsuario {
 				public void mousePressed(MouseEvent e) {
 					Mesas nuevo = null;
 					try{
-					nuevo = new Mesas(null, null);
+					nuevo = new Mesas(null, null,false);
 					nuevo.setVisible(true);
 					cerrar();
 					}catch(NoDatabaseConnection e1){

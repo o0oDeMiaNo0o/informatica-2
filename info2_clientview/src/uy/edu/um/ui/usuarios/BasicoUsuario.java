@@ -72,7 +72,7 @@ public class BasicoUsuario extends JFrame {
 			public void mousePressed(MouseEvent arg0) {
 				Mesas nuevo = null;
 				try {
-					nuevo = new Mesas(null, null);
+					nuevo = new Mesas(null, null, false);
 					nuevo.setVisible(true);
 					cerrar();
 				} catch (NoDatabaseConnection e) {

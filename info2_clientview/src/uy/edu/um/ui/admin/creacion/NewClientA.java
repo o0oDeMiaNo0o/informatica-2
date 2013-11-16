@@ -147,37 +147,44 @@ public class NewClientA extends BasicoAdmin {
 												Integer.parseInt(spinner
 														.getValue().toString()));
 										ClientMgt client = ServiceFacade
-										.getInstance().getClientMgt();
+												.getInstance().getClientMgt();
 										ClientVO cliente = null;
 										try {
 											cliente = client.createClientVO(
 													textFieldNom.getText(),
-													textFieldAp.getText(), Integer
-													.parseInt(textFieldCi
+													textFieldAp.getText(),
+													Integer.parseInt(textFieldCi
 															.getText()),
-															Integer.parseInt(textFieldTel
-																	.getText()),
-																	textFieldDir.getText(),
-																	textFieldEmail.getText(),
-																	descuento);
+													Integer.parseInt(textFieldTel
+															.getText()),
+													textFieldDir.getText(),
+													textFieldEmail.getText(),
+													descuento);
 											client.addClientVO(cliente);
 										} catch (NumberFormatException e1) {
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
-											nuevo.setVisible(true);
-										} catch (ExisteClientException e1) {
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											MensajeGenerico nuevo = new MensajeGenerico(
+													e1.getMessage(),
+													NewClientA.this);
 											nuevo.setVisible(true);
 										} catch (HasBlanksException e1) {
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											MensajeGenerico nuevo = new MensajeGenerico(
+													e1.getMessage(),
+													NewClientA.this);
 											nuevo.setVisible(true);
 										} catch (HasNumberException e1) {
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+											MensajeGenerico nuevo = new MensajeGenerico(
+													e1.getMessage(),
+													NewClientA.this);
 											nuevo.setVisible(true);
-										}catch(NoServerConnectionException e1){
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+										} catch (NoServerConnectionException e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(
+													e1.getMessage(),
+													NewClientA.this);
 											nuevo.setVisible(true);
-										}catch(NoDatabaseConnection e1){
-											MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewClientA.this);
+										} catch (NoDatabaseConnection e1) {
+											MensajeGenerico nuevo = new MensajeGenerico(
+													e1.getMessage(),
+													NewClientA.this);
 											nuevo.setVisible(true);
 										}
 										MensajeGenerico new10 = new MensajeGenerico(
@@ -228,11 +235,10 @@ public class NewClientA extends BasicoAdmin {
 		JButton btnCancelar = new JButton("Cancelar");
 		transparentPanel.add(btnCancelar,
 				"cell 4 13,alignx right,aligny center");
-		
+
 		JLabel label_3 = new JLabel("%");
 		label_3.setForeground(Color.WHITE);
 		transparentPanel.add(label_3, "cell 2 7");
-		
 
 	}
 

@@ -161,9 +161,9 @@ public class EditRemoveC extends JFrame {
 												ClientMgt client = ServiceFacade
 														.getInstance()
 														.getClientMgt();
-												ClientVO cliente = null;
 												try {
-													cliente = client.createClientVO(
+													ClientVO clienteAux = client.createClientVO(
+															cliente.getId(),
 															textFieldNom
 																	.getText(),
 															textFieldAp
@@ -177,17 +177,12 @@ public class EditRemoveC extends JFrame {
 															textFieldEmail
 																	.getText(),
 															descuento);
-													client.editClient(cliente);
+													client.editClient(clienteAux);
 													MensajeGenerico msg = new MensajeGenerico(
 															"Cliente Editado Correctamente",
 															EditRemoveC.this);
 													msg.setVisible(true);
 												} catch (NumberFormatException e1) {
-													MensajeGenerico nuevo = new MensajeGenerico(
-															e1.getMessage(),
-															EditRemoveC.this);
-													nuevo.setVisible(true);
-												} catch (ExisteClientException e1) {
 													MensajeGenerico nuevo = new MensajeGenerico(
 															e1.getMessage(),
 															EditRemoveC.this);
