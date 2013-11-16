@@ -101,17 +101,16 @@ public class EditRemoveU extends JFrame {
 					while (bandera == false) {
 						String password = textFieldPass.getText();
 						if (!password.equals("")) {
+							UserMgt nuevo = ServiceFacade.getInstance()
+									.getUserMgt();
 							if (editable == true) {
-
-								UserMgt nuevo = ServiceFacade.getInstance()
-										.getUserMgt();
 								UserVO usrEdit = null;
 								try {
 									usrEdit = nuevo.createUserVO(
 											user.getUser(),
 											textFieldPass.getText(),
 											esAdmin.isSelected());
-									nuevo.editUser(usrEdit);
+									nuevo.editUserVO(usrEdit);
 									cerrar();
 								} catch (HasBlanksException e1) {
 									// TODO Auto-generated catch block
@@ -136,9 +135,20 @@ public class EditRemoveU extends JFrame {
 								mensaje.setVisible(true);
 								bandera = true;
 							} else {
-
-								// Hacer Ma–ana
-
+								try {
+									nuevo.removeUserVO(user);
+								} catch (NoServerConnectionException e1) {
+									// TODO Auto-generated catch block
+									MensajeGenerico mensaje = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									mensaje.setVisible(true);
+								} catch (NoDatabaseConnection e1) {
+									// TODO Auto-generated catch block
+									MensajeGenerico mensaje = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									mensaje.setVisible(true);
+								}
+								cerrar();
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Usuario Eliminado Correctamente",
 										devuelve());

@@ -241,23 +241,12 @@ public class BasicoAdmin extends JFrame {
 		mntmEditarUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				UserList nuevo = new UserList(user, true);
+				UserList nuevo = new UserList();
 				nuevo.setVisible(true);
 				cerrar();
 
 			}
 		});
-
-		JMenuItem mntmVerLista_1 = new JMenuItem("Ver Lista");
-		mntmVerLista_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				UserList nuevo = new UserList(user, false);
-				nuevo.setVisible(true);
-				cerrar();
-			}
-		});
-		Usuarios.add(mntmVerLista_1);
 		Usuarios.add(mntmEditarUsuario);
 
 		JMenu mnClientes = new JMenu("Clientes");

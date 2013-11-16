@@ -2,6 +2,8 @@ package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -24,13 +27,13 @@ import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.people.client.ClientVO;
-import uy.edu.um.value_object.user.UserVO;
 
 public class ClientList extends BasicoAdmin {
 
 	private JTable table;
 	private JTextField textFieldID;
 	private ArrayList<ClientVO> clientes;
+	private Timer timer = null;
 
 	/**
 	 * Launch the application.
@@ -51,7 +54,8 @@ public class ClientList extends BasicoAdmin {
 	/**
 	 * Create the frame.
 	 */
-	public ClientList() throws NoServerConnectionException, NoDatabaseConnection{
+	public ClientList() throws NoServerConnectionException,
+			NoDatabaseConnection {
 		clientes = cargoClientes();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -141,6 +145,25 @@ public class ClientList extends BasicoAdmin {
 		transparentPanel_2.add(btnEliminarCategoria,
 				"cell 1 2,alignx center,aligny top");
 		cargaATabla();
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					clientes = cargoClientes();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							ClientList.this);
+					msg.setVisible(true);
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				cargaATabla();
+			}
+
+		});
+		timer.start();
 	}
 
 	// Metodos Auxiliares
@@ -155,7 +178,8 @@ public class ClientList extends BasicoAdmin {
 	}
 
 	// Cargo clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() throws NoDatabaseConnection, NoServerConnectionException {
+	private ArrayList<ClientVO> cargoClientes() throws NoDatabaseConnection,
+			NoServerConnectionException {
 		ClientMgt nuevo = ServiceFacade.getInstance().getClientMgt();
 		ArrayList<ClientVO> clients = new ArrayList<ClientVO>(2);
 		clients = nuevo.allClients();

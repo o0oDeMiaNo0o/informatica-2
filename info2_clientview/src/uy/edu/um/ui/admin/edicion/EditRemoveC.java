@@ -7,28 +7,25 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.ExisteClientException;
+import uy.edu.um.exceptions.checks.HasBlanksException;
+import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
-import uy.edu.um.value_object.article.ArticleVO;
-import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.people.client.ClientVO;
-
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 public class EditRemoveC extends JFrame {
 
@@ -39,7 +36,7 @@ public class EditRemoveC extends JFrame {
 	String[] textos;
 	private JTextField textFieldCi;
 	private JTextField textFieldNom;
-	private JTextField textFieldMail;
+	private JTextField textFieldEmail;
 	private JTextField textFieldTel;
 
 	/**
@@ -51,8 +48,8 @@ public class EditRemoveC extends JFrame {
 	 * 
 	 * @param toSend
 	 */
-	public EditRemoveC(ClientVO cliente, JPanel cPanel, final boolean editable,
-			String mensaje) {
+	public EditRemoveC(final ClientVO cliente, JPanel cPanel,
+			final boolean editable, String mensaje) {
 		try {
 			clientes = cargoClientes();
 			setTitle("Confirma");
@@ -105,11 +102,11 @@ public class EditRemoveC extends JFrame {
 			JLabel lblNewLabel_1 = new JLabel("Mail");
 			ZonaEdicion.add(lblNewLabel_1, "cell 2 2");
 
-			textFieldMail = new JTextField();
-			textFieldMail.setText(cliente.getEmail());
-			textFieldMail.setEditable(editable);
-			textFieldMail.setColumns(10);
-			ZonaEdicion.add(textFieldMail, "cell 3 2,growx");
+			textFieldEmail = new JTextField();
+			textFieldEmail.setText(cliente.getEmail());
+			textFieldEmail.setEditable(editable);
+			textFieldEmail.setColumns(10);
+			ZonaEdicion.add(textFieldEmail, "cell 3 2,growx");
 
 			JLabel lblDir = new JLabel("Direcci\u00F3n");
 			ZonaEdicion.add(lblDir, "cell 0 3,alignx left,aligny center");
@@ -132,7 +129,7 @@ public class EditRemoveC extends JFrame {
 			JLabel lblDescuento = new JLabel("Descuento");
 			ZonaEdicion.add(lblDescuento, "cell 0 4");
 
-			JSpinner spinner = new JSpinner();
+			final JSpinner spinner = new JSpinner();
 			spinner.setEnabled(editable);
 			int descuento = cliente.getDescuento().intValueExact();
 			spinner.setModel(new SpinnerNumberModel(descuento, new Integer(0),
@@ -148,7 +145,132 @@ public class EditRemoveC extends JFrame {
 			btnAceptar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// HACERRRRRRRRRRRRRR
+					if (editable == true) {
+						if (!textFieldNom.getText().isEmpty()) {
+							if (Helpers.isNumeric(textFieldCi.getText())) {
+								if (!textFieldEmail.getText().isEmpty()) {
+									if (!textFieldAp.getText().isEmpty()) {
+										if (Helpers.isNumeric(textFieldTel
+												.getText())) {
+											if (!textFieldDir.getText()
+													.isEmpty()) {
+												BigDecimal descuento = new BigDecimal(
+														Integer.parseInt(spinner
+																.getValue()
+																.toString()));
+												ClientMgt client = ServiceFacade
+														.getInstance()
+														.getClientMgt();
+												ClientVO cliente = null;
+												try {
+													cliente = client.createClientVO(
+															textFieldNom
+																	.getText(),
+															textFieldAp
+																	.getText(),
+															Integer.parseInt(textFieldCi
+																	.getText()),
+															Integer.parseInt(textFieldTel
+																	.getText()),
+															textFieldDir
+																	.getText(),
+															textFieldEmail
+																	.getText(),
+															descuento);
+													client.editClient(cliente);
+													MensajeGenerico msg = new MensajeGenerico(
+															"Cliente Editado Correctamente",
+															EditRemoveC.this);
+													msg.setVisible(true);
+												} catch (NumberFormatException e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												} catch (ExisteClientException e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												} catch (HasBlanksException e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												} catch (HasNumberException e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												} catch (NoServerConnectionException e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												} catch (NoDatabaseConnection e1) {
+													MensajeGenerico nuevo = new MensajeGenerico(
+															e1.getMessage(),
+															EditRemoveC.this);
+													nuevo.setVisible(true);
+												}
+												MensajeGenerico new10 = new MensajeGenerico(
+														"Cliente Agregado",
+														devuelve());
+												new10.setVisible(true);
+											} else {
+												MensajeGenerico new6 = new MensajeGenerico(
+														"Direccion Vacia",
+														devuelve());
+												new6.setVisible(true);
+											}
+										} else {
+											MensajeGenerico new5 = new MensajeGenerico(
+													"Telefono Vacio o No Numerico",
+													devuelve());
+											new5.setVisible(true);
+										}
+									} else {
+										MensajeGenerico new4 = new MensajeGenerico(
+												"Apellido Vacio", devuelve());
+										new4.setVisible(true);
+									}
+								} else {
+									MensajeGenerico new3 = new MensajeGenerico(
+											"Email Vacio", devuelve());
+									new3.setVisible(true);
+								}
+
+							} else {
+								MensajeGenerico new2 = new MensajeGenerico(
+										"Ci Vacio o No Numerico", devuelve());
+								new2.setVisible(true);
+							}
+						} else {
+							MensajeGenerico new1 = new MensajeGenerico(
+									"Nombre Vacio", devuelve());
+							new1.setVisible(true);
+						}
+					} else {
+						ClientMgt client = ServiceFacade.getInstance()
+								.getClientMgt();
+						try {
+							client.removeClientVO(cliente);
+						} catch (NoServerConnectionException e1) {
+							// TODO Auto-generated catch block
+							MensajeGenerico nuevo = new MensajeGenerico(e1
+									.getMessage(), EditRemoveC.this);
+							nuevo.setVisible(true);
+						} catch (NoDatabaseConnection e1) {
+							// TODO Auto-generated catch block
+							MensajeGenerico nuevo = new MensajeGenerico(e1
+									.getMessage(), EditRemoveC.this);
+							nuevo.setVisible(true);
+						}
+						MensajeGenerico msg = new MensajeGenerico(
+								"Cliente Eliminado Correctamente",
+								EditRemoveC.this);
+						msg.setVisible(true);
+					}
 				}
 			});
 			ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
