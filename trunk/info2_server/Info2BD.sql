@@ -16,12 +16,14 @@ CREATE TABLE `Articles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 
+
 CREATE TABLE `Categorias` (
   `idCategorias` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   `Estado` enum('Activa','Eliminada') NOT NULL DEFAULT 'Activa',
   PRIMARY KEY (`idCategorias`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
 
 
 CREATE TABLE `Clientes` (
@@ -33,8 +35,10 @@ CREATE TABLE `Clientes` (
   `Direccion` varchar(45) NOT NULL,
   `Telefono` int(11) NOT NULL,
   `Descuento` decimal(5,2) DEFAULT NULL,
+  `Estado` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
   PRIMARY KEY (`id`,`Ci`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Delivery` (
   `idDelivery` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,6 +52,7 @@ CREATE TABLE `Delivery` (
   KEY `fk_Delivery_Facturas1_idx` (`Facturas_idFacturas`),
   KEY `fk_Delivery_Users1_idx` (`Users_Username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
 
 
 
@@ -69,6 +74,7 @@ CREATE TABLE `Facturas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 
+
 CREATE TABLE `Delivery/Articulos` (
   `Delivery_idDelivery` int(11) NOT NULL,
   `Articles_ID` int(11) NOT NULL,
@@ -77,6 +83,7 @@ CREATE TABLE `Delivery/Articulos` (
   KEY `fk_Delivery/Producto_Delivery_idx` (`Delivery_idDelivery`),
   KEY `fk_Delivey/Producto_Articles1_idx` (`Articles_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Linea de Factura` (
   `Facturas_idFacturas` int(11) NOT NULL,
@@ -94,9 +101,10 @@ CREATE TABLE `Linea de Factura` (
 
 CREATE TABLE `Mesa` (
   `idMesa` int(11) NOT NULL AUTO_INCREMENT,
-  `Estado` enum('Ocupado','Libre') DEFAULT 'Libre',
+  `Estado` enum('Ocupado','Libre','Eliminada') DEFAULT 'Libre',
   PRIMARY KEY (`idMesa`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Pagos` (
   `idPagos` int(11) NOT NULL AUTO_INCREMENT,
@@ -108,11 +116,12 @@ CREATE TABLE `Pagos` (
   CONSTRAINT `fk_Pagos_Tipos de Pagos1` FOREIGN KEY (`Tipos de Pagos_idTiposdePagos`) REFERENCES `tipos de pagos` (`idTiposdePagos`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 CREATE TABLE `pedido` (
   `idpedido` int(11) NOT NULL AUTO_INCREMENT,
   `HoraPedido` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Mesa_idMesa` int(11) DEFAULT NULL,
-  `Estado` enum('En Preparacion','Entregado','Rechazado','Delivery') DEFAULT 'En Preparacion',
+  `Estado` enum('En Preparacion','Entregado','Rechazado','Facturado','Delivery') NOT NULL DEFAULT 'En Preparacion',
   `Facturas_idFacturas` int(11) DEFAULT NULL,
   `Users_Username` varchar(45) DEFAULT NULL,
   `Especificaciones` varchar(250) DEFAULT NULL,
@@ -120,7 +129,8 @@ CREATE TABLE `pedido` (
   KEY `fk_pedido_Mesa1_idx` (`Mesa_idMesa`),
   KEY `fk_pedido_Facturas1_idx` (`Facturas_idFacturas`),
   KEY `fk_pedido_Users1_idx` (`Users_Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE `Pedido/Articulos` (
   `pedido_idpedido` int(11) NOT NULL,
@@ -137,14 +147,17 @@ CREATE TABLE `Tipos de Pagos` (
   PRIMARY KEY (`idTiposdePagos`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
 CREATE TABLE `Users` (
   `idUsers` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(45) NOT NULL,
   `Password` varchar(45) NOT NULL,
   `Admin` int(1) NOT NULL,
   `Vigente` enum('Activo','Eliminado') NOT NULL DEFAULT 'Activo',
-  PRIMARY KEY (`idUsers`,`Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idUsers`,`Username`),
+  UNIQUE KEY `Username_UNIQUE` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
