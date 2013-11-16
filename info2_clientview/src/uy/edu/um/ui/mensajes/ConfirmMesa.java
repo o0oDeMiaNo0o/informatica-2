@@ -148,7 +148,6 @@ public class ConfirmMesa extends JFrame {
 									ConfirmFacturar nueva = new ConfirmFacturar(
 											mesa, frame);
 									nueva.setVisible(true);
-									frame.dispose();
 									cerrar();
 
 								} catch (NoServerConnectionException e1) {
