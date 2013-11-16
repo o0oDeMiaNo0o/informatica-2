@@ -77,7 +77,6 @@ public class OrderMgr implements OrderMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			OrderRemoteMgt oOrderRemoteMgt = (OrderRemoteMgt) oRegitry.lookup(sObjectService);
 			array = oOrderRemoteMgt.allOrdersTable(t);
-			System.out.println("ordenes recibidas correctamente");
 		} catch (Exception e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 			"y abrirlo nuevamente");
