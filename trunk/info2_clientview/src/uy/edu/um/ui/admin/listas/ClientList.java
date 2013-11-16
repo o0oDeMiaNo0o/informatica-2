@@ -157,9 +157,15 @@ public class ClientList extends BasicoAdmin {
 					msg.setVisible(true);
 				} catch (NoServerConnectionException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							ClientList.this);
+					msg.setVisible(true);
 				}
+				table.removeAll();
 				cargaATabla();
+				table.invalidate();
+				table.validate();
+				table.repaint();
 			}
 
 		});
