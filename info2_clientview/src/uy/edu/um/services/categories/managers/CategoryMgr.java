@@ -61,7 +61,7 @@ public class CategoryMgr implements CategoryMgt{
 	@Override
 	public ArrayList<CategoryVO> allCategories() throws NoServerConnectionException, NoDatabaseConnection{
 
-		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(10);
+		ArrayList<CategoryVO> array = new ArrayList<CategoryVO>(1);
 
 		try {
 
@@ -104,8 +104,7 @@ public class CategoryMgr implements CategoryMgt{
 	}
 
 	@Override
-	public void borrarCateogry(CategoryVO c)
-			throws NoServerConnectionException, NoDatabaseConnection {
+	public void borrarCateogry(CategoryVO c) throws NoServerConnectionException, NoDatabaseConnection {
 		try {
 
 			String sObjectService = "CategoryRemoteMgr";
@@ -117,7 +116,7 @@ public class CategoryMgr implements CategoryMgt{
 			oCategoryRemoteMgt.eliminarCategory(c);
 		} catch (Exception e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-					"y abrirlo nuevamente");
+					" y abrirlo nuevamente");
 		}
 
 	}

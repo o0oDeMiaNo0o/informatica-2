@@ -20,7 +20,7 @@ public interface ClientMgt {
 
 	public void addClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection;
 
-	public void removeClient(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection;
+	public void removeClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection;
 
 	public void editClient(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection;
 
