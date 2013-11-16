@@ -10,7 +10,6 @@ import uy.edu.um.interfaces.oreder.OrderRemoteMgt;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
-import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
