@@ -1,5 +1,6 @@
 package uy.edu.um.client_service.service.BillRemote.test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.BusinessFacade;
@@ -20,7 +21,7 @@ import uy.edu.um.value_object.user.UserVO;
 
 public class Test {
 	public static void main(String[] args) throws NoDatabaseConnection{
-/*		ArticleMgt amgt = BusinessFacade.getInstance().getArticleMgt();
+		ArticleMgt amgt = BusinessFacade.getInstance().getArticleMgt();
 		TableMgt tmgt = BusinessFacade.getInstance().getTableMgt();
 		ClientMgt cmgt = BusinessFacade.getInstance().getClientMgt();
 		UserMgt umgt = BusinessFacade.getInstance().getUserMgt();
@@ -43,8 +44,9 @@ public class Test {
 		ArrayList<OrderVO> toAdd = new ArrayList<OrderVO>(1);
 		toAdd.add(alksdj);
 
-		BillVO tBill = new BillVO(toAdd,clients.get(0),tables.get(0));
+		BigDecimal gj = new BigDecimal(34);
+		BillVO tBill = new BillVO(toAdd,clients.get(0),tables.get(0),gj);
 		Bill addBIll = bmgt.getBill(tBill);
-		bmgt.addBill(addBIll);*/
+		bmgt.addBill(addBIll);
 	}
 }
