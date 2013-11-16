@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import uy.edu.um.client_service.business.people.clients.entities.Client;
-import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
@@ -80,7 +79,7 @@ public class ClientDAO {
 			o.close();
 		}
 		catch(SQLException e){
-			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+			throw new RuntimeException(e);	
 		}
 		finally{
 			if (con != null) {
@@ -129,7 +128,7 @@ public class ClientDAO {
 			ArrayList<Client> toReturn = new ArrayList<Client>();
 			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
-			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Clientes");
+			ResultSet oResultSet = oStatement.executeQuery("SELECT * FROM Clientes Where Estado = 'Activo'");
 			while (oResultSet.next()) {
 				int nCli = oResultSet.getInt(1);
 				int Ci = oResultSet.getInt(2);
