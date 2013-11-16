@@ -72,7 +72,7 @@ public class UserDAO {
 			}
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement o = con.createStatement();
-			o.execute("UPDATE Users set (Password,Admin) Values ('"+u.getPassword()+"',"+adm+") Where Username = '"+u.getUsername()+"';");
+			o.execute("UPDATE Users set Password='"+u.getPassword()+"', Admin="+adm+" Where Username = '"+u.getUsername()+"';");
 			o.close();
 		}
 		catch(SQLException e){
