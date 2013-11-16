@@ -142,15 +142,31 @@ public class UserMgr implements UserMgt{
 
 	@Override
 	public void editUser(UserVO u) throws NoServerConnectionException,
-			NoDatabaseConnection {
-		// TODO Auto-generated method stub
+	NoDatabaseConnection {
+		try{
+			String sObjectService = "UserRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
+			oUserRemoteMgt.editUser(u);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
 
 	}
 
 	@Override
 	public void removeUser(UserVO u) throws NoServerConnectionException,
 			NoDatabaseConnection {
-		// TODO Auto-generated method stub
+		try{
+			String sObjectService = "UserRemoteMgr";
+			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
+			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
+			oUserRemoteMgt.editUser(u);
+		} catch (Exception e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
 
 	}
 }
