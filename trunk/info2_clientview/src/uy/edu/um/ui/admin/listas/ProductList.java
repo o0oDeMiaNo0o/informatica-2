@@ -2,8 +2,12 @@ package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -15,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -25,21 +30,11 @@ import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.admin.edicion.EditRemoveA;
+import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.article.ArticleVO;
 import uy.edu.um.value_object.categories.CategoryVO;
-import uy.edu.um.value_object.user.UserVO;
-import uy.edu.um.ui.clasesAuxiliares.TextFieldAutocompletar;
-import uy.edu.um.ui.mensajes.MensajeGenerico;
-
-import java.util.List;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class ProductList extends BasicoAdmin {
 	private ArrayList<CategoryVO> categorias;
@@ -48,6 +43,7 @@ public class ProductList extends BasicoAdmin {
 	private String[] textos;
 	private JTable table;
 	private JTextField textFieldID;
+	private Timer timer;
 
 	/**
 	 * Launch the application.
@@ -83,13 +79,13 @@ public class ProductList extends BasicoAdmin {
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
-		TransparentPanel transparentPanel_1 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_1, "cell 0 0,grow");
-		transparentPanel_1.setLayout(new MigLayout("",
+		final TransparentPanel transparentPanelCat = new TransparentPanel();
+		transparentPanel.add(transparentPanelCat, "cell 0 0,grow");
+		transparentPanelCat.setLayout(new MigLayout("",
 				"[grow][grow][][][grow]", "[grow][][][][grow]"));
 
 		JLabel lblCategorias = new JLabel("Categorias:");
-		transparentPanel_1.add(lblCategorias, "cell 1 1,alignx trailing");
+		transparentPanelCat.add(lblCategorias, "cell 1 1,alignx trailing");
 
 		final JComboBox comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
@@ -103,12 +99,12 @@ public class ProductList extends BasicoAdmin {
 			}
 		});
 
-		String[] textosMenu = cargaAlCombo(comboBox); // cargaCategorias
+		final String[] textosMenu = cargaAlCombo(comboBox); // cargaCategorias
 		comboBox.setModel(new DefaultComboBoxModel(textosMenu));
-		transparentPanel_1.add(comboBox, "cell 2 1,alignx center");
+		transparentPanelCat.add(comboBox, "cell 2 1,alignx center");
 
 		JLabel lblBsquedaRapida = new JLabel("B\u00FAsqueda Rapida");
-		transparentPanel_1.add(lblBsquedaRapida,
+		transparentPanelCat.add(lblBsquedaRapida,
 				"cell 1 3 2 1,alignx center,aligny center");
 
 		final TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
@@ -130,19 +126,19 @@ public class ProductList extends BasicoAdmin {
 			}
 		});
 		textFieldAutocompletar.setText("");
-		transparentPanel_1.add(textFieldAutocompletar,
+		transparentPanelCat.add(textFieldAutocompletar,
 				"cell 1 4 2 1,growx,aligny top");
 
-		TransparentPanel transparentPanel_2 = new TransparentPanel();
-		transparentPanel.add(transparentPanel_2, "cell 2 0,grow");
-		transparentPanel_2.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
+		TransparentPanel transparentPanelEdit = new TransparentPanel();
+		transparentPanel.add(transparentPanelEdit, "cell 2 0,grow");
+		transparentPanelEdit.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
 
 		JLabel label = new JLabel("Id Articulo: ");
-		transparentPanel_2.add(label, "flowx,cell 0 1,alignx center");
+		transparentPanelEdit.add(label, "flowx,cell 0 1,alignx center");
 
 		textFieldID = new JTextField();
 		textFieldID.setColumns(10);
-		transparentPanel_2.add(textFieldID, "cell 0 1,alignx center");
+		transparentPanelEdit.add(textFieldID, "cell 0 1,alignx center");
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -184,7 +180,7 @@ public class ProductList extends BasicoAdmin {
 			}
 
 		});
-		transparentPanel_2.add(button,
+		transparentPanelEdit.add(button,
 				"flowx,cell 0 2,alignx center,aligny top");
 
 		JButton button_1 = new JButton("Eliminar Producto");
@@ -214,8 +210,38 @@ public class ProductList extends BasicoAdmin {
 				}
 			}
 		});
-		transparentPanel_2.add(button_1, "cell 0 2,alignx center,aligny top");
+		transparentPanelEdit.add(button_1, "cell 0 2,alignx center,aligny top");
 		cargaATabla();
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					categorias = cargoCategorias();
+					listaArticulos = cargoListado();
+				} catch (NoDatabaseConnection e1) {
+					MensajeGenerico newFrame = new MensajeGenerico(
+							e1.getMessage(), ProductList.this);
+					newFrame.setVisible(true);
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico newFrame = new MensajeGenerico(
+							e1.getMessage(), ProductList.this);
+					newFrame.setVisible(true);
+				}
+				transparentPanelCat.removeAll();
+				comboBox.setModel(new DefaultComboBoxModel(
+						cargaAlCombo(comboBox)));
+				transparentPanelCat.validate();
+				transparentPanelCat.invalidate();
+				transparentPanelCat.repaint();
+				table.removeAll();
+				cargaATabla();
+				table.invalidate();
+				table.validate();
+				table.repaint();
+			}
+
+		});
+		timer.start();
 		// }catch(NoServerConnectionException e){
 		// MensajeGenerico nuevo = new
 		// MensajeGenerico(e.getMessage(),devuelve());

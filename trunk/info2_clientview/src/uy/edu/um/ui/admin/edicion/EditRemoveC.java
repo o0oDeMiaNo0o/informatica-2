@@ -245,6 +245,7 @@ public class EditRemoveC extends JFrame {
 									"Nombre Vacio", devuelve());
 							new1.setVisible(true);
 						}
+						cerrar();
 					} else {
 						ClientMgt client = ServiceFacade.getInstance()
 								.getClientMgt();
@@ -263,6 +264,7 @@ public class EditRemoveC extends JFrame {
 								"Cliente Eliminado Correctamente",
 								EditRemoveC.this);
 						msg.setVisible(true);
+						cerrar();
 					}
 				}
 			});

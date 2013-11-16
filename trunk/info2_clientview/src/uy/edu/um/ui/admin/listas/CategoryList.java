@@ -1,7 +1,10 @@
 package uy.edu.um.ui.admin.listas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -22,12 +26,12 @@ import uy.edu.um.ui.admin.BasicoAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.categories.CategoryVO;
-import java.awt.Color;
 
 public class CategoryList extends BasicoAdmin {
 	private ArrayList<CategoryVO> categorias;
 	private JTable table;
 	private JTextField textFieldID;
+	private Timer timer = null;
 
 	/**
 	 * Launch the application.
@@ -94,7 +98,7 @@ public class CategoryList extends BasicoAdmin {
 							.getCategoryMgt();
 					try {
 						nuevo.borrarCateogry(cat);
-						//transparentPanel.removeAll();
+						// transparentPanel.removeAll();
 						categorias = cargoCategorias();
 						cargaATabla();
 						transparentPanel.invalidate();
@@ -126,6 +130,30 @@ public class CategoryList extends BasicoAdmin {
 		transparentPanel_2.add(btnEliminarCategoria,
 				"cell 1 1,alignx center,aligny top");
 		cargaATabla();
+
+		this.timer = new Timer(5000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					categorias = cargoCategorias();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico newFrame = new MensajeGenerico(
+							e1.getMessage(), CategoryList.this);
+					newFrame.setVisible(true);
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico newFrame = new MensajeGenerico(
+							e1.getMessage(), CategoryList.this);
+					newFrame.setVisible(true);
+				}
+				table.removeAll();
+				cargaATabla();
+				table.invalidate();
+				table.validate();
+				table.repaint();
+			}
+
+		});
+		timer.start();
 	}
 
 	// Metodos Auxiliares
