@@ -75,7 +75,7 @@ public class ProductList extends BasicoAdmin {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 
-		TransparentPanel transparentPanel = new TransparentPanel();
+		final TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel, BorderLayout.CENTER);
 		transparentPanel.setLayout(new MigLayout("", "[][grow][]", "[grow]"));
 
@@ -131,7 +131,8 @@ public class ProductList extends BasicoAdmin {
 
 		TransparentPanel transparentPanelEdit = new TransparentPanel();
 		transparentPanel.add(transparentPanelEdit, "cell 2 0,grow");
-		transparentPanelEdit.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
+		transparentPanelEdit
+				.setLayout(new MigLayout("", "[]", "[grow][][grow]"));
 
 		JLabel label = new JLabel("Id Articulo: ");
 		transparentPanelEdit.add(label, "flowx,cell 0 1,alignx center");
@@ -230,6 +231,7 @@ public class ProductList extends BasicoAdmin {
 				transparentPanelCat.removeAll();
 				comboBox.setModel(new DefaultComboBoxModel(
 						cargaAlCombo(comboBox)));
+				magicAgain(transparentPanelCat);
 				transparentPanelCat.validate();
 				transparentPanelCat.invalidate();
 				transparentPanelCat.repaint();
@@ -247,6 +249,55 @@ public class ProductList extends BasicoAdmin {
 		// MensajeGenerico(e.getMessage(),devuelve());
 		// nuevo.setVisible(true);
 		// }
+	}
+
+	// El se–or actua de materias misteriosas
+	private void magicAgain(TransparentPanel transparentPanelCat) {
+
+		JLabel lblCategorias = new JLabel("Categorias:");
+		transparentPanelCat.add(lblCategorias, "cell 1 1,alignx trailing");
+
+		final JComboBox comboBox = new JComboBox();
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if ((!comboBox.getSelectedItem().toString()
+						.equals("---- Desplegar Lista ----"))) {
+					cargaALista(buscaEnLista(comboBox.getSelectedItem()
+							.toString()));
+					cargaATabla();
+				}
+			}
+		});
+
+		final String[] textosMenu = cargaAlCombo(comboBox); // cargaCategorias
+		comboBox.setModel(new DefaultComboBoxModel(textosMenu));
+		transparentPanelCat.add(comboBox, "cell 2 1,alignx center");
+
+		JLabel lblBsquedaRapida = new JLabel("B\u00FAsqueda Rapida");
+		transparentPanelCat.add(lblBsquedaRapida,
+				"cell 1 3 2 1,alignx center,aligny center");
+
+		final TextFieldAutocompletar textFieldAutocompletar = new TextFieldAutocompletar(
+				devuelveLista());
+		textFieldAutocompletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				textFieldAutocompletar.setText("");
+			}
+		});
+		textFieldAutocompletar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					listaTabla = devuelvoParaTabla(textFieldAutocompletar
+							.getText());
+					cargaATabla();
+				}
+			}
+		});
+		textFieldAutocompletar.setText("");
+		transparentPanelCat.add(textFieldAutocompletar,
+				"cell 1 4 2 1,growx,aligny top");
 	}
 
 	// Metodos Auxiliares
