@@ -74,8 +74,10 @@ public class UserDAO {
 			Statement o = con.createStatement();
 			o.execute("UPDATE Users set Password='"+u.getPassword()+"', Admin="+adm+" Where Username = '"+u.getUsername()+"';");
 			o.close();
+			log.info("Usuario "+u.getUsername()+" editado");
 		}
 		catch(SQLException e){
+			log.error("Error al editar usuario");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -194,7 +196,7 @@ public class UserDAO {
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = con.createStatement();
-			oStatement.execute("UPDATE Users set Vigente = 'Eliminada' Where Users.Username = '"+u.getUsername()+"';");
+			oStatement.execute("UPDATE Users set Vigente = 'Eliminado' Where Users.Username = '"+u.getUsername()+"';");
 			oStatement.close();
 			log.info("El usuario "+u.getUsername()+" fue eliminado");
 		}
