@@ -56,7 +56,7 @@ public class TableMgr implements TableMgt{
 	public ArrayList<TableVO> allTables() throws NoDatabaseConnection {
 		TableDAO dao = TableDAO.getInstance();
 		ArrayList<Table> tables = dao.EstadosMesas();
-		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(10);
+		ArrayList<TableVO> toReturn = new ArrayList<TableVO>(1);
 		for(Table t : tables){
 			if(t != null){
 				TableVO toAdd = this.getTableVO(t);

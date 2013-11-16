@@ -171,8 +171,8 @@ public class OrderMgr implements OrderMgt{
 	public ArrayList<OrderVO> allDeliveries() throws NoDatabaseConnection {
 		OrderMgt oMgt = BusinessFacade.getInstance().getOrderMgt();
 		OrderDAO dao = OrderDAO.getInstance();
-		ArrayList<Order> allDeliveries = new ArrayList<Order>(2);
-		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>(2);
+		ArrayList<Order> allDeliveries = new ArrayList<Order>();
+		ArrayList<OrderVO> toReturn = new ArrayList<OrderVO>();
 		allDeliveries = dao.getDeliverys();
 		for(Order o:allDeliveries){
 			if(o!=null){

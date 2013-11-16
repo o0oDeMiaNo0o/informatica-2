@@ -41,7 +41,7 @@ public class CategoryMgr implements CategoryMgt{
 	public ArrayList<CategoryVO> allCategories() throws NoDatabaseConnection {
 		CategoryDAO dao = CategoryDAO.getInstance();
 		ArrayList<Category> categories =  dao.getCategory();
-		ArrayList<CategoryVO> toReturn = new ArrayList<CategoryVO>(10);
+		ArrayList<CategoryVO> toReturn = new ArrayList<CategoryVO>();
 		for(Category c : categories){
 			if(c!=null){
 				CategoryVO toAdd = this.getCategoryVO(c);
