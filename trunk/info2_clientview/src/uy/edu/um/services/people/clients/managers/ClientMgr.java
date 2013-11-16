@@ -1,6 +1,8 @@
 package uy.edu.um.services.people.clients.managers;
 
 import java.math.BigDecimal;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -51,11 +53,13 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oArticleRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oArticleRemoteMgt.addClient(c);
-
-			} catch (Exception e) {
-				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-						"y abrirlo nuevamente");
-			}
+		} catch (RemoteException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+					" y abrirlo nuevamente");
+		} catch (NotBoundException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			" y abrirlo nuevamente");
+		}
 	}
 
 	@Override
@@ -76,12 +80,13 @@ public class ClientMgr implements ClientMgt{
 					.lookup(sObjectService);
 
 			array = oClientRemoteMgt.allClients();
-
-			} catch (Exception e) {
-				System.err.println("error:");
-				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-						"y abrirlo nuevamente");
-			}
+		} catch (RemoteException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+					" y abrirlo nuevamente");
+		} catch (NotBoundException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			" y abrirlo nuevamente");
+		}
 
 		return array;
 
@@ -95,9 +100,12 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oClientRemoteMgt.editClient(c);
-			} catch (Exception e) {
+			} catch (RemoteException e) {
 				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-						"y abrirlo nuevamente");
+						" y abrirlo nuevamente");
+			} catch (NotBoundException e) {
+				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+				" y abrirlo nuevamente");
 			}
 	}
 
@@ -109,11 +117,13 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 					.lookup(sObjectService);
 			oClientRemoteMgt.removeClient(c);
-			//System.out.println("Cliente agregado");
-			} catch (Exception e) {
-				throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-							"y abrirlo nuevamente");
-			}
+		} catch (RemoteException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+					"y abrirlo nuevamente");
+		} catch (NotBoundException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
+		}
 	}
 
 	@Override
@@ -125,9 +135,12 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			check = oClientRemoteMgt.existeCliente(nombre,ci);
-		} catch (Exception e) {
+		} catch (RemoteException e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-						"y abrirlo nuevamente");
+					"y abrirlo nuevamente");
+		} catch (NotBoundException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			"y abrirlo nuevamente");
 		}
 		return check;
 	}
