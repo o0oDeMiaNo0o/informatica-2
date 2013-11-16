@@ -113,7 +113,7 @@ public class ArticleMgr implements ArticleMgt {
 		if(existeArticle(nombre)){
 			throw new ExisteArticleException("El article "+nombre+" ya existe");
 		}
-		ArticleVO aReturn = new ArticleVO(nombre, precio,category);
+		ArticleVO aReturn = new ArticleVO(id, nombre, precio,category);
 		return aReturn;
 	}
 
