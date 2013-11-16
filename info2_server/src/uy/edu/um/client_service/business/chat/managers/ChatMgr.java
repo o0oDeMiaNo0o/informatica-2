@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import uy.edu.um.client_service.business.chat.entities.Chat;
 import uy.edu.um.client_service.business.chat.intefaces.ChatMgt;
+import uy.edu.um.client_service.persistance.DAO.chatDAO.ChatDAO;
+import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.value_object.chat.ChatVO;
 
 public class ChatMgr implements ChatMgt{
@@ -20,13 +22,15 @@ public class ChatMgr implements ChatMgt{
 	}
 
 	@Override
-	public void borrarMensaje(Chat c) {
-
+	public void borrarMensaje(Chat c) throws NoDatabaseConnection {
+		ChatDAO dao = ChatDAO.getInstance();
+		dao.setEntregado(c);
 	}
 
 	@Override
-	public void enviarMensaje(Chat c) {
-		// TODO Auto-generated method stub
+	public void enviarMensaje(Chat c) throws NoDatabaseConnection {
+		ChatDAO dao = ChatDAO.getInstance();
+		dao.addMsj(c);
 
 	}
 
@@ -45,9 +49,17 @@ public class ChatMgr implements ChatMgt{
 	}
 
 	@Override
-	public ArrayList<ChatVO> allChats() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<ChatVO> allChats() throws NoDatabaseConnection {
+		ChatDAO dao = ChatDAO.getInstance();
+		ArrayList<Chat> allChats = dao.getChat();
+		ArrayList<ChatVO> toReturn = new ArrayList<ChatVO>(1);
+		for(Chat c: allChats){
+			if(c!=null){
+				ChatVO toAdd = getChatVO(c);
+				toReturn.add(toAdd);
+			}
+		}
+		return toReturn;
 	}
 
 
