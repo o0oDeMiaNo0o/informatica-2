@@ -84,9 +84,6 @@ public class UserMgr implements UserMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(ServiceFacade.getInstance().getHost(),ServiceFacade.getInstance().getPort());
 			UserRemoteMgt oUserRemoteMgt = (UserRemoteMgt) oRegitry.lookup(sObjectService);
 			toReturn = oUserRemoteMgt.checkLogin(username,psw);
-			if(toReturn == true){
-				System.out.println("Login aceptado");
-			}
 		} catch (Exception e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
