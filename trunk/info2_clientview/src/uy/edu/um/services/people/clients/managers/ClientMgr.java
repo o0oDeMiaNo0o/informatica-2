@@ -132,6 +132,15 @@ public class ClientMgr implements ClientMgt{
 		return check;
 	}
 
+	@Override
+	public ClientVO createClientVO(int id, String nombre, String apellido,
+			int ci, int tel, String direccion, String mail, BigDecimal descuento)
+			throws HasBlanksException, HasNumberException,
+			NoServerConnectionException, NoDatabaseConnection {
+		ClientVO toReturn = new ClientVO(id,ci,nombre,apellido,tel,direccion,mail,descuento);
+		return toReturn;
+	}
+
 
 
 }
