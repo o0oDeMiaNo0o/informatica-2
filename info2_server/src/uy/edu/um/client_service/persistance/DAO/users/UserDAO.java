@@ -17,7 +17,9 @@ public class UserDAO {
 	private static UserDAO instance = null;
 	private final static Logger log = Logger.getLogger(UserDAO.class);
 
-	private UserDAO(){}
+	private UserDAO(){
+		
+	}
 
 	public static UserDAO getInstance(){
 		if(instance == null){
@@ -44,7 +46,7 @@ public class UserDAO {
 		}
 		catch(SQLException e){
 			log.error("Error al agregar usuario");
-			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+			throw new NoDatabaseConnection("No hay conexion con el servidor");
 		}
 		finally{
 			if (con != null) {
@@ -60,6 +62,36 @@ public class UserDAO {
 		}
 		}
 	}
+	
+	public void editUser(User u) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			int adm = 0;
+			if (u.isAdmin()){
+				adm = 1;
+			}
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement o = con.createStatement();
+			o.execute("UPDATE Users set (Password,Admin) Values ('"+u.getPassword()+"',"+adm+") Where Username = '"+u.getUsername()+"';");
+			o.close();
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+			}
+		}
+		
+	}
+	
+	
 
 	public User searchUser(String Username) throws NoDatabaseConnection{
 		Connection con = null;
