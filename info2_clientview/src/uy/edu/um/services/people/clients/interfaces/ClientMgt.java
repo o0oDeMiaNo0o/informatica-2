@@ -13,10 +13,13 @@ import uy.edu.um.value_object.people.client.ClientVO;
 public interface ClientMgt {
 
 	public ClientVO createClientVO(String nombre, String apellido,int ci, int tel, String direccion, String mail
-			, BigDecimal descuento) throws ExisteClientException,
+			, BigDecimal descuento) throws
 					HasBlanksException, HasNumberException, NoServerConnectionException, NoDatabaseConnection;
 
-	//public void addClient(String nombre, String apellido,int ci, int tel, String direccion, String mail);
+
+	public ClientVO createClientVO(int id, String nombre, String apellido,int ci, int tel, String direccion, String mail
+			, BigDecimal descuento) throws
+					HasBlanksException, HasNumberException, NoServerConnectionException, NoDatabaseConnection;
 
 	public void addClientVO(ClientVO c) throws NoServerConnectionException, NoDatabaseConnection;
 
