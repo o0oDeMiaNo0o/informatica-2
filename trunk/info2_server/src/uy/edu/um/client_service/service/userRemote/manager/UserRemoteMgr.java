@@ -40,12 +40,14 @@ public class UserRemoteMgr implements UserRemoteMgt{
 		// TODO Auto-generated method stub
 		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
 		User toDelete = uMgt.getUser(a);
-
+		uMgt.removeUser(toDelete);
 	}
 
 	@Override
 	public void editUser(UserVO a) throws RemoteException, NoDatabaseConnection{
-		// TODO Auto-generated method stub
+		UserMgt uMgt = BusinessFacade.getInstance().getUserMgt();
+		User toEdit = uMgt.getUser(a);
+		uMgt.editUser(toEdit);
 
 	}
 
