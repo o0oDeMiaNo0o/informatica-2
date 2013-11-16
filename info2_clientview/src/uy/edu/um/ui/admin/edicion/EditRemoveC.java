@@ -48,12 +48,12 @@ public class EditRemoveC extends JFrame {
 
 	/**
 	 * Create the frame.
-	 *
+	 * 
 	 * @param toSend
 	 */
 	public EditRemoveC(ClientVO cliente, JPanel cPanel, final boolean editable,
 			String mensaje) {
-		try{
+		try {
 			clientes = cargoClientes();
 			setTitle("Confirma");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,12 +66,13 @@ public class EditRemoveC extends JFrame {
 			JPanel ZonaEdicion = new JPanel();
 			contentPane.add(ZonaEdicion, BorderLayout.CENTER);
 			ZonaEdicion.setLayout(new MigLayout("", "[][388.00px][][grow]",
-			"[grow][][16px][][grow]"));
+					"[grow][][16px][][grow]"));
 			if (!mensaje.equals("")) {
 				JLabel lblNewLabelMensaje = new JLabel(mensaje);
-				lblNewLabelMensaje
-				.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
-				ZonaEdicion.add(lblNewLabelMensaje, "cell 2 0,alignx center");
+				lblNewLabelMensaje.setFont(new Font("Lucida Grande",
+						Font.PLAIN, 21));
+				ZonaEdicion.add(lblNewLabelMensaje,
+						"cell 0 0 4 1,alignx center,aligny center");
 			}
 
 			JLabel lblCi = new JLabel("Ci");
@@ -133,9 +134,9 @@ public class EditRemoveC extends JFrame {
 
 			JSpinner spinner = new JSpinner();
 			spinner.setEnabled(editable);
-			spinner.setModel(new SpinnerNumberModel(Integer.parseInt(cliente
-					.getDescuento().toString()), new Integer(0), null, new Integer(
-							1)));
+			int descuento = cliente.getDescuento().intValueExact();
+			spinner.setModel(new SpinnerNumberModel(descuento, new Integer(0),
+					null, new Integer(1)));
 
 			ZonaEdicion.add(spinner, "cell 1 4,alignx left,aligny center");
 
@@ -147,7 +148,7 @@ public class EditRemoveC extends JFrame {
 			btnAceptar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					//HACERRRRRRRRRRRRRR
+					// HACERRRRRRRRRRRRRR
 				}
 			});
 			ZonaBotones.add(btnAceptar, "cell 1 0,alignx center,growy");
@@ -160,11 +161,13 @@ public class EditRemoveC extends JFrame {
 				}
 			});
 			ZonaBotones.add(btnCancelar, "cell 2 0,growx,aligny center");
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),devuelve());
+		} catch (NoServerConnectionException e) {
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),
+					devuelve());
 			nuevo.setVisible(true);
-		}catch(NoDatabaseConnection e){
-			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),devuelve());
+		} catch (NoDatabaseConnection e) {
+			MensajeGenerico nuevoFrame = new MensajeGenerico(e.getMessage(),
+					devuelve());
 			nuevoFrame.setVisible(true);
 		}
 	}
@@ -185,12 +188,13 @@ public class EditRemoveC extends JFrame {
 	}
 
 	// Cargo Clientes a arraylist
-	private ArrayList<ClientVO> cargoClientes() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<ClientVO> cargoClientes()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		ClientMgt cli = ServiceFacade.getInstance().getClientMgt();
 		return cli.allClients();
 	}
 
-	public JFrame devuelve(){
+	public JFrame devuelve() {
 		return this;
 	}
 }

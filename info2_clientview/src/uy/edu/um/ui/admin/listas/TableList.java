@@ -50,7 +50,7 @@ public class TableList extends BasicoAdmin {
 		});
 	}
 
-	public TableList() throws NoServerConnectionException, NoDatabaseConnection{
+	public TableList() throws NoServerConnectionException, NoDatabaseConnection {
 		mesas = cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -58,7 +58,8 @@ public class TableList extends BasicoAdmin {
 
 		TransparentPanel transparentPanel = new TransparentPanel();
 		getContentPane().add(transparentPanel);
-		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][][grow]", "[][][][][][][][grow]"));
+		transparentPanel.setLayout(new MigLayout("", "[grow][][grow][][grow]",
+				"[][][][][][][][grow]"));
 
 		TransparentPanel transparentPanel_1 = new TransparentPanel();
 		getContentPane().add(transparentPanel_1, BorderLayout.NORTH);
@@ -75,10 +76,17 @@ public class TableList extends BasicoAdmin {
 				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
 
 		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				BasicoAdmin nuevo = new BasicoAdmin();
+				nuevo.setVisible(true);
+				TableList.this.dispose();
+			}
+		});
 		transparentPanel_2.add(btnNewButton,
 				"cell 0 0,alignx right,aligny center");
 	}
-
 
 	// Metodos auxiliares
 	private void cargaBotones(TransparentPanel panel) {
@@ -146,7 +154,8 @@ public class TableList extends BasicoAdmin {
 		return this;
 	}
 
-	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<TableVO> cargoMesas() throws NoServerConnectionException,
+			NoDatabaseConnection {
 		TableMgt nueva = ServiceFacade.getInstance().getTableMgt();
 		return nueva.allTables();
 

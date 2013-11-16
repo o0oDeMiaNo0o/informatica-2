@@ -282,7 +282,7 @@ public class CocinaUsuarioDelivery extends BasicoUsuario {
 	private ArrayList<OrderVO> cargaOrdenes()
 			throws NoServerConnectionException, NoDatabaseConnection {
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
-		return nuevo.
+		return nuevo.allDeliveries();
 	}
 
 	public JFrame devuelve() {
