@@ -36,8 +36,8 @@ public class UserMgr implements UserMgt{
 	public void editUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
 		String pass = u.getPassword();
-		if(checkLogin(u.getUsername(),u.getPassword()) == false){
-			pass = this.hashPassword(u.getPassword());
+		if(checkLoginAux(u.getUsername(),pass) == false){
+			pass = this.hashPassword(pass);
 		}
 		User uNew = new User(u.getUsername(),pass,u.isAdmin());
 		dao.editUser(uNew);
@@ -112,5 +112,10 @@ public class UserMgr implements UserMgt{
 		UserDAO dao = UserDAO.getInstance();
 		User obtenido = dao.searchUser(nombre);
 		return this.getUserVO(obtenido);
+	}
+
+	public boolean checkLoginAux(String username, String psw) throws NoDatabaseConnection {
+		UserDAO dao = UserDAO.getInstance();
+		return dao.checklogin(username, psw);
 	}
 }
