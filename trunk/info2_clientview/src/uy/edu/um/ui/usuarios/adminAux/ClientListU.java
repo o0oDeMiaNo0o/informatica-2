@@ -131,16 +131,18 @@ public class ClientListU extends BasicoUsuario {
 							try {
 								nuevo.removeClientVO(cliente);
 							} catch (NoServerConnectionException e1) {
-								// TODO Auto-generated catch block
 								MensajeGenerico newFrame = new MensajeGenerico(
 										e1.getMessage(), ClientListU.this);
 								newFrame.setVisible(true);
 							} catch (NoDatabaseConnection e1) {
-								// TODO Auto-generated catch block
 								MensajeGenerico newFrame = new MensajeGenerico(
 										e1.getMessage(), ClientListU.this);
 								newFrame.setVisible(true);
 							}
+							MensajeGenerico msg = new MensajeGenerico(
+									"Cliente Eliminado Correctamente",
+									ClientListU.this);
+							msg.setVisible(true);
 						}
 					} else {
 						MensajeGenerico nuevo = new MensajeGenerico(

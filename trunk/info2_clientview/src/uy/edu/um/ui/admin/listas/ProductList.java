@@ -214,7 +214,7 @@ public class ProductList extends BasicoAdmin {
 		transparentPanelEdit.add(button_1, "cell 0 2,alignx center,aligny top");
 		cargaATabla();
 
-		this.timer = new Timer(5000, new ActionListener() {
+		this.timer = new Timer(10000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					categorias = cargoCategorias();

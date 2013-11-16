@@ -24,7 +24,6 @@ import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
-import uy.edu.um.services.delivery.interfaces.DeliveryMgt;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.table.interfaces.TableMgt;
 import uy.edu.um.ui.CurrentUser;
@@ -33,7 +32,6 @@ import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.ConfirmMesa;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.articleOrder.ArticleOrderVO;
-import uy.edu.um.value_object.delivery.DeliveryVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 import uy.edu.um.value_object.table.TableVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -101,12 +99,10 @@ public class Mesas extends BasicoUsuario {
 				try {
 					mesas = cargoMesas(vengoDeCocina);
 				} catch (NoServerConnectionException e1) {
-					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
 							Mesas.this);
 					msg.setVisible(true);
 				} catch (NoDatabaseConnection e1) {
-					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
 							Mesas.this);
 					msg.setVisible(true);
@@ -149,12 +145,10 @@ public class Mesas extends BasicoUsuario {
 					try {
 						nuevo.addDelivery(delivery);
 					} catch (NoServerConnectionException e1) {
-						// TODO Auto-generated catch block
 						MensajeGenerico nuevo1 = new MensajeGenerico(e1
 								.getMessage(), Mesas.this);
 						nuevo1.setVisible(true);
 					} catch (NoDatabaseConnection e1) {
-						// TODO Auto-generated catch block
 						MensajeGenerico nuevo1 = new MensajeGenerico(e1
 								.getMessage(), Mesas.this);
 						nuevo1.setVisible(true);
