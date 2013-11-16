@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import uy.edu.um.client_service.business.people.clients.entities.Client;
+import uy.edu.um.client_service.business.users.entities.User;
 import uy.edu.um.client_service.persistance.DatabaseConnectionMgr;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 
@@ -27,11 +28,9 @@ public class ClientDAO {
 		return instance;
 	}
 
-	public void addClient(Client cliente) throws NoDatabaseConnection{
-		Connection connection = null;
+	public void addClient(Client cliente, Connection connection) throws NoDatabaseConnection{
 		log.info("Agregando cliente");
 		try{
-			connection = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement oStatement = connection.createStatement();
 			oStatement.execute("INSERT INTO CLIENTES (CI, NOMBRE, APELLIDO, MAIL, DIRECCION, TELEFONO, DESCUENTO) " +
 					"VALUES ("+cliente.getCi()+",'"+cliente.getNombre()+"','"+cliente.getApellido()+"','"+cliente.getMail()+"','"+cliente.getDireccion()+"',"+cliente.getTel()+",'"+cliente.getDescuento()+"');");
@@ -40,6 +39,18 @@ public class ClientDAO {
 		}
 		catch(SQLException e){
 			log.error("Error al agregar cliente");
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+	}
+	
+	public void addClient(Client cliente) throws NoDatabaseConnection{
+		Connection connection = null;
+		log.info("Agregando cliente");
+		try{
+			connection = DatabaseConnectionMgr.getInstance().getConnection();
+			addClient(cliente,connection);
+		}
+		catch(SQLException e){
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
@@ -56,7 +67,59 @@ public class ClientDAO {
 		}
 		}
 	}
+	
+	
+	
+	public void editClient(Client c) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement o = con.createStatement();
+			o.execute("UPDATE Clientes set Estado = 'Eliminado' Where (id = "+c.getId()+") AND (Estado='Activo');");
+			addClient(c,con);
+			o.close();
+		}
+		catch(SQLException e){
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+			}
+		}
+		
+	}
 
+	public void removeClient(Client c) throws NoDatabaseConnection{
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement o = con.createStatement();
+			o.execute("UPDATE Clientes set Estado = 'Eliminado' Where (id = "+c.getId()+") AND (Estado='Activo');");
+			o.close();
+			log.info("Se elimino al cliente: "+c.getNombre()+" "+c.getApellido()+"");
+		}
+		catch(SQLException e){
+			log.error("Error al eliminar cliente");
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+		}
+		finally{
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					log.error("Error al finalizar la conexion con la base de datos");
+					throw new NoDatabaseConnection("No hay conexion con la base de datos");
+				}
+			}
+		}
+		
+	}
 
 
 	public ArrayList<Client> getClients() throws NoDatabaseConnection{
