@@ -78,22 +78,6 @@ public class CajaPrincipal extends BasicoUsuario {
 	private TextFieldAutocompletar textFieldEliminar;
 	private Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CajaPrincipal frame = new CajaPrincipal(null, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public CajaPrincipal(final ArrayList<ArticleOrderVO> pedido,
 			final TableVO mesa) throws NoServerConnectionException,
 			NoDatabaseConnection {
@@ -268,7 +252,7 @@ public class CajaPrincipal extends BasicoUsuario {
 					} else {
 						Mesas nueva = null;
 						try {
-							nueva = new Mesas(pedidoAux, espTotal,true);
+							nueva = new Mesas(pedidoAux, espTotal, true);
 							nueva.setVisible(true);
 							cerrar();
 						} catch (NoDatabaseConnection e) {

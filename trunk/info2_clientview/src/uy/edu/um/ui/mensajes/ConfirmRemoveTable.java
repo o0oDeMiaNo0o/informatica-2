@@ -28,15 +28,6 @@ public class ConfirmRemoveTable extends JFrame {
 		this.dispose();
 	}
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param toSend
-	 */
 	public ConfirmRemoveTable(final TableVO mesa, final JFrame panel) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

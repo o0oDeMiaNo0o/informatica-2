@@ -31,27 +31,6 @@ public class OpcionesCocina extends JFrame {
 	private URL green = DirLocal.class.getResource("Libre.jpg");
 	private URL red = DirLocal.class.getResource("Ocupado.jpg");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					OpcionesCocina frame = new OpcionesCocina(null, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param orden
-	 */
 	public OpcionesCocina(final OrderVO orden, final JFrame frame) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

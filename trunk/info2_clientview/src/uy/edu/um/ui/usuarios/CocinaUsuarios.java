@@ -46,22 +46,6 @@ public class CocinaUsuarios extends BasicoUsuario {
 	private ArrayList<OrderVO> arrayOrdenes;
 	Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CocinaUsuarios frame = new CocinaUsuarios();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public CocinaUsuarios() throws NoDatabaseConnection,
 			NoServerConnectionException {
 		arrayOrdenes = cargaOrdenes();

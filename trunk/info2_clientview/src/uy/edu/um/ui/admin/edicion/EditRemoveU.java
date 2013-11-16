@@ -21,6 +21,7 @@ import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.user.interfaces.UserMgt;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.categories.CategoryVO;
 import uy.edu.um.value_object.user.UserVO;
@@ -33,15 +34,6 @@ public class EditRemoveU extends JFrame {
 	private ArrayList<CategoryVO> categorias;
 	String[] textos;
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param toSend
-	 */
 	public EditRemoveU(final UserVO user, JPanel cPanel,
 			final boolean editable, String mensaje) {
 		try {
@@ -111,7 +103,6 @@ public class EditRemoveU extends JFrame {
 											textFieldPass.getText(),
 											esAdmin.isSelected());
 									nuevo.editUserVO(usrEdit);
-									cerrar();
 								} catch (HasBlanksException e1) {
 									// TODO Auto-generated catch block
 									MensajeGenerico mensaje = new MensajeGenerico(
@@ -128,12 +119,14 @@ public class EditRemoveU extends JFrame {
 											e1.getMessage(), devuelve());
 									mensaje.setVisible(true);
 								}
-
+								MainAdmin mainAd = new MainAdmin();
+								mainAd.setVisible(true);
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Usuario Editado Correctamente",
 										devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
+								cerrar();
 							} else {
 								try {
 									nuevo.removeUserVO(user);
@@ -148,12 +141,14 @@ public class EditRemoveU extends JFrame {
 											e1.getMessage(), devuelve());
 									mensaje.setVisible(true);
 								}
-								cerrar();
+								MainAdmin mainAd = new MainAdmin();
+								mainAd.setVisible(true);
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Usuario Eliminado Correctamente",
 										devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
+								cerrar();
 							}
 						}
 						bandera = true;

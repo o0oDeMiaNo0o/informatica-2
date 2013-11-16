@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
@@ -23,6 +22,7 @@ import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
@@ -37,25 +37,6 @@ public class NewClientA extends BasicoAdmin {
 	private JTextField textFieldTel;
 	private JTextField textFieldDir;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewClientA frame = new NewClientA();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public NewClientA() {
 		super();
 
@@ -177,10 +158,13 @@ public class NewClientA extends BasicoAdmin {
 													NewClientA.this);
 											nuevo.setVisible(true);
 										} catch (NoServerConnectionException e1) {
+											MainAdmin mainAd = new MainAdmin();
+											mainAd.setVisible(true);
 											MensajeGenerico nuevo = new MensajeGenerico(
 													e1.getMessage(),
 													NewClientA.this);
 											nuevo.setVisible(true);
+											cerrar();
 										} catch (NoDatabaseConnection e1) {
 											MensajeGenerico nuevo = new MensajeGenerico(
 													e1.getMessage(),

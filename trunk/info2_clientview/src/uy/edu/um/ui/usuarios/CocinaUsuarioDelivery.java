@@ -46,22 +46,6 @@ public class CocinaUsuarioDelivery extends BasicoUsuario {
 	private ArrayList<OrderVO> arrayDeliveries;
 	Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CocinaUsuarioDelivery frame = new CocinaUsuarioDelivery();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public CocinaUsuarioDelivery() throws NoDatabaseConnection,
 			NoServerConnectionException {
 		arrayDeliveries = cargaOrdenes();

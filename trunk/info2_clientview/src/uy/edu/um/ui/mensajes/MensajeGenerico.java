@@ -28,11 +28,6 @@ public class MensajeGenerico extends JDialog {
 		this.mensaje = a;
 	}
 
-	public static void main(String[] args) {
-		MensajeGenerico nuevo = new MensajeGenerico("", null);
-		nuevo.setVisible(true);
-	}
-
 	public MensajeGenerico(String error, final JFrame jFrame) {
 		setResizable(false);
 		setBounds(100, 100, 400, 107);
@@ -40,10 +35,12 @@ public class MensajeGenerico extends JDialog {
 		if (jFrame != null) {
 			this.setLocationRelativeTo(jFrame);
 		}
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		getContentPane().setLayout(
+				new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
-		contentPanel.setLayout(new MigLayout("", "[271px,grow]", "[grow][19px][29px,grow]"));
+		contentPanel.setLayout(new MigLayout("", "[271px,grow]",
+				"[grow][19px][29px,grow]"));
 		{
 			JLabel lblUsuarioYoContrasea = new JLabel(error);
 			lblUsuarioYoContrasea.setBackground(new Color(248, 248, 255));

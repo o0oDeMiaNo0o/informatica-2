@@ -34,15 +34,6 @@ public class ConfirmMesa extends JFrame {
 		this.dispose();
 	}
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param toSend
-	 */
 	public ConfirmMesa(final TableVO mesa, final OrderVO toSend, String text,
 			final JFrame frame) {
 		setTitle("Confirma");
@@ -115,57 +106,74 @@ public class ConfirmMesa extends JFrame {
 						cerrar();
 					}
 				} else {
-					if (mesa.isOcupado()) {
+					if (mesa.getNumero() == 0) {
+						Facturacion nuevo = null;
 						try {
-
-							MesaPedido nueva = new MesaPedido(mesa);
-							nueva.setVisible(true);
-							frame.setVisible(false);
-							frame.dispose();
+							nuevo =  new Facturacion(mesa, null);
+							nuevo.setVisible(true);
 							cerrar();
+						} catch (NoServerConnectionException e1) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(
+									e1.getMessage(), devuelve());
+							nuevoFrame.setVisible(true);
 						} catch (NoDatabaseConnection e1) {
-							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
-									.getMessage(), devuelve());
+							MensajeGenerico nuevoFrame = new MensajeGenerico(
+									e1.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						}
 					} else {
-						if (toSend.getArticulos() != null) {
+						if (mesa.isOcupado()) {
 							try {
-								OrderMgt nuevo = ServiceFacade.getInstance()
-										.getOrderMgt();
-								nuevo.addOrder(toSend);
-								TableMgt nuevoMesas = ServiceFacade
-										.getInstance().getTableMgt();
-								nuevoMesas.setOcupado(toSend.getTable());
-								ConfirmFacturar nueva = new ConfirmFacturar(
-										mesa, frame);
-								nueva.setVisible(true);
-								cerrar();
 
-							} catch (NoServerConnectionException e1) {
-								MensajeGenerico nuevo = new MensajeGenerico(e1
-										.getMessage(), devuelve());
-								nuevo.setVisible(true);
+								MesaPedido nueva = new MesaPedido(mesa);
+								nueva.setVisible(true);
+								frame.setVisible(false);
+								frame.dispose();
+								cerrar();
 							} catch (NoDatabaseConnection e1) {
 								MensajeGenerico nuevoFrame = new MensajeGenerico(
 										e1.getMessage(), devuelve());
 								nuevoFrame.setVisible(true);
 							}
 						} else {
-							try {
-								CajaPrincipal nuevo = new CajaPrincipal(null,
-										mesa);
-								nuevo.setVisible(true);
-								frame.dispose();
-								cerrar();
-							} catch (NoServerConnectionException e1) {
-								MensajeGenerico nuevo = new MensajeGenerico(e1
-										.getMessage(), devuelve());
-								nuevo.setVisible(true);
-							} catch (NoDatabaseConnection e1) {
-								MensajeGenerico nuevoFrame = new MensajeGenerico(
-										e1.getMessage(), devuelve());
-								nuevoFrame.setVisible(true);
+							if (toSend.getArticulos() != null) {
+								try {
+									OrderMgt nuevo = ServiceFacade
+											.getInstance().getOrderMgt();
+									nuevo.addOrder(toSend);
+									TableMgt nuevoMesas = ServiceFacade
+											.getInstance().getTableMgt();
+									nuevoMesas.setOcupado(toSend.getTable());
+									ConfirmFacturar nueva = new ConfirmFacturar(
+											mesa, frame);
+									nueva.setVisible(true);
+									cerrar();
+
+								} catch (NoServerConnectionException e1) {
+									MensajeGenerico nuevo = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									nuevo.setVisible(true);
+								} catch (NoDatabaseConnection e1) {
+									MensajeGenerico nuevoFrame = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									nuevoFrame.setVisible(true);
+								}
+							} else {
+								try {
+									CajaPrincipal nuevo = new CajaPrincipal(
+											null, mesa);
+									nuevo.setVisible(true);
+									frame.dispose();
+									cerrar();
+								} catch (NoServerConnectionException e1) {
+									MensajeGenerico nuevo = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									nuevo.setVisible(true);
+								} catch (NoDatabaseConnection e1) {
+									MensajeGenerico nuevoFrame = new MensajeGenerico(
+											e1.getMessage(), devuelve());
+									nuevoFrame.setVisible(true);
+								}
 							}
 						}
 					}

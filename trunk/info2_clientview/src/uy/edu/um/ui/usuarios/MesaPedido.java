@@ -30,39 +30,20 @@ import uy.edu.um.value_object.table.TableVO;
 public class MesaPedido extends BasicoUsuario {
 	private JTable tablePedidoMesa;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MesaPedido frame = new MesaPedido(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * @throws NoDatabaseConnection
-	 */
 	public MesaPedido(final TableVO mesa) throws NoDatabaseConnection {
-		try{
+		try {
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 300);
 			TransparentPanel transparentPanel = new TransparentPanel();
 			getContentPane().add(transparentPanel, BorderLayout.CENTER);
 			transparentPanel.setLayout(new MigLayout("", "[grow][grow][grow]",
-			"[grow][grow][grow]"));
+					"[grow][grow][grow]"));
 
 			tablePedidoMesa = new JTable();
 			tablePedidoMesa.setBorder(new LineBorder(Color.ORANGE, 2, true));
 			tablePedidoMesa.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-			tablePedidoMesa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tablePedidoMesa
+					.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			tablePedidoMesa.setEnabled(false);
 			tablePedidoMesa.setRowSelectionAllowed(false);
 
@@ -78,7 +59,8 @@ public class MesaPedido extends BasicoUsuario {
 			btnFacturar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					ConfirmFacturar nuevo = new ConfirmFacturar(mesa, devuelve());
+					ConfirmFacturar nuevo = new ConfirmFacturar(mesa,
+							devuelve());
 					nuevo.setVisible(true);
 
 				}
@@ -96,10 +78,12 @@ public class MesaPedido extends BasicoUsuario {
 						cerrar();
 					} catch (NoServerConnectionException e1) {
 						// TODO Auto-generated catch block
-						MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), MesaPedido.this);
 						nuevo1.setVisible(true);
-					} catch(NoDatabaseConnection e1){
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+					} catch (NoDatabaseConnection e1) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+								.getMessage(), MesaPedido.this);
 						nuevoFrame.setVisible(true);
 					}
 					nuevo.setVisible(true);
@@ -113,26 +97,30 @@ public class MesaPedido extends BasicoUsuario {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					Mesas nuevo = null;
-					try{
-					nuevo = new Mesas(null, null,false);
-					nuevo.setVisible(true);
-					cerrar();
-					}catch(NoDatabaseConnection e1){
-						MensajeGenerico nuevo1 = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+					try {
+						nuevo = new Mesas(null, null, false);
+						nuevo.setVisible(true);
+						cerrar();
+					} catch (NoDatabaseConnection e1) {
+						MensajeGenerico nuevo1 = new MensajeGenerico(e1
+								.getMessage(), MesaPedido.this);
 						nuevo1.setVisible(true);
-					}catch(NoServerConnectionException e1){
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e1.getMessage(),MesaPedido.this);
+					} catch (NoServerConnectionException e1) {
+						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+								.getMessage(), MesaPedido.this);
 						nuevoFrame.setVisible(true);
 					}
 				}
 			});
 			ZonaBotones.add(btnCancelar, "cell 3 0");
 
-		}catch(NoServerConnectionException e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),MesaPedido.this);
+		} catch (NoServerConnectionException e) {
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),
+					MesaPedido.this);
 			nuevo.setVisible(true);
-		}catch(NoDatabaseConnection e){
-			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),MesaPedido.this);
+		} catch (NoDatabaseConnection e) {
+			MensajeGenerico nuevo = new MensajeGenerico(e.getMessage(),
+					MesaPedido.this);
 			nuevo.setVisible(true);
 		}
 	}
@@ -162,7 +150,8 @@ public class MesaPedido extends BasicoUsuario {
 	}
 
 	// Cargo los metodos
-	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa) throws NoServerConnectionException, NoDatabaseConnection {
+	private ArrayList<ArticleOrderVO> cargaOrdenes(TableVO mesa)
+			throws NoServerConnectionException, NoDatabaseConnection {
 		ArrayList<OrderVO> aux = new ArrayList<OrderVO>();
 		OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 		aux = nuevo.getOrderTable(mesa);

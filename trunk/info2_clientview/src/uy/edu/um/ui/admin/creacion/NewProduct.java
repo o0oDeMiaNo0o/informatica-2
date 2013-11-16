@@ -26,6 +26,7 @@ import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.article.interfaces.ArticleMgt;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
@@ -50,28 +51,9 @@ public class NewProduct extends BasicoAdmin {
 	private ImagePanel imagePanel;
 	private TransparentPanel transparentPanelBotones;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)  {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewProduct frame = new NewProduct();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public NewProduct() throws NoServerConnectionException, NoDatabaseConnection{
-		//try{
+	public NewProduct() throws NoServerConnectionException,
+			NoDatabaseConnection {
+		// try{
 		categorias = cargaCategorias();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -132,37 +114,42 @@ public class NewProduct extends BasicoAdmin {
 					if (!nombre.equals("")) {
 						if (Helpers.isNumeric(precioAux)) {
 							if (!comboBoxCat.getSelectedItem().equals(
-							"---- Desplegar Lista ----")) {
+									"---- Desplegar Lista ----")) {
 								BigDecimal precio = new BigDecimal(Integer
 										.parseInt(textFieldPrecio.getText()));
 								CategoryVO cat = buscaEnLista(comboBoxCat
 										.getSelectedItem().toString());
 
 								ArticleMgt test = ServiceFacade.getInstance()
-								.getArticleMgt();
+										.getArticleMgt();
 								ArticleVO toSend = null;
 								try {
-									toSend = a.createArticleVO(nombre,
-											precio, cat);
+									toSend = a.createArticleVO(nombre, precio,
+											cat);
 									test.sendArticle(toSend);
 								} catch (ExisteArticleException e1) {
-									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+									MensajeGenerico nuevo = new MensajeGenerico(
+											e1.getMessage(), NewProduct.this);
 									nuevo.setVisible(true);
-								} catch(NoServerConnectionException e1){
-									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+								} catch (NoServerConnectionException e1) {
+									MensajeGenerico nuevo = new MensajeGenerico(
+											e1.getMessage(), NewProduct.this);
 									nuevo.setVisible(true);
-								} catch(NoDatabaseConnection e1){
-									MensajeGenerico nuevo = new MensajeGenerico(e1.getMessage(), NewProduct.this);
+								} catch (NoDatabaseConnection e1) {
+									MensajeGenerico nuevo = new MensajeGenerico(
+											e1.getMessage(), NewProduct.this);
 									nuevo.setVisible(true);
 								}
 
-
+								MainAdmin mainAd = new MainAdmin();
+								mainAd.setVisible(true);
 								MensajeGenerico mensaje = new MensajeGenerico(
 										"Producto Agregado Correctamente",
 										devuelve());
 								mensaje.setVisible(true);
 								bandera = true;
 								resetearPosicion();
+								cerrar();
 							}
 						} else {
 							MensajeGenerico mensaje = new MensajeGenerico(
@@ -187,14 +174,16 @@ public class NewProduct extends BasicoAdmin {
 		btnCancelar = new JButton("Cancelar");
 		transparentPanelBotones.add(btnCancelar,
 				"cell 0 0,alignx right,aligny center");
-		//}catch(NoServerConnectionException e){
-		//	MensajeGenerico nFrame = new MensajeGenerico(e.getMessage(),devuelve());
-		//	nFrame.setVisible(true);
-		//}
+		// }catch(NoServerConnectionException e){
+		// MensajeGenerico nFrame = new
+		// MensajeGenerico(e.getMessage(),devuelve());
+		// nFrame.setVisible(true);
+		// }
 	}
 
 	// Metodos Auxiliares
-	public ArrayList<CategoryVO> cargaCategorias() throws NoServerConnectionException, NoDatabaseConnection {
+	public ArrayList<CategoryVO> cargaCategorias()
+			throws NoServerConnectionException, NoDatabaseConnection {
 		CategoryMgt cat = ServiceFacade.getInstance().getCategoryMgt();
 		return cat.allCategories();
 	}
