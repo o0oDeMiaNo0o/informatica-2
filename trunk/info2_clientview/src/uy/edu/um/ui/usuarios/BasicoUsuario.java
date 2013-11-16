@@ -165,6 +165,12 @@ public class BasicoUsuario extends JFrame {
 		menuCocina.add(mntmVerColaDelivery);
 
 		JMenuItem mntmEnviarMensaje = new JMenuItem("Enviar Mensaje");
+		mntmEnviarMensaje.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+			}
+		});
 		menuCocina.add(mntmEnviarMensaje);
 
 		JMenu mnClientes = new JMenu("Clientes");

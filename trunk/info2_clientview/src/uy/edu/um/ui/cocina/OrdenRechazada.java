@@ -17,7 +17,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
+import uy.edu.um.exceptions.checks.NoServerConnectionException;
+import uy.edu.um.services.ServiceFacade;
+import uy.edu.um.services.chat.interfaces.ChatMgt;
 import uy.edu.um.ui.clasesAuxiliares.JKeyboardPane;
+import uy.edu.um.ui.mensajes.MensajeGenerico;
+import uy.edu.um.value_object.chat.ChatVO;
 import uy.edu.um.value_object.oreder.OrderVO;
 
 public class OrdenRechazada extends JFrame {
@@ -50,6 +55,15 @@ public class OrdenRechazada extends JFrame {
 		btnEnviar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				ChatMgt chat = ServiceFacade.getInstance().getChatMgt();
+				ChatVO msg = new ChatVO(textPane.getText(), false);
+				try {
+					chat.addChat(msg);
+				} catch (NoServerConnectionException e1) {
+					MensajeGenerico mens = new MensajeGenerico(e1.getMessage(),
+							null);
+					mens.setVisible(true);
+				}
 				orden.setEstado(2);
 				cerrar();
 			}
