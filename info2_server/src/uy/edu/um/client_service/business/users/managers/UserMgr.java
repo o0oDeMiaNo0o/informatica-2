@@ -52,9 +52,7 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void removeUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
-		String crypted = this.hashPassword(u.getPassword());
-		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
-		dao.deleteUser(uNew);
+		dao.deleteUser(u);
 	}
 
 	@Override
