@@ -162,7 +162,6 @@ public class TableDAO {
 		}
 		oResultSet.close();
 		oStatement.close();
-		log.info("Entregado lista de mesas");
 		}
 		catch(SQLException e){
 			log.error("Error al retirar estados de las mesas");

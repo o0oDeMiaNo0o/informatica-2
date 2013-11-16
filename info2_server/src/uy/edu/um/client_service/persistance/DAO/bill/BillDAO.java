@@ -35,22 +35,20 @@ public class BillDAO {
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			ArrayList <Order> ordenes = b.getOrders();
-			ArrayList <ArticleOrder> articles = null;
+			ArrayList <ArticleOrder> articles = new ArrayList<ArticleOrder>();
 			Statement oStatement = con.createStatement();
 			oStatement.execute("INSERT INTO facturas (`Importe Total`,`Mesa_idMesa`,`Clientes_id`,`Clientes_Ci`) VALUES ("+b.getMontoTotal()+","+b.getTable().getNumero()+","+b.getClient().getId()+","+b.getClient().getCi()+");");
 			
 			
-			for(int j=0;j<ordenes.size();j++){
-				Order o = ordenes.get(j);
-				int m=0;
-				while(o.getArticles().get(m)!=null){
-					articles.add(o.getArticles().get(m));
-					m=m+1;
+			for(Order o : ordenes){
+				ArrayList<ArticleOrder> art = o.getArticles();
+				for(ArticleOrder ao : art){
+					articles.add(ao);
 				}
 			}
 			
 			for(int i =0;i<articles.size();i++){
-				ResultSet oResultSet1 = oStatement.executeQuery("SELECT ID FROM ARTICLES WHERE (ARTICLES.NAME='"+articles.get(i).getArticle().getNombre()+"') AND (ARTICLES.Estado='Activo';");
+				ResultSet oResultSet1 = oStatement.executeQuery("SELECT ID FROM ARTICLES WHERE (ARTICLES.NAME='"+articles.get(i).getArticle().getNombre()+"') AND (ARTICLES.Estado='Activo');");
 				int nId= 0;
 				while(oResultSet1.next()){
 					nId = oResultSet1.getInt(1);
@@ -58,7 +56,7 @@ public class BillDAO {
 				BigDecimal precio=(articles.get(i).getArticle().getPrecio());
 				BigDecimal cant= new BigDecimal(articles.get(i).getCantidad());
 				BigDecimal precioTotal = precio.multiply(cant);
-				oStatement.execute("INSERT INTO `Linea de Factura` (Facturas_idFacturas, Articles_ID,Cantidad,Precio Unitario,Precio Total) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+","+precio+","+precioTotal+");");
+				oStatement.execute("INSERT INTO `Linea de Factura` (Facturas_idFacturas, Articles_ID,Cantidad,`Precio Unitario`,`Precio Total`) VALUES (LAST_INSERT_ID(),"+nId+","+articles.get(i).getCantidad()+","+precio+","+precioTotal+");");
 			}
 			
 			oStatement.close();
