@@ -35,7 +35,9 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void editUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
-		dao.editUser(u);
+		String crypted = this.hashPassword(u.getPassword());
+		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
+		dao.editUser(uNew);
 	}
 
 	@Override
@@ -50,8 +52,9 @@ public class UserMgr implements UserMgt{
 	@Override
 	public void removeUser(User u) throws NoDatabaseConnection {
 		UserDAO dao = UserDAO.getInstance();
-		dao.deleteUser(u);
-
+		String crypted = this.hashPassword(u.getPassword());
+		User uNew = new User(u.getUsername(),crypted,u.isAdmin());
+		dao.deleteUser(uNew);
 	}
 
 	@Override
