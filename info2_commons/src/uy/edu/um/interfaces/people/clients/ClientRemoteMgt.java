@@ -13,9 +13,9 @@ public interface ClientRemoteMgt extends Remote{
 
 	public void showClient(ClientVO c)throws RemoteException;
 
-	public void removeClient(ClientVO c) throws RemoteException;
+	public void removeClient(ClientVO c) throws RemoteException, NoDatabaseConnection;
 
-	public void editClient(ClientVO c) throws RemoteException;
+	public void editClient(ClientVO c) throws RemoteException, NoDatabaseConnection;
 
 	public ArrayList<ClientVO> allClients() throws RemoteException, NoDatabaseConnection;
 
