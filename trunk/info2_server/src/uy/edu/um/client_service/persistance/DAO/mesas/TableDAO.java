@@ -58,6 +58,7 @@ public class TableDAO {
 	}
 
 	public void setOcupada(Table mesa) throws NoDatabaseConnection{
+		if((mesa.getNumero()!=0)||(mesa.getNumero()!=1)){
 		Connection con = null;
 		try{
 		con = DatabaseConnectionMgr.getInstance().getConnection();
@@ -81,6 +82,7 @@ public class TableDAO {
 					log.error("Error al finalizar la conexion con la base de datos");
 					throw new NoDatabaseConnection("No hay conexion con la base de datos");
 				}
+		}
 		}
 		}
 	}
