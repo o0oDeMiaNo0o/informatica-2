@@ -1,6 +1,8 @@
 package uy.edu.um.services.bill.managers;
 
 import java.math.BigDecimal;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -36,10 +38,12 @@ public class BillMgr implements BillMgt{
 			Registry oRegitry = LocateRegistry.getRegistry(host, ServiceFacade.getInstance().getPort());
 			BillRemoteMgt oBillRemoteMgt = (BillRemoteMgt) oRegitry.lookup(sObjectService);
 			oBillRemoteMgt.addBill(b);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (RemoteException e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
-				"y abrirlo nuevamente");
+					" y abrirlo nuevamente");
+		} catch (NotBoundException e) {
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			" y abrirlo nuevamente");
 		}
 
 	}
