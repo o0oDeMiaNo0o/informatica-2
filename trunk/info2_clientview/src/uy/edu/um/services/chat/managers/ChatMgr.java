@@ -30,7 +30,7 @@ public class ChatMgr implements ChatMgt{
 			ChatRemoteMgt oChatRemoteMgt = (ChatRemoteMgt) oRegitry.lookup(sObjectService);
 			oChatRemoteMgt.enviarMensaje(c);
 		}catch (Exception e) {
-			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
+			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa " +
 					"y abrirlo nuevamente");
 		}
 
