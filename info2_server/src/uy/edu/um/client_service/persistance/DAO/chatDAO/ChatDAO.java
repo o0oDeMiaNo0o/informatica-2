@@ -17,12 +17,16 @@ public class ChatDAO {
 		return instance;
 	}
 	
-	public void addMsj(String msj){
+	public void addMsj(Chat c){
 		Connection con = null;
 		try{
 			con = DatabaseConnectionMgr.getInstance().getConnection();
 			Statement o = con.createStatement();
-			o.execute("INSERT INTO `Info2`.`Chat`(`Mensaje`,`EnCocina`)VALUES('"+msj+"',);")
+			int coc = 0;
+			if(c.cocina){
+				coc=1;
+			}
+			o.execute("INSERT INTO `Info2`.`Chat`(`Mensaje`,`EnCocina`,`Estado`)VALUES('"+c+"',);")
 			
 		}
 	}
