@@ -232,6 +232,8 @@ public class NewClientA extends BasicoAdmin {
 		JLabel label_3 = new JLabel("%");
 		label_3.setForeground(Color.WHITE);
 		transparentPanel.add(label_3, "cell 2 7");
+		
+
 	}
 
 	public JFrame devuelve() {
