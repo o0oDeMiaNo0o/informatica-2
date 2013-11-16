@@ -139,10 +139,9 @@ public class Mesas extends BasicoUsuario {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (pedidoAux != null) {
-					DeliveryVO delivery = new DeliveryVO(pedidoAux, null,
-							CurrentUser.getUser(), esp, 0, false);
-					DeliveryMgt nuevo = ServiceFacade.getInstance()
-							.getDeliveryMgt();
+					OrderVO delivery = new OrderVO(pedidoAux, null, CurrentUser
+							.getUser(), esp, 4);
+					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 
 					try {
 						nuevo.addDelivery(delivery);
@@ -164,7 +163,6 @@ public class Mesas extends BasicoUsuario {
 				} else {
 					TableVO tableDelivery = new TableVO();
 					tableDelivery.setNumero(1);
-					tableDelivery.setOcupado(false);
 					ConfirmMesa nuevo = new ConfirmMesa(tableDelivery, null,
 							"Confirma Seleccion Delivery?", Mesas.this);
 					nuevo.setVisible(true);

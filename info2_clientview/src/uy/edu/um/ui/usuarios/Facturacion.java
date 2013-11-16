@@ -158,17 +158,18 @@ public class Facturacion extends BasicoUsuario {
 						.parseInt(textFieldCliente.getText()));
 				BillMgt nuevo = ServiceFacade.getInstance().getBillMgt();
 				if (cliente != null) {
-
 					try {
 						BillVO factura = nuevo.createBillVO(ordenesMesa,
-								cliente, mesa,totalBig);
+								cliente, mesa, totalBig);
 						nuevo.addBillVO(factura);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
 						msg.setVisible(true);
-						TableMgt tables = ServiceFacade.getInstance()
-								.getTableMgt();
-						tables.setLibre(mesa);
+						if (mesa.getNumero() != 1 || mesa.getNumero() != 0) {
+							TableMgt tables = ServiceFacade.getInstance()
+									.getTableMgt();
+							tables.setLibre(mesa);
+						}
 					} catch (NoServerConnectionException e1) {
 						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
 								.getMessage(), Facturacion.this);
@@ -181,16 +182,19 @@ public class Facturacion extends BasicoUsuario {
 				} else {
 					try {
 						BillVO factura = nuevo.createBillVO(ordenesMesa,
-								cliente, mesa,totalBig);
+								cliente, mesa, totalBig);
 						nuevo.addBillVO(factura);
 						BillMgt bMgt = ServiceFacade.getInstance().getBillMgt();
-						TableMgt tables = ServiceFacade.getInstance()
-								.getTableMgt();
-						tables.setLibre(mesa);
 						bMgt.addBillVO(factura);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
 						msg.setVisible(true);
+						if (mesa.getNumero() != 0 || mesa.getNumero() != 1) {
+							TableMgt tables = ServiceFacade.getInstance()
+									.getTableMgt();
+							tables.setLibre(mesa);
+						}
+
 					} catch (NoServerConnectionException e1) {
 						MensajeGenerico nuevoFrame = new MensajeGenerico(e1
 								.getMessage(), Facturacion.this);
@@ -203,6 +207,7 @@ public class Facturacion extends BasicoUsuario {
 				}
 
 			}
+
 		});
 		transparentPanel_1.add(btnAceptar, "flowx,cell 2 5,alignx right");
 

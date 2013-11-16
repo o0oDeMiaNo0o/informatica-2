@@ -137,7 +137,7 @@ public class BasicoUsuario extends JFrame {
 		menuCocina.setBackground(Color.DARK_GRAY);
 		menuBar.add(menuCocina);
 
-		JMenuItem mntmVerCocina = new JMenuItem("Ver");
+		JMenuItem mntmVerCocina = new JMenuItem("Ver Cocina");
 		mntmVerCocina.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
@@ -158,6 +158,30 @@ public class BasicoUsuario extends JFrame {
 			}
 		});
 		menuCocina.add(mntmVerCocina);
+
+		JMenuItem mntmVerColaDelivery = new JMenuItem("Ver Cola Delivery");
+		mntmVerColaDelivery.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				CocinaUsuarioDelivery nuevo = null;
+				try {
+					nuevo = new CocinaUsuarioDelivery();
+				} catch (NoDatabaseConnection e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							BasicoUsuario.this);
+					msg.setVisible(true);
+				} catch (NoServerConnectionException e1) {
+					// TODO Auto-generated catch block
+					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
+							BasicoUsuario.this);
+					msg.setVisible(true);
+				}
+				nuevo.setVisible(true);
+				cerrar();
+			}
+		});
+		menuCocina.add(mntmVerColaDelivery);
 
 		JMenuItem mntmEnviarMensaje = new JMenuItem("Enviar Mensaje");
 		menuCocina.add(mntmEnviarMensaje);
