@@ -213,32 +213,34 @@ public class CajaPrincipal extends BasicoUsuario {
 			transparentPanelBotonera.add(btnFacturar,
 					"cell 2 0,alignx center,aligny center");
 
-			JButton btnAgregar = new JButton("Agregar");
-			btnAgregar.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					MainUsuario mainUsr = null;
-					try {
-						enviarPedido(pedidoAux, mesa, espTotal, user);
-						mainUsr = new MainUsuario();
-						mainUsr.setVisible(true);
-						MensajeGenerico nuevo = new MensajeGenerico(
-								"Pedido Agregado A Mesa " + mesa.getNumero(),
-								devuelve());
-						nuevo.setVisible(true);
-						cerrar();
-					} catch (NoServerConnectionException e) {
-						MensajeGenerico nuevo = new MensajeGenerico(e
-								.getMessage(), CajaPrincipal.this);
-						nuevo.setVisible(true);
-					} catch (NoDatabaseConnection e) {
-						MensajeGenerico nuevoFrame = new MensajeGenerico(e
-								.getMessage(), CajaPrincipal.this);
-						nuevoFrame.setVisible(true);
+			if (mesa.getNumero() != 1) {
+				JButton btnAgregar = new JButton("Agregar");
+				btnAgregar.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						MainUsuario mainUsr = null;
+						try {
+							enviarPedido(pedidoAux, mesa, espTotal, user);
+							mainUsr = new MainUsuario();
+							mainUsr.setVisible(true);
+							MensajeGenerico nuevo = new MensajeGenerico(
+									"Pedido Agregado A Mesa "
+											+ mesa.getNumero(), devuelve());
+							nuevo.setVisible(true);
+							cerrar();
+						} catch (NoServerConnectionException e) {
+							MensajeGenerico nuevo = new MensajeGenerico(e
+									.getMessage(), CajaPrincipal.this);
+							nuevo.setVisible(true);
+						} catch (NoDatabaseConnection e) {
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e
+									.getMessage(), CajaPrincipal.this);
+							nuevoFrame.setVisible(true);
+						}
 					}
-				}
-			});
-			transparentPanelBotonera.add(btnAgregar, "cell 2 0");
+				});
+				transparentPanelBotonera.add(btnAgregar, "cell 2 0");
+			}
 		} else {
 
 			JButton btnNewButton = new JButton("Agregar a Mesa");
