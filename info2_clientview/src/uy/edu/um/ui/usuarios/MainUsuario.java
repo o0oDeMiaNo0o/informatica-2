@@ -1,7 +1,6 @@
 package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.net.URL;
 
@@ -13,12 +12,12 @@ import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.ui.CurrentUser;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
-import uy.edu.um.value_object.user.UserVO;
 
 public class MainUsuario extends BasicoUsuario {
 	private URL dirFondo = DirLocal.class.getResource("Bernie's.png");
 
 	public MainUsuario() {
+		ChatUsuarios chat = new ChatUsuarios();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

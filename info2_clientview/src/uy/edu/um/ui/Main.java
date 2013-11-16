@@ -10,6 +10,5 @@ public class Main {
 		nuevo.setVisible(true);
 		CurrentUser user = new CurrentUser(null);
 		ControlaDelivery delivery = new ControlaDelivery();
-		ChatUsuarios chat = new ChatUsuarios();
 	}
 }
