@@ -144,15 +144,11 @@ public class ArticlesDAO {
 		try{
 			log.info("Intento de editar articulo");
 			con = DatabaseConnectionMgr.getInstance().getConnection();
-			if(existeArticle(a.getNombre())){
 				Statement oStatement = con.createStatement();
 				oStatement.execute("UPDATE `info2`.`Articles` SET `Estado` = 'Eliminado' WHERE `ID` = "+a.getId()+";");
 				oStatement.close();
 				addArticle(a);
-			}
-			else{
-				log.error("El articulo no existe");
-			}
+				log.info("Articulo editado"); 
 
 		}
 		catch(SQLException e){
@@ -176,6 +172,30 @@ public class ArticlesDAO {
 				}
 		}
 		}
+
+	}
+	
+	public Category getCategory(int catId) throws NoDatabaseConnection{
+		Category c=null;
+		Connection con = null;
+		try{
+			con = DatabaseConnectionMgr.getInstance().getConnection();
+			Statement oStatement = con.createStatement();
+			ResultSet oResultSet1 = oStatement.executeQuery("SELECT Nombre FROM Categorias WHERE Categorias.idCategorias="+catId+";");
+			while (oResultSet1.next()){
+				String sName = oResultSet1.getString(1);
+				c = new Category(sName,catId);
+			}
+			oResultSet1.close();
+			oStatement.close();
+
+		}
+		catch(SQLException e){
+			log.error("Error al retirar la categoria");
+			throw new NoDatabaseConnection("No hay conexion con la base de datos");
+
+		}
+		return c;
 
 	}
 	
