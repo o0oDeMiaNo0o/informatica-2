@@ -33,9 +33,9 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void editUser(User u) {
-		// TODO Auto-generated method stub
-
+	public void editUser(User u) throws NoDatabaseConnection {
+		UserDAO dao = UserDAO.getInstance();
+		dao.editUser(u);
 	}
 
 	@Override
@@ -48,8 +48,9 @@ public class UserMgr implements UserMgt{
 	}
 
 	@Override
-	public void removeUser(User u) {
-		// TODO Auto-generated method stub
+	public void removeUser(User u) throws NoDatabaseConnection {
+		UserDAO dao = UserDAO.getInstance();
+		dao.deleteUser(u);
 
 	}
 

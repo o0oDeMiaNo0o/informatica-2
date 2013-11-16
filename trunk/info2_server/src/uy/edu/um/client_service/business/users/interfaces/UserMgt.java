@@ -12,9 +12,9 @@ public interface UserMgt {
 
 	public User getUser(UserVO u);
 
-	public void editUser(User u);
+	public void editUser(User u) throws NoDatabaseConnection;
 
-	public void removeUser(User u);
+	public void removeUser(User u) throws NoDatabaseConnection;
 
 	public ArrayList<UserVO> allUsers() throws NoDatabaseConnection;
 
