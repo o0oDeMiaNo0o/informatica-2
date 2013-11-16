@@ -120,6 +120,7 @@ public class ClientDAO {
 		
 			}
 		catch(SQLException e){
+			log.error("Error al chequear existencia de cliente "+nombre+"");
 			throw new NoDatabaseConnection("No hay conexion con la base de datos");
 		}
 		finally{
