@@ -140,8 +140,10 @@ public class Mesas extends BasicoUsuario {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (pedidoAux != null) {
-					OrderVO delivery = new OrderVO(pedidoAux, null, CurrentUser
-							.getUser(), esp, 4);
+					TableVO tableDelivery = new TableVO();
+					tableDelivery.setNumero(1);
+					OrderVO delivery = new OrderVO(pedidoAux, tableDelivery,
+							CurrentUser.getUser(), esp, 4);
 					OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 
 					try {
