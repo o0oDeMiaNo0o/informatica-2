@@ -45,19 +45,6 @@ public class Mesas extends BasicoUsuario {
 	public ArrayList<TableVO> mesas;
 	public Timer timer = null;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Mesas frame = new Mesas(null, null, true);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public Mesas(final ArrayList<ArticleOrderVO> pedidoAux, final String esp,
 			final boolean vengoDeCocina) throws NoDatabaseConnection,
 			NoServerConnectionException {
@@ -90,6 +77,14 @@ public class Mesas extends BasicoUsuario {
 				.setLayout(new MigLayout("", "[98px,grow]", "[29px]"));
 
 		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				MainUsuario main = new MainUsuario();
+				main.setVisible(true);
+				cerrar();
+			}
+		});
 		transparentPanel_2.add(btnNewButton,
 				"cell 0 0,alignx right,aligny center");
 		;

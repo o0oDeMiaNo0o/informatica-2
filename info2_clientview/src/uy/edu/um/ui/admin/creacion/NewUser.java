@@ -4,25 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
-import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.user.interfaces.UserMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.user.UserVO;
-import javax.swing.JCheckBox;
 
 public class NewUser extends BasicoAdmin {
 	private JTextField textFieldNombre;
@@ -34,26 +32,6 @@ public class NewUser extends BasicoAdmin {
 	private JTextField textField_1;
 	private JTextField textField_2;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewUser frame = new NewUser();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public NewUser() {
 		setTitle("Nuevo Usuario");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,15 +89,17 @@ public class NewUser extends BasicoAdmin {
 									textField_1.getText(),
 									textField_2.getText(), admin);
 						} catch (HasBlanksException e) {
-							// TODO Auto-generated catch block
 							MensajeGenerico fin = new MensajeGenerico(e
 									.getMessage(), devuelve());
 							fin.setVisible(true);
 						}
 						nuevo.addUser(nuevoUser);
+						MainAdmin mainAd = new MainAdmin();
+						mainAd.setVisible(true);
 						MensajeGenerico fin = new MensajeGenerico(
 								"Usuario Agregado Correctamente", devuelve());
 						fin.setVisible(true);
+						cerrar();
 					} catch (NoServerConnectionException e) {
 						MensajeGenerico nuevo = new MensajeGenerico(e
 								.getMessage(), devuelve());
@@ -167,7 +147,7 @@ public class NewUser extends BasicoAdmin {
 
 	}
 
-	private void cerrar() {
+	public void cerrar() {
 		this.dispose();
 
 	}

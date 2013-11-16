@@ -50,25 +50,6 @@ public class Cocina extends JFrame {
 	private ArrayList<OrderVO> arrayOrdenes;
 	Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Cocina frame = new Cocina();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public Cocina() throws NoDatabaseConnection, NoServerConnectionException {
 		arrayOrdenes = cargaOrdenes();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

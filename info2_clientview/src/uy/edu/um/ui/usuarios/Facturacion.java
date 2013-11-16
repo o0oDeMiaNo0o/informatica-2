@@ -2,7 +2,6 @@ package uy.edu.um.ui.usuarios;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,18 +48,6 @@ public class Facturacion extends BasicoUsuario {
 	private String total = "0";
 	private BigDecimal totalBig;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Facturacion frame = new Facturacion(null, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public Facturacion(final TableVO mesa, ClientVO cliente)
 			throws NoServerConnectionException, NoDatabaseConnection {
@@ -162,9 +149,12 @@ public class Facturacion extends BasicoUsuario {
 						BillVO factura = nuevo.createBillVO(ordenesMesa,
 								cliente, mesa, totalBig);
 						nuevo.addBillVO(factura);
+						MainUsuario main = new MainUsuario();
+						main.setVisible(true);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
 						msg.setVisible(true);
+						cerrar();
 						if (mesa.getNumero() != 1 || mesa.getNumero() != 0) {
 							TableMgt tables = ServiceFacade.getInstance()
 									.getTableMgt();
@@ -186,9 +176,14 @@ public class Facturacion extends BasicoUsuario {
 						nuevo.addBillVO(factura);
 						BillMgt bMgt = ServiceFacade.getInstance().getBillMgt();
 						bMgt.addBillVO(factura);
+						MainUsuario main = new MainUsuario();
+						main.setVisible(true);
+						MainUsuario mainUs = new MainUsuario();
+						mainUs.setVisible(true);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Factura Correcta", devuelve());
 						msg.setVisible(true);
+						cerrar();
 						if (mesa.getNumero() != 0 || mesa.getNumero() != 1) {
 							TableMgt tables = ServiceFacade.getInstance()
 									.getTableMgt();

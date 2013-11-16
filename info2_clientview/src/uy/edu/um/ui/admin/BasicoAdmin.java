@@ -39,27 +39,7 @@ public class BasicoAdmin extends JFrame {
 
 	public JPanel contentPane;
 	private URL dirLogo = DirLocal.class.getResource("Logo.png");
-	private UserVO user = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BasicoAdmin frame = new BasicoAdmin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public BasicoAdmin() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -310,7 +290,7 @@ public class BasicoAdmin extends JFrame {
 		return this;
 	}
 
-	private void cerrar() {
+	public void cerrar() {
 		this.dispose();
 	}
 

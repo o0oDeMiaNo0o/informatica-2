@@ -32,25 +32,6 @@ public class ClientListU extends BasicoUsuario {
 	private JTextField textFieldID;
 	private ArrayList<ClientVO> clientes;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientListU frame = new ClientListU(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public ClientListU(final TableVO mesa) {
 		try {
 			clientes = cargoClientes();

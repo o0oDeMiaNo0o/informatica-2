@@ -36,15 +36,7 @@ public class EditRemoveA extends JFrame {
 	private ArrayList<CategoryVO> categorias;
 	String[] textos;
 
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param toSend
-	 */
 	public EditRemoveA(final ArticleVO articulo, final JFrame cPanel,
 			final boolean editable, String mensaje)
 			throws NoServerConnectionException, NoDatabaseConnection {
@@ -147,6 +139,7 @@ public class EditRemoveA extends JFrame {
 														devuelve());
 												mensaje.setVisible(true);
 												bandera = true;
+												cerrar();
 											} catch (NoServerConnectionException e1) {
 												MensajeGenerico nuevo = new MensajeGenerico(
 														e1.getMessage(),
@@ -172,6 +165,7 @@ public class EditRemoveA extends JFrame {
 													devuelve());
 											mensaje.setVisible(true);
 											bandera = true;
+											cerrar();
 										}
 									} else {
 										MensajeGenerico mensaje = new MensajeGenerico(

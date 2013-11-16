@@ -14,12 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-
 import uy.edu.um.exceptions.checks.*;
 import uy.edu.um.imagenes.DirLocal;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.ui.admin.BasicoAdmin;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.ImagePanel;
 import uy.edu.um.ui.clasesAuxiliares.TransparentPanel;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
@@ -36,26 +36,6 @@ public class NewCategory extends BasicoAdmin {
 	private ImagePanel imagePanel;
 	private URL bernie = DirLocal.class.getResource("Bernie's.png");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewCategory frame = new NewCategory();
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public NewCategory() {
 		setTitle("Nueva Categoria");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,34 +75,38 @@ public class NewCategory extends BasicoAdmin {
 			public void mouseClicked(MouseEvent arg0) {
 				if (!textFieldNombre.getText().isEmpty()) {
 					// Agrego la categoria
-					try{
+					try {
 						CategoryMgt cat = ServiceFacade.getInstance()
-						.getCategoryMgt();
+								.getCategoryMgt();
 						CategoryVO nuevaCatVO = null;
-						nuevaCatVO = cat.createCategoryVO(textFieldNombre.getText());
+						nuevaCatVO = cat.createCategoryVO(textFieldNombre
+								.getText());
 						cat.sendCategoryVO(nuevaCatVO);
 						textFieldNombre.setText("");
+						MainAdmin mainAd = new MainAdmin();
+						mainAd.setVisible(true);
 						MensajeGenerico test = new MensajeGenerico(
 								"Categoria Agregada Correctamente", devuelve());
 						test.setVisible(true);
-					}catch(NoServerConnectionException e){
-						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
-								NewCategory.this);
+						cerrar();
+					} catch (NoServerConnectionException e) {
+						MensajeGenerico test = new MensajeGenerico(e
+								.getMessage(), NewCategory.this);
 						test.setVisible(true);
-					}catch (ExisteCategoryException e) {
-						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
-								NewCategory.this);
+					} catch (ExisteCategoryException e) {
+						MensajeGenerico test = new MensajeGenerico(e
+								.getMessage(), NewCategory.this);
 						test.setVisible(true);
 					} catch (HasBlanksException e) {
-						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
-								NewCategory.this);
+						MensajeGenerico test = new MensajeGenerico(e
+								.getMessage(), NewCategory.this);
 						test.setVisible(true);
-					} catch( NoDatabaseConnection e){
-						MensajeGenerico test = new MensajeGenerico(e.getMessage(),
-								NewCategory.this);
+					} catch (NoDatabaseConnection e) {
+						MensajeGenerico test = new MensajeGenerico(e
+								.getMessage(), NewCategory.this);
 						test.setVisible(true);
 					}
-				}else {
+				} else {
 					MensajeGenerico test = new MensajeGenerico("Nombre Vacio",
 							devuelve());
 					test.setVisible(true);
@@ -142,11 +126,12 @@ public class NewCategory extends BasicoAdmin {
 		});
 		transparentPanelBotones.add(buttonCancelar, "cell 1 0");
 	}
+
 	public JFrame devuelve() {
 		return this;
 	}
 
-	private void cerrar() {
+	public void cerrar() {
 		this.dispose();
 
 	}

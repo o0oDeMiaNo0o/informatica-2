@@ -45,27 +45,6 @@ public class ProductList extends BasicoAdmin {
 	private JTextField textFieldID;
 	private Timer timer;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProductList frame = new ProductList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param user
-	 */
 	public ProductList() throws NoDatabaseConnection,
 			NoServerConnectionException {
 		// try{

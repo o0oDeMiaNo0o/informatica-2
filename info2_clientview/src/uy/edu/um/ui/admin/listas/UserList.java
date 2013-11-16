@@ -33,27 +33,6 @@ public class UserList extends BasicoAdmin {
 	private JTextField textFieldNombre;
 	private Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UserList frame = new UserList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param user
-	 */
 	public UserList() {
 		try {
 			listaUser = cargoListado();

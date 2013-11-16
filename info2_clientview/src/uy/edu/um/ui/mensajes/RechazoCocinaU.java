@@ -29,27 +29,6 @@ public class RechazoCocinaU extends JFrame {
 	private URL green = DirLocal.class.getResource("Libre.jpg");
 	private URL red = DirLocal.class.getResource("Ocupado.jpg");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RechazoCocinaU frame = new RechazoCocinaU(null, null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param orden
-	 */
 	public RechazoCocinaU(final OrderVO orden, final JFrame frame) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +55,8 @@ public class RechazoCocinaU extends JFrame {
 				OrderMgt nuevo = ServiceFacade.getInstance().getOrderMgt();
 				try {
 					nuevo.rechazado(orden);
-					MensajeGenerico msg = new MensajeGenerico("La Orden Fue Cancelada",frame);
+					MensajeGenerico msg = new MensajeGenerico(
+							"La Orden Fue Cancelada", frame);
 					msg.setVisible(true);
 					cerrar();
 				} catch (NoServerConnectionException e1) {

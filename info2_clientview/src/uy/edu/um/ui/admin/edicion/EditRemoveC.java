@@ -16,13 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
-import uy.edu.um.exceptions.checks.ExisteClientException;
 import uy.edu.um.exceptions.checks.HasBlanksException;
 import uy.edu.um.exceptions.checks.HasNumberException;
 import uy.edu.um.exceptions.checks.NoDatabaseConnection;
 import uy.edu.um.exceptions.checks.NoServerConnectionException;
 import uy.edu.um.services.ServiceFacade;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
+import uy.edu.um.ui.admin.MainAdmin;
 import uy.edu.um.ui.clasesAuxiliares.Helpers;
 import uy.edu.um.ui.mensajes.MensajeGenerico;
 import uy.edu.um.value_object.people.client.ClientVO;
@@ -39,15 +39,7 @@ public class EditRemoveC extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextField textFieldTel;
 
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 * 
-	 * @param toSend
-	 */
 	public EditRemoveC(final ClientVO cliente, JPanel cPanel,
 			final boolean editable, String mensaje) {
 		try {
@@ -178,10 +170,13 @@ public class EditRemoveC extends JFrame {
 																	.getText(),
 															descuento);
 													client.editClient(clienteAux);
+													MainAdmin mainAd = new MainAdmin();
+													mainAd.setVisible(true);
 													MensajeGenerico msg = new MensajeGenerico(
 															"Cliente Editado Correctamente",
 															EditRemoveC.this);
 													msg.setVisible(true);
+													cerrar();
 												} catch (NumberFormatException e1) {
 													MensajeGenerico nuevo = new MensajeGenerico(
 															e1.getMessage(),
@@ -208,10 +203,6 @@ public class EditRemoveC extends JFrame {
 															EditRemoveC.this);
 													nuevo.setVisible(true);
 												}
-												MensajeGenerico new10 = new MensajeGenerico(
-														"Cliente Agregado",
-														devuelve());
-												new10.setVisible(true);
 											} else {
 												MensajeGenerico new6 = new MensajeGenerico(
 														"Direccion Vacia",
@@ -260,6 +251,8 @@ public class EditRemoveC extends JFrame {
 									.getMessage(), EditRemoveC.this);
 							nuevo.setVisible(true);
 						}
+						MainAdmin mainAd = new MainAdmin();
+						mainAd.setVisible(true);
 						MensajeGenerico msg = new MensajeGenerico(
 								"Cliente Eliminado Correctamente",
 								EditRemoveC.this);

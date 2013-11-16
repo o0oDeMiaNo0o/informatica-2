@@ -38,19 +38,6 @@ public class TableList extends BasicoAdmin {
 	public ArrayList<TableVO> mesas;
 	public Timer timer = null;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TableList frame = new TableList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public TableList() throws NoServerConnectionException, NoDatabaseConnection {
 		mesas = cargoMesas();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

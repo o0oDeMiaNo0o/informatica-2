@@ -33,22 +33,6 @@ public class CategoryList extends BasicoAdmin {
 	private JTextField textFieldID;
 	private Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CategoryList frame = new CategoryList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public CategoryList() throws NoDatabaseConnection,
 			NoServerConnectionException {
 		getContentPane().setBackground(Color.LIGHT_GRAY);

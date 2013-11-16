@@ -37,25 +37,6 @@ public class NewClienteU extends BasicoUsuario {
 	private JTextField textFieldTel;
 	private JTextField textFieldDir;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewClienteU frame = new NewClienteU();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public NewClienteU() throws NoServerConnectionException,
 			NoServerConnectionException {
 		super();

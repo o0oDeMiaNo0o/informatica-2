@@ -28,11 +28,6 @@ public class ConfirmFacturar extends JFrame {
 		this.dispose();
 	}
 
-	/**
-	 * Create the frame.
-	 *
-	 * @param toSend
-	 */
 	public ConfirmFacturar(final TableVO mesa, final JFrame frame) {
 		setTitle("Confirma");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,17 +56,19 @@ public class ConfirmFacturar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Facturacion factura = null;
-				try{
+				try {
 					factura = new Facturacion(mesa, null);
 					System.out.println(mesa.getNumero());
 					factura.setVisible(true);
 					frame.dispose();
 					cerrar();
-				}catch(NoServerConnectionException ex){
-					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ConfirmFacturar.this);
+				} catch (NoServerConnectionException ex) {
+					MensajeGenerico newFrame = new MensajeGenerico(ex
+							.getMessage(), ConfirmFacturar.this);
 					newFrame.setVisible(true);
-				}catch(NoDatabaseConnection ex){
-					MensajeGenerico newFrame = new MensajeGenerico(ex.getMessage(),ConfirmFacturar.this);
+				} catch (NoDatabaseConnection ex) {
+					MensajeGenerico newFrame = new MensajeGenerico(ex
+							.getMessage(), ConfirmFacturar.this);
 					newFrame.setVisible(true);
 				}
 			}

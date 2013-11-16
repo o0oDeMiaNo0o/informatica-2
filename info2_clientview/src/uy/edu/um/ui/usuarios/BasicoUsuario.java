@@ -28,25 +28,6 @@ public class BasicoUsuario extends JFrame {
 	public ImagePanel contentPane;
 	public URL DirFondo = DirLocal.class.getResource("Fondo.png");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BasicoUsuario frame = new BasicoUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public BasicoUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

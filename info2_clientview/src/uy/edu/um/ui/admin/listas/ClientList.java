@@ -35,25 +35,6 @@ public class ClientList extends BasicoAdmin {
 	private ArrayList<ClientVO> clientes;
 	private Timer timer = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClientList frame = new ClientList();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public ClientList() throws NoServerConnectionException,
 			NoDatabaseConnection {
 		clientes = cargoClientes();
@@ -151,12 +132,10 @@ public class ClientList extends BasicoAdmin {
 				try {
 					clientes = cargoClientes();
 				} catch (NoDatabaseConnection e1) {
-					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
 							ClientList.this);
 					msg.setVisible(true);
 				} catch (NoServerConnectionException e1) {
-					// TODO Auto-generated catch block
 					MensajeGenerico msg = new MensajeGenerico(e1.getMessage(),
 							ClientList.this);
 					msg.setVisible(true);
