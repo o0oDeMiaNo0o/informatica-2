@@ -12,6 +12,8 @@ import uy.edu.um.services.bill.interfaces.BillMgt;
 import uy.edu.um.services.bill.managers.BillMgr;
 import uy.edu.um.services.categories.interfaces.CategoryMgt;
 import uy.edu.um.services.categories.managers.CategoryMgr;
+import uy.edu.um.services.chat.interfaces.ChatMgt;
+import uy.edu.um.services.chat.managers.ChatMgr;
 import uy.edu.um.services.order.interfaces.OrderMgt;
 import uy.edu.um.services.order.managers.OrderMgr;
 import uy.edu.um.services.people.clients.interfaces.ClientMgt;
@@ -66,6 +68,10 @@ public class ServiceFacade {
 
 	public TableMgt getTableMgt(){
 		return TableMgr.getInstance();
+	}
+
+	public ChatMgt getChatMgt(){
+		return ChatMgr.getInstance();
 	}
 
 	public String getHost() {
