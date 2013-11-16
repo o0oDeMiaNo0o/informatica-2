@@ -109,16 +109,17 @@ public class ConfirmMesa extends JFrame {
 					if (mesa.getNumero() == 0) {
 						Facturacion nuevo = null;
 						try {
-							nuevo =  new Facturacion(mesa, null);
+							nuevo = new Facturacion(mesa, null);
 							nuevo.setVisible(true);
+							frame.dispose();
 							cerrar();
 						} catch (NoServerConnectionException e1) {
-							MensajeGenerico nuevoFrame = new MensajeGenerico(
-									e1.getMessage(), devuelve());
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+									.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						} catch (NoDatabaseConnection e1) {
-							MensajeGenerico nuevoFrame = new MensajeGenerico(
-									e1.getMessage(), devuelve());
+							MensajeGenerico nuevoFrame = new MensajeGenerico(e1
+									.getMessage(), devuelve());
 							nuevoFrame.setVisible(true);
 						}
 					} else {
@@ -147,6 +148,7 @@ public class ConfirmMesa extends JFrame {
 									ConfirmFacturar nueva = new ConfirmFacturar(
 											mesa, frame);
 									nueva.setVisible(true);
+									frame.dispose();
 									cerrar();
 
 								} catch (NoServerConnectionException e1) {
