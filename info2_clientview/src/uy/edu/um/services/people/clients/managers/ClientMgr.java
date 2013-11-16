@@ -32,10 +32,7 @@ public class ClientMgr implements ClientMgt{
 	@Override
 	public ClientVO createClientVO(String nombre, String apellido, int ci,
 			int tel, String direccion, String mail, BigDecimal descuento)
-					throws ExisteClientException, HasBlanksException, HasNumberException, NoServerConnectionException, NoDatabaseConnection {
-		if(existeCliente(nombre,ci) == true){
-			throw new ExisteClientException("El cliente "+nombre+" "+apellido+" ya existe");
-		}
+					throws HasBlanksException, HasNumberException, NoServerConnectionException, NoDatabaseConnection {
 		if(Verificacion.hasNumbers(nombre)){
 			throw new HasNumberException("El nombre contiene numeros");
 		}
@@ -128,7 +125,6 @@ public class ClientMgr implements ClientMgt{
 			ClientRemoteMgt oClientRemoteMgt = (ClientRemoteMgt) oRegitry
 			.lookup(sObjectService);
 			check = oClientRemoteMgt.existeCliente(nombre,ci);
-			//System.out.println("Cliente agregado");
 		} catch (Exception e) {
 			throw new  NoServerConnectionException("No hay conexion con el servidor, Cerrar el programa" +
 						"y abrirlo nuevamente");
