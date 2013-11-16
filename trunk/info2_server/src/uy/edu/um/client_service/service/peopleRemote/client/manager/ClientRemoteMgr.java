@@ -33,6 +33,7 @@ public class ClientRemoteMgr implements ClientRemoteMgt{
 
 	@Override
 	public void editClient(ClientVO c) throws RemoteException, NoDatabaseConnection {
+		System.out.println("jaja");
 		ClientMgt cMgt = BusinessFacade.getInstance().getClientMgt();
 		Client toEdit = cMgt.getClient(c);
 		cMgt.editClient(toEdit);
