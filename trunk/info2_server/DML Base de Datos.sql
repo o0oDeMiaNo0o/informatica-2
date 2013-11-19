@@ -232,20 +232,15 @@ VALUES
 
 
 
-
 -- Usuarios
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("MatiasG","47bce5c74f589f4867dbd57e9ca9f808",1);
+("admin","21232f297a57a5a743894a0e4a801fc3",1);
 
 INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
 VALUES
-("FacundoL","b4adcb50f1ee7b54194f82d866331b31",1);
-
-INSERT INTO `Info2`.`Users`(`Username`,`Password`,`Admin`)
-VALUES
-("Bernardo","bac82a9993c15f257413a6c3def4bc4a",0);
+("user","ee11cbb19052e40b07aac0ca060c23ee",0);
 
 
 -- Clientes
