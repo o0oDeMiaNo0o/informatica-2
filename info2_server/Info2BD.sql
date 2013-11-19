@@ -40,23 +40,19 @@ CREATE TABLE `Clientes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 
-
 CREATE TABLE `Facturas` (
   `idFacturas` int(11) NOT NULL AUTO_INCREMENT,
   `Fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Importe Total` decimal(5,2) NOT NULL,
   `Mesa_idMesa` int(11) DEFAULT NULL,
-  `Pagos_idPagos` int(11) DEFAULT NULL,
   `Clientes_id` int(11) DEFAULT NULL,
   `Clientes_Ci` int(11) DEFAULT NULL,
   PRIMARY KEY (`idFacturas`),
   KEY `fk_Facturas_Mesa1_idx` (`Mesa_idMesa`),
-  KEY `fk_Facturas_Pagos1_idx` (`Pagos_idPagos`),
   KEY `fk_Facturas_Clientes1_idx` (`Clientes_id`,`Clientes_Ci`),
   CONSTRAINT `fk_Facturas_Clientes1` FOREIGN KEY (`Clientes_id`, `Clientes_Ci`) REFERENCES `clientes` (`id`, `Ci`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Facturas_Mesa1` FOREIGN KEY (`Mesa_idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Facturas_Pagos1` FOREIGN KEY (`Pagos_idPagos`) REFERENCES `pagos` (`idPagos`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_Facturas_Mesa1` FOREIGN KEY (`Mesa_idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 
 
@@ -80,6 +76,12 @@ CREATE TABLE `Mesa` (
   PRIMARY KEY (`idMesa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `Chat` (
+  `Mensaje` varchar(255) NOT NULL DEFAULT '  ',
+  `EnCocina` int(1) DEFAULT NULL,
+  `Estado` enum('Activo','Entregado') DEFAULT 'Activo',
+  PRIMARY KEY (`Mensaje`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
 
